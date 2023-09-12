@@ -8,5 +8,6 @@ namespace PhasmophobiaCompanion.Interfaces
     {
         string Title { get; }
         string ImageUrl { get; }
+        string Description { get; }
     }
 }
