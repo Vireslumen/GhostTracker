@@ -1,19 +1,26 @@
 ﻿using PhasmophobiaCompanion.Interfaces;
+using PhasmophobiaCompanion.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace PhasmophobiaCompanion.ViewModels
 {
     public class GhostsViewModel : BaseViewModel, ISearchable, IFilterable
     {
-        public List<IListItem> ghosts;
-        public List<IListItem> Ghosts
+        public ObservableCollection<Ghost> ghosts;
+        public ObservableCollection<Ghost> Ghosts
         {
             get { return ghosts; }
-            set { ghosts = value;
-                OnPropertyChanged();
+            set
+            {
+                ghosts = value;
             }
+        }
+        public GhostsViewModel()
+        {
+            Ghosts = new ObservableCollection<Ghost>();
         }
         public List<IListItem> Filter(string filterCriteria)
         {

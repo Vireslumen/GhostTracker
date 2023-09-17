@@ -4,9 +4,9 @@ using System.Text;
 
 namespace PhasmophobiaCompanion.Models
 {
-    public class Ghost : ListItemBase
+    public struct CluesStructure
     {
-        public List<CluesStructure> Clues { get; set; }
-        
+        public string Name { get; set; }
+        public string Source { get; set; }
     }
 }
