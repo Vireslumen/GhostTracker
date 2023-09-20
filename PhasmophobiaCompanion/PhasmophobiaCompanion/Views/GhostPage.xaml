@@ -1,29 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-             x:Class="PhasmophobiaCompanion.Views.GhostPage"
+<ContentPage
+    x:Class="PhasmophobiaCompanion.Views.GhostPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     Padding="0,40,0,0"
     BackgroundColor="#791AE5"
     NavigationPage.HasNavigationBar="False">
 
     <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-
-
         <StackLayout>
             <yummy:PancakeView
-                    Margin="20,0,20,-20"
-                    Padding="10,0,0,0"
-                    BackgroundColor="White"
-                    CornerRadius="25"
-                    HeightRequest="50"
-                    VerticalOptions="EndAndExpand">
+                Margin="20,0,20,-20"
+                Padding="10,0,0,0"
+                BackgroundColor="White"
+                CornerRadius="25"
+                HeightRequest="50"
+                VerticalOptions="EndAndExpand">
                 <StackLayout Orientation="Horizontal">
                     <Image
-                            HeightRequest="25"
-                            HorizontalOptions="Start"
-                            Source="search"
-                            VerticalOptions="CenterAndExpand"
-                            WidthRequest="25" />
+                        HeightRequest="25"
+                        HorizontalOptions="Start"
+                        Source="search"
+                        VerticalOptions="CenterAndExpand"
+                        WidthRequest="25" />
                 </StackLayout>
             </yummy:PancakeView>
             <yummy:PancakeView
@@ -39,13 +39,96 @@
                         FontSize="20"
                         HorizontalOptions="CenterAndExpand"
                         HorizontalTextAlignment="Center"
-                        Text="How to get started?"
+                        Text="Ghosts"
                         TextColor="#791AE5"
                         VerticalOptions="Center" />
-                    <Grid Margin="5" ColumnSpacing="20" RowSpacing="30" x:Name="MainGrid">
-                    </Grid>
-                </StackLayout>
 
+                    <!--  Элементы для отображения списка Ghost  -->
+                    <CollectionView ItemsSource="{Binding Ghosts}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout HeightRequest="260">
+                                    <StackLayout.Padding>
+                                        0,0,0,10
+                                    </StackLayout.Padding>
+                                    <yummy:PancakeView
+                                        Padding="10,10,10,10"
+                                        BackgroundColor="White"
+                                        CornerRadius="16"
+                                        HeightRequest="260">
+                                        <yummy:PancakeView.Shadow>
+                                            <yummy:DropShadow Offset="0,3" Color="#000000" />
+                                        </yummy:PancakeView.Shadow>
+                                        <yummy:PancakeView.Margin>
+                                            <Thickness>
+                                                10,3,10,10
+                                            </Thickness>
+                                        </yummy:PancakeView.Margin>
+                                        <yummy:PancakeView.Border>
+                                            <yummy:Border Thickness="1" Color="Color.Default" />
+                                        </yummy:PancakeView.Border>
+                                        <StackLayout>
+                                            <Image HeightRequest="150" Source="{Binding ImageUrl}" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="20"
+                                                HorizontalOptions="CenterAndExpand"
+                                                HorizontalTextAlignment="Center"
+                                                Text="{Binding Title}"
+                                                TextColor="Black"
+                                                VerticalOptions="CenterAndExpand" />
+                                            <FlexLayout
+                                                AlignItems="Stretch"
+                                                BindableLayout.ItemsSource="{Binding Clues}"
+                                                JustifyContent="Center">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackLayout HorizontalOptions="End">
+                                                            <yummy:PancakeView
+                                                                Padding="3"
+                                                                BackgroundColor="White"
+                                                                CornerRadius="15"
+                                                                HeightRequest="30"
+                                                                WidthRequest="30">
+                                                                <yummy:PancakeView.Margin>
+                                                                    <Thickness>
+                                                                        5,5,5,5
+                                                                    </Thickness>
+                                                                </yummy:PancakeView.Margin>
+                                                                <yummy:PancakeView.Shadow>
+                                                                    <yummy:DropShadow
+                                                                        BlurRadius="3"
+                                                                        Offset="0,5"
+                                                                        Color="Black" />
+                                                                </yummy:PancakeView.Shadow>
+                                                                <Image
+                                                                    Aspect="AspectFit"
+                                                                    HorizontalOptions="Center"
+                                                                    Source="{Binding Source}" />
+                                                            </yummy:PancakeView>
+                                                        </StackLayout>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                                <FlexLayout.Direction>Row</FlexLayout.Direction>
+                                            </FlexLayout>
+
+                                        </StackLayout>
+                                    </yummy:PancakeView>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.Margin>
+                            <Thickness>5</Thickness>
+                        </CollectionView.Margin>
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout
+                                HorizontalItemSpacing="10"
+                                Orientation="Vertical"
+                                Span="2"
+                                VerticalItemSpacing="0" />
+                        </CollectionView.ItemsLayout>
+                    </CollectionView>
+                </StackLayout>
             </yummy:PancakeView>
         </StackLayout>
     </ScrollView>

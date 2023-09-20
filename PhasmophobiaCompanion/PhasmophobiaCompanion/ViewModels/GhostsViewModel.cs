@@ -20,7 +20,54 @@ namespace PhasmophobiaCompanion.ViewModels
         }
         public GhostsViewModel()
         {
-            Ghosts = new ObservableCollection<Ghost>();
+            Ghosts = new ObservableCollection<Ghost>()
+            {
+                new Ghost()
+                {
+                    Clues=new ObservableCollection<CluesStructure>
+                    {
+                        new CluesStructure { Name="Book", Source="Book_icon.png"},
+                        new CluesStructure { Name = "Radio", Source = "Radio_icon.png" },
+                        new CluesStructure { Name = "Minus", Source = "Minus_icon.png" }
+                    },
+                    ImageUrl="Moroi.jpg",
+                    Title="Moroi"
+                },
+                new Ghost()
+                {
+                    Clues=new ObservableCollection<CluesStructure>
+                    {
+                        new CluesStructure { Name="Radio", Source="Radio_icon.png"},
+                        new CluesStructure { Name = "Book", Source = "Book_icon.png" },
+                        new CluesStructure { Name = "Minus", Source = "Minus_icon.png" }
+                    },
+                    ImageUrl="Mara.jpg",
+                    Title="Mara"
+                },
+                new Ghost()
+                {
+                    Clues=new ObservableCollection<CluesStructure>
+                    {
+                        new CluesStructure { Name="Minus", Source="Minus_icon.png"},
+                        new CluesStructure { Name = "Radio", Source = "Radio_icon.png" },
+                        new CluesStructure { Name = "Book", Source = "Book_icon.png" }
+                    },
+                    ImageUrl="Banshi.jpg",
+                    Title="Banshi"
+                },
+                new Ghost()
+                {
+                    Clues=new ObservableCollection<CluesStructure>
+                    {
+                        new CluesStructure { Name="Book", Source="Book_icon.png"},
+                        new CluesStructure { Name = "Minus", Source = "Minus_icon.png" },
+                        new CluesStructure { Name = "Radio", Source = "Radio_icon.png" },
+                        new CluesStructure { Name = "Minus", Source = "Minus_icon.png" }
+                    },
+                    ImageUrl="Polter.jpg",
+                    Title="Polter"
+                },
+            };
         }
         public List<IListItem> Filter(string filterCriteria)
         {
