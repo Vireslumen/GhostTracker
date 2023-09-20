@@ -3,24 +3,40 @@ using PhasmophobiaCompanion.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace PhasmophobiaCompanion.ViewModels
 {
     public class GhostsViewModel : BaseViewModel, ISearchable, IFilterable
     {
-        public ObservableCollection<Ghost> ghosts;
+        private ObservableCollection<Ghost> ghosts;
+        private ObservableCollection<Ghost> filteredGhosts;
+        private string searchQuery;
         public ObservableCollection<Ghost> Ghosts
         {
-            get { return ghosts; }
+            get { return filteredGhosts; }
             set
             {
-                ghosts = value;
+                SetProperty(ref filteredGhosts, value);
             }
         }
+
+        public string SearchQuery
+        {
+            get { return searchQuery; }
+            set
+            {
+                SetProperty(ref searchQuery, value);
+                FilterGhosts();
+            }
+        }
+        public ICommand SearchCommand { get; private set; }
         public GhostsViewModel()
         {
-            Ghosts = new ObservableCollection<Ghost>()
+            ghosts = new ObservableCollection<Ghost>()
             {
                 new Ghost()
                 {
@@ -68,6 +84,8 @@ namespace PhasmophobiaCompanion.ViewModels
                     Title="Polter"
                 },
             };
+            Ghosts = new ObservableCollection<Ghost>(ghosts);
+            SearchCommand = new Command<string>(query=>Search(query));
         }
         public List<IListItem> Filter(string filterCriteria)
         {
@@ -76,7 +94,21 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public void Search(string query)
         {
-            throw new NotImplementedException();
+            SearchQuery = query;
         }
+
+        private void FilterGhosts()
+        {
+            if (string.IsNullOrWhiteSpace(SearchQuery))
+            {
+                Ghosts = new ObservableCollection<Ghost>(ghosts);
+            }
+            else
+            {
+                var filtered = ghosts.Where(ghost => ghost.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant())).ToList();
+                Ghosts = new ObservableCollection<Ghost>(filtered);
+            }
+        }
+
     }
 }

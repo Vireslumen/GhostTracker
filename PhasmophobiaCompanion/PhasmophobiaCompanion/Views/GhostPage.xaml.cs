@@ -22,9 +22,13 @@ namespace PhasmophobiaCompanion.Views
             InitializeComponent();
             GhostsViewModel viewModel = new GhostsViewModel();
             BindingContext = viewModel;
-            
-
         }
-
+        private void OnSearchCompleted(object sender, EventArgs e)
+        {
+            if(BindingContext is ViewModels.GhostsViewModel viewModel)
+            {
+                viewModel.SearchCommand.Execute(null);
+            }
+        }
     }
 }
