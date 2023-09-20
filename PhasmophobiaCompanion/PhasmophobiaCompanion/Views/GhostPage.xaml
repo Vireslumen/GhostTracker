@@ -30,6 +30,16 @@
                     HorizontalOptions="FillAndExpand"
                     Placeholder="Search Ghosts"
                     Text="{Binding SearchQuery, Mode=TwoWay}" />
+                <Image
+                    HeightRequest="25"
+                    HorizontalOptions="End"
+                    Source="filter_icon"
+                    VerticalOptions="CenterAndExpand"
+                    WidthRequest="25">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="FilterTapped" />
+                    </Image.GestureRecognizers>
+                </Image>
             </StackLayout>
         </yummy:PancakeView>
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">

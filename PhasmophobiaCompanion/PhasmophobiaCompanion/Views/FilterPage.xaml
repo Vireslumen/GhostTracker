@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<popup:PopupPage
+    x:Class="PhasmophobiaCompanion.Views.FilterPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    BackgroundColor="Transparent"
+    HasSystemPadding="True">
+
+    <Frame
+        Margin="20"
+        BackgroundColor="White"
+        CornerRadius="10"
+        HeightRequest="400"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        WidthRequest="300">
+        <StackLayout
+            Padding="10"
+            BackgroundColor="White"
+            WidthRequest="200">
+            <Label
+                Margin="0,10,0,10"
+                FontAttributes="Bold"
+                FontSize="18"
+                HorizontalOptions="Center"
+                Text="Filter by Clues" />
+            <CollectionView
+                x:Name="cluesCollectionView"
+                ItemsSource="{Binding AllClues}"
+                SelectedItems="{Binding SelectedClues, Mode=TwoWay}"
+                SelectionMode="Multiple">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <yummy:PancakeView
+                                Margin="20,5,20,5"
+                                Padding="10,5,10,5"
+                                BackgroundColor="White"
+                                CornerRadius="16"
+                                HeightRequest="50">
+                                <yummy:PancakeView.Shadow>
+                                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                                </yummy:PancakeView.Shadow>
+                                <yummy:PancakeView.Border>
+                                    <yummy:Border Thickness="1" Color="Color.Default" />
+                                </yummy:PancakeView.Border>
+                                <StackLayout Orientation="Horizontal">
+                                    <Image
+                                        HeightRequest="30"
+                                        Source="{Binding Source}"
+                                        WidthRequest="30" />
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        FontSize="16"
+                                        Text="{Binding Name}"
+                                        VerticalOptions="CenterAndExpand" />
+                                </StackLayout>
+                            </yummy:PancakeView>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button
+                Margin="0,10,0,0"
+                BackgroundColor="#791AE5"
+                Clicked="OnApplyFiltersClicked"
+                CornerRadius="5"
+                Text="Apply"
+                TextColor="White" />
+        </StackLayout>
+    </Frame>
+</popup:PopupPage>

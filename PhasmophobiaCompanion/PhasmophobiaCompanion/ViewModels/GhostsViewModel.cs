@@ -1,5 +1,6 @@
 ﻿using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
+using PhasmophobiaCompanion.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,8 @@ namespace PhasmophobiaCompanion.ViewModels
         private ObservableCollection<Ghost> ghosts;
         private ObservableCollection<Ghost> filteredGhosts;
         private string searchQuery;
+        private ObservableCollection<CluesStructure> allClues;
+        private ObservableCollection<CluesStructure> selectedClues;
         public ObservableCollection<Ghost> Ghosts
         {
             get { return filteredGhosts; }
@@ -30,19 +33,41 @@ namespace PhasmophobiaCompanion.ViewModels
             set
             {
                 SetProperty(ref searchQuery, value);
-                FilterGhosts();
+                SearchGhosts();
+            }
+        }
+
+        public ObservableCollection<CluesStructure> AllClues
+        {
+            get { return allClues; }
+            set { SetProperty(ref allClues, value); }
+        }
+
+        public ObservableCollection<CluesStructure> SelectedClues
+        {
+            get { return selectedClues; }
+            set
+            {
+                SetProperty(ref selectedClues, value);
             }
         }
         public ICommand SearchCommand { get; private set; }
         public GhostsViewModel()
         {
+            allClues = new ObservableCollection<CluesStructure>
+            {
+                new CluesStructure { Name="Book", Source="Book_icon.png"},
+                new CluesStructure { Name = "Radio", Source = "Radio_icon.png" },
+                new CluesStructure { Name = "Minus", Source = "Minus_icon.png" }
+            };
+            AllClues = new ObservableCollection<CluesStructure>(allClues);
             ghosts = new ObservableCollection<Ghost>()
             {
                 new Ghost()
                 {
                     Clues=new ObservableCollection<CluesStructure>
                     {
-                        new CluesStructure { Name="Book", Source="Book_icon.png"},
+                        new CluesStructure { Name="Radio", Source="Radio_icon.png"},
                         new CluesStructure { Name = "Radio", Source = "Radio_icon.png" },
                         new CluesStructure { Name = "Minus", Source = "Minus_icon.png" }
                     },
@@ -85,11 +110,15 @@ namespace PhasmophobiaCompanion.ViewModels
                 },
             };
             Ghosts = new ObservableCollection<Ghost>(ghosts);
-            SearchCommand = new Command<string>(query=>Search(query));
+            SelectedClues = new ObservableCollection<CluesStructure>();
+            SearchCommand = new Command<string>(query => Search(query));
         }
-        public List<IListItem> Filter(string filterCriteria)
+
+        public void Filter()
         {
-            throw new NotImplementedException();
+            var filtered = ghosts.Where(ghost => (!SelectedClues.Any() ||
+            SelectedClues.All(selectedClue => ghost.Clues.Any(clue => clue.Name == selectedClue.Name)))).ToList();
+            Ghosts = new ObservableCollection<Ghost>(filtered);
         }
 
         public void Search(string query)
@@ -97,7 +126,7 @@ namespace PhasmophobiaCompanion.ViewModels
             SearchQuery = query;
         }
 
-        private void FilterGhosts()
+        private void SearchGhosts()
         {
             if (string.IsNullOrWhiteSpace(SearchQuery))
             {

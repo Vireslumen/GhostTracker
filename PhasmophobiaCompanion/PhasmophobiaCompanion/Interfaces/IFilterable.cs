@@ -6,6 +6,6 @@ namespace PhasmophobiaCompanion.Interfaces
 {
     public interface IFilterable
     {
-        List<IListItem> Filter(string filterCriteria);
+        void Filter();
     }
 }
