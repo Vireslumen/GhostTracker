@@ -39,5 +39,18 @@ namespace PhasmophobiaCompanion.Views
                 viewModel.SearchCommand.Execute(null);
             }
         }
+
+        private void OnGhostTapped(object sender, EventArgs e)
+        {
+            if (sender is View view && view.BindingContext is Ghost selectedGhost)
+            {
+                // Создайте экземпляр вашей детальной страницы, передавая выбранный призрак
+                var detailPage = new GhostDetailPage(selectedGhost);
+
+                // Используйте навигацию для открытия детальной страницы
+                Application.Current.MainPage.Navigation.PushAsync(detailPage);
+            }
+        }
+
     }
 }
