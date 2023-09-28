@@ -150,17 +150,6 @@ namespace PhasmophobiaCompanion.ViewModels
             SelectedClues.All(selectedClue => ghost.Clues.Any(clue => clue.Name == selectedClue.Name)))).ToList();
             Ghosts = new ObservableCollection<Ghost>(filtered);
         }
-        private async void OnGhostTapped(object sender, EventArgs e)
-        {
-            if (sender is View view && view.BindingContext is Ghost selectedGhost)
-            {
-                // Создайте экземпляр вашей детальной страницы, передавая выбранный призрак
-                var detailPage = new GhostDetailPage(selectedGhost);
-
-                // Используйте навигацию для открытия детальной страницы
-                await Application.Current.MainPage.Navigation.PushAsync(detailPage);
-            }
-        }
 
         public void Search(string query)
         {

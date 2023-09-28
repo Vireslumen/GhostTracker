@@ -57,12 +57,10 @@
                     <StackLayout>
                         <Label
                             Margin="10"
-                            FontAttributes="Bold"
                             FontSize="20"
                             HorizontalOptions="CenterAndExpand"
                             HorizontalTextAlignment="Center"
                             Text="Ghosts"
-                            TextColor="#791AE5"
                             VerticalOptions="Center" />
 
                         <!--  Элементы для отображения списка Ghost  -->
@@ -95,7 +93,6 @@
                                             <StackLayout>
                                                 <Image HeightRequest="150" Source="{Binding ImageUrl}" />
                                                 <Label
-                                                    FontAttributes="Bold"
                                                     FontSize="20"
                                                     HorizontalOptions="CenterAndExpand"
                                                     HorizontalTextAlignment="Center"
