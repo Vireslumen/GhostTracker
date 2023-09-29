@@ -23,11 +23,11 @@ namespace PhasmophobiaCompanion.Views
 		}
         private async void FilterTapped(object sender, EventArgs e)
         {
-            //if (BindingContext is GhostsViewModel viewModel)
-            //{
-            //    var filterPage = new FilterPage(viewModel);
-            //    await PopupNavigation.Instance.PushAsync(filterPage);
-            //}
+            if (BindingContext is EquipmentsViewModel viewModel)
+            {
+                var filterPage = new FilterEquipmentPage(viewModel);
+                await PopupNavigation.Instance.PushAsync(filterPage);
+            }
         }
         private void OnSearchCompleted(object sender, EventArgs e)
         {
