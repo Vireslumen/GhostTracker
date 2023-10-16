@@ -12,15 +12,15 @@ using Rg.Plugins.Popup.Services;
 
 namespace PhasmophobiaCompanion.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class EquipmentPage : ContentPage
-	{
-		public EquipmentPage ()
-		{
-			InitializeComponent ();
-			EquipmentsViewModel viewModel = new EquipmentsViewModel();
-			BindingContext = viewModel;
-		}
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class EquipmentPage : ContentPage
+    {
+        public EquipmentPage()
+        {
+            InitializeComponent();
+            EquipmentsViewModel viewModel = new EquipmentsViewModel();
+            BindingContext = viewModel;
+        }
         private async void FilterTapped(object sender, EventArgs e)
         {
             if (BindingContext is EquipmentsViewModel viewModel)
@@ -39,13 +39,13 @@ namespace PhasmophobiaCompanion.Views
 
         private void OnEquipmentTapped(object sender, EventArgs e)
         {
-            if (sender is View view && view.BindingContext is Ghost selectedEquipment)
+            if (sender is View view && view.BindingContext is Equipment selectedEquipment)
             {
                 // Создайте экземпляр вашей детальной страницы, передавая выбранный призрак
-                //var detailPage = new EquipmentDetailPage(selectedEquipment);
+                var detailPage = new EquipmentDetailPage(selectedEquipment);
 
-                // Используйте навигацию для открытия детальной страницы
-                //await Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                //Используйте навигацию для открытия детальной страницы
+                Application.Current.MainPage.Navigation.PushAsync(detailPage);
             }
         }
     }

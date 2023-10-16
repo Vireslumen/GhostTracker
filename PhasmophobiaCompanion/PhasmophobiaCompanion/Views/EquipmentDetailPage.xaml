@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PhasmophobiaCompanion.Views.EquipmentDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    x:Name="EquipmentDetailPageName">
+    <StackLayout Orientation="Vertical">
+        <!--  Equipment Title  -->
+        <Label
+            FontAttributes="Bold"
+            FontSize="Large"
+            HorizontalOptions="CenterAndExpand"
+            Text="{Binding Title}" />
+        <ScrollView>
+            <!--  Основной контейнер страницы  -->
+            <Grid>
+                <!--  Первый элемент  -->
+
+                <yummy:PancakeView
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="1"
+                    Padding="10,10,10,10"
+                    BackgroundColor="Yellow"
+                    CornerRadius="16">
+                    <yummy:PancakeView.Shadow>
+                        <yummy:DropShadow Offset="0,3" Color="#000000" />
+                    </yummy:PancakeView.Shadow>
+                    <yummy:PancakeView.Margin>
+                        <Thickness>
+                            10,3,10,10
+                        </Thickness>
+                    </yummy:PancakeView.Margin>
+                    <yummy:PancakeView.Border>
+                        <yummy:Border Thickness="1" Color="Color.Default" />
+                    </yummy:PancakeView.Border>
+                    <StackLayout>
+                        <Image HeightRequest="100" Source="{Binding ImageUrl}" />
+                        <ScrollView VerticalScrollBarVisibility="Always">
+
+                            <Label
+                                FontAttributes="Italic"
+                                FontSize="16"
+                                HorizontalOptions="Center"
+                                Text="{Binding Description}"
+                                VerticalOptions="Center" />
+                        </ScrollView>
+
+                    </StackLayout>
+                </yummy:PancakeView>
+
+
+                <!--  Второй элемент  -->
+                <yummy:PancakeView
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="1"
+                    Padding="10,10,10,10"
+                    BackgroundColor="Green"
+                    CornerRadius="16">
+                    <yummy:PancakeView.Shadow>
+                        <yummy:DropShadow Offset="0,3" Color="#000000" />
+                    </yummy:PancakeView.Shadow>
+                    <yummy:PancakeView.Margin>
+                        <Thickness>
+                            10,3,10,10
+                        </Thickness>
+                    </yummy:PancakeView.Margin>
+                    <yummy:PancakeView.Border>
+                        <yummy:Border Thickness="1" Color="Color.Default" />
+                    </yummy:PancakeView.Border>
+                    <ScrollView>
+                        <StackLayout BackgroundColor="Aqua">
+                            <Label Text="{Binding Cost, StringFormat='Цена: {0}'}" />
+                            <Label Text="{Binding UnlockCost, StringFormat='Цена разблокировки: {0}'}" />
+                            <Label Text="{Binding Level, StringFormat='Уровень разблокировки: {0}'}" />
+                            <Label Text="{Binding Tier, StringFormat='Тир: {0}'}" />
+                            <Label Text="{Binding MaxLimit, StringFormat='Максимальное количество: {0}'}" />
+                            <Label Text="{Binding Uses, StringFormat='Использований: {0}'}" />
+                            <StackLayout BackgroundColor="Beige" BindableLayout.ItemsSource="{Binding OtherStats}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Label Text="{Binding}" />
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+
+                        </StackLayout>
+                    </ScrollView>
+                </yummy:PancakeView>
+                <!--  Третий элемент  -->
+                <StackLayout
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2">
+                    <CollectionView ItemsSource="{Binding UnfoldingItems}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <Frame
+                                        Padding="10"
+                                        BackgroundColor="White"
+                                        CornerRadius="5">
+                                        <StackLayout Orientation="Vertical">
+                                            <Label Text="{Binding Title}" VerticalOptions="CenterAndExpand" />
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding Header}" VerticalOptions="CenterAndExpand" />
+                                                <Image
+                                                    HeightRequest="20"
+                                                    HorizontalOptions="EndAndExpand"
+                                                    Source="{Binding Icon}"
+                                                    VerticalOptions="CenterAndExpand" />
+                                            </StackLayout>
+                                            <Label IsVisible="{Binding IsExpanded}" Text="{Binding Body}" />
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnItemTapped" />
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+                                    </Frame>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </StackLayout>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+            </Grid>
+
+        </ScrollView>
+    </StackLayout>
+
+</ContentPage>
