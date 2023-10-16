@@ -48,6 +48,10 @@
             Title="Equipment"
             ContentTemplate="{DataTemplate local:EquipmentPage}"
             Icon="equipment_icon.png" />
+        <ShellContent
+            Title="Maps"
+            ContentTemplate="{DataTemplate local:MapsPage}"
+            Icon="house.png" />
     </TabBar>
     <TabBar>
         <ShellContent ContentTemplate="{DataTemplate local:LoginPage}" Route="LoginPage" />

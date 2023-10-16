@@ -38,8 +38,7 @@
                     </yummy:PancakeView.Border>
                     <StackLayout>
                         <Image HeightRequest="100" Source="{Binding ImageUrl}" />
-                        <ScrollView VerticalScrollBarVisibility="Always">
-
+                        <ScrollView>
                             <Label
                                 FontAttributes="Italic"
                                 FontSize="16"

@@ -82,7 +82,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 SearchEquipments();
             }
         }
-        public ICommand SearchCommand { get; private set; }
+        public ICommand SearchCommand { get; set; }
         public EquipmentsViewModel()
         {
             allTiers = new ObservableCollection<string>

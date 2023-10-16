@@ -55,7 +55,7 @@ namespace PhasmophobiaCompanion.Views
                 // Выберите элементы в соответствии с SelectedClues
                 foreach (var selectedClue in viewModel.SelectedClues)
                 {
-                    
+
                     var clue = viewModel.AllClues.FirstOrDefault(c => c.Name == selectedClue.Name);
                     if (!string.IsNullOrEmpty(clue.Name))
                     {

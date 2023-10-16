@@ -51,7 +51,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 SetProperty(ref selectedClues, value);
             }
         }
-        public ICommand SearchCommand { get; private set; }
+        public ICommand SearchCommand { get; set; }
         public GhostsViewModel()
         {
             allClues = new ObservableCollection<CluesStructure>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 
 namespace PhasmophobiaCompanion.Interfaces
 {
@@ -8,5 +9,6 @@ namespace PhasmophobiaCompanion.Interfaces
     {
         void Search(string query);
         string SearchQuery { get; set; }
+        ICommand SearchCommand { get; set; }
     }
 }
