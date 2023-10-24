@@ -89,7 +89,58 @@
                                                 <TapGestureRecognizer Tapped="OnMapTapped" />
                                             </yummy:PancakeView.GestureRecognizers>
                                             <StackLayout>
-                                                <Image HeightRequest="150" Source="{Binding ImageUrl}" />
+                                                <AbsoluteLayout>
+                                                    <Image HeightRequest="150" Source="{Binding ImageUrl}" />
+                                                    <yummy:PancakeView
+                                                        AbsoluteLayout.LayoutBounds="0.99,0.99,-1,-1"
+                                                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                        BackgroundColor="White"
+                                                        CornerRadius="30"
+                                                        HeightRequest="30"
+                                                        WidthRequest="50">
+                                                        <yummy:PancakeView.Shadow>
+                                                            <yummy:DropShadow
+                                                                BlurRadius="3"
+                                                                Offset="0,5"
+                                                                Color="Black" />
+                                                        </yummy:PancakeView.Shadow>
+                                                        <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                                                            <Image HeightRequest="18" Source="unlock" />
+                                                            <Label
+                                                                FontAttributes="Bold"
+                                                                FontSize="13"
+                                                                HorizontalOptions="Center"
+                                                                Text="{Binding UnlockLvl}"
+                                                                TextColor="Black"
+                                                                VerticalOptions="Center" />
+                                                        </StackLayout>
+                                                    </yummy:PancakeView>
+                                                    <yummy:PancakeView
+                                                        AbsoluteLayout.LayoutBounds="0.01,0.99,-1,-1"
+                                                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                        BackgroundColor="White"
+                                                        CornerRadius="30"
+                                                        HeightRequest="30"
+                                                        WidthRequest="60">
+                                                        <yummy:PancakeView.Shadow>
+                                                            <yummy:DropShadow
+                                                                BlurRadius="3"
+                                                                Offset="0,5"
+                                                                Color="Black" />
+                                                        </yummy:PancakeView.Shadow>
+                                                        <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                                                            <Image HeightRequest="18" Source="room" />
+                                                            <Label
+                                                                FontAttributes="Bold"
+                                                                FontSize="13"
+                                                                HorizontalOptions="Center"
+                                                                Text="{Binding RoomCount}"
+                                                                TextColor="Black"
+                                                                VerticalOptions="Center" />
+                                                        </StackLayout>
+                                                    </yummy:PancakeView>
+
+                                                </AbsoluteLayout>
                                                 <Label
                                                     FontSize="20"
                                                     HorizontalOptions="CenterAndExpand"
@@ -97,7 +148,13 @@
                                                     Text="{Binding Title}"
                                                     TextColor="Black"
                                                     VerticalOptions="CenterAndExpand" />
-
+                                                <Label
+                                                    FontSize="16"
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    HorizontalTextAlignment="Center"
+                                                    Text="{Binding Size}"
+                                                    TextColor="Black"
+                                                    VerticalOptions="CenterAndExpand" />
                                             </StackLayout>
                                         </yummy:PancakeView>
                                     </StackLayout>

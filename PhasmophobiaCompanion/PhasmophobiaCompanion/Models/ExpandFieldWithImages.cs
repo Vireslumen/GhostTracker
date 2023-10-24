@@ -6,10 +6,8 @@ using System.Text;
 
 namespace PhasmophobiaCompanion.Models
 {
-    public class ExpandFieldWithImages
+    public class ExpandFieldWithImages: UnfoldingItem
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
         public ObservableCollection<ImagewithDescription> ImageWithDescriptions { get; set; }
 
     }

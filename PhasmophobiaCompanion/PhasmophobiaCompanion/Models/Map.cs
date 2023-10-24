@@ -13,10 +13,7 @@ namespace PhasmophobiaCompanion.Models
         public int Exits { get; set; }
         public int Floors { get; set; }
         public string HidenSpotCount { get; set; }
-        public ExpandFieldWithImages Structure { get; set; }
-        public ExpandFieldWithImages CursedLocations { get; set; }
-        public ExpandFieldWithImages HidingSpotLocation { get; set; }
-        public ExpandFieldWithImages CyclingGhostSpots { get; set; }
+        public ObservableCollection<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }
         public ObservableCollection<UnfoldingItem> UnfoldingItems { get; set; }
 
     }

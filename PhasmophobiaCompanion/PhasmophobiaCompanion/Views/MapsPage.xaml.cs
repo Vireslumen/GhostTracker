@@ -25,7 +25,7 @@ namespace PhasmophobiaCompanion.Views
         {
             if (BindingContext is MapsViewModel viewModel)
             {
-                var filterPage = new MapsFilterPage(viewModel);
+                var filterPage = new FilterMapPage(viewModel);
                 await PopupNavigation.Instance.PushAsync(filterPage);
             }
         }
