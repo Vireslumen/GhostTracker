@@ -10,6 +10,7 @@ namespace PhasmophobiaCompanion.Models
         public ObservableCollection<CluesStructure> Clues { get; set; }
         public ObservableCollection<UnfoldingItem> UnfoldingItems { get; set; }
         public string Identification { get; set; }
-
+        public GhostHunt Hunt { get; set; }
+        public GhostSpeed Speed { get; set; }
     }
 }

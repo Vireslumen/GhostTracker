@@ -11,8 +11,6 @@ namespace PhasmophobiaCompanion
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
-            Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Shell.SetNavBarIsVisible(this, false);
         }
 

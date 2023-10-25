@@ -1,5 +1,4 @@
-﻿using PhasmophobiaCompanion.Services;
-using PhasmophobiaCompanion.Views;
+﻿using PhasmophobiaCompanion.Views;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,8 +11,6 @@ namespace PhasmophobiaCompanion
         public App()
         {
             InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
 

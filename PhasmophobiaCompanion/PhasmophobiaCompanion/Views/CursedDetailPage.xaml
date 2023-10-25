@@ -1,12 +1,99 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PhasmophobiaCompanion.Views.CursedDetailPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+<ContentPage
+    x:Class="PhasmophobiaCompanion.Views.CursedDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pinch="clr-namespace:Xamarin.Forms.PinchZoomImage;assembly=Xamarin.Forms.PinchZoomImage"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+    <ScrollView>
+        <StackLayout Orientation="Vertical">
+            <Label
+                FontAttributes="Bold"
+                FontSize="Large"
+                HorizontalOptions="CenterAndExpand"
+                Text="{Binding Title}" />
+            <Image HeightRequest="150" Source="{Binding ImageUrl}" />
+            <Label
+                FontAttributes="Italic"
+                FontSize="16"
+                HorizontalOptions="Center"
+                Text="{Binding Description}"
+                VerticalOptions="Center" />
+            <StackLayout BindableLayout.ItemsSource="{Binding ExpandFieldsWithImages}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Frame
+                                Padding="10"
+                                BackgroundColor="White"
+                                CornerRadius="5">
+                                <StackLayout BackgroundColor="Aqua" Orientation="Vertical">
+                                    <Label Text="{Binding Title}" VerticalOptions="CenterAndExpand" />
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Header}" VerticalOptions="CenterAndExpand" />
+                                        <Image
+                                            HeightRequest="20"
+                                            HorizontalOptions="EndAndExpand"
+                                            Source="{Binding Icon}"
+                                            VerticalOptions="CenterAndExpand" />
+                                    </StackLayout>
+                                    <StackLayout IsVisible="{Binding IsExpanded}" Orientation="Vertical">
+                                        <Label Text="{Binding Body}" />
+                                        <StackLayout BindableLayout.ItemsSource="{Binding ImageWithDescriptions}">
+                                            <BindableLayout.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackLayout Orientation="Vertical">
+                                                        <pinch:PinchZoom>
+                                                            <pinch:PinchZoom.Content>
+                                                                <Image
+                                                                    BackgroundColor="Green"
+                                                                    Source="{Binding ImageSource}"
+                                                                    WidthRequest="500" />
+                                                            </pinch:PinchZoom.Content>
+                                                        </pinch:PinchZoom>
+                                                        <Label Text="{Binding Description}" VerticalOptions="Center" />
+                                                    </StackLayout>
+                                                </DataTemplate>
+                                            </BindableLayout.ItemTemplate>
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnItemTapped" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+            <StackLayout BindableLayout.ItemsSource="{Binding UnfoldingItems}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Frame
+                                Padding="10"
+                                BackgroundColor="White"
+                                CornerRadius="5">
+                                <StackLayout Orientation="Vertical">
+                                    <Label Text="{Binding Title}" VerticalOptions="CenterAndExpand" />
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Header}" VerticalOptions="CenterAndExpand" />
+                                        <Image
+                                            HeightRequest="20"
+                                            HorizontalOptions="EndAndExpand"
+                                            Source="{Binding Icon}"
+                                            VerticalOptions="CenterAndExpand" />
+                                    </StackLayout>
+                                    <Label IsVisible="{Binding IsExpanded}" Text="{Binding Body}" />
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnItemTapped" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
         </StackLayout>
-    </ContentPage.Content>
+    </ScrollView>
 </ContentPage>

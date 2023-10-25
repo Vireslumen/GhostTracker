@@ -6,12 +6,6 @@
     xmlns:local="clr-namespace:PhasmophobiaCompanion.Views"
     Title="PhasmophobiaCompanion">
 
-    <!--
-        The overall app visual hierarchy is defined here, along with navigation.
-        
-        https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/
-    -->
-
     <Shell.Resources>
         <ResourceDictionary>
             <Style x:Key="BaseStyle" TargetType="Element">
@@ -40,6 +34,10 @@
             ContentTemplate="{DataTemplate local:EquipmentPage}"
             Icon="equipment_icon.png" />
         <ShellContent
+            Title="Main"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Icon="home.png" />
+        <ShellContent
             Title="Maps"
             ContentTemplate="{DataTemplate local:MapsPage}"
             Icon="house.png" />
@@ -47,9 +45,6 @@
             Title="CursedItems"
             ContentTemplate="{DataTemplate local:CursedsPage}"
             Icon="cardtarot.png" />
-    </TabBar>
-    <TabBar>
-        <ShellContent ContentTemplate="{DataTemplate local:LoginPage}" Route="LoginPage" />
     </TabBar>
 
 

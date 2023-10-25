@@ -9,6 +9,5 @@ namespace PhasmophobiaCompanion.Models
     public class ExpandFieldWithImages: UnfoldingItem
     {
         public ObservableCollection<ImagewithDescription> ImageWithDescriptions { get; set; }
-
     }
 }
