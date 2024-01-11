@@ -56,13 +56,13 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             allClues = new ObservableCollection<CluesStructure>
             {
-                new CluesStructure { Name="Ghost Writing", Source="Book_icon.png"},
-                new CluesStructure { Name = "Spirit Box", Source = "Radio_icon.png" },
-                new CluesStructure { Name = "Freezing Temperatures", Source = "Minus_icon.png" },
-                new CluesStructure { Name = "Ghost Orb", Source = "Ghost_orb.png" },
-                new CluesStructure { Name = "Ultraviolet", Source = "Ultraviolet.png" },
-                new CluesStructure { Name = "EMF Level 5", Source = "EMF.png" },
-                new CluesStructure { Name = "D.O.T.S Projector", Source = "DOTS.png" }
+                new CluesStructure { Title="Ghost Writing", ImageUrl="Book_icon.png"},
+                new CluesStructure { Title = "Spirit Box", ImageUrl = "Radio_icon.png" },
+                new CluesStructure { Title = "Freezing Temperatures", ImageUrl = "Minus_icon.png" },
+                new CluesStructure { Title = "Ghost Orb", ImageUrl = "Ghost_orb.png" },
+                new CluesStructure { Title = "Ultraviolet", ImageUrl = "Ultraviolet.png" },
+                new CluesStructure { Title = "EMF Level 5", ImageUrl = "EMF.png" },
+                new CluesStructure { Title = "D.O.T.S Projector", ImageUrl = "DOTS.png" }
             };
             AllClues = new ObservableCollection<CluesStructure>(allClues);
             ghosts = new ObservableCollection<Ghost>()
@@ -126,7 +126,7 @@ namespace PhasmophobiaCompanion.ViewModels
         public void Filter()
         {
             var filtered = ghosts.Where(ghost => (!SelectedClues.Any() ||
-            SelectedClues.All(selectedClue => ghost.Clues.Any(clue => clue.Name == selectedClue.Name)))).ToList();
+            SelectedClues.All(selectedClue => ghost.Clues.Any(clue => clue.Title == selectedClue.Title)))).ToList();
             Ghosts = new ObservableCollection<Ghost>(filtered);
         }
 

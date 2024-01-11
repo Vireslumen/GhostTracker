@@ -15,6 +15,5 @@ namespace PhasmophobiaCompanion.Models
         public string HidenSpotCount { get; set; }
         public ObservableCollection<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }
         public ObservableCollection<UnfoldingItem> UnfoldingItems { get; set; }
-
     }
 }
