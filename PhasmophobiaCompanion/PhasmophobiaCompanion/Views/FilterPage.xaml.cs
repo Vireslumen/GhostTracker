@@ -32,7 +32,7 @@ namespace PhasmophobiaCompanion.Views
                 {
 
                     viewModel.SelectedClues.Clear();
-                    foreach (CluesStructure item in e.CurrentSelection)
+                    foreach (Clue item in e.CurrentSelection)
                     {
                         viewModel.SelectedClues.Add(item);
                     }

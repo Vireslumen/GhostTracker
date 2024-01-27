@@ -5,15 +5,28 @@ using System.Text;
 
 namespace PhasmophobiaCompanion.Models
 {
-    public class Equipment : ListItemBase
+    public class Equipment : BaseDisplayableItem
     {
-        public int Level { get; set; }
-        public string Tier { get; set; }
+        // Цена снаряжения.
         public int Cost { get; set; }
-        public int UnlockCost { get; set; }
+
+        // Максимальное количество снаряжения на одну сессию.
         public int MaxLimit { get; set; }
-        public string Uses { get; set; }
-        public ObservableCollection<string> OtherStats { get; set; }
+
+        // Прочие характеристики снаряжения.
+        public ObservableCollection<OtherEquipmentStat> OtherEquipmentStats { get; set; }
+
+        // Тир снаряжения.
+        public string Tier { get; set; }
         public ObservableCollection<UnfoldingItem> UnfoldingItems { get; set; }
+
+        // Цена для разблокировки снаряжения.
+        public int UnlockCost { get; set; }
+
+        // Уровень для разблокировки снаряжения.
+        public int UnlockLevel { get; set; }
+
+        // Ограничение использования снаряжения.
+        public string Uses { get; set; }
     }
 }

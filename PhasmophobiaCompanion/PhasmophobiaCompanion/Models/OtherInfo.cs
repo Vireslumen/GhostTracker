@@ -5,7 +5,10 @@ using System.Text;
 
 namespace PhasmophobiaCompanion.Models
 {
-    public class OtherInfo : ListItemBase
+    /// <summary>
+    /// Представляет собой данные для некатегоризируемой страницы.
+    /// </summary>
+    public class OtherInfo : BaseDisplayableItem
     {
         public ObservableCollection<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }
         public ObservableCollection<UnfoldingItem> UnfoldingItems { get; set; }

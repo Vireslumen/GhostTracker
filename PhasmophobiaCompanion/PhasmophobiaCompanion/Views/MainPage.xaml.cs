@@ -1,4 +1,5 @@
 ﻿using PhasmophobiaCompanion.Models;
+using PhasmophobiaCompanion.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace PhasmophobiaCompanion.Views
         public MainPage()
         {
             InitializeComponent();
+            MainPageViewModel viewModel = new MainPageViewModel();
+            BindingContext = viewModel;
         }
         private  void OnOtherPageTapped(object sender, EventArgs e)
         {
@@ -31,7 +34,7 @@ namespace PhasmophobiaCompanion.Views
             var label = sender as Label;
             if (label != null)
             {
-                var patch = label.BindingContext as Patches;
+                var patch = label.BindingContext as Patch;
                 if (patch != null && Uri.TryCreate(patch.Source, UriKind.Absolute, out Uri uri))
                 {
                     await Launcher.OpenAsync(uri);

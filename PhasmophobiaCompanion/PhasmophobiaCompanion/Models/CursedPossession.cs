@@ -5,9 +5,11 @@ using System.Text;
 
 namespace PhasmophobiaCompanion.Models
 {
-    public class CursedPossession : ListItemBase
+    /// <summary>
+    /// Представляет собой проклятый предмет, который расположен на карте.
+    /// </summary>
+    public class CursedPossession : BaseDisplayableItem
     {
-
         public ObservableCollection<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }
         public ObservableCollection<UnfoldingItem> UnfoldingItems { get; set; }
     }

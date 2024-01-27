@@ -18,5 +18,12 @@ namespace PhasmophobiaCompanion.Views
             InitializeComponent();
             BindingContext = otherInfo;
         }
+        private void OnItemTapped(object sender, EventArgs e)
+        {
+            if (sender is StackLayout layout && layout.BindingContext is UnfoldingItem unfoldingItem)
+            {
+                unfoldingItem.IsExpanded = !unfoldingItem.IsExpanded;
+            }
+        }
     }
 }

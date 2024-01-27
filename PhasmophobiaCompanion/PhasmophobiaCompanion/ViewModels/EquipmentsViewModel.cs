@@ -91,23 +91,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 "II",
                 "III"
             };
-            equipments = new ObservableCollection<Equipment>()
-            {
-                new Equipment
-                { Cost=50, Description="Firelight is a piece of equipment in Phasmophobia. They are deployable light sources that can be lit using a source of fire such as an igniter or another firelight.", ImageUrl="Candle_T2.png", Level=16,MaxLimit=4,Tier=allTiers[1], Title="Candle", UnlockCost=2000,
-                    OtherStats= new ObservableCollection<string>{
-                        "Radius:3", "Duration:2 min","+ Sanity Drain Reduction: 50%","+ Placeable" }, 
-                    Uses="undefined", 
-                    UnfoldingItems = new ObservableCollection<UnfoldingItem>{ 
-                        new UnfoldingItem {Title="Cbkf",Header="Exapnder header1", Body="Hello can i ask you to go out please, Hello can i ask you to go out please,Hello can i ask you to go out please,Hello can i ask you to go out please,Hello can i ask you to go out please" }, 
-                        new UnfoldingItem {Title="Kjdrjcnm", Header = "Exapnder header2", Body = "Hello can i ask you to go out please" } } },
-                 new Equipment
-                { Cost=50, Description="dada", ImageUrl="Parabolic_T1.png", Level=1,MaxLimit=4,Tier=allTiers[0], Title="Parabolic Microphone", UnlockCost=5000,
-                    OtherStats= new ObservableCollection<string>{"Radius:3", "Duration:2 min" } },
-                  new Equipment
-                { Cost=50, Description="dada", ImageUrl="Med_T1.png", Level=43,MaxLimit=4,Tier=allTiers[2], Title="Medicament", UnlockCost=6000,
-                    OtherStats= new ObservableCollection<string>{"Radius:3", "Duration:2 min", "Duration:2 min" } }
-            };
+            equipments = new ObservableCollection<Equipment>();
             AllTiers = new ObservableCollection<string>(allTiers);
             Equipments = new ObservableCollection<Equipment>(equipments);
             SelectedTiers = new ObservableCollection<string>();
@@ -116,7 +100,7 @@ namespace PhasmophobiaCompanion.ViewModels
         public void Filter()
         {
             var filteredTier = equipments.Where(equipment => (!SelectedTiers.Any() || SelectedTiers.Any(selectedTier => equipment.Tier == selectedTier))).ToList();
-            var filteredLevel = filteredTier.Where(equipment => ((MinUnlockLevel <= equipment.Level && MaxUnlockLevel >= equipment.Level))).ToList();
+            var filteredLevel = filteredTier.Where(equipment => ((MinUnlockLevel <= equipment.UnlockLevel && MaxUnlockLevel >= equipment.UnlockLevel))).ToList();
 
             Equipments = new ObservableCollection<Equipment>(filteredLevel);
         }

@@ -4,9 +4,9 @@ using System.Text;
 
 namespace PhasmophobiaCompanion.Models
 {
-    public class Patches
+    public interface IDatabasePathProvider
     {
-        public string Title { get; set; }
-        public string Source { get; set; }
+        string GetDatabasePath();
+        void CopyDatabaseIfNeeded();
     }
 }

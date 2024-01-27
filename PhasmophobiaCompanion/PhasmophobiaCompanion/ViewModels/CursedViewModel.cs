@@ -27,26 +27,7 @@ namespace PhasmophobiaCompanion.ViewModels
         }
         public CursedViewModel()
         {
-            var fixture = new Fixture();
-            var items = fixture.CreateMany<CursedPossession>(10);
-            curseds = new ObservableCollection<CursedPossession>(items);
-            for (int i = 0; i < curseds.Count; i++)
-            {
-                Random rand = new Random();
-                int x = rand.Next(3);
-                switch (x)
-                {
-                    case 0:
-                        curseds[i].ImageUrl = "asylum.jpg";
-                        break;
-                    case 1:
-                        curseds[i].ImageUrl = "bframhouse.jpg";
-                        break;
-                    case 2:
-                        curseds[i].ImageUrl = "campwood.jpg";
-                        break;
-                }
-            }
+            curseds = new ObservableCollection<CursedPossession>();
             Curseds = new ObservableCollection<CursedPossession>(curseds);
             SearchCommand = new Command<string>(query => Search(query));
         }

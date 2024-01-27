@@ -5,9 +5,13 @@ namespace PhasmophobiaCompanion.Models
 {
     public class UnfoldingItem : INotifyPropertyChanged
     {
-        public string Title { get; set; }
-        public string Header { get; set; }
+        private bool isExpanded;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public string Body { get; set; }
+        public string Header { get; set; }
+
         public string Icon
         {
             get
@@ -16,8 +20,6 @@ namespace PhasmophobiaCompanion.Models
             }
         }
 
-
-        bool isExpanded;
         public bool IsExpanded
         {
             get { return isExpanded; }
@@ -29,8 +31,9 @@ namespace PhasmophobiaCompanion.Models
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public string Title { get; set; }
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

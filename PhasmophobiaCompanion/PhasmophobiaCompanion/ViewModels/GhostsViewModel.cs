@@ -1,5 +1,6 @@
 ﻿using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
+using PhasmophobiaCompanion.Services;
 using PhasmophobiaCompanion.Views;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,14 @@ namespace PhasmophobiaCompanion.ViewModels
 {
     public class GhostsViewModel : BaseViewModel, ISearchable, IFilterable
     {
+
+        private readonly DataService _dataService;
         private ObservableCollection<Ghost> ghosts;
+        private ObservableCollection<Clue> allClues;
+
         private ObservableCollection<Ghost> filteredGhosts;
         private string searchQuery;
-        private ObservableCollection<CluesStructure> allClues;
-        private ObservableCollection<CluesStructure> selectedClues;
+        private ObservableCollection<Clue> selectedClues;
         public ObservableCollection<Ghost> Ghosts
         {
             get { return filteredGhosts; }
@@ -37,13 +41,13 @@ namespace PhasmophobiaCompanion.ViewModels
             }
         }
 
-        public ObservableCollection<CluesStructure> AllClues
+        public ObservableCollection<Clue> AllClues
         {
             get { return allClues; }
             set { SetProperty(ref allClues, value); }
         }
 
-        public ObservableCollection<CluesStructure> SelectedClues
+        public ObservableCollection<Clue> SelectedClues
         {
             get { return selectedClues; }
             set
@@ -54,72 +58,12 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand SearchCommand { get; set; }
         public GhostsViewModel()
         {
-            allClues = new ObservableCollection<CluesStructure>
-            {
-                new CluesStructure { Title="Ghost Writing", ImageUrl="Book_icon.png"},
-                new CluesStructure { Title = "Spirit Box", ImageUrl = "Radio_icon.png" },
-                new CluesStructure { Title = "Freezing Temperatures", ImageUrl = "Minus_icon.png" },
-                new CluesStructure { Title = "Ghost Orb", ImageUrl = "Ghost_orb.png" },
-                new CluesStructure { Title = "Ultraviolet", ImageUrl = "Ultraviolet.png" },
-                new CluesStructure { Title = "EMF Level 5", ImageUrl = "EMF.png" },
-                new CluesStructure { Title = "D.O.T.S Projector", ImageUrl = "DOTS.png" }
-            };
-            AllClues = new ObservableCollection<CluesStructure>(allClues);
-            ghosts = new ObservableCollection<Ghost>()
-            {
-                new Ghost()
-                {
-                    Clues=new ObservableCollection<CluesStructure>
-                    {
-                        AllClues[0],
-                        AllClues[2],
-                        AllClues[1]
-                    },
-                    ImageUrl="Moroi.jpg",
-                    Title="Moroi",
-                    Description="The Moroi is a type of ghost in Phasmophobia. Its ability to \"curse\" players to lower their Sanity, combined with its increased speed at low sanity levels, can cause it to become the fastest ghost in the game.",
-                    UnfoldingItems= new ObservableCollection<UnfoldingItem>{ 
-                        new UnfoldingItem {Title="Сильные стороны",Header="Он быстро бегает!", Body="Если наступить на соль в четверг третьего числа седьмого месяца после выского прыжка, то можно заметить как быстро бегает птица на жаворнячьих кошках, так что быдь не будь беги быстрее" } 
-                    ,new UnfoldingItem {Title="Слабые стороны",Header="Их нет, тоби **", Body="Если наступить на соль в четверг третьего числа седьмого месяца после выского прыжка, то можно заметить как быстро бегает птица на жаворнячьих кошках, так что быдь не будь беги быстрее" }
-                    ,new UnfoldingItem {Title="Xnj nfrjt Ltylb",Header="Dendy eto electornnay igra", Body="Если наступить на соль в четверг третьего числа седьмого месяца после выского прыжка, то можно заметить как быстро бегает птица на жаворнячьих кошках, так что быдь не будь беги быстрее" }},
-                    Identification = "The easiest way to identify a Moroi is by paying attention to the ghost's speed:\r\n\r\nListen for the ghost's speed both over multiple hunts and during a given hunt, as average sanity lowers; a ghost that speeds up over the course of multiple hunts as average sanity lowers, or gradually speeds up during wandering when all players are hiding, could be a Moroi. Remember to take into account line-of-sight acceleration, if applicable. Note that the Hantu will increase in speed if the fuse box is left off as the temperature in the map decreases, but it does not speed up through line-of-sight; either keep the fuse box turned on to avoid misidentification, or make sure that the ghost does not have the Hantu's signature freezing breath during a chase with the power off.\r\nAs an alternate strategy, sanity medication can be utilized during a hunt. As the Moroi's roaming speed changes in real time as average sanity changes, a significant increase of it while it's hunting will cause the Moroi to slow down, potentially identifying it in the span of a single hunt, while also potentially bolstering sanity enough to get the team above hunt range afterwards. All players should be hidden (or, most optimally, having been hidden from the start) to avoid the speed loss being confused for a ghost's deceleration from line-of-sight or the Revenant's losing track of players, and to wait a few seconds in order to get a read on its roaming speed before using the medication to note if the Moroi begins to slow down afterwards. Additionally, a marked degree of coordination in multiplayer is required, as multiple uses will be needed to raise average sanity enough to cause the Moroi to lose a definitive amount of speed. This strategy is much more reliable when using Tier III sanity medication in order to have sanity increase more quickly, which will both exacerbate this effect and reduce the odds that the hunt ends before sanity restoration kicks in sufficently.\r\nWhen the sanity monitor is available, one can also identify a Moroi based on its ability: if your sanity has drained much more than normal after a Spirit Box response or a whisper on the parabolic microphone, especially if you've been in fully lit rooms and/or holding a Firelight for extended periods of time, then it is likely a Moroi. Take into account sanity drain from ghost events, if any, as well as if you have used any Cursed possessions throughout the mission."
-                },
-                new Ghost()
-                {
-                    Clues=new ObservableCollection<CluesStructure>
-                    {
-                        AllClues[0],
-                        AllClues[3],
-                        AllClues[1]
-                    },
-                    ImageUrl="Mara.jpg",
-                    Title="Mare"
-                },
-                new Ghost()
-                {
-                    Clues=new ObservableCollection<CluesStructure>
-                    {
-                        AllClues[6],
-                        AllClues[3],
-                        AllClues[4]
-                    },
-                    ImageUrl="Banshi.jpg",
-                    Title="Banshee"
-                },
-                new Ghost()
-                {
-                    Clues=new ObservableCollection<CluesStructure>
-                    {
-                        AllClues[0],
-                        AllClues[4],
-                        AllClues[1]
-                    },
-                    ImageUrl="Polter.jpg",
-                    Title="Poltergeist"
-                },
-            };
+            _dataService = DependencyService.Get<DataService>();
+            ghosts = _dataService.GetGhosts();
+            allClues = _dataService.GetClues();
+            SelectedClues = new ObservableCollection<Clue>();
             Ghosts = new ObservableCollection<Ghost>(ghosts);
-            SelectedClues = new ObservableCollection<CluesStructure>();
+            AllClues = new ObservableCollection<Clue>(allClues);
             SearchCommand = new Command<string>(query => Search(query));
         }
 
