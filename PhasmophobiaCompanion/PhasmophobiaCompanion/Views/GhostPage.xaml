@@ -91,7 +91,7 @@
                                                 <TapGestureRecognizer Tapped="OnGhostTapped" />
                                             </yummy:PancakeView.GestureRecognizers>
                                             <StackLayout>
-                                                <Image HeightRequest="150" Source="{Binding ImageUrl}" />
+                                                <Image HeightRequest="150" Source="{Binding ImageFilePath}" />
                                                 <Label
                                                     FontSize="20"
                                                     HorizontalOptions="CenterAndExpand"
@@ -126,7 +126,7 @@
                                                                     <Image
                                                                         Aspect="AspectFit"
                                                                         HorizontalOptions="Center"
-                                                                        Source="{Binding Source}" />
+                                                                        Source="{Binding IconFilePath}" />
                                                                 </yummy:PancakeView>
                                                             </StackLayout>
                                                         </DataTemplate>

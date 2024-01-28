@@ -107,16 +107,16 @@
     <AndroidResource Include="Resources\drawable\filter_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Radio_icon.png" />
+    <AndroidResource Include="Resources\drawable\spiritbox_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ghost_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Minus_icon.png" />
+    <AndroidResource Include="Resources\drawable\freezing_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Book_icon.png" />
+    <AndroidResource Include="Resources\drawable\ghostwriting_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Mara.jpg" />
@@ -134,16 +134,16 @@
     <AndroidResource Include="Resources\drawable\search.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\DOTS.png" />
+    <AndroidResource Include="Resources\drawable\dots_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\EMF.png" />
+    <AndroidResource Include="Resources\drawable\emf5_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Ultraviolet.png" />
+    <AndroidResource Include="Resources\drawable\ultraviolet_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Ghost_orb.png" />
+    <AndroidResource Include="Resources\drawable\ghostorb_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\collapse_icon.png" />

@@ -21,20 +21,19 @@ namespace PhasmophobiaCompanion
             // Устанановка загрузочной страницы, как начальной
             MainPage = new LoadingScreenPage();
 
-            // Инициализация и загрузка начальных данных 
-            InitializeAppShellAsync();
+            
         }
         private async Task InitializeAppShellAsync()
         {
             try
             {
-
                 // Получение экземпляра DataService
                 var dataService = DependencyService.Get<DataService>();
 
                 // Загрузка данных
-                await dataService.LoadInitialDataAsync();
-
+                await Task.Run(async () => { dataService.LoadInitialDataAsync(); });
+                
+                //await Task.Delay(50000);
                 // После загрузки данных, загрузка начальной страницы
                 MainPage = new AppShell();
             }
@@ -45,8 +44,10 @@ namespace PhasmophobiaCompanion
             }
         }
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
+            // Инициализация и загрузка начальных данных 
+            await InitializeAppShellAsync();
         }
 
         protected override void OnSleep()

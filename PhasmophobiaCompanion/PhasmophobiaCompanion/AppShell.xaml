@@ -26,25 +26,31 @@
 
     <TabBar>
         <ShellContent
-            Title="Ghost"
+            Title="Ghosts"
             ContentTemplate="{DataTemplate local:GhostPage}"
-            Icon="ghost_icon.png" />
+            Icon="ghost_icon.png"
+            Route="ghostsTab" />
         <ShellContent
-            Title="Equipment"
+            Title="Equipments"
             ContentTemplate="{DataTemplate local:EquipmentPage}"
-            Icon="equipment_icon.png" />
+            Icon="equipment_icon.png"
+            Route="equipmentsTab" />
         <ShellContent
+            x:Name="mainTab"
             Title="Main"
             ContentTemplate="{DataTemplate local:MainPage}"
-            Icon="home.png" />
+            Icon="home.png"
+            Route="mainTab" />
         <ShellContent
             Title="Maps"
             ContentTemplate="{DataTemplate local:MapsPage}"
-            Icon="house.png" />
+            Icon="house.png"
+            Route="mapsTab" />
         <ShellContent
             Title="CursedItems"
             ContentTemplate="{DataTemplate local:CursedsPage}"
-            Icon="cardtarot.png" />
+            Icon="cardtarot.png"
+            Route="cursedsTab" />
     </TabBar>
 
 

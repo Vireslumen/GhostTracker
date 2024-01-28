@@ -20,8 +20,8 @@ namespace PhasmophobiaCompanion.Services
         }
         public event Action GhostsDataLoaded;
         public event Action MapsDataLoaded;
-        public event Action EquipmentDataLoaded;
-        public event Action CursedDataLoaded;
+        public event Action EquipmentsDataLoaded;
+        public event Action CursedsDataLoaded;
 
         //Ghost data
         // Уже загружается на главной странице
@@ -56,6 +56,7 @@ namespace PhasmophobiaCompanion.Services
         public async Task LoadInitialDataAsync()
         {
             await LoadGhostsDataAsync();
+            // TODO: добавить загрузки для остальных частей главной страницы
         }
 
         public bool IsGhostsDataLoaded { get; private set; }
@@ -67,21 +68,25 @@ namespace PhasmophobiaCompanion.Services
         {
             Ghosts= new ObservableCollection<Ghost>(await DatabaseLoader.GetGhostsAsync(LanguageCode,Clues));
             IsGhostsDataLoaded = true;
+            GhostsDataLoaded?.Invoke();
         }
         public async Task LoadMapsDataAsync()
         {
             // Загрузка данных
             IsMapsDataLoaded = true;
+            MapsDataLoaded?.Invoke();
         }
         public async Task LoadEquipmentsDataAsync()
         {
             // Загрузка данных
             IsEquipmentsDataLoaded = true;
+            EquipmentsDataLoaded?.Invoke();
         }
         public async Task LoadCursedsDataAsync()
         {
             // Загрузка данных
             IsCursedsDataLoaded = true;
+            CursedsDataLoaded?.Invoke();
         }
 
         public ObservableCollection<Ghost> GetGhosts()
