@@ -8,7 +8,7 @@ namespace PhasmophobiaCompanion.ViewModels
 {
     public class MainPageViewModel
     {
-        public SpecialMode specialMode { get; set; }
+        public ChallengeMode ChallengeMode { get; set; }
         public ObservableCollection<string> Tips { get; set; }
         public ObservableCollection<Ghost> Ghosts { get; set; }
         public ObservableCollection<Clue> Clues { get; set; }
@@ -17,7 +17,9 @@ namespace PhasmophobiaCompanion.ViewModels
         public ObservableCollection<string> DailyQuest { get; set; }
         public ObservableCollection<string> WeeklyQuest { get; set; }
         public ObservableCollection<OtherInfo> OtherInfos { get; set; }
+        public MainPageViewModel()
+        {
 
-
+        }
     }
 }

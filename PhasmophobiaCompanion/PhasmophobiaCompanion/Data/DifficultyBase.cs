@@ -21,6 +21,7 @@ namespace PhasmophobiaCompanion.Data
 
         public float RewardMultiplier { get; set; }
         public float SanityConsumption { get; set; }
+        public int SanityRestoration { get; set; }
         public bool SanityMonitorWork { get; set; }
         public int SetupTime { get; set; }
         public ICollection<DifficultyTranslations> Translations { get; set; }

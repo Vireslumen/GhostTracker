@@ -28,6 +28,17 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        /// Ассинхронно возвращает список подсказок - Tips на основе кода языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов</param>
+        /// <returns>Список подсказок.</returns>
+        public async Task<List<string>> GetTipsAsync(string languageCode)
+        {
+            var tipsData = await _phasmaDbContext.TipsTranslations.Where(t => t.LanguageCode == languageCode).ToListAsync();
+            return tipsData.Select(t => t.Tip).ToList();
+        }
+
+        /// <summary>
         /// Асинхронно возвращает список проклятых предметов - CursedPossession на основе кода языка.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>
@@ -79,11 +90,11 @@ namespace PhasmophobiaCompanion.Services
                       SanityMonitorWork = d.SanityMonitorWork,
                       ActivityMonitorWork = d.ActivityMonitorWork,
                       EvidenceAvailable = d.EvidenceAvailable,
+                      SanityRestoration = d.SanityRestoration,
                       Title = d.Translations.FirstOrDefault()?.Title,
                       Description = d.Translations.FirstOrDefault()?.Description,
                       GhostActivity = d.Translations.FirstOrDefault()?.GhostActivity,
                       GhostHuntTime = d.Translations.FirstOrDefault()?.GhostHuntTime,
-                      SanityRestoration = d.Translations.FirstOrDefault()?.SanityRestoration,
                       DoorOpenedCount = d.Translations.FirstOrDefault()?.DoorOpenedCount,
                       DeadCashBack = d.Translations.FirstOrDefault()?.DeadCashBack,
                       ObjectiveBoardPendingAloneAll = d.Translations.FirstOrDefault()?.ObjectiveBoardPendingAloneAll,

@@ -1,6 +1,7 @@
 ﻿using AutoFixture;
 using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
+using PhasmophobiaCompanion.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +15,7 @@ namespace PhasmophobiaCompanion.ViewModels
 {
     class CursedViewModel : BaseViewModel, ISearchable
     {
+        private readonly DataService _dataService;
         private ObservableCollection<CursedPossession> curseds;
         private ObservableCollection<CursedPossession> filteredCurseds;
         private string searchQuery;
@@ -27,7 +29,8 @@ namespace PhasmophobiaCompanion.ViewModels
         }
         public CursedViewModel()
         {
-            curseds = new ObservableCollection<CursedPossession>();
+            _dataService = DependencyService.Get<DataService>();
+            curseds = _dataService.GetCurseds();
             Curseds = new ObservableCollection<CursedPossession>(curseds);
             SearchCommand = new Command<string>(query => Search(query));
         }

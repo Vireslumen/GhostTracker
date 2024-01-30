@@ -16,6 +16,7 @@ namespace PhasmophobiaCompanion.Data
     {
         //Определения DbSet для различных сущностей.
         public DbSet<ClueBase> ClueBase { get; set; }
+        public DbSet<TipsTranslations> TipsTranslations { get; set; }
         public DbSet<CursedPossessionBase> CursedPossessionBase { get; set; }
         public DbSet<DifficultyBase> DifficultyBase { get; set; }
         public DbSet<EquipmentBase> EquipmentBase { get; set; }

@@ -1,5 +1,6 @@
 ﻿using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
+using PhasmophobiaCompanion.Services;
 using PhasmophobiaCompanion.Views;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace PhasmophobiaCompanion.ViewModels
 {
     public class EquipmentsViewModel : BaseViewModel, ISearchable, IFilterable
     {
+        private readonly DataService _dataService;
         private string searchQuery;
         private ObservableCollection<Equipment> equipments;
         private ObservableCollection<Equipment> filteredEquipments;
@@ -85,13 +87,14 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand SearchCommand { get; set; }
         public EquipmentsViewModel()
         {
+            _dataService = DependencyService.Get<DataService>();
             allTiers = new ObservableCollection<string>
             {
                 "I",
                 "II",
                 "III"
             };
-            equipments = new ObservableCollection<Equipment>();
+            equipments = _dataService.GetEquipments();
             AllTiers = new ObservableCollection<string>(allTiers);
             Equipments = new ObservableCollection<Equipment>(equipments);
             SelectedTiers = new ObservableCollection<string>();

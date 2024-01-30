@@ -44,7 +44,7 @@
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <StackLayout>
-                        <Image HeightRequest="150" Source="{Binding ImageUrl}" />
+                        <Image HeightRequest="150" Source="{Binding ImageFilePath}" />
                         <Label
                             FontAttributes="Bold"
                             FontSize="20"
@@ -80,7 +80,7 @@
                                             <Image
                                                 Aspect="AspectFit"
                                                 HorizontalOptions="Center"
-                                                Source="{Binding Source}" />
+                                                Source="{Binding IconFilePath}" />
                                         </yummy:PancakeView>
                                     </StackLayout>
                                 </DataTemplate>

@@ -35,7 +35,6 @@ namespace PhasmophobiaCompanion.Data
 
         public string LanguageCode { get; set; }
         public string ObjectiveBoardPendingAloneAll { get; set; }
-        public string SanityRestoration { get; set; }
         public string SanityStartAt { get; set; }
         public string Title { get; set; }
     }

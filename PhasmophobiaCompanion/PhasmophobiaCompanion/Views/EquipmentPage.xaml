@@ -119,7 +119,7 @@
                                                                 FontAttributes="Bold"
                                                                 FontSize="13"
                                                                 HorizontalOptions="Center"
-                                                                Text="{Binding Level}"
+                                                                Text="{Binding UnlockLevel}"
                                                                 TextColor="Black"
                                                                 VerticalOptions="Center" />
                                                         </StackLayout>

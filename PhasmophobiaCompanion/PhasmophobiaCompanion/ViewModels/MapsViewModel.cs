@@ -1,6 +1,7 @@
 ﻿using AutoFixture;
 using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
+using PhasmophobiaCompanion.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +14,7 @@ namespace PhasmophobiaCompanion.ViewModels
 {
     public class MapsViewModel : BaseViewModel, ISearchable, IFilterable
     {
+        private readonly DataService _dataService;
         public string SearchQuery
         {
             get { return searchQuery; }
@@ -51,7 +53,8 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public MapsViewModel()
         {
-            maps = new ObservableCollection<Map>();
+            _dataService = DependencyService.Get<DataService>();
+            maps = _dataService.GetMaps();
             Maps = new ObservableCollection<Map>(maps);
             allSizes = new ObservableCollection<string>
             {

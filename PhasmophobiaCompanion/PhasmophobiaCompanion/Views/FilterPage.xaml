@@ -49,12 +49,12 @@
                                 <StackLayout Orientation="Horizontal">
                                     <Image
                                         HeightRequest="30"
-                                        Source="{Binding Source}"
+                                        Source="{Binding IconFilePath}"
                                         WidthRequest="30" />
                                     <Label
                                         Margin="10,0,0,0"
                                         FontSize="16"
-                                        Text="{Binding Name}"
+                                        Text="{Binding Title}"
                                         VerticalOptions="CenterAndExpand" />
                                 </StackLayout>
                             </yummy:PancakeView>

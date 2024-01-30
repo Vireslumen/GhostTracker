@@ -58,7 +58,7 @@ namespace PhasmophobiaCompanion.Models
         public bool SanityMonitorWork { get; set; }
 
         // Насколько сильно восстанавливают рассудок лекарства.
-        public string SanityRestoration { get; set; }
+        public int SanityRestoration { get; set; }
 
         // Начальное значение рассудка.
         public string SanityStartAt { get; set; }

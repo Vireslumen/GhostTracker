@@ -23,23 +23,38 @@ namespace PhasmophobiaCompanion.Droid
             string dbPath = Path.Combine(folderPath, "phasmaDATADB.db");
 
             // Копирование базы данных, если она еще не существует
-            CopyDatabaseIfNotExists(dbPath);
+            CopyOrUpdateDatabase(dbPath);
             LoadApplication(new App());
         }
-        private void CopyDatabaseIfNotExists(string dbPath)
+        //private void CopyDatabaseIfNotExists(string dbPath)
+        //{
+        //    if (!File.Exists(dbPath))
+        //    {
+        //        using (var br = new BinaryReader(Android.App.Application.Context.Assets.Open("phasmaDATADB.db")))
+        //        {
+        //            using (var bw = new BinaryWriter(new FileStream(dbPath, FileMode.Create)))
+        //            {
+        //                byte[] buffer = new byte[2048];
+        //                int length = 0;
+        //                while ((length = br.Read(buffer, 0, buffer.Length)) > 0)
+        //                {
+        //                    bw.Write(buffer, 0, length);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+        private void CopyOrUpdateDatabase(string dbPath)
         {
-            if (!File.Exists(dbPath))
+            using (var br = new BinaryReader(Android.App.Application.Context.Assets.Open("phasmaDATADB.db")))
             {
-                using (var br = new BinaryReader(Android.App.Application.Context.Assets.Open("phasmaDATADB.db")))
+                using (var bw = new BinaryWriter(new FileStream(dbPath, FileMode.Create)))
                 {
-                    using (var bw = new BinaryWriter(new FileStream(dbPath, FileMode.Create)))
+                    byte[] buffer = new byte[2048];
+                    int length = 0;
+                    while ((length = br.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        byte[] buffer = new byte[2048];
-                        int length = 0;
-                        while ((length = br.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            bw.Write(buffer, 0, length);
-                        }
+                        bw.Write(buffer, 0, length);
                     }
                 }
             }

@@ -107,7 +107,7 @@
     <AndroidResource Include="Resources\drawable\filter_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\spiritbox_icon.png" />
+    <AndroidResource Include="Resources\drawable\spirit_box_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ghost_icon.png" />
@@ -116,7 +116,7 @@
     <AndroidResource Include="Resources\drawable\freezing_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ghostwriting_icon.png" />
+    <AndroidResource Include="Resources\drawable\ghost_writing_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Mara.jpg" />
@@ -143,7 +143,7 @@
     <AndroidResource Include="Resources\drawable\ultraviolet_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ghostorb_icon.png" />
+    <AndroidResource Include="Resources\drawable\ghost_orb_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\collapse_icon.png" />
