@@ -140,6 +140,33 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        /// Асинхронно возвращает список особых режимов - ChallengeMode на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <param name="equipments">Список всего снаряжения - Equipment.</param>
+        /// <param name="maps">Список всех карт - Map.</param>
+        /// <param name="difficulties">Список всех сложностей - Difficulty.</param>
+        /// <returns>Список особых режимов.</returns>
+        public async Task<List<ChallengeMode>> GetChallengeModesAsync(string languageCode, ObservableCollection<Equipment> equipments, ObservableCollection<Map> maps, ObservableCollection<Difficulty> difficulties)
+        {
+            var challangeModeData = await _phasmaDbContext.ChallengeModeBase
+                            .Include(c => c.Translations.Where(t => t.LanguageCode == languageCode))
+                            .Include(c => c.EquipmentBase)
+                            .ToListAsync();
+            // Супер-ультра костыль
+            return challangeModeData
+                    .Select(c => new ChallengeMode
+                    {
+                        Title = c.Translations.FirstOrDefault()?.Title,
+                        Description = c.Translations.FirstOrDefault()?.Description,
+                        Equipments = equipments.Where(e => c.EquipmentBase.Any(eq => eq.ImageFilePath == e.ImageFilePath)).ToList(),
+                        ChallengeModeMap = maps[c.MapID - 1],
+                        ChallengeModeDifficulty = difficulties[c.DifficultyID - 1]
+                    }
+                    ).ToList();
+        }
+
+        /// <summary>
         /// Асинхронно возвращает список призраков - Ghost на основе кода языка, а также всех улик.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>

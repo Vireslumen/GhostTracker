@@ -42,7 +42,7 @@ namespace PhasmophobiaCompanion.Services
         private ObservableCollection<CursedPossession> Curseds;
 
         //Main Page data
-        private ChallengeMode specialMode;
+        private ObservableCollection<ChallengeMode> ChallengeModes;
         private ObservableCollection<Quest> Quests;
         private ObservableCollection<string> Tips;
         private ObservableCollection<Difficulty> Difficulties;
@@ -99,13 +99,13 @@ namespace PhasmophobiaCompanion.Services
             await LoadPatchesAsync();
             await LoadQuestsAsync();
             await LoadOtherInfoAsync();
+            await LoadMapsDataAsync();
+            await LoadEquipmentsDataAsync();
+            await LoadChallengeModeAsync();
         }
         public async Task LoadOtherDataAsync()
         {
-            await LoadMapsDataAsync();
-            await LoadEquipmentsDataAsync();
             await LoadCursedsDataAsync();
-
         }
         public bool IsGhostsDataLoaded { get; private set; }
         public bool IsMapsDataLoaded { get; private set; }
@@ -136,6 +136,18 @@ namespace PhasmophobiaCompanion.Services
         public async Task LoadOtherInfoAsync()
         {
             OtherInfos = new ObservableCollection<OtherInfo>(await DatabaseLoader.GetOtherInfosAsync(LanguageCode));
+        }
+        public async Task LoadChallengeModeAsync()
+        {
+            try
+            {
+
+                ChallengeModes = new ObservableCollection<ChallengeMode>(await DatabaseLoader.GetChallengeModesAsync(LanguageCode, Equipments, Maps, Difficulties));
+            }
+            catch (Exception ex)
+            {
+                Console.ReadLine();
+            }
         }
         public async Task LoadMapsDataAsync()
         {

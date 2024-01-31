@@ -21,6 +21,7 @@ namespace PhasmophobiaCompanion.Data
         public ObservableCollection<OtherEquipmentStatBase> OtherEquipmentStatBase { get; set; }
         public ICollection<EquipmentTranslations> Translations { get; set; }
         public ObservableCollection<UnfoldingItemBase> UnfoldingItemBase { get; set; }
+        public ICollection<ChallengeModeBase> ChallengeModeBase { get; set; }
         public int UnlockCost { get; set; }
         public int UnlockLevel { get; set; }
     }

@@ -15,6 +15,7 @@ namespace PhasmophobiaCompanion.Data
     public class PhasmaDB : DbContext
     {
         //Определения DbSet для различных сущностей.
+        public DbSet<ChallengeModeBase> ChallengeModeBase { get; set; }
         public DbSet<ClueBase> ClueBase { get; set; }
         public DbSet<TipsTranslations> TipsTranslations { get; set; }
         public DbSet<CursedPossessionBase> CursedPossessionBase { get; set; }
@@ -59,6 +60,15 @@ namespace PhasmophobiaCompanion.Data
             ConfigureEquipmentEntity(modelBuilder);
             ConfigureMapEntity(modelBuilder);
             ConfigureOtherInfoEntity(modelBuilder);
+            ConfigureChallengeModeEntity(modelBuilder);
+        }
+        
+        private void ConfigureChallengeModeEntity(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ChallengeModeBase>()
+                .HasMany(c => c.EquipmentBase)
+                .WithMany(c => c.ChallengeModeBase)
+                .UsingEntity(j => j.ToTable("ChallengeModeToEquipmentLink"));
         }
 
         private void ConfigureClueEntity(ModelBuilder modelBuilder)
