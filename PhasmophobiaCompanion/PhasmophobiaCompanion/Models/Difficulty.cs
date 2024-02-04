@@ -9,6 +9,7 @@ namespace PhasmophobiaCompanion.Models
     /// </summary>
     public class Difficulty
     {
+        public int ID { get; set; }
         // Работает ли монитор активности призрака.
         public bool ActivityMonitorWork { get; set; }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 
 namespace PhasmophobiaCompanion.Models
@@ -10,7 +11,12 @@ namespace PhasmophobiaCompanion.Models
     /// </summary>
     public class Ghost : BaseDisplayableItem
     {
-        public ObservableCollection<Clue> Clues { get; set; }
+        public Ghost()
+        {
+            Clues = new ObservableCollection<Clue>();
+        }
+        public int ID { get; set; }
+        public List<int> CluesID { get; set; }
 
         // Как лучше определить этот тип призрака.
         public string Identification { get; set; }
@@ -45,5 +51,18 @@ namespace PhasmophobiaCompanion.Models
         // Условие минимального значение рассудка, до которого охота не может начаться.
         public string MinSanityHuntClause { get; set; }
         public ObservableCollection<UnfoldingItem> UnfoldingItems { get; set; }
+        public ObservableCollection<Clue> Clues { get; set; }
+
+        public void PopulateAssociatedClues(ObservableCollection<Clue> allClues)
+        {
+            foreach (var clueId in CluesID)
+            {
+                var clue = allClues.FirstOrDefault(c => c.ID == clueId);
+                if (clue != null)
+                {
+                    Clues.Add(clue);
+                }
+            }
+        }
     }
 }

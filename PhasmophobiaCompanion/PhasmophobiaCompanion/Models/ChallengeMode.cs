@@ -10,15 +10,19 @@ namespace PhasmophobiaCompanion.Models
     /// </summary>
     public class ChallengeMode
     {
-        // Карта особого режима игры.
-        public Map ChallengeModeMap { get; set; }
+        public int ID { get; set; }
+
+        // ID карты особого режима игры.
+        public int MapID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
 
         // Снаряжение особого режима.
-        public List<Equipment> Equipments { get; set; }
+        public List<int> EquipmentsID { get; set; }
 
         // Настройки сложности для особого режима.
-        public Difficulty ChallengeModeDifficulty { get; set; }
+        public int DifficultyID { get; set; }
+
+        public Map ChallengeMap { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace PhasmophobiaCompanion.Models
     /// </summary>
     public class OtherInfo : BaseDisplayableItem
     {
+        public int ID { get; set; }
         public ObservableCollection<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }
         public ObservableCollection<UnfoldingItem> UnfoldingItems { get; set; }
     }

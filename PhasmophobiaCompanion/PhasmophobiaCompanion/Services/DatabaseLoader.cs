@@ -55,12 +55,13 @@ namespace PhasmophobiaCompanion.Services
                                 .ThenInclude(i => i.Translations.Where(t => t.LanguageCode == languageCode))
                         .Include(c => c.UnfoldingItemBase)
                             .ThenInclude(u => u.Translations.Where(t => t.LanguageCode == languageCode))
-                        .ToListAsync();
+                        .ToListAsync().ConfigureAwait(false);
 
             // Преобразование данных в список объектов CursedPossession.
             return cursedPossessionData
                   .Select(c => new CursedPossession
                   {
+                      ID = c.ID,
                       ImageFilePath = c.ImageFilePath,
                       Title = c.Translations.FirstOrDefault()?.Title,
                       Description = c.Translations.FirstOrDefault()?.Description,
@@ -82,6 +83,7 @@ namespace PhasmophobiaCompanion.Services
             return difficultyData
                   .Select(d => new Difficulty
                   {
+                      ID = d.ID,
                       UnlockLevel = d.UnlockLevel,
                       RewardMultiplier = d.RewardMultiplier,
                       SetupTime = d.SetupTime,
@@ -119,11 +121,12 @@ namespace PhasmophobiaCompanion.Services
                         .Include(e => e.OtherEquipmentStatBase)
                         .Include(e => e.UnfoldingItemBase)
                             .ThenInclude(u => u.Translations.Where(t => t.LanguageCode == languageCode))
-                        .ToListAsync();
+                        .ToListAsync().ConfigureAwait(false);
 
             return equipmentData
                   .Select(e => new Equipment
                   {
+                      ID = e.ID,
                       UnlockLevel = e.UnlockLevel,
                       Cost = e.Cost,
                       UnlockCost = e.UnlockCost,
@@ -147,7 +150,7 @@ namespace PhasmophobiaCompanion.Services
         /// <param name="maps">Список всех карт - Map.</param>
         /// <param name="difficulties">Список всех сложностей - Difficulty.</param>
         /// <returns>Список особых режимов.</returns>
-        public async Task<List<ChallengeMode>> GetChallengeModesAsync(string languageCode, ObservableCollection<Equipment> equipments, ObservableCollection<Map> maps, ObservableCollection<Difficulty> difficulties)
+        public async Task<List<ChallengeMode>> GetChallengeModesAsync(string languageCode)
         {
             var challangeModeData = await _phasmaDbContext.ChallengeModeBase
                             .Include(c => c.Translations.Where(t => t.LanguageCode == languageCode))
@@ -157,13 +160,43 @@ namespace PhasmophobiaCompanion.Services
             return challangeModeData
                     .Select(c => new ChallengeMode
                     {
+                        ID = c.ID,
                         Title = c.Translations.FirstOrDefault()?.Title,
                         Description = c.Translations.FirstOrDefault()?.Description,
-                        Equipments = equipments.Where(e => c.EquipmentBase.Any(eq => eq.ImageFilePath == e.ImageFilePath)).ToList(),
-                        ChallengeModeMap = maps[c.MapID - 1],
-                        ChallengeModeDifficulty = difficulties[c.DifficultyID - 1]
+                        EquipmentsID = c.EquipmentBase.Select(e => e.ID).ToList(),
+                        MapID = c.MapID,
+                        DifficultyID = c.DifficultyID
                     }
                     ).ToList();
+        }
+
+
+        public async Task<List<Clue>> GetCluesAsync(string languageCode)
+        {
+            var cluesData = await _phasmaDbContext.ClueBase
+                        .Include(c => c.Translations.Where(t => t.LanguageCode == languageCode))
+                        .Include(c => c.GhostBase)
+                        .Include(c => c.UnfoldingItemBase)
+                                .ThenInclude(u => u.Translations.Where(t => t.LanguageCode == languageCode))
+                        .Include(c => c.ExpandFieldWithImagesBase)
+                                .ThenInclude(e => e.Translations.Where(t => t.LanguageCode == languageCode))
+                        .Include(c => c.ExpandFieldWithImagesBase)
+                                .ThenInclude(e => e.ImageWithDescriptionBase)
+                                    .ThenInclude(i => i.Translations.Where(t => t.LanguageCode == languageCode))
+                        .ToListAsync();
+            return cluesData.Select(
+                c => new Clue
+                {
+                    ID=c.ID,
+                    IconFilePath = c.IconFilePath,
+                    ImageFilePath = c.ImageFilePath,
+                    Title = c.Translations.FirstOrDefault()?.Title,
+                    Description = c.Translations.FirstOrDefault()?.Description,
+                    UnfoldingItems = MapUnfoldingItems(c.UnfoldingItemBase, languageCode),
+                    ExpandFieldsWithImages = MapExpandFieldWithImages(c.ExpandFieldWithImagesBase, languageCode),
+                    GhostsID = c.GhostBase.Select(g => g.ID).ToList()
+                }
+                ).ToList();
         }
 
         /// <summary>
@@ -172,7 +205,7 @@ namespace PhasmophobiaCompanion.Services
         /// <param name="languageCode">Код языка для получения переводов.</param>
         /// <param name="clues">Список всех улик, который будет записан методом.</param>
         /// <returns>Список призраков.</returns>
-        public async Task<List<Ghost>> GetGhostsAsync(string languageCode, ObservableCollection<Clue> clues)
+        public async Task<List<Ghost>> GetGhostsAsync(string languageCode)
         {
             var ghostData = await _phasmaDbContext.GhostBase
                         .Include(g => g.Translations.Where(t => t.LanguageCode == languageCode))
@@ -192,11 +225,10 @@ namespace PhasmophobiaCompanion.Services
                             .ThenInclude(u => u.Translations.Where(t => t.LanguageCode == languageCode))
                         .ToListAsync();
 
-            List<Ghost> ghosts = new List<Ghost>();
-            foreach (var g in ghostData)
-            {
-                ghosts.Add(new Ghost
+            return ghostData
+                .Select(g => new Ghost
                 {
+                    ID = g.ID,
                     ImageFilePath = g.ImageFilePath,
                     MinSanityHunt = g.MinSanityHunt,
                     MaxSanityHunt = g.MaxSanityHunt,
@@ -211,11 +243,9 @@ namespace PhasmophobiaCompanion.Services
                     MinGhostSpeedClause = g.Translations.FirstOrDefault()?.MinGhostSpeedClause,
                     MinSanityHuntClause = g.Translations.FirstOrDefault()?.MinSanityHuntClause,
                     MaxGhostSpeedLoSClause = g.Translations.FirstOrDefault()?.MaxGhostSpeedLoSClause,
-                    UnfoldingItems = MapUnfoldingItems(g.UnfoldingItemBase, languageCode)
-                });
-                ghosts[ghosts.Count - 1].Clues = MapClues(g.ClueBase, languageCode, clues, ghosts[ghosts.Count - 1]);
-            }
-            return ghosts;
+                    UnfoldingItems = MapUnfoldingItems(g.UnfoldingItemBase, languageCode),
+                    CluesID = g.ClueBase.Select(c => c.ID).ToList()
+                }).ToList();
         }
 
         /// <summary>
@@ -234,10 +264,11 @@ namespace PhasmophobiaCompanion.Services
                                     .ThenInclude(i => i.Translations.Where(t => t.LanguageCode == languageCode))
                             .Include(m => m.UnfoldingItemBase)
                                 .ThenInclude(u => u.Translations.Where(t => t.LanguageCode == languageCode))
-                            .ToListAsync();
+                            .ToListAsync().ConfigureAwait(false);
             return mapData
                   .Select(m => new Map
                   {
+                      ID = m.ID,
                       RoomCount = m.RoomCount,
                       UnlockLevel = m.UnlockLevel,
                       Exits = m.Exits,
@@ -274,6 +305,7 @@ namespace PhasmophobiaCompanion.Services
             return otherInfoData
                   .Select(o => new OtherInfo
                   {
+                      ID = o.ID,
                       ImageFilePath = o.ImageFilePath,
                       Title = o.Translations.FirstOrDefault()?.Title,
                       Description = o.Translations.FirstOrDefault()?.Description,
@@ -294,6 +326,7 @@ namespace PhasmophobiaCompanion.Services
             return patchData
                         .Select(p => new Patch
                         {
+                            ID = p.ID,
                             Source = p.Source,
                             Title = p.Title
                         }
@@ -315,51 +348,13 @@ namespace PhasmophobiaCompanion.Services
             return questData.Select(
                       q => new Quest
                       {
+                          ID = q.ID,
                           Description = q.Translations.FirstOrDefault()?.Description,
                           Clause = q.Translations.FirstOrDefault()?.Clause,
                           Reward = q.Reward
                       }
                       ).ToList();
         }
-
-        private static ObservableCollection<Clue> MapClues(IEnumerable<ClueBase> ghostClueBase, string languageCode, ObservableCollection<Clue> allClue, Ghost ghost)
-        {
-            ObservableCollection<Clue> ghostClue = new ObservableCollection<Clue>();
-
-            foreach (var c in ghostClueBase)
-            {
-                bool wasnot = false;
-                foreach (var CL in allClue)
-                {
-                    if (c.Translations.FirstOrDefault()?.Title == CL.Title)
-                    {
-                        wasnot = true;
-                        CL.Ghosts.Add(ghost);
-                        ghostClue.Add(CL);
-                        break;
-
-                    }
-                }
-                if (!wasnot)
-                {
-                    allClue.Add(new Clue
-                    {
-                        Ghosts = new ObservableCollection<Ghost>(),
-                        IconFilePath = c.IconFilePath,
-                        ImageFilePath = c.ImageFilePath,
-                        Title = c.Translations.FirstOrDefault()?.Title,
-                        Description = c.Translations.FirstOrDefault()?.Description,
-                        UnfoldingItems = MapUnfoldingItems(c.UnfoldingItemBase, languageCode),
-                        ExpandFieldsWithImages = MapExpandFieldWithImages(c.ExpandFieldWithImagesBase, languageCode)
-                    });
-                    allClue[allClue.Count - 1].Ghosts.Add(ghost);
-                    ghostClue.Add(allClue[allClue.Count - 1]);
-                }
-
-            }
-            return ghostClue;
-        }
-
         private static ObservableCollection<ExpandFieldWithImages> MapExpandFieldWithImages(IEnumerable<ExpandFieldWithImagesBase> expandFieldWithImages, string languageCode)
         {
             return new ObservableCollection<ExpandFieldWithImages>(expandFieldWithImages.Select(e => new ExpandFieldWithImages

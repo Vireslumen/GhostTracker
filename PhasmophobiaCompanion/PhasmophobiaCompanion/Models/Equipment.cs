@@ -7,6 +7,7 @@ namespace PhasmophobiaCompanion.Models
 {
     public class Equipment : BaseDisplayableItem
     {
+        public int ID { get; set; }
         // Цена снаряжения.
         public int Cost { get; set; }
 

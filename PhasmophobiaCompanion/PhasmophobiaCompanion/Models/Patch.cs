@@ -9,6 +9,7 @@ namespace PhasmophobiaCompanion.Models
     /// </summary>
     public class Patch
     {
+        public int ID { get; set; }
         // Ссылка на страницу описания патча.
         public string Source { get; set; }
 

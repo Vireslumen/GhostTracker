@@ -9,6 +9,7 @@ namespace PhasmophobiaCompanion.Models
     /// </summary>
     public class Quest
     {
+        public int ID { get; set; }
         // Условие выполнения квеста.
         public string Clause { get; set; }
 

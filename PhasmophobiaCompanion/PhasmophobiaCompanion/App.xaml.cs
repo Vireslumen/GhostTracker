@@ -20,8 +20,6 @@ namespace PhasmophobiaCompanion
 
             // Устанановка загрузочной страницы, как начальной
             MainPage = new LoadingScreenPage();
-
-
         }
         private async Task InitializeAppShellAsync()
         {
@@ -29,7 +27,6 @@ namespace PhasmophobiaCompanion
             {
                 // Получение экземпляра DataService
                 var dataService = DependencyService.Get<DataService>();
-
                 // Загрузка данных
                 await Task.Run(async () => { dataService.LoadInitialDataAsync(); });
                 Task.Run(async () => { dataService.LoadOtherDataAsync(); });
@@ -39,6 +36,7 @@ namespace PhasmophobiaCompanion
             }
             catch (Exception ex)
             {
+                //Временно
                 int i = 0;
                 i++;
             }

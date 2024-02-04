@@ -10,6 +10,7 @@ namespace PhasmophobiaCompanion.Models
     /// </summary>
     public class Map : BaseDisplayableItem
     {
+        public int ID { get; set; }
         // Количество выходов.
         public int Exits { get; set; }
         public ObservableCollection<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }

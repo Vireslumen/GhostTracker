@@ -16,7 +16,5 @@ namespace PhasmophobiaCompanion.Data
         public int DifficultyID { get; set; }
         public ICollection<ChallengeModeTranslations> Translations { get; set; }
         public List<EquipmentBase> EquipmentBase { get; set; }
-        public DifficultyBase Difficulty { get; set; }
-        public MapBase Map { get; set; }
     }
 }

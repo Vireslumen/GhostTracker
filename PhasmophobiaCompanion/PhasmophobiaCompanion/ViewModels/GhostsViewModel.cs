@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using PhasmophobiaCompanion.ViewModels;
 
 namespace PhasmophobiaCompanion.ViewModels
 {
@@ -69,9 +70,10 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public void Filter()
         {
-            var filtered = ghosts.Where(ghost => (!SelectedClues.Any() ||
-            SelectedClues.All(selectedClue => ghost.Clues.Any(clue => clue.Title == selectedClue.Title)))).ToList();
-            Ghosts = new ObservableCollection<Ghost>(filtered);
+            //var filtered = ghosts.Where(ghost => (!SelectedClues.Any() ||
+            //SelectedClues.All(selectedClue => ghost.Clues.Any(clue => clue.Title == selectedClue.Title)))).ToList();
+            //TODO: сделать тут под CluesID
+            //Ghosts = new ObservableCollection<Ghost>(filtered);
         }
 
         public void Search(string query)
