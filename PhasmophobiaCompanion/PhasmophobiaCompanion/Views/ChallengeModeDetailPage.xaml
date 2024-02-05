@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PhasmophobiaCompanion.Views.ChallengeModeDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pinch="clr-namespace:Xamarin.Forms.PinchZoomImage;assembly=Xamarin.Forms.PinchZoomImage"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    x:Name="ChallengeModeDetailPageName">
+    <ScrollView>
+        <StackLayout Orientation="Vertical">
+            <Grid>
+                <yummy:PancakeView
+                    Grid.Column="0"
+                    Grid.ColumnSpan="1"
+                    Padding="10,10,10,10"
+                    BackgroundColor="White"
+                    CornerRadius="16"
+                    HeightRequest="260">
+                    <yummy:PancakeView.Shadow>
+                        <yummy:DropShadow Offset="0,3" Color="#000000" />
+                    </yummy:PancakeView.Shadow>
+                    <yummy:PancakeView.Margin>
+                        <Thickness>
+                            10,3,10,10
+                        </Thickness>
+                    </yummy:PancakeView.Margin>
+                    <yummy:PancakeView.Border>
+                        <yummy:Border Thickness="1" Color="Color.Default" />
+                    </yummy:PancakeView.Border>
+                    <StackLayout>
+                        <Image HeightRequest="150" Source="{Binding ChallengeMap.ImageFilePath}" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding ChallengeMap.Title}"
+                            TextColor="Black"
+                            VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </yummy:PancakeView>
+                <yummy:PancakeView
+                    Grid.Column="1"
+                    Grid.ColumnSpan="1"
+                    Padding="10,10,10,10"
+                    BackgroundColor="White"
+                    CornerRadius="16"
+                    HeightRequest="260">
+                    <yummy:PancakeView.Shadow>
+                        <yummy:DropShadow Offset="0,3" Color="#000000" />
+                    </yummy:PancakeView.Shadow>
+                    <yummy:PancakeView.Margin>
+                        <Thickness>
+                            10,3,10,10
+                        </Thickness>
+                    </yummy:PancakeView.Margin>
+                    <yummy:PancakeView.Border>
+                        <yummy:Border Thickness="1" Color="Color.Default" />
+                    </yummy:PancakeView.Border>
+                    <Label
+                        FontAttributes="Italic"
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="{Binding Description}"
+                        VerticalOptions="Center" />
+                </yummy:PancakeView>
+            </Grid>
+            <yummy:PancakeView
+                Grid.Column="1"
+                Grid.ColumnSpan="1"
+                Padding="10,10,10,10"
+                BackgroundColor="White"
+                CornerRadius="16">
+                <yummy:PancakeView.Shadow>
+                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                </yummy:PancakeView.Shadow>
+                <yummy:PancakeView.Margin>
+                    <Thickness>
+                        10,3,10,10
+                    </Thickness>
+                </yummy:PancakeView.Margin>
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="Color.Default" />
+                </yummy:PancakeView.Border>
+                <StackLayout BindableLayout.ItemsSource="{Binding ChallengeEquipments}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Title}" />
+                                            <Span Text=" Tier " />
+                                            <Span Text="{Binding Tier}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </StackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </yummy:PancakeView>
+            <yummy:PancakeView
+                Grid.Column="1"
+                Grid.ColumnSpan="1"
+                Padding="10,10,10,10"
+                BackgroundColor="White"
+                CornerRadius="16">
+                <yummy:PancakeView.Shadow>
+                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                </yummy:PancakeView.Shadow>
+                <yummy:PancakeView.Margin>
+                    <Thickness>
+                        10,3,10,10
+                    </Thickness>
+                </yummy:PancakeView.Margin>
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="Color.Default" />
+                </yummy:PancakeView.Border>
+
+                <StackLayout>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="ActivityMonitorWork: " />
+                                <Span Text="{Binding ChallengeDifficulty.ActivityMonitorWork}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="DeadCashBack: " />
+                                <Span Text="{Binding ChallengeDifficulty.DeadCashBack}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="DoorOpenedCount: " />
+                                <Span Text="{Binding ChallengeDifficulty.DoorOpenedCount}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="ElectricityBlockNotShowedOnMap: " />
+                                <Span Text="{Binding ChallengeDifficulty.ElectricityBlockNotShowedOnMap}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="ElectricityOn: " />
+                                <Span Text="{Binding ChallengeDifficulty.ElectricityOn}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="EvidenceAvailable: " />
+                                <Span Text="{Binding ChallengeDifficulty.EvidenceAvailable}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="FingerPrints: " />
+                                <Span Text="{Binding ChallengeDifficulty.FingerPrints}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="GhostActivity: " />
+                                <Span Text="{Binding ChallengeDifficulty.GhostActivity}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="GhostHuntTime: " />
+                                <Span Text="{Binding ChallengeDifficulty.GhostHuntTime}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="HidingSpotBlocked: " />
+                                <Span Text="{Binding ChallengeDifficulty.HidingSpotBlocked}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="HuntExtendByKilling: " />
+                                <Span Text="{Binding ChallengeDifficulty.HuntExtendByKilling}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="ActivityMonitorWork: " />
+                                <Span Text="{Binding ChallengeDifficulty.ActivityMonitorWork}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="ObjectiveBoardPendingAloneAll: " />
+                                <Span Text="{Binding ChallengeDifficulty.ObjectiveBoardPendingAloneAll}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="RewardMultiplier: " />
+                                <Span Text="{Binding ChallengeDifficulty.RewardMultiplier}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="SanityConsumption: " />
+                                <Span Text="{Binding ChallengeDifficulty.SanityConsumption}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="SanityMonitorWork: " />
+                                <Span Text="{Binding ChallengeDifficulty.SanityMonitorWork}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="SanityRestoration: " />
+                                <Span Text="{Binding ChallengeDifficulty.SanityRestoration}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="SanityStartAt: " />
+                                <Span Text="{Binding ChallengeDifficulty.SanityStartAt}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="SetupTime: " />
+                                <Span Text="{Binding ChallengeDifficulty.SetupTime}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="UnlockLevel: " />
+                                <Span Text="{Binding ChallengeDifficulty.UnlockLevel}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+
+            </yummy:PancakeView>
+            <StackLayout />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,4 +1,5 @@
 ﻿using PhasmophobiaCompanion.Models;
+using PhasmophobiaCompanion.Services;
 using PhasmophobiaCompanion.ViewModels;
 using Rg.Plugins.Popup.Services;
 using System;
@@ -16,13 +17,14 @@ namespace PhasmophobiaCompanion.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
+        MainPageViewModel viewModel;
         public MainPage()
         {
             InitializeComponent();
-            MainPageViewModel viewModel = new MainPageViewModel();
+            viewModel = new MainPageViewModel();
             BindingContext = viewModel;
         }
-        private  void OnOtherPageTapped(object sender, EventArgs e)
+        private void OnOtherPageTapped(object sender, EventArgs e)
         {
             if (sender is BindableObject bindable && bindable.BindingContext is OtherInfo otherInfo)
             {
@@ -104,5 +106,23 @@ namespace PhasmophobiaCompanion.Views
             }
 
         }
+
+        private void OnChallengeModeTapped(object sender, EventArgs e)
+        {
+            var parentLabel = sender as Xamarin.Forms.PancakeView.PancakeView;
+            var challengeMode = viewModel.ChallengeMode;
+            if (viewModel._dataService.IsMapsDataLoaded && viewModel._dataService.IsEquipmentsDataLoaded)
+            {
+                challengeMode.ChallengeMap = viewModel._dataService.GetMaps().Where(m => m.ID == challengeMode.MapID).FirstOrDefault();
+                challengeMode.ChallengeEquipments = new System.Collections.ObjectModel.ObservableCollection<Equipment>
+                                                    ( viewModel._dataService.GetEquipments().Where(e => challengeMode.EquipmentsID.Contains(e.ID)).ToList());
+                challengeMode.ChallengeDifficulty= viewModel._dataService.GetDifficulties().Where(d => d.ID == challengeMode.DifficultyID).FirstOrDefault();
+                var Page = new ChallengeModeDetailPage(challengeMode);
+                Application.Current.MainPage.Navigation.PushAsync(Page);
+            }
+            // TODO: Сделать, чтобы если Карты не были загружены, какую-нибудь загрузки или что-нибудь в этом духе.
+
+        }
+
     }
 }

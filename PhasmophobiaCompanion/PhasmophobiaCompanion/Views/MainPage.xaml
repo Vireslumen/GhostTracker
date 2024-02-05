@@ -43,6 +43,9 @@
                         </Label>
                         <Label Text="{Binding ChallengeMode.Description}" />
                     </StackLayout>
+                    <yummy:PancakeView.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnChallengeModeTapped" />
+                    </yummy:PancakeView.GestureRecognizers>
                 </yummy:PancakeView>
 
                 <!--  Random Tip  -->

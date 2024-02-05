@@ -11,7 +11,7 @@ namespace PhasmophobiaCompanion.ViewModels
 {
     public class MainPageViewModel
     {
-        private readonly DataService _dataService;
+        public readonly DataService _dataService;
         public ChallengeMode ChallengeMode { get; set; }
         public ObservableCollection<string> Tips { get; set; }
         public ObservableCollection<Ghost> Ghosts { get; set; }
