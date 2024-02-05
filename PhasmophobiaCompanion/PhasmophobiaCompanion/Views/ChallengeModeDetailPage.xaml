@@ -8,6 +8,17 @@
     x:Name="ChallengeModeDetailPageName">
     <ScrollView>
         <StackLayout Orientation="Vertical">
+            <Label
+                FontAttributes="Bold"
+                FontSize="Large"
+                HorizontalOptions="CenterAndExpand">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Special Mode: " />
+                        <Span Text="{Binding Title}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
             <Grid>
                 <yummy:PancakeView
                     Grid.Column="0"
