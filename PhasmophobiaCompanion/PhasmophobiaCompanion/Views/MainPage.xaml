@@ -13,7 +13,7 @@
             Margin="0,30,0,0"
             Padding="0,0,0,0"
             BackgroundColor="White"
-            CornerRadius="40,40,0,0"
+            CornerRadius="16"
             VerticalOptions="FillAndExpand">
             <StackLayout Spacing="10">
                 <!--  Special Mode  -->
@@ -112,13 +112,29 @@
                                         <Label Padding="10" LineBreakMode="NoWrap">
                                             <Label.FormattedText>
                                                 <FormattedString>
-                                                    <Span Text="{Binding Title}" />
+                                                    <Span Text="{Binding Title}">
+                                                        <Span.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="OnGhostTapped" />
+                                                        </Span.GestureRecognizers>
+                                                    </Span>
                                                     <Span Text=": " />
-                                                    <Span Text="{Binding MinGhostSpeed}" />
+                                                    <Span Text="{Binding MinGhostSpeed}">
+                                                        <Span.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="OnMinGhostSpeedTapped" />
+                                                        </Span.GestureRecognizers>
+                                                    </Span>
                                                     <Span Text=" - " />
-                                                    <Span Text="{Binding MaxGhostSpeed}" />
+                                                    <Span Text="{Binding MaxGhostSpeed}">
+                                                        <Span.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="OnMaxGhostSpeedTapped" />
+                                                        </Span.GestureRecognizers>
+                                                    </Span>
                                                     <Span Text=" (" />
-                                                    <Span Text="{Binding MaxGhostSpeedLoS}" />
+                                                    <Span Text="{Binding MaxGhostSpeedLoS}">
+                                                        <Span.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="OnMaxGhostSpeedLoSTapped" />
+                                                        </Span.GestureRecognizers>
+                                                    </Span>
                                                     <Span Text=")" />
                                                 </FormattedString>
                                             </Label.FormattedText>
@@ -152,11 +168,23 @@
                                         <Label Padding="10" LineBreakMode="NoWrap">
                                             <Label.FormattedText>
                                                 <FormattedString>
-                                                    <Span Text="{Binding Title}" />
+                                                    <Span Text="{Binding Title}">
+                                                        <Span.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="OnGhostTapped" />
+                                                        </Span.GestureRecognizers>
+                                                    </Span>
                                                     <Span Text=": " />
-                                                    <Span Text="{Binding MinSanityHunt}" />
+                                                    <Span Text="{Binding MinSanityHunt}">
+                                                        <Span.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="OnMinSanityHuntTapped" />
+                                                        </Span.GestureRecognizers>
+                                                    </Span>
                                                     <Span Text=" - " />
-                                                    <Span Text="{Binding MaxSanityHunt}" />
+                                                    <Span Text="{Binding MaxSanityHunt}">
+                                                        <Span.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="OnMaxSanityHuntTapped" />
+                                                        </Span.GestureRecognizers>
+                                                    </Span>
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
