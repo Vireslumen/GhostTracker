@@ -247,7 +247,9 @@
                                             Text="{Binding Title}"
                                             VerticalOptions="Center" />
                                     </StackLayout>
-
+                                    <yummy:PancakeView.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnClueTapped" />
+                                    </yummy:PancakeView.GestureRecognizers>
                                 </yummy:PancakeView>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
@@ -287,6 +289,7 @@
                                         <Label FontAttributes="Bold" Text="{Binding Title}" />
                                         <Label Text="{Binding Description}" />
                                     </StackLayout>
+
                                 </yummy:PancakeView>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>

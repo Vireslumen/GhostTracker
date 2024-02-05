@@ -109,7 +109,6 @@ namespace PhasmophobiaCompanion.Views
 
         private void OnChallengeModeTapped(object sender, EventArgs e)
         {
-            var parentLabel = sender as Xamarin.Forms.PancakeView.PancakeView;
             var challengeMode = viewModel.ChallengeMode;
             if (viewModel._dataService.IsMapsDataLoaded && viewModel._dataService.IsEquipmentsDataLoaded)
             {
@@ -124,5 +123,14 @@ namespace PhasmophobiaCompanion.Views
 
         }
 
+        private void OnClueTapped(object sender, EventArgs e)
+        {
+            var parentLabel = sender as Xamarin.Forms.PancakeView.PancakeView;
+            if(parentLabel?.BindingContext is Clue clueItem)
+            {
+                var Page=new ClueDetailPage(clueItem);
+                Application.Current.MainPage.Navigation.PushAsync(Page);
+            }
+        }
     }
 }
