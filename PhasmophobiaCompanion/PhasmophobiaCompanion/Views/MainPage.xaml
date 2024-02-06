@@ -288,6 +288,9 @@
                                     <StackLayout Orientation="Vertical">
                                         <Label FontAttributes="Bold" Text="{Binding Title}" />
                                         <Label Text="{Binding Description}" />
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnDifficultyTapped" />
+                                        </StackLayout.GestureRecognizers>
                                     </StackLayout>
 
                                 </yummy:PancakeView>

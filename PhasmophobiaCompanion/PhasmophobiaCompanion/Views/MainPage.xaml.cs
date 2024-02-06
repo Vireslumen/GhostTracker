@@ -125,10 +125,20 @@ namespace PhasmophobiaCompanion.Views
 
         private void OnClueTapped(object sender, EventArgs e)
         {
-            var parentLabel = sender as Xamarin.Forms.PancakeView.PancakeView;
-            if(parentLabel?.BindingContext is Clue clueItem)
+            var parentPancake = sender as Xamarin.Forms.PancakeView.PancakeView;
+            if(parentPancake?.BindingContext is Clue clueItem)
             {
                 var Page=new ClueDetailPage(clueItem);
+                Application.Current.MainPage.Navigation.PushAsync(Page);
+            }
+        }
+
+        private void OnDifficultyTapped(object sender, EventArgs e)
+        {
+            var parentStack = sender as Xamarin.Forms.StackLayout;
+            if (parentStack?.BindingContext is Difficulty difficultyItem)
+            {
+                var Page = new DifficultyDetailPage(difficultyItem);
                 Application.Current.MainPage.Navigation.PushAsync(Page);
             }
         }

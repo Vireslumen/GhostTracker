@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PhasmophobiaCompanion.Views.DifficultyDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pinch="clr-namespace:Xamarin.Forms.PinchZoomImage;assembly=Xamarin.Forms.PinchZoomImage"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    x:Name="DifficultyDetailPageName">
+    <ScrollView>
+        <StackLayout Orientation="Vertical">
+            <Label
+                FontAttributes="Bold"
+                FontSize="Large"
+                HorizontalOptions="CenterAndExpand">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Difficulty: " />
+                        <Span Text="{Binding Title}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label
+                FontAttributes="Italic"
+                FontSize="Header"
+                HorizontalOptions="CenterAndExpand">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding Description}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <yummy:PancakeView
+                Padding="10,10,10,10"
+                BackgroundColor="White"
+                CornerRadius="16">
+                <yummy:PancakeView.Shadow>
+                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                </yummy:PancakeView.Shadow>
+                <yummy:PancakeView.Margin>
+                    <Thickness>
+                        10,3,10,10
+                    </Thickness>
+                </yummy:PancakeView.Margin>
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="Color.Default" />
+                </yummy:PancakeView.Border>
+
+                <StackLayout>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="ActivityMonitorWork: " />
+                                <Span Text="{Binding ActivityMonitorWork}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="DeadCashBack: " />
+                                <Span Text="{Binding DeadCashBack}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="DoorOpenedCount: " />
+                                <Span Text="{Binding DoorOpenedCount}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="ElectricityBlockNotShowedOnMap: " />
+                                <Span Text="{Binding ElectricityBlockNotShowedOnMap}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="ElectricityOn: " />
+                                <Span Text="{Binding ElectricityOn}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="EvidenceAvailable: " />
+                                <Span Text="{Binding EvidenceAvailable}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="FingerPrints: " />
+                                <Span Text="{Binding FingerPrints}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="GhostActivity: " />
+                                <Span Text="{Binding GhostActivity}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="GhostHuntTime: " />
+                                <Span Text="{Binding GhostHuntTime}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="HidingSpotBlocked: " />
+                                <Span Text="{Binding HidingSpotBlocked}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="HuntExtendByKilling: " />
+                                <Span Text="{Binding HuntExtendByKilling}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="ActivityMonitorWork: " />
+                                <Span Text="{Binding ActivityMonitorWork}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="ObjectiveBoardPendingAloneAll: " />
+                                <Span Text="{Binding ObjectiveBoardPendingAloneAll}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="RewardMultiplier: " />
+                                <Span Text="{Binding RewardMultiplier}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="SanityConsumption: " />
+                                <Span Text="{Binding SanityConsumption}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="SanityMonitorWork: " />
+                                <Span Text="{Binding SanityMonitorWork}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="SanityRestoration: " />
+                                <Span Text="{Binding SanityRestoration}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="SanityStartAt: " />
+                                <Span Text="{Binding SanityStartAt}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="SetupTime: " />
+                                <Span Text="{Binding SetupTime}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="UnlockLevel: " />
+                                <Span Text="{Binding UnlockLevel}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+
+            </yummy:PancakeView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
