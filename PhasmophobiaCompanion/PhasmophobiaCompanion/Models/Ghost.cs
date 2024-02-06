@@ -52,7 +52,6 @@ namespace PhasmophobiaCompanion.Models
         public string MinSanityHuntClause { get; set; }
         public ObservableCollection<UnfoldingItem> UnfoldingItems { get; set; }
         public ObservableCollection<Clue> Clues { get; set; }
-
         public void PopulateAssociatedClues(ObservableCollection<Clue> allClues)
         {
             foreach (var clueId in CluesID)

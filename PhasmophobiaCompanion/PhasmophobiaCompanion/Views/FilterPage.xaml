@@ -25,7 +25,7 @@
                 FontAttributes="Bold"
                 FontSize="18"
                 HorizontalOptions="Center"
-                Text="Filter by Clues" />
+                Text="{Binding GhostCommon.FilterTitle}" />
             <CollectionView
                 x:Name="cluesCollectionView"
                 ItemsSource="{Binding AllClues}"
@@ -67,7 +67,7 @@
                 BackgroundColor="#791AE5"
                 Clicked="OnApplyFiltersClicked"
                 CornerRadius="5"
-                Text="Apply"
+                Text="{Binding GhostCommon.ApplyTitle}"
                 TextColor="White" />
         </StackLayout>
     </Frame>

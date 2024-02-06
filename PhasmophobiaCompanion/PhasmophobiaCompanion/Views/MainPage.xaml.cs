@@ -142,5 +142,30 @@ namespace PhasmophobiaCompanion.Views
                 Application.Current.MainPage.Navigation.PushAsync(Page);
             }
         }
+
+        private async void OnMaxSpeedHeaderTapped(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.PushAsync(new TooltipPopup(viewModel.GhostCommon.MaxSpeed));
+        }
+
+        private async void OnMinSpeedHeaderTapped(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.PushAsync(new TooltipPopup(viewModel.GhostCommon.MinSpeed));
+        }
+
+        private async void OnMaxSpeedLoSHeaderTapped(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.PushAsync(new TooltipPopup(viewModel.GhostCommon.MaxSpeedLoS));
+        }
+
+        private async void OnMinSanityHeaderTapped(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.PushAsync(new TooltipPopup(viewModel.GhostCommon.MinSanityHunt));
+        }
+
+        private async void OnMaxSanityHeaderTapped(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.PushAsync(new TooltipPopup(viewModel.GhostCommon.MaxSanityHunt));
+        }
     }
 }

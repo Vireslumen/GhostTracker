@@ -47,10 +47,16 @@ namespace PhasmophobiaCompanion.Services
         private ObservableCollection<OtherInfo> OtherInfos;
         private ObservableCollection<Ghost> Ghosts;
         private ObservableCollection<Clue> Clues;
+        private GhostCommon GhostCommon;
 
         public ObservableCollection<Ghost> GetGhosts()
         {
             return Ghosts;
+        }
+        
+        public GhostCommon GetGhostCommon()
+        {
+            return GhostCommon;
         }
         public ObservableCollection<Clue> GetClues()
         {
@@ -142,9 +148,27 @@ namespace PhasmophobiaCompanion.Services
                 string serializedData = JsonConvert.SerializeObject(Ghosts);
                 File.WriteAllText(filePath, serializedData);
             }
+            await LoadGhostCommonAsync();
             IsGhostsDataLoaded = true;
             GhostsDataLoaded?.Invoke();
         }
+
+        public async Task LoadGhostCommonAsync()
+        {
+            string filePath = Path.Combine(FolderPath, "ghost_common_cache.json");
+            if (File.Exists(filePath))
+            {
+                string cachedData = File.ReadAllText(filePath);
+                GhostCommon = JsonConvert.DeserializeObject<GhostCommon>(cachedData);
+            }
+            else
+            {
+                GhostCommon = await DatabaseLoader.GetGhostCommonAsync(LanguageCode);
+                string serializedData = JsonConvert.SerializeObject(GhostCommon);
+                File.WriteAllText(filePath, serializedData);
+            }
+        }
+
         public async Task LoadTipsDataAsync()
         {
             string filePath = Path.Combine(FolderPath, "tips_cache.json");

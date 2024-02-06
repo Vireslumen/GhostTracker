@@ -187,7 +187,7 @@ namespace PhasmophobiaCompanion.Services
             return cluesData.Select(
                 c => new Clue
                 {
-                    ID=c.ID,
+                    ID = c.ID,
                     IconFilePath = c.IconFilePath,
                     ImageFilePath = c.ImageFilePath,
                     Title = c.Translations.FirstOrDefault()?.Title,
@@ -197,6 +197,30 @@ namespace PhasmophobiaCompanion.Services
                     GhostsID = c.GhostBase.Select(g => g.ID).ToList()
                 }
                 ).ToList();
+        }
+
+
+        public async Task<GhostCommon> GetGhostCommonAsync(string languageCode)
+        {
+            var ghostCommonData = await _phasmaDbContext.GhostCommonTranslations
+    .Where(g => g.LanguageCode == languageCode).ToListAsync();
+            return ghostCommonData.Select(g => new GhostCommon {
+            ApplyTitle=g.ApplyTitle,
+            FilterTitle=g.FilterTitle,
+            MaxSanityHunt=g.MaxSanityHunt,
+            MaxSpeed=g.MaxSpeed,
+            MaxSpeedLoS=g.MaxSpeedLoS,
+            MinSanityHunt=g.MinSanityHunt,
+            MinSpeed=g.MinSpeed,
+            SanityHunt=g.SanityHunt,
+            Search=g.Search,
+            Speed=g.Speed,
+            GhostsTitle=g.GhostsTitle,
+            Min=g.Min,
+            Max=g.Max,
+            GhostTitle=g.GhostTitle,
+            LoS=g.LoS
+            }).FirstOrDefault();
         }
 
         /// <summary>

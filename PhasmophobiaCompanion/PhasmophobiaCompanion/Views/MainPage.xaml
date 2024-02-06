@@ -90,9 +90,19 @@
                         <ColumnDefinition Width="4*" />
                         <ColumnDefinition Width="3*" />
                     </Grid.ColumnDefinitions>
-
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontAttributes="Bold"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding GhostCommon.Speed}" />
                     <!--  Ghost Speeds  -->
                     <yummy:PancakeView
+                        Grid.Row="1"
                         Grid.Column="0"
                         Padding="0,10,0,10"
                         BackgroundColor="White"
@@ -108,47 +118,88 @@
                         <yummy:PancakeView.Border>
                             <yummy:Border Thickness="1" Color="Color.Default" />
                         </yummy:PancakeView.Border>
-                        <ListView Grid.Column="0" ItemsSource="{Binding Ghosts}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <Label Padding="10" LineBreakMode="NoWrap">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="{Binding Title}">
-                                                        <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer Tapped="OnGhostTapped" />
-                                                        </Span.GestureRecognizers>
-                                                    </Span>
-                                                    <Span Text=": " />
-                                                    <Span Text="{Binding MinGhostSpeed}">
-                                                        <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer Tapped="OnMinGhostSpeedTapped" />
-                                                        </Span.GestureRecognizers>
-                                                    </Span>
-                                                    <Span Text=" - " />
-                                                    <Span Text="{Binding MaxGhostSpeed}">
-                                                        <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer Tapped="OnMaxGhostSpeedTapped" />
-                                                        </Span.GestureRecognizers>
-                                                    </Span>
-                                                    <Span Text=" (" />
-                                                    <Span Text="{Binding MaxGhostSpeedLoS}">
-                                                        <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer Tapped="OnMaxGhostSpeedLoSTapped" />
-                                                        </Span.GestureRecognizers>
-                                                    </Span>
-                                                    <Span Text=")" />
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+
+                        <StackLayout Orientation="Vertical">
+                            <Label FontAttributes="Bold">
+                                <Label.Padding>
+                                    10,0,10,0
+                                </Label.Padding>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding GhostCommon.GhostTitle}" />
+                                        <Span Text=": " />
+                                        <Span Text="{Binding GhostCommon.Min}">
+                                            <Span.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnMinSpeedHeaderTapped" />
+                                            </Span.GestureRecognizers>
+                                        </Span>
+                                        <Span Text=" - " />
+                                        <Span Text="{Binding GhostCommon.Max}">
+                                            <Span.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnMaxSpeedHeaderTapped" />
+                                            </Span.GestureRecognizers>
+                                        </Span>
+                                        <Span Text="{Binding GhostCommon.LoS}">
+                                            <Span.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnMaxSpeedLoSHeaderTapped" />
+                                            </Span.GestureRecognizers>
+                                        </Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <ListView ItemsSource="{Binding Ghosts}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Label Padding="10" LineBreakMode="NoWrap">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Title}">
+                                                            <Span.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="OnGhostTapped" />
+                                                            </Span.GestureRecognizers>
+                                                        </Span>
+                                                        <Span Text=": " />
+                                                        <Span Text="{Binding MinGhostSpeed}">
+                                                            <Span.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="OnMinGhostSpeedTapped" />
+                                                            </Span.GestureRecognizers>
+                                                        </Span>
+                                                        <Span Text=" - " />
+                                                        <Span Text="{Binding MaxGhostSpeed}">
+                                                            <Span.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="OnMaxGhostSpeedTapped" />
+                                                            </Span.GestureRecognizers>
+                                                        </Span>
+                                                        <Span Text=" (" />
+                                                        <Span Text="{Binding MaxGhostSpeedLoS}">
+                                                            <Span.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="OnMaxGhostSpeedLoSTapped" />
+                                                            </Span.GestureRecognizers>
+                                                        </Span>
+                                                        <Span Text=")" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+
+                        </StackLayout>
                     </yummy:PancakeView>
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding GhostCommon.SanityHunt}" />
                     <!--  Sanity Thresholds  -->
+
+
                     <yummy:PancakeView
+                        Grid.Row="1"
                         Grid.Column="1"
                         Padding="0,10,0,10"
                         BackgroundColor="White"
@@ -164,37 +215,61 @@
                         <yummy:PancakeView.Border>
                             <yummy:Border Thickness="1" Color="Color.Default" />
                         </yummy:PancakeView.Border>
-                        <ListView Grid.Column="1" ItemsSource="{Binding Ghosts}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <Label Padding="10" LineBreakMode="NoWrap">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="{Binding Title}">
-                                                        <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer Tapped="OnGhostTapped" />
-                                                        </Span.GestureRecognizers>
-                                                    </Span>
-                                                    <Span Text=": " />
-                                                    <Span Text="{Binding MinSanityHunt}">
-                                                        <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer Tapped="OnMinSanityHuntTapped" />
-                                                        </Span.GestureRecognizers>
-                                                    </Span>
-                                                    <Span Text=" - " />
-                                                    <Span Text="{Binding MaxSanityHunt}">
-                                                        <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer Tapped="OnMaxSanityHuntTapped" />
-                                                        </Span.GestureRecognizers>
-                                                    </Span>
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                        <StackLayout>
+                            <Label FontAttributes="Bold">
+                                <Label.Padding>
+                                    10,0,10,0
+                                </Label.Padding>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding GhostCommon.GhostTitle}" />
+                                        <Span Text=": " />
+                                        <Span Text="{Binding GhostCommon.Min}">
+                                            <Span.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnMinSanityHeaderTapped" />
+                                            </Span.GestureRecognizers>
+                                        </Span>
+                                        <Span Text=" - " />
+                                        <Span Text="{Binding GhostCommon.Max}">
+                                            <Span.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnMaxSanityHeaderTapped" />
+                                            </Span.GestureRecognizers>
+                                        </Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <ListView ItemsSource="{Binding Ghosts}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Label Padding="10" LineBreakMode="NoWrap">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Title}">
+                                                            <Span.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="OnGhostTapped" />
+                                                            </Span.GestureRecognizers>
+                                                        </Span>
+                                                        <Span Text=": " />
+                                                        <Span Text="{Binding MinSanityHunt}">
+                                                            <Span.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="OnMinSanityHuntTapped" />
+                                                            </Span.GestureRecognizers>
+                                                        </Span>
+                                                        <Span Text=" - " />
+                                                        <Span Text="{Binding MaxSanityHunt}">
+                                                            <Span.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="OnMaxSanityHuntTapped" />
+                                                            </Span.GestureRecognizers>
+                                                        </Span>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
                     </yummy:PancakeView>
                 </Grid>
                 <!--  Evidence List  -->
@@ -292,7 +367,6 @@
                                             <TapGestureRecognizer Tapped="OnDifficultyTapped" />
                                         </StackLayout.GestureRecognizers>
                                     </StackLayout>
-
                                 </yummy:PancakeView>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>

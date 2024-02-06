@@ -15,6 +15,7 @@ namespace PhasmophobiaCompanion.ViewModels
         public ChallengeMode ChallengeMode { get; set; }
         public ObservableCollection<string> Tips { get; set; }
         public ObservableCollection<Ghost> Ghosts { get; set; }
+        public GhostCommon GhostCommon { get; set; }
         public ObservableCollection<Clue> Clues { get; set; }
         public ObservableCollection<Difficulty> Difficulties { get; set; }
         public ObservableCollection<Patch> Patches { get; set; }
@@ -29,6 +30,7 @@ namespace PhasmophobiaCompanion.ViewModels
             ChallengeMode = _dataService.GetChallengeMode(1);
             Tips = _dataService.GetTips();
             Ghosts = _dataService.GetGhosts();
+            GhostCommon = _dataService.GetGhostCommon();
             Clues = _dataService.GetClues();
             Difficulties = _dataService.GetDifficulties();
             Patches = _dataService.GetPatches();

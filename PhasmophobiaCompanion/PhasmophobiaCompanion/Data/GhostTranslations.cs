@@ -11,14 +11,10 @@ namespace PhasmophobiaCompanion.Data
     public class GhostTranslations
     {
         public string Description { get; set; }
-
         public GhostBase Ghost { get; set; }
-
         public int GhostBaseID { get; set; }
-
         [Key]
         public int ID { get; set; }
-
         public string Identification { get; set; }
         public string LanguageCode { get; set; }
         public string MaxGhostSpeedClause { get; set; }
