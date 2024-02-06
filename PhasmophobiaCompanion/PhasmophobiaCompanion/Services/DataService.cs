@@ -108,6 +108,10 @@ namespace PhasmophobiaCompanion.Services
                 {
                     ghost.PopulateAssociatedClues(Clues);
                 }
+                foreach (var clue in Clues)
+                {
+                    clue.PopulateAssociatedGhosts(Ghosts);
+                }
             }
             catch (Exception ex)
             {

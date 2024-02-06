@@ -30,5 +30,25 @@ namespace PhasmophobiaCompanion.Views
             }
             //TODO: Возможно стоит убрать else if вроде должно и в первый заходить из-за наследования
         }
+
+        private void OnClueTapped(object sender, EventArgs e)
+        {
+            var parentStack = sender as Xamarin.Forms.StackLayout;
+            if (parentStack?.BindingContext is Clue clueItem)
+            {
+                var Page = new ClueDetailPage(clueItem);
+                Application.Current.MainPage.Navigation.PushAsync(Page);
+            }
+        }
+
+        private void OnGhostTapped(object sender, EventArgs e)
+        {
+            var parentStack = sender as Xamarin.Forms.StackLayout;
+            if (parentStack?.BindingContext is Ghost ghostItem)
+            {
+                var Page = new GhostDetailPage(ghostItem);
+                Application.Current.MainPage.Navigation.PushAsync(Page);
+            }
+        }
     }
 }

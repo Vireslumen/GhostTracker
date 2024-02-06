@@ -155,6 +155,72 @@
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>
+
+            <yummy:PancakeView Padding="5,5,5,5" CornerRadius="10">
+                <yummy:PancakeView.Margin>
+                    <Thickness>
+                        10,3,10,10
+                    </Thickness>
+                </yummy:PancakeView.Margin>
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="Color.Default" />
+                </yummy:PancakeView.Border>
+                <CollectionView ItemsSource="{Binding Ghosts}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <StackLayout
+                                    Grid.Column="0"
+                                    Orientation="Vertical"
+                                    VerticalOptions="CenterAndExpand">
+                                    <Label FontAttributes="Bold" Text="{Binding Title}" />
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnGhostTapped" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+
+                                <FlexLayout
+                                    Grid.Column="1"
+                                    BindableLayout.ItemsSource="{Binding Clues}"
+                                    Direction="Column"
+                                    JustifyContent="Start"
+                                    Wrap="Wrap">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout
+                                                Margin="0"
+                                                Orientation="Vertical"
+                                                VerticalOptions="FillAndExpand">
+                                                <Image
+                                                    HeightRequest="30"
+                                                    Source="{Binding IconFilePath}"
+                                                    WidthRequest="30" />
+                                                <Label
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    HorizontalTextAlignment="Center"
+                                                    LineBreakMode="WordWrap"
+                                                    Text="{Binding Title}"
+                                                    VerticalOptions="Center" />
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnClueTapped" />
+                                                </StackLayout.GestureRecognizers>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </FlexLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </yummy:PancakeView>
         </StackLayout>
     </ScrollView>
 </ContentPage>
