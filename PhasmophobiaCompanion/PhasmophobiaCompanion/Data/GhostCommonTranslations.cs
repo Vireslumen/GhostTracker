@@ -5,6 +5,9 @@ using System.Text;
 
 namespace PhasmophobiaCompanion.Data
 {
+    /// <summary>
+    /// Entity framework модель для таблицы GhostCommonTranslations.
+    /// </summary>
     public class GhostCommonTranslations
     {
         [Key]

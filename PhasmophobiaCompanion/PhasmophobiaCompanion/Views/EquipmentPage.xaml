@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    x:Name="EquipmentPageName"
     Padding="0,20,0,0"
     BackgroundColor="#791AE5"
     NavigationPage.HasNavigationBar="False">
@@ -27,7 +28,7 @@
                     BackgroundColor="White"
                     Completed="OnSearchCompleted"
                     HorizontalOptions="FillAndExpand"
-                    Placeholder="Search Equipment"
+                    Placeholder="{Binding EquipmentCommon.Search}"
                     Text="{Binding SearchQuery, Mode=TwoWay}" />
                 <Image
                     HeightRequest="25"
@@ -60,7 +61,7 @@
                             FontSize="20"
                             HorizontalOptions="CenterAndExpand"
                             HorizontalTextAlignment="Center"
-                            Text="Equipments"
+                            Text="{Binding EquipmentCommon.EquipmentsTitle}"
                             TextColor="#791AE5"
                             VerticalOptions="Center" />
 
@@ -141,9 +142,16 @@
                                                             FontAttributes="Bold"
                                                             FontSize="13"
                                                             HorizontalOptions="Center"
-                                                            Text="{Binding Tier, StringFormat='Tier {0}'}"
                                                             TextColor="Black"
-                                                            VerticalOptions="Center" />
+                                                            VerticalOptions="Center">
+                                                            <Label.FormattedText>
+                                                                <FormattedString>
+                                                                    <Span Text="{Binding Source={x:Reference EquipmentPageName}, Path=BindingContext.EquipmentCommon.Tier}" />
+                                                                    <Span Text=" " />
+                                                                    <Span Text="{Binding Tier}" />
+                                                                </FormattedString>
+                                                            </Label.FormattedText>
+                                                        </Label>
                                                     </yummy:PancakeView>
                                                     <yummy:PancakeView
                                                         AbsoluteLayout.LayoutBounds="0.99,0.99,-1,-1"

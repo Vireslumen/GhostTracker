@@ -1,4 +1,5 @@
 ﻿using PhasmophobiaCompanion.Models;
+using PhasmophobiaCompanion.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,10 @@ namespace PhasmophobiaCompanion.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class EquipmentDetailPage : ContentPage
 	{
-		public EquipmentDetailPage ( Equipment selectedEquipment)
+		public EquipmentDetailPage ( EquipmentsViewModel viewModel)
 		{
 			InitializeComponent ();
-			BindingContext = selectedEquipment;
+			BindingContext = viewModel;
 
 		}
         private void OnItemTapped(object sender, EventArgs e)

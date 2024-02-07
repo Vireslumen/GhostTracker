@@ -110,6 +110,30 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        /// Асинхронно возвращает общие данные для снаряжения - EquipmentCommon, на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Общие данные для снаряжения.</returns>
+        public async Task<EquipmentCommon> GetEquipmentCommonAsync(string languageCode)
+        {
+            var equipmentCommonData = await _phasmaDbContext.EquipmentCommonTranslations
+    .Where(e => e.LanguageCode == languageCode).ToListAsync();
+            return equipmentCommonData.Select(e => new EquipmentCommon
+            {
+                EquipmentsTitle=e.EquipmentsTitle,
+                FilterTier=e.FilterTier,
+                FilterUnlock=e.FilterUnlock,
+                MaxLimit=e.MaxLimit,
+                Price=e.Price,
+                PriceUnlock=e.PriceUnlock,
+                Search=e.Search,
+                Tier=e.Tier,
+                Apply=e.Apply,
+                UnlockLevel=e.UnlockLevel
+            }).FirstOrDefault();
+        }
+
+        /// <summary>
         /// Асинхронно возвращает список снаряжения - Equipment на основе кода языка.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>
@@ -135,7 +159,6 @@ namespace PhasmophobiaCompanion.Services
                       Title = e.Translations.FirstOrDefault()?.Title,
                       Description = e.Translations.FirstOrDefault()?.Description,
                       Tier = e.Translations.FirstOrDefault()?.Tier,
-                      Uses = e.Translations.FirstOrDefault()?.Uses,
                       OtherEquipmentStats = MapOtherEquipmentStat(e.OtherEquipmentStatBase, languageCode),
                       UnfoldingItems = MapUnfoldingItems(e.UnfoldingItemBase, languageCode)
                   })
@@ -170,7 +193,11 @@ namespace PhasmophobiaCompanion.Services
                     ).ToList();
         }
 
-
+        /// <summary>
+        /// Асинхронно возвращает список улик - Clue на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Список улик.</returns>
         public async Task<List<Clue>> GetCluesAsync(string languageCode)
         {
             var cluesData = await _phasmaDbContext.ClueBase
@@ -199,7 +226,11 @@ namespace PhasmophobiaCompanion.Services
                 ).ToList();
         }
 
-
+        /// <summary>
+        /// Асинхронно возвращает общие данные для призраков - GhostCommon, на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Общие данные для призраков.</returns>
         public async Task<GhostCommon> GetGhostCommonAsync(string languageCode)
         {
             var ghostCommonData = await _phasmaDbContext.GhostCommonTranslations
@@ -379,6 +410,14 @@ namespace PhasmophobiaCompanion.Services
                       }
                       ).ToList();
         }
+
+        /// <summary>
+        /// Преобразует коллекцию объектов ExpandFieldWithImagesBase в ObservableCollection<ExpandFieldWithImages>,
+        /// используя заданный код языка для выбора подходящих переводов.
+        /// </summary>
+        /// <param name="expandFieldWithImages">Коллекция базовых объектов ExpandFieldWithImagesBase для преобразования.</param>
+        /// <param name="languageCode">Код языка, который используется для выбора соответствующих переводов.</param>
+        /// <returns>ObservableCollection объектов ExpandFieldWithImages, содержащих переведенные данные.</returns>
         private static ObservableCollection<ExpandFieldWithImages> MapExpandFieldWithImages(IEnumerable<ExpandFieldWithImagesBase> expandFieldWithImages, string languageCode)
         {
             return new ObservableCollection<ExpandFieldWithImages>(expandFieldWithImages.Select(e => new ExpandFieldWithImages
@@ -390,6 +429,13 @@ namespace PhasmophobiaCompanion.Services
             }));
         }
 
+        /// <summary>
+        /// Преобразует коллекцию объектов ImageWithDescriptionBase в ObservableCollection<ImageWithDescription>,
+        /// используя заданный код языка для выбора подходящих переводов.
+        /// </summary>
+        /// <param name="imageWithDescriptions">Коллекция базовых объектов ImageWithDescriptionBase для преобразования.</param>
+        /// <param name="languageCode">Код языка, который используется для выбора соответствующих переводов.</param>
+        /// <returns>ObservableCollection объектов ImageWithDescription, содержащих переведенные данные.</returns>
         private static ObservableCollection<ImageWithDescription> MapImageWithDescription(IEnumerable<ImageWithDescriptionBase> imageWithDescriptions, string languageCode)
         {
             return new ObservableCollection<ImageWithDescription>(imageWithDescriptions.Select(i => new ImageWithDescription
@@ -399,6 +445,13 @@ namespace PhasmophobiaCompanion.Services
             }));
         }
 
+        /// <summary>
+        /// Преобразует коллекцию объектов OtherEquipmentStatBase в ObservableCollection<OtherEquipmentStat>,
+        /// используя заданный код языка для выбора подходящих переводов.
+        /// </summary>
+        /// <param name="otherEquipmentStats">Коллекция базовых объектов OtherEquipmentStatBase для преобразования.</param>
+        /// <param name="languageCode">Код языка, который используется для выбора соответствующих переводов.</param>
+        /// <returns>ObservableCollection объектов OtherEquipmentStat, содержащих переведенные данные.</returns>
         private static ObservableCollection<OtherEquipmentStat> MapOtherEquipmentStat(IEnumerable<OtherEquipmentStatBase> otherEquipmentStats, string languageCode)
         {
             return new ObservableCollection<OtherEquipmentStat>(otherEquipmentStats.Where(o => o.LanguageCode == languageCode).Select(
@@ -409,6 +462,13 @@ namespace PhasmophobiaCompanion.Services
                                   ));
         }
 
+        /// <summary>
+        /// Преобразует коллекцию объектов UnfoldingItemBase в ObservableCollection<UnfoldingItem>,
+        /// используя заданный код языка для выбора подходящих переводов.
+        /// </summary>
+        /// <param name="unfoldingItems">Коллекция базовых объектов UnfoldingItemBase для преобразования.</param>
+        /// <param name="languageCode">Код языка, который используется для выбора соответствующих переводов.</param>
+        /// <returns>ObservableCollection объектов UnfoldingItemBase, содержащих переведенные данные.</returns>
         private static ObservableCollection<UnfoldingItem> MapUnfoldingItems(IEnumerable<UnfoldingItemBase> unfoldingItems, string languageCode)
         {
             return new ObservableCollection<UnfoldingItem>(unfoldingItems.Select(u => new UnfoldingItem

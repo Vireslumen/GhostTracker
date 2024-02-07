@@ -34,6 +34,7 @@ namespace PhasmophobiaCompanion.Services
 
         //Equipment data
         private ObservableCollection<Equipment> Equipments;
+        private EquipmentCommon EquipmentCommon;
 
         //Cursed data
         private ObservableCollection<CursedPossession> Curseds;
@@ -57,6 +58,10 @@ namespace PhasmophobiaCompanion.Services
         public GhostCommon GetGhostCommon()
         {
             return GhostCommon;
+        }
+        public EquipmentCommon GetEquipmentCommon()
+        {
+            return EquipmentCommon;
         }
         public ObservableCollection<Clue> GetClues()
         {
@@ -286,8 +291,25 @@ namespace PhasmophobiaCompanion.Services
                 string serializedData = JsonConvert.SerializeObject(Equipments);
                 File.WriteAllText(filePath, serializedData);
             }
+            await LoadEquipmentCommonAsync();
             IsEquipmentsDataLoaded = true;
             EquipmentsDataLoaded?.Invoke();
+        }
+
+        public async Task LoadEquipmentCommonAsync()
+        {
+            string filePath = Path.Combine(FolderPath, "equipment_common_cache.json");
+            if (File.Exists(filePath))
+            {
+                string cachedData = File.ReadAllText(filePath);
+                EquipmentCommon = JsonConvert.DeserializeObject<EquipmentCommon>(cachedData);
+            }
+            else
+            {
+                EquipmentCommon = await DatabaseLoader.GetEquipmentCommonAsync(LanguageCode);
+                string serializedData = JsonConvert.SerializeObject(EquipmentCommon);
+                File.WriteAllText(filePath, serializedData);
+            }
         }
         public async Task LoadCursedsDataAsync()
         {

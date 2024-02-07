@@ -19,6 +19,8 @@ namespace PhasmophobiaCompanion.ViewModels
         private ObservableCollection<Equipment> equipments;
         private ObservableCollection<Equipment> filteredEquipments;
         private ObservableCollection<string> allTiers;
+        public Equipment SelectedEquipment { get; set; }
+        public EquipmentCommon EquipmentCommon { get; set; }
 
         public ObservableCollection<string> AllTiers
         {
@@ -94,6 +96,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 "II",
                 "III"
             };
+            EquipmentCommon = _dataService.GetEquipmentCommon();
             equipments = _dataService.GetEquipments();
             AllTiers = new ObservableCollection<string>(allTiers);
             Equipments = new ObservableCollection<Equipment>(equipments);

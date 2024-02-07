@@ -20,6 +20,5 @@ namespace PhasmophobiaCompanion.Data
         public string LanguageCode { get; set; }
         public string Tier { get; set; }
         public string Title { get; set; }
-        public string Uses { get; set; }
     }
 }

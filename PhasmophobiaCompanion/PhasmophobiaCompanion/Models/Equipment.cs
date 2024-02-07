@@ -5,6 +5,9 @@ using System.Text;
 
 namespace PhasmophobiaCompanion.Models
 {
+    /// <summary>
+    /// Представляет собой снаряжение.
+    /// </summary>
     public class Equipment : BaseDisplayableItem
     {
         public int ID { get; set; }
@@ -26,8 +29,5 @@ namespace PhasmophobiaCompanion.Models
 
         // Уровень для разблокировки снаряжения.
         public int UnlockLevel { get; set; }
-
-        // Ограничение использования снаряжения.
-        public string Uses { get; set; }
     }
 }
