@@ -1,29 +1,49 @@
-﻿using Newtonsoft.Json;
-using PhasmophobiaCompanion.Data;
-using PhasmophobiaCompanion.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Diagnostics;
+using Newtonsoft.Json;
+using PhasmophobiaCompanion.Data;
+using PhasmophobiaCompanion.Models;
 
 namespace PhasmophobiaCompanion.Services
 {
     public class DataService
     {
-        private DatabaseLoader DatabaseLoader;
+        private readonly DatabaseLoader DatabaseLoader;
 
         /// <summary>
-        /// Код языка, на котором будут отображаться данные в приложении.
+        ///     Код языка, на котором будут отображаться данные в приложении.
         /// </summary>
-        private string LanguageCode;
+        private readonly string LanguageCode;
+
+        //Main Page data
+        private ObservableCollection<ChallengeMode> ChallengeModes;
+        private ObservableCollection<Clue> Clues;
+
+        //Cursed data
+        private ObservableCollection<CursedPossession> Curseds;
+        private ObservableCollection<Difficulty> Difficulties;
+        private EquipmentCommon EquipmentCommon;
+
+        //Equipment data
+        private ObservableCollection<Equipment> Equipments;
+
         /// <summary>
-        /// Путь к папке с кэшированными данными.
+        ///     Путь к папке с кэшированными данными.
         /// </summary>
         public string FolderPath;
+
+        private GhostCommon GhostCommon;
+        private ObservableCollection<Ghost> Ghosts;
+
+        //Map data
+        private ObservableCollection<Map> Maps;
+        private ObservableCollection<OtherInfo> OtherInfos;
+        private ObservableCollection<Patch> Patches;
+        private ObservableCollection<Quest> Quests;
+        private ObservableCollection<string> Tips;
+
         public DataService()
         {
             DatabaseLoader = new DatabaseLoader(new PhasmaDB());
@@ -31,88 +51,83 @@ namespace PhasmophobiaCompanion.Services
             LanguageCode = "EN";
             FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
         }
+
+        public bool IsCursedsDataLoaded { get; private set; }
+        public bool IsEquipmentsDataLoaded { get; private set; }
+        public bool IsGhostsDataLoaded { get; private set; }
+        public bool IsMapsDataLoaded { get; private set; }
         public event Action GhostsDataLoaded;
         public event Action MapsDataLoaded;
         public event Action EquipmentsDataLoaded;
         public event Action CursedsDataLoaded;
 
-        //Map data
-        private ObservableCollection<Map> Maps;
-
-        //Equipment data
-        private ObservableCollection<Equipment> Equipments;
-        private EquipmentCommon EquipmentCommon;
-
-        //Cursed data
-        private ObservableCollection<CursedPossession> Curseds;
-
-        //Main Page data
-        private ObservableCollection<ChallengeMode> ChallengeModes;
-        private ObservableCollection<Quest> Quests;
-        private ObservableCollection<string> Tips;
-        private ObservableCollection<Difficulty> Difficulties;
-        private ObservableCollection<Patch> Patches;
-        private ObservableCollection<OtherInfo> OtherInfos;
-        private ObservableCollection<Ghost> Ghosts;
-        private ObservableCollection<Clue> Clues;
-        private GhostCommon GhostCommon;
-
         public ObservableCollection<Ghost> GetGhosts()
         {
             return Ghosts;
         }
-        
+
         public GhostCommon GetGhostCommon()
         {
             return GhostCommon;
         }
+
         public EquipmentCommon GetEquipmentCommon()
         {
             return EquipmentCommon;
         }
+
         public ObservableCollection<Clue> GetClues()
         {
             return Clues;
         }
+
         public ObservableCollection<Quest> GetQuests()
         {
             return Quests;
         }
+
         public ObservableCollection<string> GetTips()
         {
             return Tips;
         }
+
         public ObservableCollection<Difficulty> GetDifficulties()
         {
             return Difficulties;
         }
+
         public ObservableCollection<Patch> GetPatches()
         {
             return Patches;
         }
+
         public ObservableCollection<Map> GetMaps()
         {
             return Maps;
         }
+
         public ObservableCollection<Equipment> GetEquipments()
         {
             return Equipments;
         }
+
         public ObservableCollection<OtherInfo> GetOtherInfos()
         {
             return OtherInfos;
         }
+
         public ObservableCollection<CursedPossession> GetCurseds()
         {
             return Curseds;
         }
+
         public ChallengeMode GetChallengeMode(int challengeID)
         {
             return ChallengeModes[challengeID];
         }
 
         /// <summary>
-        /// Загрузка первоначальных данных требуемых на главной странице
+        ///     Загрузка первоначальных данных требуемых на главной странице
         /// </summary>
         public async Task LoadInitialDataAsync()
         {
@@ -129,15 +144,9 @@ namespace PhasmophobiaCompanion.Services
 
                 //Добавление связи от призраков Ghost к уликам Clue
                 //Связи добавляются после кэширования, из-за невозможности кэшировать данные с такими связями
-                foreach (var ghost in Ghosts)
-                {
-                    ghost.PopulateAssociatedClues(Clues);
-                }
+                foreach (var ghost in Ghosts) ghost.PopulateAssociatedClues(Clues);
                 //Добавление связи от улик Clue - к призракам Ghost
-                foreach (var clue in Clues)
-                {
-                    clue.PopulateAssociatedGhosts(Ghosts);
-                }
+                foreach (var clue in Clues) clue.PopulateAssociatedGhosts(Ghosts);
             }
             catch (Exception ex)
             {
@@ -146,7 +155,8 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
-        /// Загрузка вторичных данных, которые не нужны для главной страницы, загружаются после первоначальных и уже во время работы приложения
+        ///     Загрузка вторичных данных, которые не нужны для главной страницы, загружаются после первоначальных и уже во время
+        ///     работы приложения
         /// </summary>
         public async Task LoadOtherDataAsync()
         {
@@ -154,222 +164,208 @@ namespace PhasmophobiaCompanion.Services
             await LoadCursedsDataAsync().ConfigureAwait(false);
             await LoadEquipmentsDataAsync().ConfigureAwait(false);
         }
-        public bool IsGhostsDataLoaded { get; private set; }
-        public bool IsMapsDataLoaded { get; private set; }
-        public bool IsEquipmentsDataLoaded { get; private set; }
-        public bool IsCursedsDataLoaded { get; private set; }
-        
+
         /// <summary>
-        /// Загружает данные о призраках - Ghost из базы данных, а затем кэширует их,
-        /// либо загружает данные из кэша, в зависимости от наличия кэша.
+        ///     Асинхронно загружает данные из кэша или из базы данных, если кэш отсутствует.
+        /// </summary>
+        /// <typeparam name="T">Тип данных, который нужно загрузить.</typeparam>
+        /// <param name="cacheFileName">Имя файла кэша для проверки наличия и загрузки данных.</param>
+        /// <param name="databaseLoadFunction">Функция для загрузки данных из базы данных, если кэш отсутствует.</param>
+        /// <returns>Объект типа <typeparamref name="T" />, содержащий загруженные данные.</returns>
+        /// <remarks>
+        ///     Этот метод сначала пытается загрузить данные из файла кэша. Если файл кэша не найден,
+        ///     данные загружаются из базы данных с помощью предоставленной функции и затем кэшируются.
+        /// </remarks>
+        public async Task<T> LoadDataAsync<T>(string cacheFileName, Func<Task<T>> databaseLoadFunction)
+        {
+            var filePath = Path.Combine(FolderPath, cacheFileName);
+            // Проверка наличия кэша
+            if (File.Exists(filePath))
+            {
+                var cachedData = File.ReadAllText(filePath);
+                return JsonConvert.DeserializeObject<T>(cachedData);
+            }
+
+            // Загрузка данных из базы данных и кэширование
+            var data = await databaseLoadFunction();
+            var serializedData = JsonConvert.SerializeObject(data);
+            File.WriteAllText(filePath, serializedData);
+            return data;
+        }
+
+        /// <summary>
+        ///     Загружает данные о призраках - Ghost из базы данных, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
         /// </summary>
         public async Task LoadGhostsDataAsync()
         {
-            string filePath = Path.Combine(FolderPath, "ghosts_cache.json");
-            //Если кэш есть, то данные загружаются из него
-            if (File.Exists(filePath))
-            {
-                string cachedData = File.ReadAllText(filePath);
-                Ghosts = JsonConvert.DeserializeObject<ObservableCollection<Ghost>>(cachedData);
-            }
-            //Если кэша нет, то данные загружаеюся из базы данных, а затем кэшируются
-            else
-            {
-                Ghosts = new ObservableCollection<Ghost>(await DatabaseLoader.GetGhostsAsync(LanguageCode));
-                string serializedData = JsonConvert.SerializeObject(Ghosts);
-                File.WriteAllText(filePath, serializedData);
-            }
+            Ghosts = await LoadDataAsync(
+                "ghosts_cache.json",
+                async () => new ObservableCollection<Ghost>(await DatabaseLoader.GetGhostsAsync(LanguageCode))
+            );
             //Загрузка текстовых данных для интерфейса, относящимся к призракам - Ghost
             await LoadGhostCommonAsync();
             //Уведомление о том, что данные загружены
             IsGhostsDataLoaded = true;
             GhostsDataLoaded?.Invoke();
         }
+
         /// <summary>
-        /// Загружает текстовые данные для интерфейса, относящиеся к призракам - Ghost из базы данных, а затем кэширует их,
-        /// либо загружает данные из кэша, в зависимости от наличия кэша.
+        ///     Загружает текстовые данные для интерфейса, относящиеся к призракам - Ghost из базы данных, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
         /// </summary>
         public async Task LoadGhostCommonAsync()
         {
-            string filePath = Path.Combine(FolderPath, "ghost_common_cache.json");
-            //Если кэш есть, то данные загружаются из него
-            if (File.Exists(filePath))
-            {
-                string cachedData = File.ReadAllText(filePath);
-                GhostCommon = JsonConvert.DeserializeObject<GhostCommon>(cachedData);
-            }
-            //Если кэша нет, то данные загружаеюся из базы данных, а затем кэшируются
-            else
-            {
-                GhostCommon = await DatabaseLoader.GetGhostCommonAsync(LanguageCode);
-                string serializedData = JsonConvert.SerializeObject(GhostCommon);
-                File.WriteAllText(filePath, serializedData);
-            }
+            GhostCommon = await LoadDataAsync("ghost_common_cache.json",
+                async () => await DatabaseLoader.GetGhostCommonAsync(LanguageCode));
         }
+
         /// <summary>
-        /// Загружает список подсказок - Tip, , а затем кэширует их,
-        /// либо загружает данные из кэша, в зависимости от наличия кэша.
+        ///     Загружает список подсказок - Tip, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
         /// </summary>
         public async Task LoadTipsDataAsync()
         {
-            string filePath = Path.Combine(FolderPath, "tips_cache.json");
-            //Если кэш есть, то данные загружаются из него
-            if (File.Exists(filePath))
-            {
-                string cachedData = File.ReadAllText(filePath);
-                Tips = JsonConvert.DeserializeObject<ObservableCollection<string>>(cachedData);
-            }
-            //Если кэша нет, то данные загружаеюся из базы данных, а затем кэшируются
-            else
-            {
-                Tips = new ObservableCollection<string>(await DatabaseLoader.GetTipsAsync(LanguageCode));
-                string serializedData = JsonConvert.SerializeObject(Tips);
-                File.WriteAllText(filePath, serializedData);
-            }
+            Tips = await LoadDataAsync(
+                "tips_cache.json",
+                async () => new ObservableCollection<string>(await DatabaseLoader.GetTipsAsync(LanguageCode))
+            );
         }
 
+        /// <summary>
+        ///     Загружает список сложностей - Difficulty, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
         public async Task LoadDifficultiesAsync()
         {
-            string filePath = Path.Combine(FolderPath, "difficulties_cache.json");
-            if (File.Exists(filePath))
-            {
-                string cachedData = File.ReadAllText(filePath);
-                Difficulties = JsonConvert.DeserializeObject<ObservableCollection<Difficulty>>(cachedData);
-            }
-            else
-            {
-                Difficulties = new ObservableCollection<Difficulty>(await DatabaseLoader.GetDifficultiesAsync(LanguageCode));
-                string serializedData = JsonConvert.SerializeObject(Difficulties);
-                File.WriteAllText(filePath, serializedData);
-            }
+            Difficulties = await LoadDataAsync(
+                "difficulties_cache.json",
+                async () => new ObservableCollection<Difficulty>(
+                    await DatabaseLoader.GetDifficultiesAsync(LanguageCode))
+            );
         }
+
+        /// <summary>
+        ///     Загружает список патчей - Patch, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
         public async Task LoadPatchesAsync()
         {
-            string filePath = Path.Combine(FolderPath, "patch_cache.json");
-            if (File.Exists(filePath))
-            {
-                string cachedData = File.ReadAllText(filePath);
-                Patches = JsonConvert.DeserializeObject<ObservableCollection<Patch>>(cachedData);
-            }
-            else
-            {
-                Patches = new ObservableCollection<Patch>(await DatabaseLoader.GetPatchesAsync());
-                string serializedData = JsonConvert.SerializeObject(Patches);
-                File.WriteAllText(filePath, serializedData);
-            }
+            Patches = await LoadDataAsync(
+                "patch_cache.json",
+                async () => new ObservableCollection<Patch>(await DatabaseLoader.GetPatchesAsync())
+            );
         }
+
+        /// <summary>
+        ///     Загружает список квестов - Quest, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
         public async Task LoadQuestsAsync()
         {
-            string filePath = Path.Combine(FolderPath, "quest_cache.json");
-            if (File.Exists(filePath))
-            {
-                string cachedData = File.ReadAllText(filePath);
-                Quests = JsonConvert.DeserializeObject<ObservableCollection<Quest>>(cachedData);
-            }
-            else
-            {
-                Quests = new ObservableCollection<Quest>(await DatabaseLoader.GetQuestsAsync(LanguageCode));
-                string serializedData = JsonConvert.SerializeObject(Quests);
-                File.WriteAllText(filePath, serializedData);
-            }
+            Quests = await LoadDataAsync(
+                "quest_cache.json",
+                async () => new ObservableCollection<Quest>(await DatabaseLoader.GetQuestsAsync(LanguageCode))
+            );
         }
+
+        /// <summary>
+        ///     Загружает список некатегоризированных страниц  - OtherInfo, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
         public async Task LoadOtherInfoAsync()
         {
-            string filePath = Path.Combine(FolderPath, "other_info_cache.json");
-            if (File.Exists(filePath))
-            {
-                string cachedData = File.ReadAllText(filePath);
-                OtherInfos = JsonConvert.DeserializeObject<ObservableCollection<OtherInfo>>(cachedData);
-            }
-            else
-            {
-                OtherInfos = new ObservableCollection<OtherInfo>(await DatabaseLoader.GetOtherInfosAsync(LanguageCode));
-                string serializedData = JsonConvert.SerializeObject(OtherInfos);
-                File.WriteAllText(filePath, serializedData);
-            }
-
+            OtherInfos = await LoadDataAsync(
+                "quest_cache.json",
+                async () => new ObservableCollection<OtherInfo>(await DatabaseLoader.GetOtherInfosAsync(LanguageCode))
+            );
         }
-        
+
+        /// <summary>
+        ///     Загружает список особых режимов  - ChallengeMode, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
         public async Task LoadChallengeModeAsync()
         {
-            //TODO: переделать как у остальных методов
-                ChallengeModes = new ObservableCollection<ChallengeMode>(await DatabaseLoader.GetChallengeModesAsync(LanguageCode));
+            ChallengeModes = await LoadDataAsync(
+                "challenge_mode_cache.json",
+                async () => new ObservableCollection<ChallengeMode>(
+                    await DatabaseLoader.GetChallengeModesAsync(LanguageCode))
+            );
         }
 
+        /// <summary>
+        ///     Загружает список улик  - Clue, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
         public async Task LoadCluesAsync()
         {
-            //TODO: переделать как у остальных методов
-            Clues = new ObservableCollection<Clue>(await DatabaseLoader.GetCluesAsync(LanguageCode));
+            Clues = await LoadDataAsync(
+                "clues_cache.json",
+                async () => new ObservableCollection<Clue>(await DatabaseLoader.GetCluesAsync(LanguageCode))
+            );
         }
 
+        /// <summary>
+        ///     Загружает список карт  - Map, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
         public async Task LoadMapsDataAsync()
         {
-            string filePath = Path.Combine(FolderPath, "maps_cache.json");
-            if (File.Exists(filePath))
-            {
-                string cachedData = File.ReadAllText(filePath);
-                Maps = JsonConvert.DeserializeObject<ObservableCollection<Map>>(cachedData);
-            }
-            else
-            {
-                Maps = new ObservableCollection<Map>(await DatabaseLoader.GetMapsAsync(LanguageCode).ConfigureAwait(false));
-                string serializedData = JsonConvert.SerializeObject(Maps);
-                File.WriteAllText(filePath, serializedData);
-            }
+            Maps = await LoadDataAsync(
+                "maps_cache.json",
+                async () => new ObservableCollection<Map>(await DatabaseLoader.GetMapsAsync(LanguageCode)
+                    .ConfigureAwait(false))
+            );
+            // Уведомление о загрузки данных
             IsMapsDataLoaded = true;
             MapsDataLoaded?.Invoke();
         }
+
+        /// <summary>
+        ///     Загружает список снаряжения  - Equipment, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
         public async Task LoadEquipmentsDataAsync()
         {
-            string filePath = Path.Combine(FolderPath, "equipments_cache.json");
-            if (File.Exists(filePath))
-            {
-                string cachedData = File.ReadAllText(filePath);
-                Equipments = JsonConvert.DeserializeObject<ObservableCollection<Equipment>>(cachedData);
-            }
-            else
-            {
-                Equipments = new ObservableCollection<Equipment>(await DatabaseLoader.GetEquipmentAsync(LanguageCode).ConfigureAwait(false));
-                string serializedData = JsonConvert.SerializeObject(Equipments);
-                File.WriteAllText(filePath, serializedData);
-            }
+            Equipments = await LoadDataAsync(
+                "equipments_cache.json",
+                async () => new ObservableCollection<Equipment>(await DatabaseLoader.GetEquipmentAsync(LanguageCode)
+                    .ConfigureAwait(false))
+            );
+
+            //Загрузка текстовых данных для интерфейса, относящимся к снаряжению - Equipment
             await LoadEquipmentCommonAsync();
+            // Уведомление о загрузки данных
             IsEquipmentsDataLoaded = true;
             EquipmentsDataLoaded?.Invoke();
         }
 
+        /// <summary>
+        ///     Загружает текстовые данные для интерфейса, относящиеся к снаряжению - Equipment из базы данных, а затем кэширует
+        ///     их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
         public async Task LoadEquipmentCommonAsync()
         {
-            string filePath = Path.Combine(FolderPath, "equipment_common_cache.json");
-            if (File.Exists(filePath))
-            {
-                string cachedData = File.ReadAllText(filePath);
-                EquipmentCommon = JsonConvert.DeserializeObject<EquipmentCommon>(cachedData);
-            }
-            else
-            {
-                EquipmentCommon = await DatabaseLoader.GetEquipmentCommonAsync(LanguageCode);
-                string serializedData = JsonConvert.SerializeObject(EquipmentCommon);
-                File.WriteAllText(filePath, serializedData);
-            }
+            EquipmentCommon = await LoadDataAsync("equipment_common_cache.json",
+                async () => await DatabaseLoader.GetEquipmentCommonAsync(LanguageCode).ConfigureAwait(false));
         }
+
+        /// <summary>
+        ///     Загружает список проклятых предметов  - CursedPossession, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
         public async Task LoadCursedsDataAsync()
         {
-            string filePath = Path.Combine(FolderPath, "curseds_cache.json");
-            if (File.Exists(filePath))
-            {
-                string cachedData = File.ReadAllText(filePath);
-                Curseds = JsonConvert.DeserializeObject<ObservableCollection<CursedPossession>>(cachedData);
-            }
-            else
-            {
-                Curseds = new ObservableCollection<CursedPossession>(await DatabaseLoader.GetCursedPossessionsAsync(LanguageCode).ConfigureAwait(false));
-                string serializedData = JsonConvert.SerializeObject(Curseds);
-                File.WriteAllText(filePath, serializedData);
-            }
+            Curseds = await LoadDataAsync(
+                "curseds_cache.json",
+                async () => new ObservableCollection<CursedPossession>(await DatabaseLoader
+                    .GetCursedPossessionsAsync(LanguageCode).ConfigureAwait(false))
+            );
+            // Уведомление о загрузки данных
             IsCursedsDataLoaded = true;
             CursedsDataLoaded?.Invoke();
         }
-
     }
 }
