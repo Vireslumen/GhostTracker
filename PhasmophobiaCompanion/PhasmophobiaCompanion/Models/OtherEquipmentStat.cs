@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PhasmophobiaCompanion.Models
+﻿namespace PhasmophobiaCompanion.Models
 {
     /// <summary>
-    /// Представляет собой дополнительную характеристику снаряжения.
+    ///     Представляет собой дополнительную характеристику снаряжения.
     /// </summary>
     public class OtherEquipmentStat
     {

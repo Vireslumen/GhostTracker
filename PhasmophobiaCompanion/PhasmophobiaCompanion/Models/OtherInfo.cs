@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 
 namespace PhasmophobiaCompanion.Models
 {
     /// <summary>
-    /// Представляет собой данные для некатегоризируемой страницы.
+    ///     Представляет собой данные для некатегоризируемой страницы.
     /// </summary>
     public class OtherInfo : BaseDisplayableItem
     {

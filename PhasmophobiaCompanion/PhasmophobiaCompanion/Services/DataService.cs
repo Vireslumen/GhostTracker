@@ -15,13 +15,20 @@ namespace PhasmophobiaCompanion.Services
     public class DataService
     {
         private DatabaseLoader DatabaseLoader;
+
+        /// <summary>
+        /// Код языка, на котором будут отображаться данные в приложении.
+        /// </summary>
         private string LanguageCode;
+        /// <summary>
+        /// Путь к папке с кэшированными данными.
+        /// </summary>
         public string FolderPath;
         public DataService()
         {
             DatabaseLoader = new DatabaseLoader(new PhasmaDB());
+            //TODO: Сделать чтобы код языка выбирался изначально исходя из языка системы пользователя, а затем исходя из настроек
             LanguageCode = "EN";
-            Clues = new ObservableCollection<Clue>();
             FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
         }
         public event Action GhostsDataLoaded;
@@ -103,6 +110,10 @@ namespace PhasmophobiaCompanion.Services
         {
             return ChallengeModes[challengeID];
         }
+
+        /// <summary>
+        /// Загрузка первоначальных данных требуемых на главной странице
+        /// </summary>
         public async Task LoadInitialDataAsync()
         {
             try
@@ -115,10 +126,14 @@ namespace PhasmophobiaCompanion.Services
                 await LoadQuestsAsync();
                 await LoadOtherInfoAsync();
                 await LoadChallengeModeAsync();
+
+                //Добавление связи от призраков Ghost к уликам Clue
+                //Связи добавляются после кэширования, из-за невозможности кэшировать данные с такими связями
                 foreach (var ghost in Ghosts)
                 {
                     ghost.PopulateAssociatedClues(Clues);
                 }
+                //Добавление связи от улик Clue - к призракам Ghost
                 foreach (var clue in Clues)
                 {
                     clue.PopulateAssociatedGhosts(Ghosts);
@@ -129,6 +144,10 @@ namespace PhasmophobiaCompanion.Services
                 Console.ReadLine();
             }
         }
+
+        /// <summary>
+        /// Загрузка вторичных данных, которые не нужны для главной страницы, загружаются после первоначальных и уже во время работы приложения
+        /// </summary>
         public async Task LoadOtherDataAsync()
         {
             await LoadMapsDataAsync().ConfigureAwait(false);
@@ -139,33 +158,47 @@ namespace PhasmophobiaCompanion.Services
         public bool IsMapsDataLoaded { get; private set; }
         public bool IsEquipmentsDataLoaded { get; private set; }
         public bool IsCursedsDataLoaded { get; private set; }
+        
+        /// <summary>
+        /// Загружает данные о призраках - Ghost из базы данных, а затем кэширует их,
+        /// либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
         public async Task LoadGhostsDataAsync()
         {
             string filePath = Path.Combine(FolderPath, "ghosts_cache.json");
+            //Если кэш есть, то данные загружаются из него
             if (File.Exists(filePath))
             {
                 string cachedData = File.ReadAllText(filePath);
                 Ghosts = JsonConvert.DeserializeObject<ObservableCollection<Ghost>>(cachedData);
             }
+            //Если кэша нет, то данные загружаеюся из базы данных, а затем кэшируются
             else
             {
                 Ghosts = new ObservableCollection<Ghost>(await DatabaseLoader.GetGhostsAsync(LanguageCode));
                 string serializedData = JsonConvert.SerializeObject(Ghosts);
                 File.WriteAllText(filePath, serializedData);
             }
+            //Загрузка текстовых данных для интерфейса, относящимся к призракам - Ghost
             await LoadGhostCommonAsync();
+            //Уведомление о том, что данные загружены
             IsGhostsDataLoaded = true;
             GhostsDataLoaded?.Invoke();
         }
-
+        /// <summary>
+        /// Загружает текстовые данные для интерфейса, относящиеся к призракам - Ghost из базы данных, а затем кэширует их,
+        /// либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
         public async Task LoadGhostCommonAsync()
         {
             string filePath = Path.Combine(FolderPath, "ghost_common_cache.json");
+            //Если кэш есть, то данные загружаются из него
             if (File.Exists(filePath))
             {
                 string cachedData = File.ReadAllText(filePath);
                 GhostCommon = JsonConvert.DeserializeObject<GhostCommon>(cachedData);
             }
+            //Если кэша нет, то данные загружаеюся из базы данных, а затем кэшируются
             else
             {
                 GhostCommon = await DatabaseLoader.GetGhostCommonAsync(LanguageCode);
@@ -173,15 +206,20 @@ namespace PhasmophobiaCompanion.Services
                 File.WriteAllText(filePath, serializedData);
             }
         }
-
+        /// <summary>
+        /// Загружает список подсказок - Tip, , а затем кэширует их,
+        /// либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
         public async Task LoadTipsDataAsync()
         {
             string filePath = Path.Combine(FolderPath, "tips_cache.json");
+            //Если кэш есть, то данные загружаются из него
             if (File.Exists(filePath))
             {
                 string cachedData = File.ReadAllText(filePath);
                 Tips = JsonConvert.DeserializeObject<ObservableCollection<string>>(cachedData);
             }
+            //Если кэша нет, то данные загружаеюся из базы данных, а затем кэшируются
             else
             {
                 Tips = new ObservableCollection<string>(await DatabaseLoader.GetTipsAsync(LanguageCode));
@@ -189,6 +227,7 @@ namespace PhasmophobiaCompanion.Services
                 File.WriteAllText(filePath, serializedData);
             }
         }
+
         public async Task LoadDifficultiesAsync()
         {
             string filePath = Path.Combine(FolderPath, "difficulties_cache.json");
@@ -250,14 +289,17 @@ namespace PhasmophobiaCompanion.Services
             }
 
         }
+        
         public async Task LoadChallengeModeAsync()
         {
+            //TODO: переделать как у остальных методов
                 ChallengeModes = new ObservableCollection<ChallengeMode>(await DatabaseLoader.GetChallengeModesAsync(LanguageCode));
         }
 
         public async Task LoadCluesAsync()
         {
-            Clues=new ObservableCollection<Clue>(await DatabaseLoader.GetCluesAsync(LanguageCode));
+            //TODO: переделать как у остальных методов
+            Clues = new ObservableCollection<Clue>(await DatabaseLoader.GetCluesAsync(LanguageCode));
         }
 
         public async Task LoadMapsDataAsync()

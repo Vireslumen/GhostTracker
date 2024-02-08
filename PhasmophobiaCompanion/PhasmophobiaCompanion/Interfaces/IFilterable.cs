@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PhasmophobiaCompanion.Interfaces
+﻿namespace PhasmophobiaCompanion.Interfaces
 {
     public interface IFilterable
     {

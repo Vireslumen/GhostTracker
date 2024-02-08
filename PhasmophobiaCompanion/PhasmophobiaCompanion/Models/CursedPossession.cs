@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 
 namespace PhasmophobiaCompanion.Models
 {
     /// <summary>
-    /// Представляет собой проклятый предмет, который расположен на карте.
+    ///     Представляет собой проклятый предмет, который расположен на карте.
     /// </summary>
     public class CursedPossession : BaseDisplayableItem
     {

@@ -1,48 +1,42 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using PhasmophobiaCompanion.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
 using Xamarin.Forms;
 
 namespace PhasmophobiaCompanion.Data
 {
     /// <summary>
-    /// Контекст базы данных для приложений, наследующий от DbContext.
+    ///     Контекст базы данных для приложений, наследующий от DbContext.
     /// </summary>
     public class PhasmaDB : DbContext
     {
         //Определения DbSet для различных сущностей.
-        public DbSet<EquipmentCommonTranslations> EquipmentCommonTranslations { get; set; }
-        public DbSet<GhostCommonTranslations> GhostCommonTranslations { get; set; }
         public DbSet<ChallengeModeBase> ChallengeModeBase { get; set; }
         public DbSet<ClueBase> ClueBase { get; set; }
-        public DbSet<TipsTranslations> TipsTranslations { get; set; }
         public DbSet<CursedPossessionBase> CursedPossessionBase { get; set; }
         public DbSet<DifficultyBase> DifficultyBase { get; set; }
         public DbSet<EquipmentBase> EquipmentBase { get; set; }
+        public DbSet<EquipmentCommonTranslations> EquipmentCommonTranslations { get; set; }
         public DbSet<GhostBase> GhostBase { get; set; }
+        public DbSet<GhostCommonTranslations> GhostCommonTranslations { get; set; }
         public DbSet<MapBase> MapBase { get; set; }
         public DbSet<OtherInfoBase> OtherInfoBase { get; set; }
         public DbSet<PatchBase> PatchBase { get; set; }
         public DbSet<QuestBase> QuestBase { get; set; }
-        public DbSet<UnfoldingItemBase> UnfoldingItemBase { get; set; }
+        public DbSet<TipsTranslations> TipsTranslations { get; set; }
 
         /// <summary>
-        /// Конфигурация подключения к базе данных.
+        ///     Конфигурация подключения к базе данных.
         /// </summary>
-        /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string dbPath = "phasmaDATADB.db"; // Путь к файлу базы данных по умолчанию
+            var dbPath = "phasmaDATADB.db"; // Путь к файлу базы данных по умолчанию
 
             // Проверка, выполняется ли код на Android
             if (Device.RuntimePlatform == Device.Android)
             {
                 // Получение пути к папке для хранения базы данных на устройстве
-                string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+                var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
                 dbPath = Path.Combine(folderPath, dbPath);
             }
 
@@ -50,9 +44,8 @@ namespace PhasmophobiaCompanion.Data
         }
 
         /// <summary>
-        /// Конфигурация моделей с помощью Fluent API.
+        ///     Конфигурация моделей с помощью Fluent API.
         /// </summary>
-        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             ConfigureGhostEnitity(modelBuilder);
@@ -64,7 +57,7 @@ namespace PhasmophobiaCompanion.Data
             ConfigureOtherInfoEntity(modelBuilder);
             ConfigureChallengeModeEntity(modelBuilder);
         }
-        
+
         private void ConfigureChallengeModeEntity(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ChallengeModeBase>()

@@ -1,34 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 
 namespace PhasmophobiaCompanion.Models
 {
     /// <summary>
-    /// Представляет собой карту для игровой сессии.
+    ///     Представляет собой карту для игровой сессии.
     /// </summary>
     public class Map : BaseDisplayableItem
     {
-        public int ID { get; set; }
-        // Количество выходов.
+        /// <summary>
+        ///     Количество выходов.
+        /// </summary>
         public int Exits { get; set; }
-        public ObservableCollection<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }
-
-        // Количество этажей.
+        /// <summary>
+        ///     Количество этажей.
+        /// </summary>
         public int Floors { get; set; }
-
-        // Количество мест для прятания.
-        public string HidingSpotCount { get; set; }
-
-        // Количество комнат.
+        public int ID { get; set; }
+        /// <summary>
+        ///     Количество комнат.
+        /// </summary>
         public int RoomCount { get; set; }
-
-        // Размер карты.
-        public string Size { get; set; }
-        public ObservableCollection<UnfoldingItem> UnfoldingItems { get; set; }
-
-        // Уровень необходимый для разблокировки карты.
         public int UnlockLevel { get; set; }
+        public ObservableCollection<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }
+        public ObservableCollection<UnfoldingItem> UnfoldingItems { get; set; }
+        /// <summary>
+        ///     Количество мест для прятания.
+        /// </summary>
+        public string HidingSpotCount { get; set; }
+        /// <summary>
+        ///     Размер карты.
+        /// </summary>
+        public string Size { get; set; }
     }
 }
