@@ -9,6 +9,9 @@ using Xamarin.Forms;
 
 namespace PhasmophobiaCompanion.ViewModels
 {
+    /// <summary>
+    /// ViewModel для главной страницы.
+    /// </summary>
     public class MainPageViewModel
     {
         public readonly DataService _dataService;
@@ -27,6 +30,7 @@ namespace PhasmophobiaCompanion.ViewModels
         public MainPageViewModel()
         {
             _dataService = DependencyService.Get<DataService>();
+            //Загрузка всех данных для страницы
             ChallengeMode = _dataService.GetChallengeMode(1);
             Tips = _dataService.GetTips();
             Ghosts = _dataService.GetGhosts();
@@ -40,19 +44,21 @@ namespace PhasmophobiaCompanion.ViewModels
             DailyQuest = GetFourQuests(new int[] { 1, 2, 3, 4});
             WeeklyQuest = GetFourQuests(new int[] { 1, 2, 3, 4 });
         }
+
+        /// <summary>
+        /// Смена отображаемой подсказки на случайную из списка всех подсказок.
+        /// </summary>
         public void ChangeTip()
         {
-            try
-            {
                 Random random = new Random();
                 DisplayedTip = Tips[random.Next(Tips.Count)];
-            }
-            catch(Exception ex)
-            {
-                DisplayedTip = "Tip.";
-            }
         }
         
+        /// <summary>
+        /// Получение коллекции квестов по номерам.
+        /// </summary>
+        /// <param name="indices">массив номеров квестов.</param>
+        /// <returns>Коллекция квестов.</returns>
         public ObservableCollection<Quest> GetFourQuests(int[] indices)
         {
             return new ObservableCollection<Quest>(Quests.Where((c, index) => indices.Contains(index)));

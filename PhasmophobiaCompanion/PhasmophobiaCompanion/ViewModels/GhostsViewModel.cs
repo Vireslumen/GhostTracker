@@ -1,106 +1,115 @@
-﻿using PhasmophobiaCompanion.Interfaces;
-using PhasmophobiaCompanion.Models;
-using PhasmophobiaCompanion.Services;
-using PhasmophobiaCompanion.Views;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows.Input;
+using PhasmophobiaCompanion.Interfaces;
+using PhasmophobiaCompanion.Models;
+using PhasmophobiaCompanion.Services;
 using Xamarin.Forms;
-using PhasmophobiaCompanion.ViewModels;
 
 namespace PhasmophobiaCompanion.ViewModels
 {
+    /// <summary>
+    ///     ViewModel для страницы списка призраков, поддерживает поиск и фильтрацию.
+    /// </summary>
     public class GhostsViewModel : BaseViewModel, ISearchable, IFilterable
     {
-
         private readonly DataService _dataService;
-        private ObservableCollection<Ghost> ghosts;
-        private ObservableCollection<Clue> allClues;
+        private readonly ObservableCollection<Ghost> ghosts;
         private GhostCommon ghostCommon;
+        private ObservableCollection<Clue> allClues;
+        private ObservableCollection<Clue> selectedClues;
         private ObservableCollection<Ghost> filteredGhosts;
         private string searchQuery;
-        private ObservableCollection<Clue> selectedClues;
-        public GhostCommon GhostCommon
-        {
-            get => ghostCommon;
-            set
-            {
-                ghostCommon = value;
-                OnPropertyChanged(nameof(GhostCommon));
-            }
-        }
-        public ObservableCollection<Ghost> Ghosts
-        {
-            get { return filteredGhosts; }
-            set
-            {
-                SetProperty(ref filteredGhosts, value);
-            }
-        }
 
-        public string SearchQuery
-        {
-            get { return searchQuery; }
-            set
-            {
-                SetProperty(ref searchQuery, value);
-                SearchGhosts();
-            }
-        }
-
-        public ObservableCollection<Clue> AllClues
-        {
-            get { return allClues; }
-            set { SetProperty(ref allClues, value); }
-        }
-
-        public ObservableCollection<Clue> SelectedClues
-        {
-            get { return selectedClues; }
-            set
-            {
-                SetProperty(ref selectedClues, value);
-            }
-        }
-        public ICommand SearchCommand { get; set; }
-        public string CommonTitle;
-        public string CommonSearch;
         public GhostsViewModel()
         {
             try
             {
-
                 _dataService = DependencyService.Get<DataService>();
+                //Загрузка всех призраков и улик.
                 ghosts = _dataService.GetGhosts();
                 allClues = _dataService.GetClues();
-                GhostCommon = _dataService.GetGhostCommon();
                 SelectedClues = new ObservableCollection<Clue>();
                 Ghosts = new ObservableCollection<Ghost>(ghosts);
                 AllClues = new ObservableCollection<Clue>(allClues);
+                //Загрузка данных для интерфейса.
+                GhostCommon = _dataService.GetGhostCommon();
+
                 SearchCommand = new Command<string>(query => Search(query));
             }
             catch (Exception ex)
             {
                 Console.ReadLine();
             }
-
         }
 
+        /// <summary>
+        ///     Общие текстовые данные для интерфейса относящегося к призракам.
+        /// </summary>
+        public GhostCommon GhostCommon
+        {
+            get => ghostCommon;
+            set
+            {
+                ghostCommon = value;
+                OnPropertyChanged();
+            }
+        }
+        public ObservableCollection<Clue> AllClues
+        {
+            get => allClues;
+            set => SetProperty(ref allClues, value);
+        }
+        public ObservableCollection<Clue> SelectedClues
+        {
+            get => selectedClues;
+            set => SetProperty(ref selectedClues, value);
+        }
+        /// <summary>
+        ///     Отображаемая коллекция призраков, которая может быть отфильтрована на основе заданных критериев.
+        /// </summary>
+        public ObservableCollection<Ghost> Ghosts
+        {
+            get => filteredGhosts;
+            set => SetProperty(ref filteredGhosts, value);
+        }
+
+        /// <summary>
+        ///     Фильтрация списка призраков на основе выбранных улик.
+        /// </summary>
         public void Filter()
         {
-            var filtered = ghosts.Where(ghost => (!SelectedClues.Any() ||
-            SelectedClues.All(selectedClue => ghost.Clues.Any(clue => clue.Title == selectedClue.Title)))).ToList();
+            var filtered = ghosts.Where(ghost => !SelectedClues.Any() ||
+                                                 SelectedClues.All(selectedClue =>
+                                                     ghost.Clues.Any(clue => clue.Title == selectedClue.Title)))
+                .ToList();
             Ghosts = new ObservableCollection<Ghost>(filtered);
         }
 
+        public string SearchQuery
+        {
+            get => searchQuery;
+            set
+            {
+                SetProperty(ref searchQuery, value);
+                SearchGhosts();
+            }
+        }
+        public ICommand SearchCommand { get; set; }
+
+        /// <summary>
+        ///     Установка поискового запроса и активация поиска.
+        /// </summary>
+        /// <param name="query">Поисковый запрос.</param>
         public void Search(string query)
         {
             SearchQuery = query;
         }
 
+        /// <summary>
+        ///     Фильтрация коллекции в соответствии с поисковым запросом.
+        /// </summary>
         private void SearchGhosts()
         {
             if (string.IsNullOrWhiteSpace(SearchQuery))
@@ -109,10 +118,11 @@ namespace PhasmophobiaCompanion.ViewModels
             }
             else
             {
-                var filtered = ghosts.Where(ghost => ghost.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant())).ToList();
+                // Поиск по названию призрака.
+                var filtered = ghosts
+                    .Where(ghost => ghost.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant())).ToList();
                 Ghosts = new ObservableCollection<Ghost>(filtered);
             }
         }
-
     }
 }
