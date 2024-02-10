@@ -276,7 +276,7 @@ namespace PhasmophobiaCompanion.Services
         public async Task LoadOtherInfoAsync()
         {
             OtherInfos = await LoadDataAsync(
-                "quest_cache.json",
+                "otherinfos_cache.json",
                 async () => new ObservableCollection<OtherInfo>(await DatabaseLoader.GetOtherInfosAsync(LanguageCode))
             );
         }
