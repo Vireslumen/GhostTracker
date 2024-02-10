@@ -61,7 +61,7 @@
                         <StackLayout BackgroundColor="Aqua">
                             <Label Text="{Binding Size, StringFormat='Map Size: {0}'}" />
                             <Label Text="{Binding RoomCount, StringFormat='Room number: {0}'}" />
-                            <Label Text="{Binding UnlockLvl, StringFormat='Unlock Lvl: {0}'}" />
+                            <Label Text="{Binding UnlockLevel, StringFormat='Unlock Lvl: {0}'}" />
                             <Label Text="{Binding Floors, StringFormat='Floors: {0}'}" />
                             <Label Text="{Binding Exits, StringFormat='Exits: {0}'}" />
                             <Label Text="{Binding HidenSpotCount, StringFormat='Hiden Spots: {0}'}" />
