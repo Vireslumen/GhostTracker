@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.ChallengeModeDetailPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:pinch="clr-namespace:Xamarin.Forms.PinchZoomImage;assembly=Xamarin.Forms.PinchZoomImage"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     x:Name="ChallengeModeDetailPageName">
     <ScrollView>
         <StackLayout Orientation="Vertical">
+            <!--  Заголовок страницы  -->
             <Label
                 FontAttributes="Bold"
                 FontSize="Large"
@@ -19,10 +20,11 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
+
             <Grid>
+                <!--  Поле информации о карте особого режима  -->
                 <yummy:PancakeView
                     Grid.Column="0"
-                    Grid.ColumnSpan="1"
                     Padding="10,10,10,10"
                     BackgroundColor="White"
                     CornerRadius="16"
@@ -50,9 +52,9 @@
                             VerticalOptions="CenterAndExpand" />
                     </StackLayout>
                 </yummy:PancakeView>
+                <!--  Поле описание особого режима  -->
                 <yummy:PancakeView
                     Grid.Column="1"
-                    Grid.ColumnSpan="1"
                     Padding="10,10,10,10"
                     BackgroundColor="White"
                     CornerRadius="16"
@@ -76,9 +78,8 @@
                         VerticalOptions="Center" />
                 </yummy:PancakeView>
             </Grid>
+            <!--  Список снаряжения выдаваемого в особом режиме  -->
             <yummy:PancakeView
-                Grid.Column="1"
-                Grid.ColumnSpan="1"
                 Padding="10,10,10,10"
                 BackgroundColor="White"
                 CornerRadius="16">
@@ -111,9 +112,8 @@
                     </BindableLayout.ItemTemplate>
                 </StackLayout>
             </yummy:PancakeView>
+            <!--  Настройки сложности особого режима  -->
             <yummy:PancakeView
-                Grid.Column="1"
-                Grid.ColumnSpan="1"
                 Padding="10,10,10,10"
                 BackgroundColor="White"
                 CornerRadius="16">

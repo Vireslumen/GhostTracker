@@ -1,27 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.EquipmentDetailPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     x:Name="EquipmentDetailPageName">
     <StackLayout Orientation="Vertical">
-        <!--  Equipment Title  -->
+        <!--  Заголовок страницы  -->
         <Label
             FontAttributes="Bold"
             FontSize="Large"
             HorizontalOptions="CenterAndExpand"
             Text="{Binding SelectedEquipment.Title}" />
         <ScrollView>
-            <!--  Основной контейнер страницы  -->
             <Grid>
-                <!--  Первый элемент  -->
-
+                <!--  Изображение снаряжение с его описанием  -->
                 <yummy:PancakeView
                     Grid.Row="0"
                     Grid.Column="0"
-                    Grid.ColumnSpan="1"
                     Padding="10,10,10,10"
                     BackgroundColor="Yellow"
                     CornerRadius="16">
@@ -37,7 +34,9 @@
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <StackLayout>
+                        <!--  Изображение снаряжение  -->
                         <Image HeightRequest="100" Source="{Binding SelectedEquipment.ImageUrl}" />
+                        <!--  Описание снаряжения  -->
                         <ScrollView>
                             <Label
                                 FontAttributes="Italic"
@@ -46,16 +45,11 @@
                                 Text="{Binding SelectedEquipment.Description}"
                                 VerticalOptions="Center" />
                         </ScrollView>
-
                     </StackLayout>
                 </yummy:PancakeView>
-
-
-                <!--  Второй элемент  -->
                 <yummy:PancakeView
                     Grid.Row="0"
                     Grid.Column="1"
-                    Grid.ColumnSpan="1"
                     Padding="10,10,10,10"
                     BackgroundColor="Green"
                     CornerRadius="16">
@@ -70,8 +64,10 @@
                     <yummy:PancakeView.Border>
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
+                    <!--  Параметры снаряжения как общие так и уникальные  -->
                     <ScrollView>
                         <StackLayout BackgroundColor="Aqua">
+                            <!--  Общие параметры снаряжения  -->
                             <Label>
                                 <Label.FormattedText>
                                     <FormattedString>
@@ -117,6 +113,7 @@
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
+                            <!--  Уникальные параметры снаряжения  -->
                             <StackLayout BackgroundColor="Beige" BindableLayout.ItemsSource="{Binding SelectedEquipment.OtherEquipmentStats}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
@@ -128,12 +125,13 @@
                         </StackLayout>
                     </ScrollView>
                 </yummy:PancakeView>
-                <!--  Третий элемент  -->
                 <StackLayout
                     Grid.Row="1"
                     Grid.RowSpan="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="2">
+                    <!--  Список раскрывающихся элементов, содержащих текст в них  -->
+
                     <CollectionView ItemsSource="{Binding SelectedEquipment.UnfoldingItems}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
@@ -143,15 +141,19 @@
                                         BackgroundColor="White"
                                         CornerRadius="5">
                                         <StackLayout Orientation="Vertical">
+                                            <!--  Название раскрывающегося элемента  -->
                                             <Label Text="{Binding Title}" VerticalOptions="CenterAndExpand" />
                                             <StackLayout Orientation="Horizontal">
+                                                <!--  Краткое описание раскрывающегося элемента  -->
                                                 <Label Text="{Binding Header}" VerticalOptions="CenterAndExpand" />
+                                                <!--  Иконка раскрытия или скрытия тела элемента  -->
                                                 <Image
                                                     HeightRequest="20"
                                                     HorizontalOptions="EndAndExpand"
                                                     Source="{Binding Icon}"
                                                     VerticalOptions="CenterAndExpand" />
                                             </StackLayout>
+                                            <!--  Раскрывающийся текст  -->
                                             <Label IsVisible="{Binding IsExpanded}" Text="{Binding Body}" />
                                             <StackLayout.GestureRecognizers>
                                                 <TapGestureRecognizer Tapped="OnItemTapped" />

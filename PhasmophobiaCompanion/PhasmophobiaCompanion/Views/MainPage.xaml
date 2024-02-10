@@ -16,7 +16,7 @@
             CornerRadius="16"
             VerticalOptions="FillAndExpand">
             <StackLayout Spacing="10">
-                <!--  Special Mode  -->
+                <!--  Поле особого режима  -->
                 <yummy:PancakeView
                     Padding="10,10,10,10"
                     BackgroundColor="White"
@@ -33,6 +33,7 @@
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <StackLayout>
+                        <!--  Название особого режима  -->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
@@ -41,6 +42,7 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
+                        <!--  Описание особого режима  -->
                         <Label Text="{Binding ChallengeMode.Description}" />
                     </StackLayout>
                     <yummy:PancakeView.GestureRecognizers>
@@ -48,7 +50,7 @@
                     </yummy:PancakeView.GestureRecognizers>
                 </yummy:PancakeView>
 
-                <!--  Random Tip  -->
+                <!--  Рандомная подсказка  -->
                 <yummy:PancakeView
                     Padding="10,10,10,10"
                     BackgroundColor="White"
@@ -66,7 +68,7 @@
                     </yummy:PancakeView.Border>
                     <Label Text="{Binding DisplayedTip}" />
                 </yummy:PancakeView>
-                <!--  Global Search  -->
+                <!--  Строка поиска  -->
                 <yummy:PancakeView
                     Padding="10,10,10,10"
                     BackgroundColor="White"
@@ -84,7 +86,7 @@
                     </yummy:PancakeView.Border>
                     <SearchBar Placeholder="Search..." />
                 </yummy:PancakeView>
-                <!--  Speeds and Sanity Thresholds in a Grid  -->
+                <!--  Таблицы скоростей призраков и рассудка для начала охоты  -->
                 <Grid HeightRequest="300">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="4*" />
@@ -94,13 +96,14 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+                    <!--  Заголовок таблице скоростей призрака  -->
                     <Label
                         Grid.Row="0"
                         Grid.Column="0"
                         FontAttributes="Bold"
                         HorizontalTextAlignment="Center"
                         Text="{Binding GhostCommon.Speed}" />
-                    <!--  Ghost Speeds  -->
+                    <!--  Таблицы скоростей призрака  -->
                     <yummy:PancakeView
                         Grid.Row="1"
                         Grid.Column="0"
@@ -188,14 +191,14 @@
 
                         </StackLayout>
                     </yummy:PancakeView>
-
+                    <!--  Заголовок рассудка для начала охоты  -->
                     <Label
                         Grid.Row="0"
                         Grid.Column="1"
                         FontAttributes="Bold"
                         HorizontalTextAlignment="Center"
                         Text="{Binding GhostCommon.SanityHunt}" />
-                    <!--  Sanity Thresholds  -->
+                    <!--  Таблица рассудков для начала охоты  -->
 
 
                     <yummy:PancakeView
@@ -272,7 +275,7 @@
                         </StackLayout>
                     </yummy:PancakeView>
                 </Grid>
-                <!--  Evidence List  -->
+                <!--  Список улик  -->
                 <yummy:PancakeView
                     Padding="10,10,10,10"
                     BackgroundColor="White"
@@ -331,7 +334,7 @@
                     </FlexLayout>
 
                 </yummy:PancakeView>
-
+                <!--  Список сложностей  -->
                 <yummy:PancakeView
                     Padding="10,10,10,10"
                     BackgroundColor="White"
@@ -374,7 +377,7 @@
 
                 </yummy:PancakeView>
 
-                <!--  Released Patches  -->
+                <!--  Список патчей  -->
                 <yummy:PancakeView
                     Padding="10,10,10,10"
                     BackgroundColor="White"
@@ -411,14 +414,14 @@
                     </FlexLayout>
                 </yummy:PancakeView>
 
-                <!--  Daily and Weekly Quests in a Grid  -->
+                <!--  Список ежедневных и недельных квестов  -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <!--  Daily Quests  -->
+                    <!--  Ежедневные квесты  -->
                     <yummy:PancakeView
                         Grid.Column="0"
                         Padding="10,10,10,10"
@@ -450,7 +453,7 @@
                         </FlexLayout>
                     </yummy:PancakeView>
 
-                    <!--  Weekly Quests  -->
+                    <!--  Еженедельные квесты  -->
                     <yummy:PancakeView
                         Grid.Column="1"
                         Padding="10,10,10,10"
@@ -482,7 +485,7 @@
                         </FlexLayout>
                     </yummy:PancakeView>
                 </Grid>
-                <!--  Other Pages  -->
+                <!--  Горизонтальная прокрутная некатегоризованных страниц  -->
                 <yummy:PancakeView
                     Grid.Column="1"
                     Padding="10,10,10,10"
@@ -521,7 +524,6 @@
                                     <yummy:PancakeView.Border>
                                         <yummy:Border Thickness="1" Color="Color.Default" />
                                     </yummy:PancakeView.Border>
-                                    <!--  Сделать PancakeView круглым  -->
                                     <Label
                                         HorizontalOptions="Center"
                                         Text="{Binding Title}"

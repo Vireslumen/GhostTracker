@@ -16,16 +16,19 @@
         HorizontalOptions="Center"
         VerticalOptions="Center"
         WidthRequest="300">
+        <!--  Фильтрация по уликам  -->
         <StackLayout
             Padding="10"
             BackgroundColor="White"
             WidthRequest="200">
+            <!--  Название фильтрации по уликам  -->
             <Label
                 Margin="0,10,0,10"
                 FontAttributes="Bold"
                 FontSize="18"
                 HorizontalOptions="Center"
                 Text="{Binding GhostCommon.FilterTitle}" />
+            <!--  Список улик  -->
             <CollectionView
                 x:Name="cluesCollectionView"
                 ItemsSource="{Binding AllClues}"
@@ -62,6 +65,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <!--  Кнопка для принятия фильтрации  -->
             <Button
                 Margin="0,10,0,0"
                 BackgroundColor="#791AE5"

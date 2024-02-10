@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.ClueDetailPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -8,6 +9,7 @@
     x:Name="ClueDetailPageName">
     <ScrollView>
         <StackLayout Orientation="Vertical">
+            <!--  Заголовок страницы улики  -->
             <StackLayout Orientation="Horizontal">
                 <Image
                     HeightRequest="30"
@@ -21,10 +23,10 @@
             </StackLayout>
 
             <Grid>
+                <!--  Поле изображения улики  -->
                 <yummy:PancakeView
                     Grid.Row="0"
                     Grid.Column="0"
-                    Grid.ColumnSpan="1"
                     Padding="10,10,10,10"
                     BackgroundColor="Yellow"
                     CornerRadius="16">
@@ -44,10 +46,10 @@
                     </StackLayout>
 
                 </yummy:PancakeView>
+                <!--  Поле описание улики  -->
                 <yummy:PancakeView
                     Grid.Row="0"
                     Grid.Column="1"
-                    Grid.ColumnSpan="1"
                     Padding="10,10,10,10"
                     BackgroundColor="Green"
                     CornerRadius="16">
@@ -80,6 +82,7 @@
                 </Grid.ColumnDefinitions>
 
             </Grid>
+            <!--  Список раскрывающихся элементов содержащих список изображений и описаний к ним  -->
             <StackLayout BindableLayout.ItemsSource="{Binding ExpandFieldsWithImages}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
@@ -89,9 +92,12 @@
                                 BackgroundColor="White"
                                 CornerRadius="5">
                                 <StackLayout BackgroundColor="Aqua" Orientation="Vertical">
+                                    <!--  Название раскрывающегося элемента  -->
                                     <Label Text="{Binding Title}" VerticalOptions="CenterAndExpand" />
                                     <StackLayout Orientation="Horizontal">
+                                        <!--  Краткое описание раскрывающегося элемента  -->
                                         <Label Text="{Binding Header}" VerticalOptions="CenterAndExpand" />
+                                        <!--  Иконка раскрытия или скрытия тела элемента  -->
                                         <Image
                                             HeightRequest="20"
                                             HorizontalOptions="EndAndExpand"
@@ -99,11 +105,14 @@
                                             VerticalOptions="CenterAndExpand" />
                                     </StackLayout>
                                     <StackLayout IsVisible="{Binding IsExpanded}" Orientation="Vertical">
+                                        <!--  Описание раскрывающегося элемента  -->
                                         <Label Text="{Binding Body}" />
+                                        <!--  Список изображений и описания к ним  -->
                                         <StackLayout BindableLayout.ItemsSource="{Binding ImageWithDescriptions}">
                                             <BindableLayout.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackLayout Orientation="Vertical">
+                                                        <!--  Изображение  -->
                                                         <pinch:PinchZoom>
                                                             <pinch:PinchZoom.Content>
                                                                 <Image
@@ -112,6 +121,7 @@
                                                                     WidthRequest="500" />
                                                             </pinch:PinchZoom.Content>
                                                         </pinch:PinchZoom>
+                                                        <!--  Описание изображения  -->
                                                         <Label Text="{Binding Description}" VerticalOptions="Center" />
                                                     </StackLayout>
                                                 </DataTemplate>
@@ -127,6 +137,7 @@
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>
+            <!--  Список раскрывающихся элементов, содержащих текст в них  -->
             <StackLayout BindableLayout.ItemsSource="{Binding UnfoldingItems}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
@@ -136,15 +147,19 @@
                                 BackgroundColor="White"
                                 CornerRadius="5">
                                 <StackLayout Orientation="Vertical">
+                                    <!--  Название раскрывающегося элемента  -->
                                     <Label Text="{Binding Title}" VerticalOptions="CenterAndExpand" />
                                     <StackLayout Orientation="Horizontal">
+                                        <!--  Краткое описание раскрывающегося элемента  -->
                                         <Label Text="{Binding Header}" VerticalOptions="CenterAndExpand" />
+                                        <!--  Иконка раскрытия или скрытия тела элемента  -->
                                         <Image
                                             HeightRequest="20"
                                             HorizontalOptions="EndAndExpand"
                                             Source="{Binding Icon}"
                                             VerticalOptions="CenterAndExpand" />
                                     </StackLayout>
+                                    <!--  Раскрывающийся текст  -->
                                     <Label IsVisible="{Binding IsExpanded}" Text="{Binding Body}" />
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="OnItemTapped" />
@@ -155,7 +170,7 @@
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>
-
+            <!--  Поле содержащее список призраков у которых есть данная улика, а также список улик этих призраков  -->
             <yummy:PancakeView Padding="5,5,5,5" CornerRadius="10">
                 <yummy:PancakeView.Margin>
                     <Thickness>
@@ -177,6 +192,7 @@
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
+                                <!--  Список призраков  -->
                                 <StackLayout
                                     Grid.Column="0"
                                     Orientation="Vertical"
@@ -186,7 +202,7 @@
                                         <TapGestureRecognizer Tapped="OnGhostTapped" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
-
+                                <!--  Список улик призраков  -->
                                 <FlexLayout
                                     Grid.Column="1"
                                     BindableLayout.ItemsSource="{Binding Clues}"
@@ -199,10 +215,12 @@
                                                 Margin="0"
                                                 Orientation="Vertical"
                                                 VerticalOptions="FillAndExpand">
+                                                <!--  Иконка улики  -->
                                                 <Image
                                                     HeightRequest="30"
                                                     Source="{Binding IconFilePath}"
                                                     WidthRequest="30" />
+                                                <!--  Название улики  -->
                                                 <Label
                                                     HorizontalOptions="CenterAndExpand"
                                                     HorizontalTextAlignment="Center"

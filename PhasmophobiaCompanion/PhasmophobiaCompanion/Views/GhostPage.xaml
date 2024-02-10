@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.GhostPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:PhasmophobiaCompanion"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     Padding="0,20,0,0"
     BackgroundColor="#791AE5"
     NavigationPage.HasNavigationBar="False">
 
     <StackLayout>
+        <!--  Строка поиска и фильтрации призраков  -->
         <yummy:PancakeView
             Margin="20,0,20,20"
             Padding="10,0,0,0"
@@ -17,7 +18,9 @@
             CornerRadius="25"
             HeightRequest="50"
             VerticalOptions="EndAndExpand">
+
             <StackLayout Orientation="Horizontal">
+                <!--  Строка поиска призраков  -->
                 <Image
                     HeightRequest="25"
                     HorizontalOptions="Start"
@@ -31,6 +34,7 @@
                     HorizontalOptions="FillAndExpand"
                     Placeholder="{Binding GhostCommon.Search}"
                     Text="{Binding SearchQuery, Mode=TwoWay}" />
+                <!--  Кнопка фильтрации призраков  -->
                 <Image
                     HeightRequest="25"
                     HorizontalOptions="End"
@@ -56,6 +60,7 @@
                     CornerRadius="40,40,0,0"
                     VerticalOptions="FillAndExpand">
                     <StackLayout>
+                        <!--  Заголовок страницы  -->
                         <Label
                             Margin="10"
                             FontSize="20"
@@ -63,8 +68,7 @@
                             HorizontalTextAlignment="Center"
                             Text="{Binding GhostCommon.GhostsTitle}"
                             VerticalOptions="Center" />
-
-                        <!--  Элементы для отображения списка Ghost  -->
+                        <!--  Список призраков  -->
                         <CollectionView ItemsSource="{Binding Ghosts}" SelectionMode="Single">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
@@ -92,7 +96,9 @@
                                                 <TapGestureRecognizer Tapped="OnGhostTapped" />
                                             </yummy:PancakeView.GestureRecognizers>
                                             <StackLayout>
+                                                <!--  Изображение призрака  -->
                                                 <Image HeightRequest="150" Source="{Binding ImageFilePath}" />
+                                                <!--  Название призрака  -->
                                                 <Label
                                                     FontSize="20"
                                                     HorizontalOptions="CenterAndExpand"
@@ -100,6 +106,7 @@
                                                     Text="{Binding Title}"
                                                     TextColor="Black"
                                                     VerticalOptions="CenterAndExpand" />
+                                                <!--  Список улик призрака  -->
                                                 <FlexLayout
                                                     AlignItems="Stretch"
                                                     BindableLayout.ItemsSource="{Binding Clues}"

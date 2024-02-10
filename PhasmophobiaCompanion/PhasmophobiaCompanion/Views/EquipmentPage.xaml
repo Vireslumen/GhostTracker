@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.EquipmentPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -9,6 +10,7 @@
     BackgroundColor="#791AE5"
     NavigationPage.HasNavigationBar="False">
     <StackLayout>
+        <!--  Строка поиска и фильтрации снаряжения  -->
         <yummy:PancakeView
             Margin="20,0,20,20"
             Padding="10,0,0,0"
@@ -17,6 +19,7 @@
             HeightRequest="50"
             VerticalOptions="EndAndExpand">
             <StackLayout Orientation="Horizontal">
+                <!--  Строка поиска снаряжения  -->
                 <Image
                     HeightRequest="25"
                     HorizontalOptions="Start"
@@ -30,6 +33,7 @@
                     HorizontalOptions="FillAndExpand"
                     Placeholder="{Binding EquipmentCommon.Search}"
                     Text="{Binding SearchQuery, Mode=TwoWay}" />
+                <!--  Кнопка фильтрации снаряжения  -->
                 <Image
                     HeightRequest="25"
                     HorizontalOptions="End"
@@ -55,6 +59,7 @@
                     CornerRadius="40,40,0,0"
                     VerticalOptions="FillAndExpand">
                     <StackLayout>
+                        <!--  Заголовок страницы  -->
                         <Label
                             Margin="10"
                             FontAttributes="Bold"
@@ -64,7 +69,7 @@
                             Text="{Binding EquipmentCommon.EquipmentsTitle}"
                             TextColor="#791AE5"
                             VerticalOptions="Center" />
-
+                        <!--  Список снаряжения  -->
                         <CollectionView ItemsSource="{Binding Equipments}" SelectionMode="Single">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
@@ -92,6 +97,7 @@
                                             </yummy:PancakeView.GestureRecognizers>
                                             <StackLayout>
                                                 <AbsoluteLayout>
+                                                    <!--  Изображения снаряжения  -->
                                                     <Image
                                                         AbsoluteLayout.LayoutBounds="0,0,1,1"
                                                         AbsoluteLayout.LayoutFlags="All"
@@ -101,6 +107,7 @@
                                                             0,20,0,20
                                                         </Image.Margin>
                                                     </Image>
+                                                    <!--  Уровень разблокировки снаряжения  -->
                                                     <yummy:PancakeView
                                                         AbsoluteLayout.LayoutBounds="0.01,0.01,-1,-1"
                                                         AbsoluteLayout.LayoutFlags="PositionProportional"
@@ -125,6 +132,7 @@
                                                                 VerticalOptions="Center" />
                                                         </StackLayout>
                                                     </yummy:PancakeView>
+                                                    <!--  Тир снаряжения  -->
                                                     <yummy:PancakeView
                                                         AbsoluteLayout.LayoutBounds="0.99,0.01,-1,-1"
                                                         AbsoluteLayout.LayoutFlags="PositionProportional"
@@ -153,6 +161,7 @@
                                                             </Label.FormattedText>
                                                         </Label>
                                                     </yummy:PancakeView>
+                                                    <!--  Цена снаряжения  -->
                                                     <yummy:PancakeView
                                                         AbsoluteLayout.LayoutBounds="0.99,0.99,-1,-1"
                                                         AbsoluteLayout.LayoutFlags="PositionProportional"
@@ -177,6 +186,7 @@
                                                                 VerticalOptions="Center" />
                                                         </StackLayout>
                                                     </yummy:PancakeView>
+                                                    <!--  Цена разблокировки снаряжения  -->
                                                     <yummy:PancakeView
                                                         AbsoluteLayout.LayoutBounds="0.01,0.99,-1,-1"
                                                         AbsoluteLayout.LayoutFlags="PositionProportional"
@@ -201,8 +211,8 @@
                                                                 VerticalOptions="Center" />
                                                         </StackLayout>
                                                     </yummy:PancakeView>
-
                                                 </AbsoluteLayout>
+                                                <!--  Название снаряжения  -->
                                                 <Label
                                                     FontAttributes="Bold"
                                                     FontSize="20"
@@ -211,6 +221,7 @@
                                                     Text="{Binding Title}"
                                                     TextColor="Black"
                                                     VerticalOptions="CenterAndExpand" />
+                                                <!--  TODO: Сделай чтобы это было нормально  -->
                                                 <StackLayout>
                                                     <StackLayout BindableLayout.ItemsSource="{Binding OtherStats}">
                                                         <BindableLayout.ItemTemplate>

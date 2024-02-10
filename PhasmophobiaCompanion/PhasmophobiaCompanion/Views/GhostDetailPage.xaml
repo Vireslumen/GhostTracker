@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.GhostDetailPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -9,18 +10,14 @@
     NavigationPage.HasNavigationBar="False">
 
     <ScrollView>
-        <!--  Основной контейнер страницы  -->
         <Grid>
-            <!--  Первый элемент  -->
             <BoxView
                 Grid.Row="0"
-                Grid.RowSpan="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="4"
                 BackgroundColor="Green" />
             <StackLayout
                 Grid.Row="0"
-                Grid.RowSpan="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="4"
                 HeightRequest="260">
@@ -44,7 +41,9 @@
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <StackLayout>
+                        <!--  Изображение призрака  -->
                         <Image HeightRequest="150" Source="{Binding ImageFilePath}" />
+                        <!--  Название призркак  -->
                         <Label
                             FontAttributes="Bold"
                             FontSize="20"
@@ -53,6 +52,7 @@
                             Text="{Binding Title}"
                             TextColor="Black"
                             VerticalOptions="CenterAndExpand" />
+                        <!--  Список улик призрака  -->
                         <FlexLayout
                             AlignItems="Stretch"
                             BindableLayout.ItemsSource="{Binding Clues}"
@@ -91,14 +91,12 @@
                     </StackLayout>
                 </yummy:PancakeView>
             </StackLayout>
-
-            <!--  Второй элемент  -->
             <BoxView
                 Grid.Row="0"
-                Grid.RowSpan="1"
                 Grid.Column="4"
                 Grid.ColumnSpan="5"
                 BackgroundColor="White" />
+            <!--  Описание призрака  -->
             <Label
                 Grid.Row="0"
                 Grid.Column="4"
@@ -108,7 +106,6 @@
                 HorizontalOptions="Center"
                 Text="{Binding Description}"
                 VerticalOptions="Center" />
-            <!--  Третий элемент  -->
             <BoxView
                 Grid.Row="1"
                 Grid.RowSpan="2"
@@ -120,6 +117,7 @@
                 Grid.RowSpan="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="9">
+                <!--  Список раскрывающихся элементов, содержащих текст в них  -->
                 <CollectionView ItemsSource="{Binding UnfoldingItems}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
@@ -129,15 +127,19 @@
                                     BackgroundColor="White"
                                     CornerRadius="5">
                                     <StackLayout Orientation="Vertical">
+                                        <!--  Название раскрывающегося элемента  -->
                                         <Label Text="{Binding Title}" VerticalOptions="CenterAndExpand" />
                                         <StackLayout Orientation="Horizontal">
+                                            <!--  Краткое описание раскрывающегося элемента  -->
                                             <Label Text="{Binding Header}" VerticalOptions="CenterAndExpand" />
+                                            <!--  Иконка раскрытия или скрытия тела элемента  -->
                                             <Image
                                                 HeightRequest="20"
                                                 HorizontalOptions="EndAndExpand"
                                                 Source="{Binding Icon}"
                                                 VerticalOptions="CenterAndExpand" />
                                         </StackLayout>
+                                        <!--  Раскрывающийся текст  -->
                                         <Label IsVisible="{Binding IsExpanded}" Text="{Binding Body}" />
                                         <StackLayout.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnItemTapped" />

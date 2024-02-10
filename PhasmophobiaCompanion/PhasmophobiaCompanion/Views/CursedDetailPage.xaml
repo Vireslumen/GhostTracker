@@ -1,24 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.CursedDetailPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:pinch="clr-namespace:Xamarin.Forms.PinchZoomImage;assembly=Xamarin.Forms.PinchZoomImage"
-    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+    xmlns:pinch="clr-namespace:Xamarin.Forms.PinchZoomImage;assembly=Xamarin.Forms.PinchZoomImage">
     <ScrollView>
         <StackLayout Orientation="Vertical">
+            <!--  Заголовок страницы  -->
             <Label
                 FontAttributes="Bold"
                 FontSize="Large"
                 HorizontalOptions="CenterAndExpand"
                 Text="{Binding Title}" />
+            <!--  Изображение проклятого предмета  -->
             <Image HeightRequest="150" Source="{Binding ImageUrl}" />
+            <!--  Описание проклятого предмета  -->
             <Label
                 FontAttributes="Italic"
                 FontSize="16"
                 HorizontalOptions="Center"
                 Text="{Binding Description}"
                 VerticalOptions="Center" />
+            <!--  Список раскрывающихся элементов содержащих список изображений и описаний к ним  -->
             <StackLayout BindableLayout.ItemsSource="{Binding ExpandFieldsWithImages}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
@@ -28,21 +32,28 @@
                                 BackgroundColor="White"
                                 CornerRadius="5">
                                 <StackLayout BackgroundColor="Aqua" Orientation="Vertical">
+                                    <!--  Название раскрывающегося элемента  -->
                                     <Label Text="{Binding Title}" VerticalOptions="CenterAndExpand" />
                                     <StackLayout Orientation="Horizontal">
+                                        <!--  Краткое описание раскрывающегося элемента  -->
                                         <Label Text="{Binding Header}" VerticalOptions="CenterAndExpand" />
+                                        <!--  Иконка раскрытия или скрытия тела элемента  -->
                                         <Image
                                             HeightRequest="20"
                                             HorizontalOptions="EndAndExpand"
                                             Source="{Binding Icon}"
                                             VerticalOptions="CenterAndExpand" />
                                     </StackLayout>
+
                                     <StackLayout IsVisible="{Binding IsExpanded}" Orientation="Vertical">
+                                        <!--  Описание раскрывающегося элемента  -->
                                         <Label Text="{Binding Body}" />
+                                        <!--  Список изображений и описания к ним  -->
                                         <StackLayout BindableLayout.ItemsSource="{Binding ImageWithDescriptions}">
                                             <BindableLayout.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackLayout Orientation="Vertical">
+                                                        <!--  Изображение  -->
                                                         <pinch:PinchZoom>
                                                             <pinch:PinchZoom.Content>
                                                                 <Image
@@ -51,6 +62,7 @@
                                                                     WidthRequest="500" />
                                                             </pinch:PinchZoom.Content>
                                                         </pinch:PinchZoom>
+                                                        <!--  Описание изображения  -->
                                                         <Label Text="{Binding Description}" VerticalOptions="Center" />
                                                     </StackLayout>
                                                 </DataTemplate>
@@ -66,6 +78,7 @@
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>
+            <!--  Список раскрывающихся элементов, содержащих текст в них  -->
             <StackLayout BindableLayout.ItemsSource="{Binding UnfoldingItems}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
@@ -75,15 +88,19 @@
                                 BackgroundColor="White"
                                 CornerRadius="5">
                                 <StackLayout Orientation="Vertical">
+                                    <!--  Название раскрывающегося элемента  -->
                                     <Label Text="{Binding Title}" VerticalOptions="CenterAndExpand" />
                                     <StackLayout Orientation="Horizontal">
+                                        <!--  Краткое описание раскрывающегося элемента  -->
                                         <Label Text="{Binding Header}" VerticalOptions="CenterAndExpand" />
+                                        <!--  Иконка раскрытия или скрытия тела элемента  -->
                                         <Image
                                             HeightRequest="20"
                                             HorizontalOptions="EndAndExpand"
                                             Source="{Binding Icon}"
                                             VerticalOptions="CenterAndExpand" />
                                     </StackLayout>
+                                    <!--  Раскрывающийся текст  -->
                                     <Label IsVisible="{Binding IsExpanded}" Text="{Binding Body}" />
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="OnItemTapped" />
