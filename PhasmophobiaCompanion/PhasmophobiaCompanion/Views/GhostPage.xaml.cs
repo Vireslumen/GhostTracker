@@ -1,29 +1,25 @@
-﻿using PhasmophobiaCompanion.Models;
+﻿using System;
+using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.ViewModels;
 using Rg.Plugins.Popup.Services;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
-using Xamarin.Forms.PancakeView;
 using Xamarin.Forms.Xaml;
 
 namespace PhasmophobiaCompanion.Views
 {
-
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class GhostPage : ContentPage
     {
         public GhostPage()
         {
             InitializeComponent();
-            GhostsViewModel viewModel = new GhostsViewModel();
+            var viewModel = new GhostsViewModel();
             BindingContext = viewModel;
         }
+
+        /// <summary>
+        ///     Открывает всплывающее окно для фильтрации снаряжения.
+        /// </summary>
         private async void FilterTapped(object sender, EventArgs e)
         {
             if (BindingContext is GhostsViewModel viewModel)
@@ -32,25 +28,25 @@ namespace PhasmophobiaCompanion.Views
                 await PopupNavigation.Instance.PushAsync(filterPage);
             }
         }
-        private void OnSearchCompleted(object sender, EventArgs e)
-        {
-            if(BindingContext is ViewModels.GhostsViewModel viewModel)
-            {
-                viewModel.SearchCommand.Execute(null);
-            }
-        }
 
+        /// <summary>
+        ///     Переход на подробную страницу призрака по нажатию на него.
+        /// </summary>
         private void OnGhostTapped(object sender, EventArgs e)
         {
             if (sender is View view && view.BindingContext is Ghost selectedGhost)
             {
-                // Создайте экземпляр вашей детальной страницы, передавая выбранный призрак
                 var detailPage = new GhostDetailPage(selectedGhost);
-
-                // Используйте навигацию для открытия детальной страницы
                 Application.Current.MainPage.Navigation.PushAsync(detailPage);
             }
         }
 
+        /// <summary>
+        ///     Выполняет поиск после его завершения.
+        /// </summary>
+        private void OnSearchCompleted(object sender, EventArgs e)
+        {
+            if (BindingContext is GhostsViewModel viewModel) viewModel.SearchCommand.Execute(null);
+        }
     }
 }

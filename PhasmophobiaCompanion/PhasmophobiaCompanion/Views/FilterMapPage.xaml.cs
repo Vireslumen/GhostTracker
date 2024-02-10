@@ -1,13 +1,9 @@
-﻿using PhasmophobiaCompanion.ViewModels;
-using Rg.Plugins.Popup.Pages;
-using Rg.Plugins.Popup.Services;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using PhasmophobiaCompanion.ViewModels;
+using Rg.Plugins.Popup.Pages;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,56 +13,45 @@ namespace PhasmophobiaCompanion.Views
     [DesignTimeVisible(false)]
     public partial class FilterMapPage : PopupPage
     {
+        /// <summary>
+        ///     Включена ли обработка выбора элемента списка тиров.
+        /// </summary>
         private bool isSelectionHandlingEnabled = true;
+
         public FilterMapPage(MapsViewModel viewModel)
         {
             InitializeComponent();
             sizesCollectionView.SelectionChanged += OnItemSelected;
             BindingContext = viewModel;
-
         }
-        private void OnItemSelected(object sender, SelectionChangedEventArgs e)
-        {
-            if (BindingContext is MapsViewModel viewModel)
-            {
-                if (isSelectionHandlingEnabled)
-                {
-                    viewModel.SelectedSizes.Clear();
-                    foreach (string item in e.CurrentSelection)
-                    {
-                        viewModel.SelectedSizes.Add(item);
-                    }
-                }
-            }
 
-        }
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
             if (BindingContext is MapsViewModel viewModel)
             {
-                // Отключите обработку выбора элементов
+                // Отключение обработки выбора элементов
                 isSelectionHandlingEnabled = false;
 
-                // Очистите выбранные элементы
+                // Очистка выбранных элементы
                 sizesCollectionView.SelectedItems.Clear();
 
-                // Выберите элементы в соответствии с SelectedClues
+                // Выбор элементов в соответствии с SelectedSizes
                 foreach (var selectedTier in viewModel.SelectedSizes)
                 {
-
                     var tier = viewModel.AllSizes.FirstOrDefault(c => c == selectedTier);
-                    if (!string.IsNullOrEmpty(tier))
-                    {
-                        sizesCollectionView.SelectedItems.Add(tier);
-                    }
+                    if (!string.IsNullOrEmpty(tier)) sizesCollectionView.SelectedItems.Add(tier);
                 }
 
-                // Включите обработку выбора элементов
+                // Включение обработки выбора элементов
                 isSelectionHandlingEnabled = true;
             }
         }
+
+        /// <summary>
+        ///     Применение выбранных фильтров для страницы.
+        /// </summary>
         private async void OnApplyFiltersClicked(object sender, EventArgs e)
         {
             if (BindingContext is MapsViewModel viewModel)
@@ -77,6 +62,20 @@ namespace PhasmophobiaCompanion.Views
                 viewModel.Filter();
                 await PopupNavigation.Instance.PopAsync();
             }
+        }
+
+        /// <summary>
+        ///     Изменение списка выбранных размеров карт во ViewModel.
+        ///     Происходит при нажатии на размер карты в списке отображаемом в интерфейсе.
+        /// </summary>
+        private void OnItemSelected(object sender, SelectionChangedEventArgs e)
+        {
+            if (BindingContext is MapsViewModel viewModel)
+                if (isSelectionHandlingEnabled)
+                {
+                    viewModel.SelectedSizes.Clear();
+                    foreach (string item in e.CurrentSelection) viewModel.SelectedSizes.Add(item);
+                }
         }
     }
 }

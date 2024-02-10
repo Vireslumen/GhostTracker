@@ -1,69 +1,57 @@
-﻿using Rg.Plugins.Popup.Pages;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
-using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.ViewModels;
-using System;
+using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace PhasmophobiaCompanion.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     [DesignTimeVisible(false)]
-    public partial class FilterEquipmentPage: PopupPage
+    public partial class FilterEquipmentPage : PopupPage
     {
+        /// <summary>
+        ///     Включена ли обработка выбора элемента списка тиров.
+        /// </summary>
         private bool isSelectionHandlingEnabled = true;
+
         public FilterEquipmentPage(EquipmentsViewModel viewModel)
-		{
-			InitializeComponent ();
+        {
+            InitializeComponent();
             tiersCollectionView.SelectionChanged += OnItemSelected;
             BindingContext = viewModel;
         }
-        private void OnItemSelected(object sender, SelectionChangedEventArgs e)
-        {
-            if (BindingContext is EquipmentsViewModel viewModel)
-            {
-                if (isSelectionHandlingEnabled)
-                {
 
-                    viewModel.SelectedTiers.Clear();
-                    foreach (string item in e.CurrentSelection)
-                    {
-                        viewModel.SelectedTiers.Add(item);
-                    }
-                }
-            }
-
-        }
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
             if (BindingContext is EquipmentsViewModel viewModel)
             {
-                // Отключите обработку выбора элементов
+                // Отключение обработки выбора элементов
                 isSelectionHandlingEnabled = false;
 
-                // Очистите выбранные элементы
+                // Очистка выбранных элементы
                 tiersCollectionView.SelectedItems.Clear();
 
-                // Выберите элементы в соответствии с SelectedClues
+                // Выбор элементов в соответствии с SelectedTiers
                 foreach (var selectedTier in viewModel.SelectedTiers)
                 {
-
                     var tier = viewModel.AllTiers.FirstOrDefault(c => c == selectedTier);
-                    if (!string.IsNullOrEmpty(tier))
-                    {
-                        tiersCollectionView.SelectedItems.Add(tier);
-                    }
+                    if (!string.IsNullOrEmpty(tier)) tiersCollectionView.SelectedItems.Add(tier);
                 }
 
-                // Включите обработку выбора элементов
+                // Включение обработки выбора элементов
                 isSelectionHandlingEnabled = true;
             }
         }
+
+        /// <summary>
+        ///     Применение выбранных фильтров для страницы.
+        /// </summary>
         private async void OnApplyFiltersClicked(object sender, EventArgs e)
         {
             if (BindingContext is EquipmentsViewModel viewModel)
@@ -74,6 +62,20 @@ namespace PhasmophobiaCompanion.Views
                 viewModel.Filter();
                 await PopupNavigation.Instance.PopAsync();
             }
+        }
+
+        /// <summary>
+        ///     Изменение списка выбранных тиров во ViewModel.
+        ///     Происходит при нажатии на тир в списке отображаемом в интерфейсе.
+        /// </summary>
+        private void OnItemSelected(object sender, SelectionChangedEventArgs e)
+        {
+            if (BindingContext is EquipmentsViewModel viewModel)
+                if (isSelectionHandlingEnabled)
+                {
+                    viewModel.SelectedTiers.Clear();
+                    foreach (string item in e.CurrentSelection) viewModel.SelectedTiers.Add(item);
+                }
         }
     }
 }
