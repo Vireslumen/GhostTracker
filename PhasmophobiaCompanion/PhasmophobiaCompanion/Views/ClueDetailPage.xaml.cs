@@ -24,11 +24,6 @@ namespace PhasmophobiaCompanion.Views
             {
                 unfoldingItem.IsExpanded = !unfoldingItem.IsExpanded;
             }
-            else if (sender is StackLayout layout2 && layout2.BindingContext is ExpandFieldWithImages expandFieldWithImages)
-            {
-                expandFieldWithImages.IsExpanded = !expandFieldWithImages.IsExpanded;
-            }
-            //TODO: Возможно стоит убрать else if вроде должно и в первый заходить из-за наследования
         }
 
         private void OnClueTapped(object sender, EventArgs e)

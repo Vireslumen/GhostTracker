@@ -24,10 +24,6 @@ namespace PhasmophobiaCompanion.Views
             {
                 unfoldingItem.IsExpanded = !unfoldingItem.IsExpanded;
             }
-            else if(sender is StackLayout layout2 && layout2.BindingContext is ExpandFieldWithImages expandFieldWithImages)
-            {
-                expandFieldWithImages.IsExpanded = !expandFieldWithImages.IsExpanded;
-            }
         }
     }
 }
