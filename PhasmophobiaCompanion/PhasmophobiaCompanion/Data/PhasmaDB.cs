@@ -20,6 +20,7 @@ namespace PhasmophobiaCompanion.Data
         public DbSet<GhostBase> GhostBase { get; set; }
         public DbSet<GhostCommonTranslations> GhostCommonTranslations { get; set; }
         public DbSet<MapBase> MapBase { get; set; }
+        public DbSet<MapCommonTranslations> MapCommonTranslations { get; set; }
         public DbSet<OtherInfoBase> OtherInfoBase { get; set; }
         public DbSet<PatchBase> PatchBase { get; set; }
         public DbSet<QuestBase> QuestBase { get; set; }

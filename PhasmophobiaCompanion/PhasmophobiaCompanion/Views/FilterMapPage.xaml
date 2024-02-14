@@ -32,7 +32,7 @@
                     FontAttributes="Bold"
                     FontSize="18"
                     HorizontalOptions="Center"
-                    Text="Filter by Size" />
+                    Text="{Binding MapCommon.FilterSize}" />
                 <!--  Список размеров карт  -->
                 <CollectionView
                     x:Name="sizesCollectionView"
@@ -81,7 +81,7 @@
                     FontSize="18"
                     HorizontalOptions="Center"
                     HorizontalTextAlignment="Center"
-                    Text="Filter by Room Number" />
+                    Text="{Binding MapCommon.FilterRoom}" />
                 <!--  Поле минимального количества комнат для фильтрации  -->
                 <Entry
                     x:Name="minRoom"
@@ -107,7 +107,7 @@
                 BackgroundColor="#791AE5"
                 Clicked="OnApplyFiltersClicked"
                 CornerRadius="5"
-                Text="Apply"
+                Text="{Binding MapCommon.Apply}"
                 TextColor="White" />
         </Grid>
 

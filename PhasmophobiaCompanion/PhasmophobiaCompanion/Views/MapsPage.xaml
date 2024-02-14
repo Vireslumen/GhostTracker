@@ -30,7 +30,7 @@
                     BackgroundColor="White"
                     Completed="OnSearchCompleted"
                     HorizontalOptions="FillAndExpand"
-                    Placeholder="Search Map"
+                    Placeholder="{Binding MapCommon.Search}"
                     Text="{Binding SearchQuery, Mode=TwoWay}" />
                 <!--  Кнопка фильтрации карт  -->
                 <Image
@@ -64,7 +64,7 @@
                             FontSize="20"
                             HorizontalOptions="CenterAndExpand"
                             HorizontalTextAlignment="Center"
-                            Text="Maps"
+                            Text="{Binding MapCommon.MapsTitle}"
                             VerticalOptions="Center" />
                         <!--  Список карт  -->
                         <CollectionView ItemsSource="{Binding Maps}" SelectionMode="Single">

@@ -14,7 +14,7 @@
                 FontAttributes="Bold"
                 FontSize="Large"
                 HorizontalOptions="CenterAndExpand"
-                Text="{Binding Title}" />
+                Text="{Binding SelectedMap.Title}" />
             <Grid>
                 <!--  Изображение карты  -->
                 <yummy:PancakeView
@@ -35,7 +35,7 @@
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <StackLayout>
-                        <Image HeightRequest="150" Source="{Binding ImageUrl}" />
+                        <Image HeightRequest="150" Source="{Binding SelectedMap.ImageUrl}" />
                     </StackLayout>
 
                 </yummy:PancakeView>
@@ -59,12 +59,60 @@
                     </yummy:PancakeView.Border>
                     <ScrollView>
                         <StackLayout BackgroundColor="Aqua">
-                            <Label Text="{Binding Size, StringFormat='Map Size: {0}'}" />
-                            <Label Text="{Binding RoomCount, StringFormat='Room number: {0}'}" />
-                            <Label Text="{Binding UnlockLevel, StringFormat='Unlock Lvl: {0}'}" />
-                            <Label Text="{Binding Floors, StringFormat='Floors: {0}'}" />
-                            <Label Text="{Binding Exits, StringFormat='Exits: {0}'}" />
-                            <Label Text="{Binding HidenSpotCount, StringFormat='Hiden Spots: {0}'}" />
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding MapCommon.MapSize}" />
+                                        <Span Text=": " />
+                                        <Span Text="{Binding SelectedMap.Size}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding MapCommon.RoomNumber}" />
+                                        <Span Text=": " />
+                                        <Span Text="{Binding SelectedMap.RoomCount}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding MapCommon.UnlockLvl}" />
+                                        <Span Text=": " />
+                                        <Span Text="{Binding SelectedMap.UnlockLevel}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding MapCommon.Floors}" />
+                                        <Span Text=": " />
+                                        <Span Text="{Binding SelectedMap.Floors}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding MapCommon.Exits}" />
+                                        <Span Text=": " />
+                                        <Span Text="{Binding SelectedMap.Exits}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding MapCommon.HidenSpot}" />
+                                        <Span Text=": " />
+                                        <Span Text="{Binding SelectedMap.HidingSpotCount}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
                         </StackLayout>
                     </ScrollView>
                 </yummy:PancakeView>
@@ -77,7 +125,7 @@
                         FontAttributes="Italic"
                         FontSize="16"
                         HorizontalOptions="Center"
-                        Text="{Binding Description}"
+                        Text="{Binding SelectedMap.Description}"
                         VerticalOptions="Center" />
                 </ScrollView>
                 <Grid.RowDefinitions>
@@ -90,7 +138,7 @@
 
             </Grid>
             <!--  Список раскрывающихся элементов содержащих список изображений и описаний к ним  -->
-            <StackLayout BindableLayout.ItemsSource="{Binding ExpandFieldsWithImages}">
+            <StackLayout BindableLayout.ItemsSource="{Binding SelectedMap.ExpandFieldsWithImages}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
@@ -145,7 +193,7 @@
                 </BindableLayout.ItemTemplate>
             </StackLayout>
             <!--  Список раскрывающихся элементов, содержащих текст в них  -->
-            <StackLayout BindableLayout.ItemsSource="{Binding UnfoldingItems}">
+            <StackLayout BindableLayout.ItemsSource="{Binding SelectedMap.UnfoldingItems}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>

@@ -11,12 +11,13 @@ namespace PhasmophobiaCompanion.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapsPage : ContentPage
     {
+        private MapsViewModel viewModel;
         public MapsPage()
         {
             try
             {
                 InitializeComponent();
-                var viewModel = new MapsViewModel();
+                viewModel = new MapsViewModel();
                 BindingContext = viewModel;
             }
             catch (Exception ex)
@@ -55,7 +56,8 @@ namespace PhasmophobiaCompanion.Views
             {
                 if (sender is View view && view.BindingContext is Map selectMap)
                 {
-                    var detailPage = new MapDetailPage(selectMap);
+                    viewModel.SelectedMap = selectMap;
+                    var detailPage = new MapDetailPage(viewModel);
                     Application.Current.MainPage.Navigation.PushAsync(detailPage);
                 }
             }

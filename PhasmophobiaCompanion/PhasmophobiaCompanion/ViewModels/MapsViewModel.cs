@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Interfaces;
@@ -18,6 +19,8 @@ namespace PhasmophobiaCompanion.ViewModels
         private readonly ObservableCollection<Map> maps;
         private double maxRoom = 100;
         private double minRoom;
+        private Map selectedMap;
+        private MapCommon mapCommon;
         private ObservableCollection<Map> filteredMaps;
         private ObservableCollection<string> allSizes;
         private ObservableCollection<string> selectedSizes;
@@ -31,18 +34,19 @@ namespace PhasmophobiaCompanion.ViewModels
                 // Загрузка всех карт.
                 maps = _dataService.GetMaps();
                 Maps = new ObservableCollection<Map>(maps);
+                MapCommon = _dataService.GetMapCommon();
                 allSizes = new ObservableCollection<string>
-            {
-                "Small",
-                "Medium",
-                "Large"
-            };
+                {
+                    "Small",
+                    "Medium",
+                    "Large"
+                };
                 AllSizes = new ObservableCollection<string>(allSizes);
                 SelectedSizes = new ObservableCollection<string>();
 
                 SearchCommand = new Command<string>(query => Search(query));
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время инициализации MapsViewModel.");
                 throw;
@@ -71,6 +75,27 @@ namespace PhasmophobiaCompanion.ViewModels
                     minRoom = value;
                     OnPropertyChanged();
                 }
+            }
+        }
+        public Map SelectedMap
+        {
+            get => selectedMap;
+            set
+            {
+                selectedMap = value;
+                OnPropertyChanged();
+            }
+        }
+        /// <summary>
+        ///     Общие текстовые данные для интерфейса относящегося к картам.
+        /// </summary>
+        public MapCommon MapCommon
+        {
+            get => mapCommon;
+            set
+            {
+                mapCommon = value;
+                OnPropertyChanged();
             }
         }
         /// <summary>
@@ -106,8 +131,10 @@ namespace PhasmophobiaCompanion.ViewModels
                 var filteredRoom = filteredSize
                     .Where(maps => MinRoom <= maps.RoomCount && MaxRoom >= maps.RoomCount).ToList();
                 Maps = new ObservableCollection<Map>(filteredRoom);
+                //Загрузка данных для интерфейса.
+                MapCommon = _dataService.GetMapCommon();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время фильтрации карт.");
                 throw;
@@ -135,7 +162,7 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 SearchQuery = query;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время установки поискового запроса MapsViewModel.");
                 throw;
@@ -161,7 +188,7 @@ namespace PhasmophobiaCompanion.ViewModels
                     Maps = new ObservableCollection<Map>(filtered);
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время поиска карт.");
                 throw;
