@@ -1,26 +1,39 @@
-﻿using PhasmophobiaCompanion.Models;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
 using PhasmophobiaCompanion.Services;
 using PhasmophobiaCompanion.Views;
-using System;
-using System.Threading.Tasks;
+using Serilog;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace PhasmophobiaCompanion
 {
     public partial class App : Application
     {
-
         public App()
         {
             InitializeComponent();
 
-            // Регистрация DataService
-            DependencyService.Register<DataService>();
-
-            // Устанановка загрузочной страницы, как начальной
-            MainPage = new LoadingScreenPage();
+            try
+            {
+                var logFilePath = Path.Combine("/storage/emulated/0/Download/", "logs", "log-.txt");
+                var logger = new LoggerConfiguration()
+                    .MinimumLevel.Debug()
+                    .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day)
+                    .CreateLogger();
+                Log.Logger = logger;
+                // Регистрация DataService
+                DependencyService.Register<DataService>();
+                // Устанановка загрузочной страницы, как начальной
+                MainPage = new LoadingScreenPage();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время инициализации приложения.");
+                throw;
+            }
         }
+
         private async Task InitializeAppShellAsync()
         {
             try
@@ -36,24 +49,22 @@ namespace PhasmophobiaCompanion
             }
             catch (Exception ex)
             {
-                //Временно
-                int i = 0;
-                i++;
+                Log.Error(ex, "Ошибка во время инициализации приложения.");
+                throw;
             }
         }
 
         protected override async void OnStart()
         {
-            // Инициализация и загрузка начальных данных 
-            await InitializeAppShellAsync();
-        }
-
-        protected override void OnSleep()
-        {
-        }
-
-        protected override void OnResume()
-        {
+            try
+            {
+                // Инициализация и загрузка начальных данных 
+                await InitializeAppShellAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время инициализации приложения.");
+            }
         }
     }
 }

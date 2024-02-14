@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Serilog;
 
 namespace PhasmophobiaCompanion.Models
 {
@@ -11,7 +13,15 @@ namespace PhasmophobiaCompanion.Models
     {
         public Clue()
         {
-            Ghosts = new ObservableCollection<Ghost>();
+            try
+            {
+                Ghosts = new ObservableCollection<Ghost>();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время инициализации оболочки вкладок.");
+                throw;
+            }
         }
 
         public int ID { get; set; }
@@ -27,10 +37,18 @@ namespace PhasmophobiaCompanion.Models
         /// <param name="allghosts">Список всех призраков Ghost.</param>
         public void PopulateAssociatedGhosts(ObservableCollection<Ghost> allghosts)
         {
-            foreach (var ghostId in GhostsID)
+            try
             {
-                var ghost = allghosts.FirstOrDefault(c => c.ID == ghostId);
-                if (ghost != null) Ghosts.Add(ghost);
+                foreach (var ghostId in GhostsID)
+                {
+                    var ghost = allghosts.FirstOrDefault(c => c.ID == ghostId);
+                    if (ghost != null) Ghosts.Add(ghost);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время связывания улик с призраками.");
+                throw;
             }
         }
     }

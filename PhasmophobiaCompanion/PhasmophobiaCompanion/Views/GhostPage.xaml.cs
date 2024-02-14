@@ -2,6 +2,7 @@
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.ViewModels;
 using Rg.Plugins.Popup.Services;
+using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,20 +13,36 @@ namespace PhasmophobiaCompanion.Views
     {
         public GhostPage()
         {
-            InitializeComponent();
-            var viewModel = new GhostsViewModel();
-            BindingContext = viewModel;
+            try
+            {
+                InitializeComponent();
+                var viewModel = new GhostsViewModel();
+                BindingContext = viewModel;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время инициализации GhostPage.");
+                throw;
+            }
         }
 
         /// <summary>
-        ///     Открывает всплывающее окно для фильтрации снаряжения.
+        ///     Открывает всплывающее окно для фильтрации призраков.
         /// </summary>
         private async void FilterTapped(object sender, EventArgs e)
         {
-            if (BindingContext is GhostsViewModel viewModel)
+            try
             {
-                var filterPage = new FilterPage(viewModel);
-                await PopupNavigation.Instance.PushAsync(filterPage);
+                if (BindingContext is GhostsViewModel viewModel)
+                {
+                    var filterPage = new FilterPage(viewModel);
+                    await PopupNavigation.Instance.PushAsync(filterPage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время открытия фильтра на странице призраков GhostPage.");
+                throw;
             }
         }
 
@@ -34,10 +51,18 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private void OnGhostTapped(object sender, EventArgs e)
         {
-            if (sender is View view && view.BindingContext is Ghost selectedGhost)
+            try
             {
-                var detailPage = new GhostDetailPage(selectedGhost);
-                Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                if (sender is View view && view.BindingContext is Ghost selectedGhost)
+                {
+                    var detailPage = new GhostDetailPage(selectedGhost);
+                    Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время перехода на подробную страницу призрака GhostDetailPage из страницы призраков GhostPage.");
+                throw;
             }
         }
 
@@ -46,7 +71,15 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private void OnSearchCompleted(object sender, EventArgs e)
         {
-            if (BindingContext is GhostsViewModel viewModel) viewModel.SearchCommand.Execute(null);
+            try
+            {
+                if (BindingContext is GhostsViewModel viewModel) viewModel.SearchCommand.Execute(null);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время поиска на странице призраков GhostPage.");
+                throw;
+            }
         }
     }
 }

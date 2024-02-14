@@ -5,6 +5,7 @@ using System.Windows.Input;
 using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
+using Serilog;
 using Xamarin.Forms;
 
 namespace PhasmophobiaCompanion.ViewModels
@@ -40,7 +41,7 @@ namespace PhasmophobiaCompanion.ViewModels
             }
             catch (Exception ex)
             {
-                Console.ReadLine();
+                Log.Error(ex, "Ошибка во время инициализации GhostsViewModel.");
             }
         }
 
@@ -80,11 +81,19 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         public void Filter()
         {
-            var filtered = ghosts.Where(ghost => !SelectedClues.Any() ||
-                                                 SelectedClues.All(selectedClue =>
-                                                     ghost.Clues.Any(clue => clue.Title == selectedClue.Title)))
-                .ToList();
-            Ghosts = new ObservableCollection<Ghost>(filtered);
+            try
+            {
+                var filtered = ghosts.Where(ghost => !SelectedClues.Any() ||
+                                                         SelectedClues.All(selectedClue =>
+                                                             ghost.Clues.Any(clue => clue.Title == selectedClue.Title)))
+                        .ToList();
+                Ghosts = new ObservableCollection<Ghost>(filtered);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время фильтрации призраков.");
+                throw;
+            }
         }
 
         public string SearchQuery
@@ -104,7 +113,15 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <param name="query">Поисковый запрос.</param>
         public void Search(string query)
         {
-            SearchQuery = query;
+            try
+            {
+                SearchQuery = query;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время установки поискового запроса GhostsViewModel.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -112,16 +129,24 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private void SearchGhosts()
         {
-            if (string.IsNullOrWhiteSpace(SearchQuery))
+            try
             {
-                Ghosts = new ObservableCollection<Ghost>(ghosts);
+                if (string.IsNullOrWhiteSpace(SearchQuery))
+                {
+                    Ghosts = new ObservableCollection<Ghost>(ghosts);
+                }
+                else
+                {
+                    // Поиск по названию призрака.
+                    var filtered = ghosts
+                        .Where(ghost => ghost.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant())).ToList();
+                    Ghosts = new ObservableCollection<Ghost>(filtered);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // Поиск по названию призрака.
-                var filtered = ghosts
-                    .Where(ghost => ghost.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant())).ToList();
-                Ghosts = new ObservableCollection<Ghost>(filtered);
+                Log.Error(ex, "Ошибка во время поиска призраков.");
+                throw;
             }
         }
     }

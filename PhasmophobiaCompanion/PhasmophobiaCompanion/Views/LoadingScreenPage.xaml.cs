@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using Serilog;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace PhasmophobiaCompanion.Views
@@ -8,7 +9,15 @@ namespace PhasmophobiaCompanion.Views
     {
         public LoadingScreenPage()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (System.Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время инициализации LoadingScreenPage.");
+                throw;
+            }
         }
     }
 }

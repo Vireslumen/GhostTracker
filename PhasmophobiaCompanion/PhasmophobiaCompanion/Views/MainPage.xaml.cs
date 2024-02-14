@@ -4,6 +4,7 @@ using System.Linq;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.ViewModels;
 using Rg.Plugins.Popup.Services;
+using Serilog;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.PancakeView;
@@ -18,9 +19,17 @@ namespace PhasmophobiaCompanion.Views
 
         public MainPage()
         {
-            InitializeComponent();
-            viewModel = new MainPageViewModel();
-            BindingContext = viewModel;
+            try
+            {
+                InitializeComponent();
+                viewModel = new MainPageViewModel();
+                BindingContext = viewModel;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время инициализации MainPage.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -28,20 +37,28 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private void OnChallengeModeTapped(object sender, EventArgs e)
         {
-            var challengeMode = viewModel.ChallengeMode;
-            if (viewModel._dataService.IsMapsDataLoaded && viewModel._dataService.IsEquipmentsDataLoaded)
+            try
             {
-                challengeMode.ChallengeMap = viewModel._dataService.GetMaps().Where(m => m.ID == challengeMode.MapID)
-                    .FirstOrDefault();
-                challengeMode.ChallengeEquipments = new ObservableCollection<Equipment>
-                (viewModel._dataService.GetEquipments().Where(e => challengeMode.EquipmentsID.Contains(e.ID))
-                    .ToList());
-                challengeMode.ChallengeDifficulty = viewModel._dataService.GetDifficulties()
-                    .Where(d => d.ID == challengeMode.DifficultyID).FirstOrDefault();
-                var Page = new ChallengeModeDetailPage(challengeMode);
-                Application.Current.MainPage.Navigation.PushAsync(Page);
+                var challengeMode = viewModel.ChallengeMode;
+                if (viewModel._dataService.IsMapsDataLoaded && viewModel._dataService.IsEquipmentsDataLoaded)
+                {
+                    challengeMode.ChallengeMap = viewModel._dataService.GetMaps().Where(m => m.ID == challengeMode.MapID)
+                        .FirstOrDefault();
+                    challengeMode.ChallengeEquipments = new ObservableCollection<Equipment>
+                    (viewModel._dataService.GetEquipments().Where(e => challengeMode.EquipmentsID.Contains(e.ID))
+                        .ToList());
+                    challengeMode.ChallengeDifficulty = viewModel._dataService.GetDifficulties()
+                        .Where(d => d.ID == challengeMode.DifficultyID).FirstOrDefault();
+                    var Page = new ChallengeModeDetailPage(challengeMode);
+                    Application.Current.MainPage.Navigation.PushAsync(Page);
+                }
+                // TODO: Сделать, чтобы если Карты не были загружены, какую-нибудь загрузки или что-нибудь в этом духе.
             }
-            // TODO: Сделать, чтобы если Карты не были загружены, какую-нибудь загрузки или что-нибудь в этом духе.
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время перехода на страницу особого режима ChallengeModeDetailPage.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -49,11 +66,19 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private void OnClueTapped(object sender, EventArgs e)
         {
-            var parentPancake = sender as PancakeView;
-            if (parentPancake?.BindingContext is Clue clueItem)
+            try
             {
-                var Page = new ClueDetailPage(clueItem);
-                Application.Current.MainPage.Navigation.PushAsync(Page);
+                var parentPancake = sender as PancakeView;
+                if (parentPancake?.BindingContext is Clue clueItem)
+                {
+                    var Page = new ClueDetailPage(clueItem);
+                    Application.Current.MainPage.Navigation.PushAsync(Page);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время перехода на страницу улики ClueDetailPage с главной страницы MainPage.");
+                throw;
             }
         }
 
@@ -62,11 +87,19 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private void OnDifficultyTapped(object sender, EventArgs e)
         {
-            var parentStack = sender as StackLayout;
-            if (parentStack?.BindingContext is Difficulty difficultyItem)
+            try
             {
-                var Page = new DifficultyDetailPage(difficultyItem);
-                Application.Current.MainPage.Navigation.PushAsync(Page);
+                var parentStack = sender as StackLayout;
+                if (parentStack?.BindingContext is Difficulty difficultyItem)
+                {
+                    var Page = new DifficultyDetailPage(difficultyItem);
+                    Application.Current.MainPage.Navigation.PushAsync(Page);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время перехода на страницу сложности DifficultyDetailPage.");
+                throw;
             }
         }
 
@@ -75,11 +108,19 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private void OnGhostTapped(object sender, EventArgs e)
         {
-            var parentLabel = sender as Label;
-            if (parentLabel?.BindingContext is Ghost ghostItem)
+            try
             {
-                var Page = new GhostDetailPage(ghostItem);
-                Application.Current.MainPage.Navigation.PushAsync(Page);
+                var parentLabel = sender as Label;
+                if (parentLabel?.BindingContext is Ghost ghostItem)
+                {
+                    var Page = new GhostDetailPage(ghostItem);
+                    Application.Current.MainPage.Navigation.PushAsync(Page);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время перехода на подробную страницу призрака GhostDetailPage с главной страницы MainPage.");
+                throw;
             }
         }
 
@@ -88,11 +129,19 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private async void OnMaxGhostSpeedLoSTapped(object sender, EventArgs e)
         {
-            var parentLabel = sender as Label;
-            if (parentLabel?.BindingContext is Ghost ghostItem)
+            try
             {
-                var maxGhostSpeedLoSClause = ghostItem.MaxGhostSpeedLoSClause;
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(maxGhostSpeedLoSClause));
+                var parentLabel = sender as Label;
+                if (parentLabel?.BindingContext is Ghost ghostItem)
+                {
+                    var maxGhostSpeedLoSClause = ghostItem.MaxGhostSpeedLoSClause;
+                    await PopupNavigation.Instance.PushAsync(new TooltipPopup(maxGhostSpeedLoSClause));
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxGhostSpeedLoSClause.");
+                throw;
             }
         }
 
@@ -101,11 +150,19 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private async void OnMaxGhostSpeedTapped(object sender, EventArgs e)
         {
-            var parentLabel = sender as Label;
-            if (parentLabel?.BindingContext is Ghost ghostItem)
+            try
             {
-                var maxGhostSpeedClause = ghostItem.MaxGhostSpeedClause;
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(maxGhostSpeedClause));
+                var parentLabel = sender as Label;
+                if (parentLabel?.BindingContext is Ghost ghostItem)
+                {
+                    var maxGhostSpeedClause = ghostItem.MaxGhostSpeedClause;
+                    await PopupNavigation.Instance.PushAsync(new TooltipPopup(maxGhostSpeedClause));
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxGhostSpeedClause.");
+                throw;
             }
         }
 
@@ -114,7 +171,15 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private async void OnMaxSanityHeaderTapped(object sender, EventArgs e)
         {
-            await PopupNavigation.Instance.PushAsync(new TooltipPopup(viewModel.GhostCommon.MaxSanityHunt));
+            try
+            {
+                await PopupNavigation.Instance.PushAsync(new TooltipPopup(viewModel.GhostCommon.MaxSanityHunt));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки MaxSanityHunt.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -122,11 +187,19 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private async void OnMaxSanityHuntTapped(object sender, EventArgs e)
         {
-            var parentLabel = sender as Label;
-            if (parentLabel?.BindingContext is Ghost ghostItem)
+            try
             {
-                var maxSanityHuntClause = ghostItem.MaxSanityHuntClause;
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(maxSanityHuntClause));
+                var parentLabel = sender as Label;
+                if (parentLabel?.BindingContext is Ghost ghostItem)
+                {
+                    var maxSanityHuntClause = ghostItem.MaxSanityHuntClause;
+                    await PopupNavigation.Instance.PushAsync(new TooltipPopup(maxSanityHuntClause));
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxSanityHuntClause.");
+                throw;
             }
         }
 
@@ -135,7 +208,15 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private async void OnMaxSpeedHeaderTapped(object sender, EventArgs e)
         {
-            await PopupNavigation.Instance.PushAsync(new TooltipPopup(viewModel.GhostCommon.MaxSpeed));
+            try
+            {
+                await PopupNavigation.Instance.PushAsync(new TooltipPopup(viewModel.GhostCommon.MaxSpeed));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки MaxSpeed.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -143,7 +224,15 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private async void OnMaxSpeedLoSHeaderTapped(object sender, EventArgs e)
         {
-            await PopupNavigation.Instance.PushAsync(new TooltipPopup(viewModel.GhostCommon.MaxSpeedLoS));
+            try
+            {
+                await PopupNavigation.Instance.PushAsync(new TooltipPopup(viewModel.GhostCommon.MaxSpeedLoS));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки MaxSpeedLoS.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -151,11 +240,19 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private async void OnMinGhostSpeedTapped(object sender, EventArgs e)
         {
-            var parentLabel = sender as Label;
-            if (parentLabel?.BindingContext is Ghost ghostItem)
+            try
             {
-                var minGhostSpeedClause = ghostItem.MinGhostSpeedClause;
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(minGhostSpeedClause));
+                var parentLabel = sender as Label;
+                if (parentLabel?.BindingContext is Ghost ghostItem)
+                {
+                    var minGhostSpeedClause = ghostItem.MinGhostSpeedClause;
+                    await PopupNavigation.Instance.PushAsync(new TooltipPopup(minGhostSpeedClause));
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки minGhostSpeedClause.");
+                throw;
             }
         }
 
@@ -164,7 +261,15 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private async void OnMinSanityHeaderTapped(object sender, EventArgs e)
         {
-            await PopupNavigation.Instance.PushAsync(new TooltipPopup(viewModel.GhostCommon.MinSanityHunt));
+            try
+            {
+                await PopupNavigation.Instance.PushAsync(new TooltipPopup(viewModel.GhostCommon.MinSanityHunt));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки MinSanityHunt.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -172,11 +277,19 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private async void OnMinSanityHuntTapped(object sender, EventArgs e)
         {
-            var parentLabel = sender as Label;
-            if (parentLabel?.BindingContext is Ghost ghostItem)
+            try
             {
-                var minSanityHuntClause = ghostItem.MinSanityHuntClause;
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(minSanityHuntClause));
+                var parentLabel = sender as Label;
+                if (parentLabel?.BindingContext is Ghost ghostItem)
+                {
+                    var minSanityHuntClause = ghostItem.MinSanityHuntClause;
+                    await PopupNavigation.Instance.PushAsync(new TooltipPopup(minSanityHuntClause));
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки minSanityHuntClause.");
+                throw;
             }
         }
 
@@ -185,7 +298,15 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private async void OnMinSpeedHeaderTapped(object sender, EventArgs e)
         {
-            await PopupNavigation.Instance.PushAsync(new TooltipPopup(viewModel.GhostCommon.MinSpeed));
+            try
+            {
+                await PopupNavigation.Instance.PushAsync(new TooltipPopup(viewModel.GhostCommon.MinSpeed));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки MinSpeed.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -193,10 +314,18 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private void OnOtherPageTapped(object sender, EventArgs e)
         {
-            if (sender is BindableObject bindable && bindable.BindingContext is OtherInfo otherInfo)
+            try
             {
-                var Page = new OtherInfoPage(otherInfo);
-                Application.Current.MainPage.Navigation.PushAsync(Page);
+                if (sender is BindableObject bindable && bindable.BindingContext is OtherInfo otherInfo)
+                {
+                    var Page = new OtherInfoPage(otherInfo);
+                    Application.Current.MainPage.Navigation.PushAsync(Page);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время перехода на некатегоризированную страницу OtherInfo.");
+                throw;
             }
         }
 
@@ -205,12 +334,20 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private async void OnPatchTapped(object sender, EventArgs e)
         {
-            var label = sender as Label;
-            if (label != null)
+            try
             {
-                var patch = label.BindingContext as Patch;
-                if (patch != null && Uri.TryCreate(patch.Source, UriKind.Absolute, out var uri))
-                    await Launcher.OpenAsync(uri);
+                var label = sender as Label;
+                if (label != null)
+                {
+                    var patch = label.BindingContext as Patch;
+                    if (patch != null && Uri.TryCreate(patch.Source, UriKind.Absolute, out var uri))
+                        await Launcher.OpenAsync(uri);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время перехода на страницу(в браузере) патча Patch.");
+                throw;
             }
         }
     }

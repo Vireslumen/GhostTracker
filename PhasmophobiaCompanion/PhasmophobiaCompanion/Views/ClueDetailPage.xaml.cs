@@ -1,5 +1,6 @@
 ﻿using System;
 using PhasmophobiaCompanion.Models;
+using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,8 +11,16 @@ namespace PhasmophobiaCompanion.Views
     {
         public ClueDetailPage(Clue clue)
         {
-            InitializeComponent();
-            BindingContext = clue;
+            try
+            {
+                InitializeComponent();
+                BindingContext = clue;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время инициализации ClueDetailPage.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -19,11 +28,19 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private void OnClueTapped(object sender, EventArgs e)
         {
-            var parentStack = sender as StackLayout;
-            if (parentStack?.BindingContext is Clue clueItem)
+            try
             {
-                var Page = new ClueDetailPage(clueItem);
-                Application.Current.MainPage.Navigation.PushAsync(Page);
+                var parentStack = sender as StackLayout;
+                if (parentStack?.BindingContext is Clue clueItem)
+                {
+                    var Page = new ClueDetailPage(clueItem);
+                    Application.Current.MainPage.Navigation.PushAsync(Page);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время перехода на страницу улики с подробной страницы улики.");
+                throw;
             }
         }
 
@@ -32,11 +49,19 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private void OnGhostTapped(object sender, EventArgs e)
         {
-            var parentStack = sender as StackLayout;
-            if (parentStack?.BindingContext is Ghost ghostItem)
+            try
             {
-                var Page = new GhostDetailPage(ghostItem);
-                Application.Current.MainPage.Navigation.PushAsync(Page);
+                var parentStack = sender as StackLayout;
+                if (parentStack?.BindingContext is Ghost ghostItem)
+                {
+                    var Page = new GhostDetailPage(ghostItem);
+                    Application.Current.MainPage.Navigation.PushAsync(Page);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время перехода на страницу призрака с подробной страницы улики.");
+                throw;
             }
         }
 
@@ -45,8 +70,16 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private void OnItemTapped(object sender, EventArgs e)
         {
-            if (sender is StackLayout layout && layout.BindingContext is UnfoldingItem unfoldingItem)
-                unfoldingItem.IsExpanded = !unfoldingItem.IsExpanded;
+            try
+            {
+                if (sender is StackLayout layout && layout.BindingContext is UnfoldingItem unfoldingItem)
+                    unfoldingItem.IsExpanded = !unfoldingItem.IsExpanded;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время раскрытия или сворачивания списка на странице ClueDetailPage.");
+                throw;
+            }
         }
     }
 }

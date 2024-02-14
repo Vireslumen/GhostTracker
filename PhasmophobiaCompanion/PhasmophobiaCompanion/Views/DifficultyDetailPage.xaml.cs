@@ -1,4 +1,5 @@
 ﻿using PhasmophobiaCompanion.Models;
+using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,8 +10,16 @@ namespace PhasmophobiaCompanion.Views
     {
         public DifficultyDetailPage(Difficulty difficulty)
         {
-            InitializeComponent();
-            BindingContext = difficulty;
+            try
+            {
+                InitializeComponent();
+                BindingContext = difficulty;
+            }
+            catch (System.Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время инициализации DifficultyDetailPage.");
+                throw;
+            }
         }
     }
 }

@@ -1,152 +1,175 @@
-﻿using PhasmophobiaCompanion.Models;
+﻿using System;
 using PhasmophobiaCompanion.Services;
-using PhasmophobiaCompanion.ViewModels;
 using PhasmophobiaCompanion.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Serilog;
 using Xamarin.Forms;
 
 namespace PhasmophobiaCompanion
 {
-    public partial class AppShell : Xamarin.Forms.Shell
+    public partial class AppShell : Shell
     {
-        private DataService _dataService;
+        private readonly DataService _dataService;
+        private bool isShowingLoadingScreen;
 
-        private bool isShowingLoadingScreen = false;
         public AppShell()
         {
-            InitializeComponent();
-            this.CurrentItem = mainTab;
-            Shell.SetNavBarIsVisible(this, false);
-            _dataService = DependencyService.Get<DataService>();
-            this.Navigating += OnShellNavigation;
-        }
-
-        private async void OnShellNavigation(object sender, ShellNavigatingEventArgs e)
-        {
-            if (e.Target.Location.OriginalString.Contains("ghostsTab") && !_dataService.IsGhostsDataLoaded)
+            try
             {
-                // Subscribe to an event or notification that data loading is complete
-                _dataService.GhostsDataLoaded += OnGhostsDataLoaded;
+                InitializeComponent();
+                CurrentItem = mainTab;
+                SetNavBarIsVisible(this, false);
+                _dataService = DependencyService.Get<DataService>();
+                Navigating += OnShellNavigation;
 
-                // Cancel the navigation if data is not loaded
-                e.Cancel();
-
-                // Display a loading screen here
-                ShowLoadingScreen();
             }
-            else if (e.Target.Location.OriginalString.Contains("equipmentsTab") && !_dataService.IsEquipmentsDataLoaded)
+            catch (Exception ex)
             {
-                // Subscribe to an event or notification that data loading is complete
-                _dataService.EquipmentsDataLoaded += OnEquipmentsDataLoaded;
-
-                // Cancel the navigation if data is not loaded
-                e.Cancel();
-
-                // Display a loading screen here
-                ShowLoadingScreen();
-            }
-            else if (e.Target.Location.OriginalString.Contains("mapsTab") && !_dataService.IsMapsDataLoaded)
-            {                // Subscribe to an event or notification that data loading is complete
-                _dataService.MapsDataLoaded += OnMapsDataLoaded;
-
-                // Cancel the navigation if data is not loaded
-                e.Cancel();
-
-                // Display a loading screen here
-                ShowLoadingScreen();
-            }
-            else if (e.Target.Location.OriginalString.Contains("cursedsTab") && !_dataService.IsCursedsDataLoaded)
-            {                // Subscribe to an event or notification that data loading is complete
-                _dataService.CursedsDataLoaded += OnCursedsDataLoaded;
-
-                // Cancel the navigation if data is not loaded
-                e.Cancel();
-
-                // Display a loading screen here
-                ShowLoadingScreen();
-            }
-        }
-
-        private void OnCursedsDataLoaded()
-        {
-            // Hide the loading screen
-            HideLoadingScreen();
-
-            // Unsubscribe from the event
-            _dataService.CursedsDataLoaded -= OnCursedsDataLoaded;
-
-            // Navigate to ghostPage now that data is loaded
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                await Shell.Current.GoToAsync("cursedsTab");
-            });
-        }
-
-        private void OnMapsDataLoaded()
-        {
-            // Hide the loading screen
-            HideLoadingScreen();
-
-            // Unsubscribe from the event
-            _dataService.MapsDataLoaded -= OnMapsDataLoaded;
-
-            // Navigate to ghostPage now that data is loaded
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                await Shell.Current.GoToAsync("mapsTab");
-            });
-        }
-
-        private void OnEquipmentsDataLoaded()
-        {
-            // Hide the loading screen
-            HideLoadingScreen();
-
-            // Unsubscribe from the event
-            _dataService.EquipmentsDataLoaded -= OnEquipmentsDataLoaded;
-
-            // Navigate to ghostPage now that data is loaded
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                await Shell.Current.GoToAsync("equipmentsTab");
-            });
-        }
-
-        private void OnGhostsDataLoaded()
-        {
-            // Hide the loading screen
-            HideLoadingScreen();
-
-            // Unsubscribe from the event
-            _dataService.GhostsDataLoaded -= OnGhostsDataLoaded;
-
-            // Navigate to ghostPage now that data is loaded
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                await Shell.Current.GoToAsync("ghostsTab");
-            });
-        }
-
-        private async void ShowLoadingScreen()
-        {
-            if (!isShowingLoadingScreen)
-            {
-                isShowingLoadingScreen = true;
-                await Shell.Current.Navigation.PushModalAsync(new LoadingScreenPage(), true);
+                Log.Error(ex, "Ошибка во время инициализации оболочки вкладок.");
+                throw;
             }
         }
 
         private async void HideLoadingScreen()
         {
-            if (isShowingLoadingScreen)
+            try
             {
-                await Shell.Current.Navigation.PopModalAsync(true);
-                isShowingLoadingScreen = false;
+                if (isShowingLoadingScreen)
+                {
+                    await Current.Navigation.PopModalAsync(true);
+                    isShowingLoadingScreen = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время скрытия загрузочного экрана.");
+                throw;
             }
         }
 
+        /// <summary>
+        ///     Метод перехода на вкладку проклятых предметов - CursedsPage.
+        /// </summary>
+        private void OnCursedsDataLoaded()
+        {
+            try
+            {
+                HideLoadingScreen();
+                _dataService.CursedsDataLoaded -= OnCursedsDataLoaded;
+                Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("cursedsTab"); });
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки вкладки проклятых предметов.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Метод перехода на вкладку снаряжения - EquipmentPage.
+        /// </summary>
+        private void OnEquipmentsDataLoaded()
+        {
+            try
+            {
+                HideLoadingScreen();
+                _dataService.EquipmentsDataLoaded -= OnEquipmentsDataLoaded;
+                Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("equipmentsTab"); });
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки вкладки снаряжения.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Метод перехода на вкладку призраков - GhostPage.
+        /// </summary>
+        private void OnGhostsDataLoaded()
+        {
+            try
+            {
+                HideLoadingScreen();
+                _dataService.GhostsDataLoaded -= OnGhostsDataLoaded;
+                Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("ghostsTab"); });
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки вкладки призраков.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Метод перехода на вкладку карт - MapsPage.
+        /// </summary>
+        private void OnMapsDataLoaded()
+        {
+            try
+            {
+                HideLoadingScreen();
+                _dataService.MapsDataLoaded -= OnMapsDataLoaded;
+                Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("mapsTab"); });
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки вкладки карт.");
+                throw;
+            }
+        }
+
+        private async void OnShellNavigation(object sender, ShellNavigatingEventArgs e)
+        {
+            try
+            {
+                if (e.Target.Location.OriginalString.Contains("ghostsTab") && !_dataService.IsGhostsDataLoaded)
+                {
+                    _dataService.GhostsDataLoaded += OnGhostsDataLoaded;
+                    e.Cancel();
+                    ShowLoadingScreen();
+                }
+                else if (e.Target.Location.OriginalString.Contains("equipmentsTab") &&
+                         !_dataService.IsEquipmentsDataLoaded)
+                {
+                    _dataService.EquipmentsDataLoaded += OnEquipmentsDataLoaded;
+                    e.Cancel();
+                    ShowLoadingScreen();
+                }
+                else if (e.Target.Location.OriginalString.Contains("mapsTab") && !_dataService.IsMapsDataLoaded)
+                {
+                    _dataService.MapsDataLoaded += OnMapsDataLoaded;
+                    e.Cancel();
+                    ShowLoadingScreen();
+                }
+                else if (e.Target.Location.OriginalString.Contains("cursedsTab") && !_dataService.IsCursedsDataLoaded)
+                {
+                    _dataService.CursedsDataLoaded += OnCursedsDataLoaded;
+                    e.Cancel();
+                    ShowLoadingScreen();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время перехода на другую вкладку.");
+                throw;
+            }
+        }
+
+        private async void ShowLoadingScreen()
+        {
+            try
+            {
+                if (!isShowingLoadingScreen)
+                {
+                    isShowingLoadingScreen = true;
+                    await Current.Navigation.PushModalAsync(new LoadingScreenPage(), true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время показа загрузочного экрана.");
+                throw;
+            }
+        }
     }
 }

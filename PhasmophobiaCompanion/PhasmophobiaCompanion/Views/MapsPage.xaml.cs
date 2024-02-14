@@ -2,6 +2,7 @@
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.ViewModels;
 using Rg.Plugins.Popup.Services;
+using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,9 +13,17 @@ namespace PhasmophobiaCompanion.Views
     {
         public MapsPage()
         {
-            InitializeComponent();
-            var viewModel = new MapsViewModel();
-            BindingContext = viewModel;
+            try
+            {
+                InitializeComponent();
+                var viewModel = new MapsViewModel();
+                BindingContext = viewModel;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время инициализации MapsPage.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -22,10 +31,18 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private async void FilterTapped(object sender, EventArgs e)
         {
-            if (BindingContext is MapsViewModel viewModel)
+            try
             {
-                var filterPage = new FilterMapPage(viewModel);
-                await PopupNavigation.Instance.PushAsync(filterPage);
+                if (BindingContext is MapsViewModel viewModel)
+                {
+                    var filterPage = new FilterMapPage(viewModel);
+                    await PopupNavigation.Instance.PushAsync(filterPage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время открытия фильтра страницы карт MapsPage.");
+                throw;
             }
         }
 
@@ -34,10 +51,18 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private void OnMapTapped(object sender, EventArgs e)
         {
-            if (sender is View view && view.BindingContext is Map selectMap)
+            try
             {
-                var detailPage = new MapDetailPage(selectMap);
-                Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                if (sender is View view && view.BindingContext is Map selectMap)
+                {
+                    var detailPage = new MapDetailPage(selectMap);
+                    Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время перехода на подробную страницу карты MapDetailPage.");
+                throw;
             }
         }
 
@@ -46,7 +71,15 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private void OnSearchCompleted(object sender, EventArgs e)
         {
-            if (BindingContext is MapsViewModel viewModel) viewModel.SearchCommand.Execute(null);
+            try
+            {
+                if (BindingContext is MapsViewModel viewModel) viewModel.SearchCommand.Execute(null);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время поиска на странице карт MapsPage.");
+                throw;
+            }
         }
     }
 }

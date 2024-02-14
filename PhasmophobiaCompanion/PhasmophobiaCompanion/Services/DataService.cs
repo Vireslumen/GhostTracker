@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PhasmophobiaCompanion.Data;
 using PhasmophobiaCompanion.Models;
+using Serilog;
 
 namespace PhasmophobiaCompanion.Services
 {
@@ -46,10 +47,18 @@ namespace PhasmophobiaCompanion.Services
 
         public DataService()
         {
-            DatabaseLoader = new DatabaseLoader(new PhasmaDB());
-            //TODO: Сделать чтобы код языка выбирался изначально исходя из языка системы пользователя, а затем исходя из настроек
-            LanguageCode = "EN";
-            FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            try
+            {
+                DatabaseLoader = new DatabaseLoader(new PhasmaDB());
+                //TODO: Сделать чтобы код языка выбирался изначально исходя из языка системы пользователя, а затем исходя из настроек
+                LanguageCode = "EN";
+                FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки конструктора DataService.");
+                throw;
+            }
         }
 
         public bool IsCursedsDataLoaded { get; private set; }
@@ -63,67 +72,171 @@ namespace PhasmophobiaCompanion.Services
 
         public ObservableCollection<Ghost> GetGhosts()
         {
-            return Ghosts;
+            try
+            {
+                return Ghosts;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения призраков.");
+                throw;
+            }
         }
 
         public GhostCommon GetGhostCommon()
         {
-            return GhostCommon;
+            try
+            {
+                return GhostCommon;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения общих названий для призраков.");
+                throw;
+            }
         }
 
         public EquipmentCommon GetEquipmentCommon()
         {
-            return EquipmentCommon;
+            try
+            {
+                return EquipmentCommon;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения общих названий для снаряжения.");
+                throw;
+            }
         }
 
         public ObservableCollection<Clue> GetClues()
         {
-            return Clues;
+            try
+            {
+                return Clues;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения улик.");
+                throw;
+            }
         }
 
         public ObservableCollection<Quest> GetQuests()
         {
-            return Quests;
+            try
+            {
+                return Quests;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения квестов.");
+                throw;
+            }
         }
 
         public ObservableCollection<string> GetTips()
         {
-            return Tips;
+            try
+            {
+                return Tips;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения подсказок.");
+                throw;
+            }
         }
 
         public ObservableCollection<Difficulty> GetDifficulties()
         {
-            return Difficulties;
+            try
+            {
+                return Difficulties;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения сложностей.");
+                throw;
+            }
         }
 
         public ObservableCollection<Patch> GetPatches()
         {
-            return Patches;
+            try
+            {
+                return Patches;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения патчей.");
+                throw;
+            }
         }
 
         public ObservableCollection<Map> GetMaps()
         {
-            return Maps;
+            try
+            {
+                return Maps;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения карт.");
+                throw;
+            }
         }
 
         public ObservableCollection<Equipment> GetEquipments()
         {
-            return Equipments;
+            try
+            {
+                return Equipments;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения снаряжения.");
+                throw;
+            }
         }
 
         public ObservableCollection<OtherInfo> GetOtherInfos()
         {
-            return OtherInfos;
+            try
+            {
+                return OtherInfos;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения некатегоризируемых страниц.");
+                throw;
+            }
         }
 
         public ObservableCollection<CursedPossession> GetCurseds()
         {
-            return Curseds;
+            try
+            {
+                return Curseds;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения проклятых предметов.");
+                throw;
+            }
         }
 
         public ChallengeMode GetChallengeMode(int challengeID)
         {
-            return ChallengeModes[challengeID];
+            try
+            {
+                return ChallengeModes[challengeID];
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения особого режима.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -150,7 +263,8 @@ namespace PhasmophobiaCompanion.Services
             }
             catch (Exception ex)
             {
-                Console.ReadLine();
+                Log.Error(ex, "Ошибка во время загрузки первоначальных данных.");
+                throw;
             }
         }
 
@@ -160,9 +274,17 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public async Task LoadOtherDataAsync()
         {
-            await LoadMapsDataAsync().ConfigureAwait(false);
-            await LoadCursedsDataAsync().ConfigureAwait(false);
-            await LoadEquipmentsDataAsync().ConfigureAwait(false);
+            try
+            {
+                await LoadMapsDataAsync().ConfigureAwait(false);
+                await LoadCursedsDataAsync().ConfigureAwait(false);
+                await LoadEquipmentsDataAsync().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки вторичных данных.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -178,19 +300,27 @@ namespace PhasmophobiaCompanion.Services
         /// </remarks>
         public async Task<T> LoadDataAsync<T>(string cacheFileName, Func<Task<T>> databaseLoadFunction)
         {
-            var filePath = Path.Combine(FolderPath, cacheFileName);
-            // Проверка наличия кэша
-            if (File.Exists(filePath))
+            try
             {
-                var cachedData = File.ReadAllText(filePath);
-                return JsonConvert.DeserializeObject<T>(cachedData);
-            }
+                var filePath = Path.Combine(FolderPath, cacheFileName);
+                // Проверка наличия кэша
+                if (File.Exists(filePath))
+                {
+                    var cachedData = File.ReadAllText(filePath);
+                    return JsonConvert.DeserializeObject<T>(cachedData);
+                }
 
-            // Загрузка данных из базы данных и кэширование
-            var data = await databaseLoadFunction();
-            var serializedData = JsonConvert.SerializeObject(data);
-            File.WriteAllText(filePath, serializedData);
-            return data;
+                // Загрузка данных из базы данных и кэширование
+                var data = await databaseLoadFunction();
+                var serializedData = JsonConvert.SerializeObject(data);
+                File.WriteAllText(filePath, serializedData);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки данных или из базы данных или из кэша.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -199,15 +329,23 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public async Task LoadGhostsDataAsync()
         {
-            Ghosts = await LoadDataAsync(
-                "ghosts_cache.json",
-                async () => new ObservableCollection<Ghost>(await DatabaseLoader.GetGhostsAsync(LanguageCode))
-            );
-            //Загрузка текстовых данных для интерфейса, относящимся к призракам - Ghost
-            await LoadGhostCommonAsync();
-            //Уведомление о том, что данные загружены
-            IsGhostsDataLoaded = true;
-            GhostsDataLoaded?.Invoke();
+            try
+            {
+                Ghosts = await LoadDataAsync(
+                        "ghosts_cache.json",
+                        async () => new ObservableCollection<Ghost>(await DatabaseLoader.GetGhostsAsync(LanguageCode))
+                    );
+                //Загрузка текстовых данных для интерфейса, относящимся к призракам - Ghost
+                await LoadGhostCommonAsync();
+                //Уведомление о том, что данные загружены
+                IsGhostsDataLoaded = true;
+                GhostsDataLoaded?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки призраков.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -216,8 +354,16 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public async Task LoadGhostCommonAsync()
         {
-            GhostCommon = await LoadDataAsync("ghost_common_cache.json",
-                async () => await DatabaseLoader.GetGhostCommonAsync(LanguageCode));
+            try
+            {
+                GhostCommon = await LoadDataAsync("ghost_common_cache.json",
+                        async () => await DatabaseLoader.GetGhostCommonAsync(LanguageCode));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки общих названий для призраков.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -226,10 +372,18 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public async Task LoadTipsDataAsync()
         {
-            Tips = await LoadDataAsync(
-                "tips_cache.json",
-                async () => new ObservableCollection<string>(await DatabaseLoader.GetTipsAsync(LanguageCode))
-            );
+            try
+            {
+                Tips = await LoadDataAsync(
+                        "tips_cache.json",
+                        async () => new ObservableCollection<string>(await DatabaseLoader.GetTipsAsync(LanguageCode))
+                    );
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки подсказок.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -238,11 +392,19 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public async Task LoadDifficultiesAsync()
         {
-            Difficulties = await LoadDataAsync(
-                "difficulties_cache.json",
-                async () => new ObservableCollection<Difficulty>(
-                    await DatabaseLoader.GetDifficultiesAsync(LanguageCode))
-            );
+            try
+            {
+                Difficulties = await LoadDataAsync(
+                       "difficulties_cache.json",
+                       async () => new ObservableCollection<Difficulty>(
+                           await DatabaseLoader.GetDifficultiesAsync(LanguageCode))
+                   );
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки сложностей.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -251,10 +413,18 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public async Task LoadPatchesAsync()
         {
-            Patches = await LoadDataAsync(
-                "patch_cache.json",
-                async () => new ObservableCollection<Patch>(await DatabaseLoader.GetPatchesAsync())
-            );
+            try
+            {
+                Patches = await LoadDataAsync(
+                        "patch_cache.json",
+                        async () => new ObservableCollection<Patch>(await DatabaseLoader.GetPatchesAsync())
+                    );
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки патчей.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -263,10 +433,18 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public async Task LoadQuestsAsync()
         {
-            Quests = await LoadDataAsync(
-                "quest_cache.json",
-                async () => new ObservableCollection<Quest>(await DatabaseLoader.GetQuestsAsync(LanguageCode))
-            );
+            try
+            {
+                Quests = await LoadDataAsync(
+                        "quest_cache.json",
+                        async () => new ObservableCollection<Quest>(await DatabaseLoader.GetQuestsAsync(LanguageCode))
+                    );
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки квестов.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -275,10 +453,18 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public async Task LoadOtherInfoAsync()
         {
-            OtherInfos = await LoadDataAsync(
-                "otherinfos_cache.json",
-                async () => new ObservableCollection<OtherInfo>(await DatabaseLoader.GetOtherInfosAsync(LanguageCode))
-            );
+            try
+            {
+                OtherInfos = await LoadDataAsync(
+                        "otherinfos_cache.json",
+                        async () => new ObservableCollection<OtherInfo>(await DatabaseLoader.GetOtherInfosAsync(LanguageCode))
+                    );
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки некатегоризируемых страниц.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -287,11 +473,19 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public async Task LoadChallengeModeAsync()
         {
-            ChallengeModes = await LoadDataAsync(
-                "challenge_mode_cache.json",
-                async () => new ObservableCollection<ChallengeMode>(
-                    await DatabaseLoader.GetChallengeModesAsync(LanguageCode))
-            );
+            try
+            {
+                ChallengeModes = await LoadDataAsync(
+                        "challenge_mode_cache.json",
+                        async () => new ObservableCollection<ChallengeMode>(
+                            await DatabaseLoader.GetChallengeModesAsync(LanguageCode))
+                    );
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки особых режимов.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -300,10 +494,18 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public async Task LoadCluesAsync()
         {
-            Clues = await LoadDataAsync(
-                "clues_cache.json",
-                async () => new ObservableCollection<Clue>(await DatabaseLoader.GetCluesAsync(LanguageCode))
-            );
+            try
+            {
+                Clues = await LoadDataAsync(
+                        "clues_cache.json",
+                        async () => new ObservableCollection<Clue>(await DatabaseLoader.GetCluesAsync(LanguageCode))
+                    );
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки улик.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -312,14 +514,22 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public async Task LoadMapsDataAsync()
         {
-            Maps = await LoadDataAsync(
-                "maps_cache.json",
-                async () => new ObservableCollection<Map>(await DatabaseLoader.GetMapsAsync(LanguageCode)
-                    .ConfigureAwait(false))
-            );
-            // Уведомление о загрузки данных
-            IsMapsDataLoaded = true;
-            MapsDataLoaded?.Invoke();
+            try
+            {
+                Maps = await LoadDataAsync(
+                       "maps_cache.json",
+                       async () => new ObservableCollection<Map>(await DatabaseLoader.GetMapsAsync(LanguageCode)
+                           .ConfigureAwait(false))
+                   );
+                // Уведомление о загрузки данных
+                IsMapsDataLoaded = true;
+                MapsDataLoaded?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки карт.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -328,17 +538,25 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public async Task LoadEquipmentsDataAsync()
         {
-            Equipments = await LoadDataAsync(
-                "equipments_cache.json",
-                async () => new ObservableCollection<Equipment>(await DatabaseLoader.GetEquipmentAsync(LanguageCode)
-                    .ConfigureAwait(false))
-            );
+            try
+            {
+                Equipments = await LoadDataAsync(
+                        "equipments_cache.json",
+                        async () => new ObservableCollection<Equipment>(await DatabaseLoader.GetEquipmentAsync(LanguageCode)
+                            .ConfigureAwait(false))
+                    );
 
-            //Загрузка текстовых данных для интерфейса, относящимся к снаряжению - Equipment
-            await LoadEquipmentCommonAsync();
-            // Уведомление о загрузки данных
-            IsEquipmentsDataLoaded = true;
-            EquipmentsDataLoaded?.Invoke();
+                //Загрузка текстовых данных для интерфейса, относящимся к снаряжению - Equipment
+                await LoadEquipmentCommonAsync();
+                // Уведомление о загрузки данных
+                IsEquipmentsDataLoaded = true;
+                EquipmentsDataLoaded?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки снаряжения.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -348,8 +566,16 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public async Task LoadEquipmentCommonAsync()
         {
-            EquipmentCommon = await LoadDataAsync("equipment_common_cache.json",
-                async () => await DatabaseLoader.GetEquipmentCommonAsync(LanguageCode).ConfigureAwait(false));
+            try
+            {
+                EquipmentCommon = await LoadDataAsync("equipment_common_cache.json",
+                       async () => await DatabaseLoader.GetEquipmentCommonAsync(LanguageCode).ConfigureAwait(false));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки общих названий для снаряжения.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -358,14 +584,22 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public async Task LoadCursedsDataAsync()
         {
-            Curseds = await LoadDataAsync(
-                "curseds_cache.json",
-                async () => new ObservableCollection<CursedPossession>(await DatabaseLoader
-                    .GetCursedPossessionsAsync(LanguageCode).ConfigureAwait(false))
-            );
-            // Уведомление о загрузки данных
-            IsCursedsDataLoaded = true;
-            CursedsDataLoaded?.Invoke();
+            try
+            {
+                Curseds = await LoadDataAsync(
+                        "curseds_cache.json",
+                        async () => new ObservableCollection<CursedPossession>(await DatabaseLoader
+                            .GetCursedPossessionsAsync(LanguageCode).ConfigureAwait(false))
+                    );
+                // Уведомление о загрузки данных
+                IsCursedsDataLoaded = true;
+                CursedsDataLoaded?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки проклятых предметов.");
+                throw;
+            }
         }
     }
 }

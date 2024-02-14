@@ -1,8 +1,8 @@
-﻿namespace PhasmophobiaCompanion.Models
+﻿namespace PhasmophobiaCompanion.Interfaces
 {
     public interface IDatabasePathProvider
     {
-        string GetDatabasePath();
         void CopyDatabaseIfNeeded();
+        string GetDatabasePath();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,20 +30,28 @@ namespace PhasmophobiaCompanion.ViewModels
         public ObservableCollection<Quest> WeeklyQuest { get; set; }
         public MainPageViewModel()
         {
-            _dataService = DependencyService.Get<DataService>();
-            //Загрузка всех данных для страницы
-            ChallengeMode = _dataService.GetChallengeMode(1);
-            Tips = _dataService.GetTips();
-            Ghosts = _dataService.GetGhosts();
-            GhostCommon = _dataService.GetGhostCommon();
-            Clues = _dataService.GetClues();
-            Difficulties = _dataService.GetDifficulties();
-            Patches = _dataService.GetPatches();
-            Quests = _dataService.GetQuests();
-            OtherInfos = _dataService.GetOtherInfos();
-            ChangeTip();
-            DailyQuest = GetFourQuests(new int[] { 1, 2, 3, 4});
-            WeeklyQuest = GetFourQuests(new int[] { 1, 2, 3, 4 });
+            try
+            {
+                _dataService = DependencyService.Get<DataService>();
+                //Загрузка всех данных для страницы
+                ChallengeMode = _dataService.GetChallengeMode(1);
+                Tips = _dataService.GetTips();
+                Ghosts = _dataService.GetGhosts();
+                GhostCommon = _dataService.GetGhostCommon();
+                Clues = _dataService.GetClues();
+                Difficulties = _dataService.GetDifficulties();
+                Patches = _dataService.GetPatches();
+                Quests = _dataService.GetQuests();
+                OtherInfos = _dataService.GetOtherInfos();
+                ChangeTip();
+                DailyQuest = GetFourQuests(new int[] { 1, 2, 3, 4 });
+                WeeklyQuest = GetFourQuests(new int[] { 1, 2, 3, 4 });
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время инициализации MainPageViewModel.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -50,8 +59,16 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         public void ChangeTip()
         {
+            try
+            {
                 Random random = new Random();
                 DisplayedTip = Tips[random.Next(Tips.Count)];
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время смены отображаемой подсказки.");
+                throw;
+            }
         }
         
         /// <summary>
@@ -61,7 +78,15 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <returns>Коллекция квестов.</returns>
         public ObservableCollection<Quest> GetFourQuests(int[] indices)
         {
-            return new ObservableCollection<Quest>(Quests.Where((c, index) => indices.Contains(index)));
+            try
+            {
+                return new ObservableCollection<Quest>(Quests.Where((c, index) => indices.Contains(index)));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения квестов по выбранным номерам.");
+                throw;
+            }
         }
     }
 }

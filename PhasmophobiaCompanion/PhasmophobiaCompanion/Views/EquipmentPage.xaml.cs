@@ -2,6 +2,7 @@
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.ViewModels;
 using Rg.Plugins.Popup.Services;
+using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,9 +15,17 @@ namespace PhasmophobiaCompanion.Views
 
         public EquipmentPage()
         {
-            InitializeComponent();
-            viewModel = new EquipmentsViewModel();
-            BindingContext = viewModel;
+            try
+            {
+                InitializeComponent();
+                viewModel = new EquipmentsViewModel();
+                BindingContext = viewModel;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время инициализации EquipmentPage.");
+                throw;
+            }
         }
 
         /// <summary>
@@ -24,10 +33,18 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private async void FilterTapped(object sender, EventArgs e)
         {
-            if (BindingContext is EquipmentsViewModel viewModel)
+            try
             {
-                var filterPage = new FilterEquipmentPage(viewModel);
-                await PopupNavigation.Instance.PushAsync(filterPage);
+                if (BindingContext is EquipmentsViewModel viewModel)
+                {
+                    var filterPage = new FilterEquipmentPage(viewModel);
+                    await PopupNavigation.Instance.PushAsync(filterPage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время открытия фильтра для страницы EquipmentPage.");
+                throw;
             }
         }
 
@@ -36,11 +53,19 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private void OnEquipmentTapped(object sender, EventArgs e)
         {
-            if (sender is View view && view.BindingContext is Equipment selectedEquipment)
+            try
             {
-                viewModel.SelectedEquipment = selectedEquipment;
-                var detailPage = new EquipmentDetailPage(viewModel);
-                Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                if (sender is View view && view.BindingContext is Equipment selectedEquipment)
+                {
+                    viewModel.SelectedEquipment = selectedEquipment;
+                    var detailPage = new EquipmentDetailPage(viewModel);
+                    Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время перехода на подробную страницу снаряжения EquipmentDetailPage.");
+                throw;
             }
         }
 
@@ -49,7 +74,15 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         private void OnSearchCompleted(object sender, EventArgs e)
         {
-            if (BindingContext is EquipmentsViewModel viewModel) viewModel.SearchCommand.Execute(null);
+            try
+            {
+                if (BindingContext is EquipmentsViewModel viewModel) viewModel.SearchCommand.Execute(null);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время поиска на странице EquipmentPage.");
+                throw;
+            }
         }
     }
 }
