@@ -14,6 +14,7 @@ namespace PhasmophobiaCompanion.Data
         public DbSet<ChallengeModeBase> ChallengeModeBase { get; set; }
         public DbSet<ClueBase> ClueBase { get; set; }
         public DbSet<CursedPossessionBase> CursedPossessionBase { get; set; }
+        public DbSet<CursedPossessionCommonTranslations> CursedPossessionCommonTranslations { get; set; }
         public DbSet<DifficultyBase> DifficultyBase { get; set; }
         public DbSet<EquipmentBase> EquipmentBase { get; set; }
         public DbSet<EquipmentCommonTranslations> EquipmentCommonTranslations { get; set; }
@@ -25,39 +26,6 @@ namespace PhasmophobiaCompanion.Data
         public DbSet<PatchBase> PatchBase { get; set; }
         public DbSet<QuestBase> QuestBase { get; set; }
         public DbSet<TipsTranslations> TipsTranslations { get; set; }
-
-        /// <summary>
-        ///     Конфигурация подключения к базе данных.
-        /// </summary>
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            var dbPath = "phasmaDATADB.db"; // Путь к файлу базы данных по умолчанию
-
-            // Проверка, выполняется ли код на Android
-            if (Device.RuntimePlatform == Device.Android)
-            {
-                // Получение пути к папке для хранения базы данных на устройстве
-                var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                dbPath = Path.Combine(folderPath, dbPath);
-            }
-
-            optionsBuilder.UseSqlite($"Data Source={dbPath}");
-        }
-
-        /// <summary>
-        ///     Конфигурация моделей с помощью Fluent API.
-        /// </summary>
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            ConfigureGhostEnitity(modelBuilder);
-            ConfigureClueEntity(modelBuilder);
-            ConfigureImageWithDescriptionEntity(modelBuilder);
-            ConfigureCursedPossessionEntity(modelBuilder);
-            ConfigureEquipmentEntity(modelBuilder);
-            ConfigureMapEntity(modelBuilder);
-            ConfigureOtherInfoEntity(modelBuilder);
-            ConfigureChallengeModeEntity(modelBuilder);
-        }
 
         private void ConfigureChallengeModeEntity(ModelBuilder modelBuilder)
         {
@@ -146,6 +114,39 @@ namespace PhasmophobiaCompanion.Data
                 .HasMany(o => o.ExpandFieldWithImagesBase)
                 .WithMany(e => e.OtherInfoBase)
                 .UsingEntity(j => j.ToTable("OtherInfoToExpandFieldWithImagesLink"));
+        }
+
+        /// <summary>
+        ///     Конфигурация подключения к базе данных.
+        /// </summary>
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            var dbPath = "phasmaDATADB.db"; // Путь к файлу базы данных по умолчанию
+
+            // Проверка, выполняется ли код на Android
+            if (Device.RuntimePlatform == Device.Android)
+            {
+                // Получение пути к папке для хранения базы данных на устройстве
+                var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                dbPath = Path.Combine(folderPath, dbPath);
+            }
+
+            optionsBuilder.UseSqlite($"Data Source={dbPath}");
+        }
+
+        /// <summary>
+        ///     Конфигурация моделей с помощью Fluent API.
+        /// </summary>
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            ConfigureGhostEnitity(modelBuilder);
+            ConfigureClueEntity(modelBuilder);
+            ConfigureImageWithDescriptionEntity(modelBuilder);
+            ConfigureCursedPossessionEntity(modelBuilder);
+            ConfigureEquipmentEntity(modelBuilder);
+            ConfigureMapEntity(modelBuilder);
+            ConfigureOtherInfoEntity(modelBuilder);
+            ConfigureChallengeModeEntity(modelBuilder);
         }
     }
 }

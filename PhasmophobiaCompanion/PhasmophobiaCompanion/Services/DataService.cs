@@ -23,23 +23,16 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public string FolderPath;
 
+        private CursedPossessionCommon CursedPossessionCommon;
         private EquipmentCommon EquipmentCommon;
         private GhostCommon GhostCommon;
         private MapCommon MapCommon;
-
-        //Main Page data
         private ObservableCollection<ChallengeMode> ChallengeModes;
         private ObservableCollection<Clue> Clues;
-
-        //Cursed data
         private ObservableCollection<CursedPossession> Curseds;
         private ObservableCollection<Difficulty> Difficulties;
-
-        //Equipment data
         private ObservableCollection<Equipment> Equipments;
         private ObservableCollection<Ghost> Ghosts;
-
-        //Map data
         private ObservableCollection<Map> Maps;
         private ObservableCollection<OtherInfo> OtherInfos;
         private ObservableCollection<Patch> Patches;
@@ -91,6 +84,19 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время получения улик.");
+                throw;
+            }
+        }
+
+        public CursedPossessionCommon GetCursedCommon()
+        {
+            try
+            {
+                return CursedPossessionCommon;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения общих названий для проклятых предметов.");
                 throw;
             }
         }
@@ -295,6 +301,25 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        ///     Загружает текстовые данные для интерфейса, относящиеся к проклятым предметам - CursedPossession из базы данных, а
+        ///     затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
+        public async Task LoadCursedCommonAsync()
+        {
+            try
+            {
+                CursedPossessionCommon = await LoadDataAsync("cursed_common_cache.json",
+                    async () => await DatabaseLoader.GetCursedPossessionCommonAsync(LanguageCode));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки общих названий для проклятых предметов.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Загружает список проклятых предметов  - CursedPossession, а затем кэширует их,
         ///     либо загружает данные из кэша, в зависимости от наличия кэша.
         /// </summary>
@@ -307,6 +332,8 @@ namespace PhasmophobiaCompanion.Services
                     async () => new ObservableCollection<CursedPossession>(await DatabaseLoader
                         .GetCursedPossessionsAsync(LanguageCode).ConfigureAwait(false))
                 );
+                //Загрузка текстовых данных для интерфейса, относящимся к проклятым предметам - CursedPossession
+                await LoadCursedCommonAsync();
                 // Уведомление о загрузки данных
                 IsCursedsDataLoaded = true;
                 CursedsDataLoaded?.Invoke();

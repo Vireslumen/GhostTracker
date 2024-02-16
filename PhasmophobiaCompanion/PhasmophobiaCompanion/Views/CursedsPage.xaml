@@ -28,7 +28,7 @@
                     BackgroundColor="White"
                     Completed="OnSearchCompleted"
                     HorizontalOptions="FillAndExpand"
-                    Placeholder="Search Cursed"
+                    Placeholder="{Binding CursedPossessionCommon.Search}"
                     Text="{Binding SearchQuery, Mode=TwoWay}" />
             </StackLayout>
         </yummy:PancakeView>
@@ -48,7 +48,7 @@
                             FontSize="20"
                             HorizontalOptions="CenterAndExpand"
                             HorizontalTextAlignment="Center"
-                            Text="Cursed Items"
+                            Text="{Binding CursedPossessionCommon.CursedsTitle}"
                             VerticalOptions="Center" />
                         <!--  Список проклятых предметов  -->
                         <CollectionView ItemsSource="{Binding Curseds}" SelectionMode="Single">

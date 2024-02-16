@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Interfaces;
@@ -18,6 +19,7 @@ namespace PhasmophobiaCompanion.ViewModels
         private readonly ObservableCollection<CursedPossession> curseds;
         private ObservableCollection<CursedPossession> filteredCurseds;
         private string searchQuery;
+        private CursedPossessionCommon cursedPossessionCommon;
 
         public CursedViewModel()
         {
@@ -27,16 +29,25 @@ namespace PhasmophobiaCompanion.ViewModels
                 //Загрузка всех проклятых предметов.
                 curseds = _dataService.GetCurseds();
                 Curseds = new ObservableCollection<CursedPossession>(curseds);
-
+                cursedPossessionCommon = _dataService.GetCursedCommon();
                 SearchCommand = new Command<string>(query => Search(query));
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время инициализации CursedViewModel.");
                 throw;
             }
         }
 
+        public CursedPossessionCommon CursedPossessionCommon
+        {
+            get => cursedPossessionCommon;
+            set
+            {
+                cursedPossessionCommon = value;
+                OnPropertyChanged();
+            }
+        }
         public ObservableCollection<CursedPossession> Curseds
         {
             get => filteredCurseds;
@@ -63,7 +74,7 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 SearchQuery = query;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время установки поискового запроса у CursedViewModel.");
                 throw;
@@ -85,11 +96,12 @@ namespace PhasmophobiaCompanion.ViewModels
                 {
                     //Поиск по названию проклятого предмета.
                     var filtered = curseds
-                        .Where(cursed => cursed.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant())).ToList();
+                        .Where(cursed => cursed.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant()))
+                        .ToList();
                     Curseds = new ObservableCollection<CursedPossession>(filtered);
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время поиска проклятых предметов.");
                 throw;

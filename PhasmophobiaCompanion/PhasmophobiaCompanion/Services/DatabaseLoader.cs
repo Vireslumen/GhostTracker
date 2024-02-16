@@ -113,6 +113,33 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        ///     Асинхронно возвращает общие данные для проклятых предметов - CursedPossessionCommon, на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Общие данные для проклятых предметов.</returns>
+        public async Task<CursedPossessionCommon> GetCursedPossessionCommonAsync(string languageCode)
+        {
+            try
+            {
+                // Загрузка данных с учетом перевода и связанных сущностей.
+                var cursedCommonData = await _phasmaDbContext.CursedPossessionCommonTranslations
+                    .Where(e => e.LanguageCode == languageCode).ToListAsync();
+
+                //Преобразование данных в объект CursedPossessionCommon.
+                return cursedCommonData.Select(m => new CursedPossessionCommon
+                {
+                    Search = m.Search,
+                    CursedsTitle = m.CursedsTitle
+                }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки из бд общих названия для проклятых предметов.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Асинхронно возвращает список проклятых предметов - CursedPossession на основе кода языка.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>
@@ -393,7 +420,7 @@ namespace PhasmophobiaCompanion.Services
                 var mapCommonData = await _phasmaDbContext.MapCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
-                //Преобразование данных в объект EquipmentCommon.
+                //Преобразование данных в объект MapCommon.
                 return mapCommonData.Select(m => new MapCommon
                 {
                     Search = m.Search,
