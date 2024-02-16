@@ -1,5 +1,8 @@
 ﻿namespace PhasmophobiaCompanion.Data
 {
+    /// <summary>
+    ///     Entity framework модель для таблицы CursedPossessionCommonTranslations.
+    /// </summary>
     public class CursedPossessionCommonTranslations
     {
         public int ID { get; set; }
