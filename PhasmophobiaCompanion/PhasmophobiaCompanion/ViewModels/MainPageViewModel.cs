@@ -1,33 +1,22 @@
-﻿using PhasmophobiaCompanion.Models;
-using PhasmophobiaCompanion.Services;
-using Serilog;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
+using PhasmophobiaCompanion.Models;
+using PhasmophobiaCompanion.Services;
+using Serilog;
 using Xamarin.Forms;
 
 namespace PhasmophobiaCompanion.ViewModels
 {
     /// <summary>
-    /// ViewModel для главной страницы.
+    ///     ViewModel для главной страницы.
     /// </summary>
-    public class MainPageViewModel
+    public class MainPageViewModel : BaseViewModel
     {
         public readonly DataService _dataService;
-        public ChallengeMode ChallengeMode { get; set; }
-        public ObservableCollection<string> Tips { get; set; }
-        public ObservableCollection<Ghost> Ghosts { get; set; }
-        public GhostCommon GhostCommon { get; set; }
-        public ObservableCollection<Clue> Clues { get; set; }
-        public ObservableCollection<Difficulty> Difficulties { get; set; }
-        public ObservableCollection<Patch> Patches { get; set; }
-        public ObservableCollection<Quest> Quests { get; set; }
-        public ObservableCollection<OtherInfo> OtherInfos { get; set; }
-        public string DisplayedTip { get; set; }
-        public ObservableCollection<Quest> DailyQuest { get; set; }
-        public ObservableCollection<Quest> WeeklyQuest { get; set; }
+        private Difficulty selectedDifficulty;
+        private DifficultyCommon difficultyCommon;
+
         public MainPageViewModel()
         {
             try
@@ -44,8 +33,9 @@ namespace PhasmophobiaCompanion.ViewModels
                 Quests = _dataService.GetQuests();
                 OtherInfos = _dataService.GetOtherInfos();
                 ChangeTip();
-                DailyQuest = GetFourQuests(new int[] { 1, 2, 3, 4 });
-                WeeklyQuest = GetFourQuests(new int[] { 1, 2, 3, 4 });
+                DailyQuest = GetFourQuests(new[] {1, 2, 3, 4});
+                WeeklyQuest = GetFourQuests(new[] {1, 2, 3, 4});
+                DifficultyCommon = _dataService.GetDifficultyCommon();
             }
             catch (Exception ex)
             {
@@ -54,14 +44,48 @@ namespace PhasmophobiaCompanion.ViewModels
             }
         }
 
+        public ChallengeMode ChallengeMode { get; set; }
+        public Difficulty SelectedDifficulty
+        {
+            get => selectedDifficulty;
+            set
+            {
+                selectedDifficulty = value;
+                OnPropertyChanged();
+            }
+        }
         /// <summary>
-        /// Смена отображаемой подсказки на случайную из списка всех подсказок.
+        ///     Общие текстовые данные для интерфейса относящегося к сложностям.
+        /// </summary>
+        public DifficultyCommon DifficultyCommon
+        {
+            get => difficultyCommon;
+            set
+            {
+                difficultyCommon = value;
+                OnPropertyChanged();
+            }
+        }
+        public GhostCommon GhostCommon { get; set; }
+        public ObservableCollection<Clue> Clues { get; set; }
+        public ObservableCollection<Difficulty> Difficulties { get; set; }
+        public ObservableCollection<Ghost> Ghosts { get; set; }
+        public ObservableCollection<OtherInfo> OtherInfos { get; set; }
+        public ObservableCollection<Patch> Patches { get; set; }
+        public ObservableCollection<Quest> DailyQuest { get; set; }
+        public ObservableCollection<Quest> Quests { get; set; }
+        public ObservableCollection<Quest> WeeklyQuest { get; set; }
+        public ObservableCollection<string> Tips { get; set; }
+        public string DisplayedTip { get; set; }
+
+        /// <summary>
+        ///     Смена отображаемой подсказки на случайную из списка всех подсказок.
         /// </summary>
         public void ChangeTip()
         {
             try
             {
-                Random random = new Random();
+                var random = new Random();
                 DisplayedTip = Tips[random.Next(Tips.Count)];
             }
             catch (Exception ex)
@@ -70,9 +94,9 @@ namespace PhasmophobiaCompanion.ViewModels
                 throw;
             }
         }
-        
+
         /// <summary>
-        /// Получение коллекции квестов по номерам.
+        ///     Получение коллекции квестов по номерам.
         /// </summary>
         /// <param name="indices">массив номеров квестов.</param>
         /// <returns>Коллекция квестов.</returns>

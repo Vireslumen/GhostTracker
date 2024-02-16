@@ -42,7 +42,8 @@ namespace PhasmophobiaCompanion.Views
                 var challengeMode = viewModel.ChallengeMode;
                 if (viewModel._dataService.IsMapsDataLoaded && viewModel._dataService.IsEquipmentsDataLoaded)
                 {
-                    challengeMode.ChallengeMap = viewModel._dataService.GetMaps().Where(m => m.ID == challengeMode.MapID)
+                    challengeMode.ChallengeMap = viewModel._dataService.GetMaps()
+                        .Where(m => m.ID == challengeMode.MapID)
                         .FirstOrDefault();
                     challengeMode.ChallengeEquipments = new ObservableCollection<Equipment>
                     (viewModel._dataService.GetEquipments().Where(e => challengeMode.EquipmentsID.Contains(e.ID))
@@ -92,7 +93,8 @@ namespace PhasmophobiaCompanion.Views
                 var parentStack = sender as StackLayout;
                 if (parentStack?.BindingContext is Difficulty difficultyItem)
                 {
-                    var Page = new DifficultyDetailPage(difficultyItem);
+                    viewModel.SelectedDifficulty = difficultyItem;
+                    var Page = new DifficultyDetailPage(viewModel);
                     Application.Current.MainPage.Navigation.PushAsync(Page);
                 }
             }
@@ -119,7 +121,8 @@ namespace PhasmophobiaCompanion.Views
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время перехода на подробную страницу призрака GhostDetailPage с главной страницы MainPage.");
+                Log.Error(ex,
+                    "Ошибка во время перехода на подробную страницу призрака GhostDetailPage с главной страницы MainPage.");
                 throw;
             }
         }

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.DifficultyDetailPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:pinch="clr-namespace:Xamarin.Forms.PinchZoomImage;assembly=Xamarin.Forms.PinchZoomImage"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     x:Name="DifficultyDetailPageName">
     <ScrollView>
@@ -15,8 +15,9 @@
                 HorizontalOptions="CenterAndExpand">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="Difficulty: " />
-                        <Span Text="{Binding Title}" />
+                        <Span Text="{Binding DifficultyCommon.DifficultyTitle}" />
+                        <Span Text=": " />
+                        <Span Text="{Binding SelectedDifficulty.Title}" />
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
@@ -27,7 +28,7 @@
                 HorizontalOptions="CenterAndExpand">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="{Binding Description}" />
+                        <Span Text="{Binding SelectedDifficulty.Description}" />
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
@@ -52,8 +53,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="ActivityMonitorWork: " />
-                                <Span Text="{Binding ActivityMonitorWork}" />
+                                <Span Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.ActivityMonitorWork}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -61,8 +63,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="DeadCashBack: " />
-                                <Span Text="{Binding DeadCashBack}" />
+                                <Span Text="{Binding DifficultyCommon.DeadCashBack}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.DeadCashBack}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -70,8 +73,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="DoorOpenedCount: " />
-                                <Span Text="{Binding DoorOpenedCount}" />
+                                <Span Text="{Binding DifficultyCommon.DoorOpenedCount}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.DoorOpenedCount}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -79,8 +83,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="ElectricityBlockNotShowedOnMap: " />
-                                <Span Text="{Binding ElectricityBlockNotShowedOnMap}" />
+                                <Span Text="{Binding DifficultyCommon.ElectricityBlockNotShowedOnMap}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.ElectricityBlockNotShowedOnMap}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -88,8 +93,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="ElectricityOn: " />
-                                <Span Text="{Binding ElectricityOn}" />
+                                <Span Text="{Binding DifficultyCommon.ElectricityOn}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.ElectricityOn}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -97,8 +103,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="EvidenceAvailable: " />
-                                <Span Text="{Binding EvidenceAvailable}" />
+                                <Span Text="{Binding DifficultyCommon.EvidenceAvailable}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.EvidenceAvailable}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -106,8 +113,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="FingerPrints: " />
-                                <Span Text="{Binding FingerPrints}" />
+                                <Span Text="{Binding DifficultyCommon.FingerPrints}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.FingerPrints}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -115,8 +123,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="GhostActivity: " />
-                                <Span Text="{Binding GhostActivity}" />
+                                <Span Text="{Binding DifficultyCommon.GhostActivity}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.GhostActivity}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -124,8 +133,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="GhostHuntTime: " />
-                                <Span Text="{Binding GhostHuntTime}" />
+                                <Span Text="{Binding DifficultyCommon.GhostHuntTime}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.GhostHuntTime}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -133,8 +143,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="HidingSpotBlocked: " />
-                                <Span Text="{Binding HidingSpotBlocked}" />
+                                <Span Text="{Binding DifficultyCommon.HidingSpotBlocked}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.HidingSpotBlocked}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -142,8 +153,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="HuntExtendByKilling: " />
-                                <Span Text="{Binding HuntExtendByKilling}" />
+                                <Span Text="{Binding DifficultyCommon.HuntExtendByKilling}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.HuntExtendByKilling}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -151,8 +163,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="ActivityMonitorWork: " />
-                                <Span Text="{Binding ActivityMonitorWork}" />
+                                <Span Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.ActivityMonitorWork}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -160,8 +173,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="ObjectiveBoardPendingAloneAll: " />
-                                <Span Text="{Binding ObjectiveBoardPendingAloneAll}" />
+                                <Span Text="{Binding DifficultyCommon.ObjectiveBoardPendingAloneAll}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.ObjectiveBoardPendingAloneAll}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -169,8 +183,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="RewardMultiplier: " />
-                                <Span Text="{Binding RewardMultiplier}" />
+                                <Span Text="{Binding DifficultyCommon.RewardMultiplier}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.RewardMultiplier}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -178,8 +193,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="SanityConsumption: " />
-                                <Span Text="{Binding SanityConsumption}" />
+                                <Span Text="{Binding DifficultyCommon.SanityConsumption}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.SanityConsumption}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -187,8 +203,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="SanityMonitorWork: " />
-                                <Span Text="{Binding SanityMonitorWork}" />
+                                <Span Text="{Binding DifficultyCommon.SanityMonitorWork}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.SanityMonitorWork}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -196,8 +213,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="SanityRestoration: " />
-                                <Span Text="{Binding SanityRestoration}" />
+                                <Span Text="{Binding DifficultyCommon.SanityRestoration}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.SanityRestoration}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -205,8 +223,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="SanityStartAt: " />
-                                <Span Text="{Binding SanityStartAt}" />
+                                <Span Text="{Binding DifficultyCommon.SanityStartAt}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.SanityStartAt}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -214,8 +233,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="SetupTime: " />
-                                <Span Text="{Binding SetupTime}" />
+                                <Span Text="{Binding DifficultyCommon.SetupTime}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.SetupTime}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -223,8 +243,9 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="UnlockLevel: " />
-                                <Span Text="{Binding UnlockLevel}" />
+                                <Span Text="{Binding DifficultyCommon.UnlockLevel}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding SelectedDifficulty.UnlockLevel}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>

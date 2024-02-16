@@ -24,6 +24,7 @@ namespace PhasmophobiaCompanion.Services
         public string FolderPath;
 
         private CursedPossessionCommon CursedPossessionCommon;
+        private DifficultyCommon DifficultyCommon;
         private EquipmentCommon EquipmentCommon;
         private GhostCommon GhostCommon;
         private MapCommon MapCommon;
@@ -123,6 +124,19 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время получения сложностей.");
+                throw;
+            }
+        }
+
+        public DifficultyCommon GetDifficultyCommon()
+        {
+            try
+            {
+                return DifficultyCommon;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения общих данных для сложностей.");
                 throw;
             }
         }
@@ -394,10 +408,30 @@ namespace PhasmophobiaCompanion.Services
                     async () => new ObservableCollection<Difficulty>(
                         await DatabaseLoader.GetDifficultiesAsync(LanguageCode))
                 );
+                //Загрузка текстовых данных для интерфейса, относящимся к сложностям - Difficulty
+                await LoadDifficultyCommonAsync();
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки сложностей.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Загружает текстовые данные для интерфейса, относящиеся к сложностям - Difficulty из базы данных, а затем кэширует
+        ///     их, либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
+        public async Task LoadDifficultyCommonAsync()
+        {
+            try
+            {
+                DifficultyCommon = await LoadDataAsync("difficulty_common_cache.json",
+                    async () => await DatabaseLoader.GetDifficultyCommonAsync(LanguageCode).ConfigureAwait(false));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки общих названий для сложностей.");
                 throw;
             }
         }

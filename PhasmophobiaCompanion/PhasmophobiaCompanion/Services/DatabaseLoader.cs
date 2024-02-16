@@ -232,6 +232,52 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        ///     Асинхронно возвращает общие данные для проклятых предметов - DifficultyCommon, на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Общие данные для сложностей.</returns>
+        public async Task<DifficultyCommon> GetDifficultyCommonAsync(string languageCode)
+        {
+            try
+            {
+                // Загрузка данных с учетом перевода и связанных сущностей.
+                var difficultyCommonData = await _phasmaDbContext.DifficultyCommonTranslations
+                    .Where(e => e.LanguageCode == languageCode).ToListAsync();
+
+                //Преобразование данных в объект DifficultyCommon.
+                return difficultyCommonData.Select(d => new DifficultyCommon
+                {
+                    ActivityMonitorWork = d.ActivityMonitorWork,
+                    DeadCashBack = d.DeadCashBack,
+                    DifficultiesTitle = d.DifficultiesTitle,
+                    DifficultyTitle = d.DifficultyTitle,
+                    DoorOpenedCount = d.DoorOpenedCount,
+                    ElectricityBlockNotShowedOnMap = d.ElectricityBlockNotShowedOnMap,
+                    ElectricityOn = d.ElectricityOn,
+                    EvidenceAvailable = d.EvidenceAvailable,
+                    FingerPrints = d.FingerPrints,
+                    GhostActivity = d.GhostActivity,
+                    GhostHuntTime = d.GhostHuntTime,
+                    HidingSpotBlocked = d.HidingSpotBlocked,
+                    HuntExtendByKilling = d.HuntExtendByKilling,
+                    ObjectiveBoardPendingAloneAll = d.ObjectiveBoardPendingAloneAll,
+                    RewardMultiplier = d.RewardMultiplier,
+                    SanityConsumption = d.SanityConsumption,
+                    SanityMonitorWork = d.SanityMonitorWork,
+                    SanityRestoration = d.SanityRestoration,
+                    SanityStartAt = d.SanityStartAt,
+                    SetupTime = d.SetupTime,
+                    UnlockLevel = d.UnlockLevel
+                }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки из бд общих названия для сложностей.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Асинхронно возвращает список снаряжения - Equipment на основе кода языка.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>
