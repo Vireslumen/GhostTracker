@@ -32,6 +32,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 Patches = _dataService.GetPatches();
                 Quests = _dataService.GetQuests();
                 OtherInfos = _dataService.GetOtherInfos();
+                MainPageCommon = _dataService.GetMainPageCommon();
                 ChangeTip();
                 DailyQuest = GetFourQuests(new[] {1, 2, 3, 4});
                 WeeklyQuest = GetFourQuests(new[] {1, 2, 3, 4});
@@ -67,6 +68,7 @@ namespace PhasmophobiaCompanion.ViewModels
             }
         }
         public GhostCommon GhostCommon { get; set; }
+        public MainPageCommon MainPageCommon { get; set; }
         public ObservableCollection<Clue> Clues { get; set; }
         public ObservableCollection<Difficulty> Difficulties { get; set; }
         public ObservableCollection<Ghost> Ghosts { get; set; }

@@ -28,6 +28,7 @@ namespace PhasmophobiaCompanion.Services
         private EquipmentCommon EquipmentCommon;
         private GhostCommon GhostCommon;
         private MapCommon MapCommon;
+        private MainPageCommon MainPageCommon;
         private ObservableCollection<ChallengeMode> ChallengeModes;
         private ObservableCollection<Clue> Clues;
         private ObservableCollection<CursedPossession> Curseds;
@@ -85,6 +86,19 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время получения улик.");
+                throw;
+            }
+        }
+
+        public MainPageCommon GetMainPageCommon()
+        {
+            try
+            {
+                return MainPageCommon;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения общих данных для главной страницы.");
                 throw;
             }
         }
@@ -540,7 +554,7 @@ namespace PhasmophobiaCompanion.Services
                 await LoadQuestsAsync();
                 await LoadOtherInfoAsync();
                 await LoadChallengeModeAsync();
-
+                await LoadMainPageCommonAsync();
                 //Добавление связи от призраков Ghost к уликам Clue
                 //Связи добавляются после кэширования, из-за невозможности кэшировать данные с такими связями
                 foreach (var ghost in Ghosts) ghost.PopulateAssociatedClues(Clues);
@@ -568,6 +582,24 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки общих названий для карт.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Загружает текстовые данные для интерфейса, относящиеся к главной странице - MainPage из базы данных, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
+        public async Task LoadMainPageCommonAsync()
+        {
+            try
+            {
+                MainPageCommon = await LoadDataAsync("main_page_common_cache.json",
+                    async () => await DatabaseLoader.GetMainPageCommonAsync(LanguageCode));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки общих названий для главной страницы.");
                 throw;
             }
         }

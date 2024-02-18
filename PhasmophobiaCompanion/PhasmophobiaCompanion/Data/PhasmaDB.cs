@@ -9,8 +9,9 @@ namespace PhasmophobiaCompanion.Data
     ///     Контекст базы данных для приложений, наследующий от DbContext.
     /// </summary>
     public class PhasmaDB : DbContext
-    {        
+    {
         //Определения DbSet для различных сущностей.
+        public DbSet<MainPageCommonTranslations> MainPageCommonTranslations { get; set; }
         public DbSet<ChallengeModeBase> ChallengeModeBase { get; set; }
         public DbSet<ClueBase> ClueBase { get; set; }
         public DbSet<CursedPossessionBase> CursedPossessionBase { get; set; }

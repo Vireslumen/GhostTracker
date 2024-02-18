@@ -37,7 +37,8 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Special Mode: " />
+                                    <Span FontAttributes="Bold" Text="{Binding MainPageCommon.SpecialMode}" />
+                                    <Span Text=": " />
                                     <Span Text="{Binding Path=ChallengeMode.Title}" />
                                 </FormattedString>
                             </Label.FormattedText>
@@ -50,7 +51,20 @@
                     </yummy:PancakeView.GestureRecognizers>
                 </yummy:PancakeView>
 
+
                 <!--  Рандомная подсказка  -->
+                <Label
+                    Padding="10,10,10,0"
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    HorizontalOptions="StartAndExpand"
+                    Text="{Binding MainPageCommon.Tip}">
+                    <Label.Margin>
+                        <Thickness>
+                            10,3,10,0
+                        </Thickness>
+                    </Label.Margin>
+                </Label>
                 <yummy:PancakeView
                     Padding="10,10,10,10"
                     BackgroundColor="White"
@@ -84,7 +98,7 @@
                     <yummy:PancakeView.Border>
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
-                    <SearchBar Placeholder="Search..." />
+                    <SearchBar Placeholder="{Binding MainPageCommon.Search}" />
                 </yummy:PancakeView>
                 <!--  Таблицы скоростей призраков и рассудка для начала охоты  -->
                 <Grid HeightRequest="300">
@@ -196,6 +210,7 @@
                         Grid.Row="0"
                         Grid.Column="1"
                         FontAttributes="Bold"
+                        FontSize="Header"
                         HorizontalTextAlignment="Center"
                         Text="{Binding GhostCommon.SanityHunt}" />
                     <!--  Таблица рассудков для начала охоты  -->
@@ -276,6 +291,18 @@
                     </yummy:PancakeView>
                 </Grid>
                 <!--  Список улик  -->
+                <Label
+                    Padding="10,10,10,0"
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    HorizontalOptions="StartAndExpand"
+                    Text="{Binding MainPageCommon.Clue}">
+                    <Label.Margin>
+                        <Thickness>
+                            10,3,10,0
+                        </Thickness>
+                    </Label.Margin>
+                </Label>
                 <yummy:PancakeView
                     Padding="10,10,10,10"
                     BackgroundColor="White"
@@ -336,12 +363,14 @@
                 </yummy:PancakeView>
                 <!--  Список сложностей  -->
                 <Label
+                    Padding="10,10,10,0"
                     FontAttributes="Bold"
+                    FontSize="Medium"
                     HorizontalOptions="StartAndExpand"
                     Text="{Binding DifficultyCommon.DifficultiesTitle}">
                     <Label.Margin>
                         <Thickness>
-                            10,3,10,10
+                            10,3,10,0
                         </Thickness>
                     </Label.Margin>
                 </Label>
@@ -388,6 +417,18 @@
                 </yummy:PancakeView>
 
                 <!--  Список патчей  -->
+                <Label
+                    Padding="10,10,10,0"
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    HorizontalOptions="StartAndExpand"
+                    Text="{Binding MainPageCommon.Patches}">
+                    <Label.Margin>
+                        <Thickness>
+                            10,3,10,0
+                        </Thickness>
+                    </Label.Margin>
+                </Label>
                 <yummy:PancakeView
                     Padding="10,10,10,10"
                     BackgroundColor="White"
@@ -430,9 +471,28 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
                     <!--  Ежедневные квесты  -->
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Padding="10,10,10,0"
+                        FontAttributes="Bold"
+                        FontSize="Header"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="{Binding MainPageCommon.DailyQuest}">
+                        <Label.Margin>
+                            <Thickness>
+                                10,3,10,0
+                            </Thickness>
+                        </Label.Margin>
+                    </Label>
                     <yummy:PancakeView
+                        Grid.Row="1"
                         Grid.Column="0"
                         Padding="10,10,10,10"
                         BackgroundColor="White"
@@ -464,7 +524,22 @@
                     </yummy:PancakeView>
 
                     <!--  Еженедельные квесты  -->
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Padding="10,10,10,0"
+                        FontAttributes="Bold"
+                        FontSize="Header"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="{Binding MainPageCommon.WeeklyQuest}">
+                        <Label.Margin>
+                            <Thickness>
+                                10,3,10,0
+                            </Thickness>
+                        </Label.Margin>
+                    </Label>
                     <yummy:PancakeView
+                        Grid.Row="1"
                         Grid.Column="1"
                         Padding="10,10,10,10"
                         BackgroundColor="White"
@@ -496,6 +571,18 @@
                     </yummy:PancakeView>
                 </Grid>
                 <!--  Горизонтальная прокрутная некатегоризованных страниц  -->
+                <Label
+                    Padding="10,10,10,0"
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    HorizontalOptions="StartAndExpand"
+                    Text="{Binding MainPageCommon.OtherPages}">
+                    <Label.Margin>
+                        <Thickness>
+                            10,3,10,0
+                        </Thickness>
+                    </Label.Margin>
+                </Label>
                 <yummy:PancakeView
                     Grid.Column="1"
                     Padding="10,10,10,10"

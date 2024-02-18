@@ -454,6 +454,41 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        ///     Асинхронно возвращает общие данные для главной страницы - MainPageCommon, на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Общие данные для главной страницы.</returns>
+        public async Task<MainPageCommon> GetMainPageCommonAsync(string languageCode)
+        {
+            try
+            {
+                // Загрузка данных с учетом перевода и связанных сущностей.
+                var mainPageCommonData = await _phasmaDbContext.MainPageCommonTranslations
+                    .Where(e => e.LanguageCode == languageCode).ToListAsync();
+
+                //Преобразование данных в объект MainPageCommon.
+                return mainPageCommonData.Select(m => new MainPageCommon
+                {
+                    Clue = m.Clue,
+                    DailyQuest = m.DailyQuest,
+                    OtherPages = m.OtherPages,
+                    Patches = m.Patches,
+                    Search = m.Search,
+                    Settings = m.Settings,
+                    SpecialMode = m.SpecialMode,
+                    Theme = m.Theme,
+                    Tip = m.Tip,
+                    WeeklyQuest = m.WeeklyQuest
+                }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки из бд общих названия для главной страницы.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Асинхронно возвращает общие данные для карт - MapCommon, на основе языка.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>
