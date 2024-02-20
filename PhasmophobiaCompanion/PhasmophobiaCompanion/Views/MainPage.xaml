@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -46,8 +47,9 @@
                         <!--  Описание особого режима  -->
                         <Label Text="{Binding ChallengeMode.Description}" />
                     </StackLayout>
+
                     <yummy:PancakeView.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnChallengeModeTapped" />
+                        <TapGestureRecognizer Command="{Binding ChallengeModeTappedCommand}" />
                     </yummy:PancakeView.GestureRecognizers>
                 </yummy:PancakeView>
 
@@ -98,7 +100,29 @@
                     <yummy:PancakeView.Border>
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
-                    <SearchBar Placeholder="{Binding MainPageCommon.Search}" />
+                    <StackLayout>
+                        <SearchBar
+                            Placeholder="{Binding MainPageCommon.Search}"
+                            SearchCommand="{Binding SearchCommand}"
+                            Text="{Binding SearchText, Mode=TwoWay}" />
+                        <Frame
+                            Padding="0"
+                            BackgroundColor="White"
+                            CornerRadius="5"
+                            HasShadow="True"
+                            HorizontalOptions="FillAndExpand"
+                            IsVisible="{Binding IsSearchResultVisible}"
+                            VerticalOptions="Start">
+                            <ListView ItemsSource="{Binding SearchResults}"
+                                      SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding Title}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Frame>
+                    </StackLayout>
                 </yummy:PancakeView>
                 <!--  Таблицы скоростей призраков и рассудка для начала охоты  -->
                 <Grid HeightRequest="300">
@@ -147,24 +171,25 @@
                                         <Span Text=": " />
                                         <Span Text="{Binding GhostCommon.Min}">
                                             <Span.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="OnMinSpeedHeaderTapped" />
+                                                <TapGestureRecognizer Command="{Binding MinSpeedHeaderTappedCommand}" />
                                             </Span.GestureRecognizers>
                                         </Span>
                                         <Span Text=" - " />
                                         <Span Text="{Binding GhostCommon.Max}">
                                             <Span.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="OnMaxSpeedHeaderTapped" />
+                                                <TapGestureRecognizer Command="{Binding MaxSpeedHeaderTappedCommand}" />
                                             </Span.GestureRecognizers>
                                         </Span>
                                         <Span Text="{Binding GhostCommon.LoS}">
                                             <Span.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="OnMaxSpeedLoSHeaderTapped" />
+                                                <TapGestureRecognizer
+                                                    Command="{Binding MaxSpeedLoSHeaderTappedCommand}" />
                                             </Span.GestureRecognizers>
                                         </Span>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
-                            <ListView ItemsSource="{Binding Ghosts}">
+                            <ListView x:Name="ghostListViewSpeed" ItemsSource="{Binding Ghosts}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
@@ -173,25 +198,33 @@
                                                     <FormattedString>
                                                         <Span Text="{Binding Title}">
                                                             <Span.GestureRecognizers>
-                                                                <TapGestureRecognizer Tapped="OnGhostTapped" />
+                                                                <TapGestureRecognizer
+                                                                    Command="{Binding Path=BindingContext.GhostTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}"
+                                                                    CommandParameter="{Binding .}" />
                                                             </Span.GestureRecognizers>
                                                         </Span>
                                                         <Span Text=": " />
                                                         <Span Text="{Binding MinGhostSpeed}">
                                                             <Span.GestureRecognizers>
-                                                                <TapGestureRecognizer Tapped="OnMinGhostSpeedTapped" />
+                                                                <TapGestureRecognizer
+                                                                    Command="{Binding Path=BindingContext.MinGhostSpeedTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}"
+                                                                    CommandParameter="{Binding .}" />
                                                             </Span.GestureRecognizers>
                                                         </Span>
                                                         <Span Text=" - " />
                                                         <Span Text="{Binding MaxGhostSpeed}">
                                                             <Span.GestureRecognizers>
-                                                                <TapGestureRecognizer Tapped="OnMaxGhostSpeedTapped" />
+                                                                <TapGestureRecognizer
+                                                                    Command="{Binding Path=BindingContext.MaxGhostSpeedTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}"
+                                                                    CommandParameter="{Binding .}" />
                                                             </Span.GestureRecognizers>
                                                         </Span>
                                                         <Span Text=" (" />
                                                         <Span Text="{Binding MaxGhostSpeedLoS}">
                                                             <Span.GestureRecognizers>
-                                                                <TapGestureRecognizer Tapped="OnMaxGhostSpeedLoSTapped" />
+                                                                <TapGestureRecognizer
+                                                                    Command="{Binding Path=BindingContext.MaxGhostSpeedLoSTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}"
+                                                                    CommandParameter="{Binding .}" />
                                                             </Span.GestureRecognizers>
                                                         </Span>
                                                         <Span Text=")" />
@@ -244,19 +277,19 @@
                                         <Span Text=": " />
                                         <Span Text="{Binding GhostCommon.Min}">
                                             <Span.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="OnMinSanityHeaderTapped" />
+                                                <TapGestureRecognizer Command="{Binding MinSanityHeaderTappedCommand}" />
                                             </Span.GestureRecognizers>
                                         </Span>
                                         <Span Text=" - " />
                                         <Span Text="{Binding GhostCommon.Max}">
                                             <Span.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="OnMaxSanityHeaderTapped" />
+                                                <TapGestureRecognizer Command="{Binding MaxSanityHeaderTappedCommand}" />
                                             </Span.GestureRecognizers>
                                         </Span>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
-                            <ListView ItemsSource="{Binding Ghosts}">
+                            <ListView x:Name="ghostListViewSanity" ItemsSource="{Binding Ghosts}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
@@ -265,19 +298,25 @@
                                                     <FormattedString>
                                                         <Span Text="{Binding Title}">
                                                             <Span.GestureRecognizers>
-                                                                <TapGestureRecognizer Tapped="OnGhostTapped" />
+                                                                <TapGestureRecognizer
+                                                                    Command="{Binding Path=BindingContext.GhostTappedCommand, Source={x:Reference Name=ghostListViewSanity}}"
+                                                                    CommandParameter="{Binding .}" />
                                                             </Span.GestureRecognizers>
                                                         </Span>
                                                         <Span Text=": " />
                                                         <Span Text="{Binding MinSanityHunt}">
                                                             <Span.GestureRecognizers>
-                                                                <TapGestureRecognizer Tapped="OnMinSanityHuntTapped" />
+                                                                <TapGestureRecognizer
+                                                                    Command="{Binding Path=BindingContext.MinSanityHuntTappedCommand, Source={x:Reference Name=ghostListViewSanity}}"
+                                                                    CommandParameter="{Binding .}" />
                                                             </Span.GestureRecognizers>
                                                         </Span>
                                                         <Span Text=" - " />
                                                         <Span Text="{Binding MaxSanityHunt}">
                                                             <Span.GestureRecognizers>
-                                                                <TapGestureRecognizer Tapped="OnMaxSanityHuntTapped" />
+                                                                <TapGestureRecognizer
+                                                                    Command="{Binding Path=BindingContext.MaxSanityHuntTappedCommand, Source={x:Reference Name=ghostListViewSanity}}"
+                                                                    CommandParameter="{Binding .}" />
                                                             </Span.GestureRecognizers>
                                                         </Span>
                                                     </FormattedString>
@@ -319,6 +358,7 @@
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <FlexLayout
+                        x:Name="clueFlexLayout"
                         AlignContent="Start"
                         AlignItems="Start"
                         BindableLayout.ItemsSource="{Binding Clues}"
@@ -353,7 +393,9 @@
                                             VerticalOptions="Center" />
                                     </StackLayout>
                                     <yummy:PancakeView.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnClueTapped" />
+                                        <TapGestureRecognizer
+                                            Command="{Binding Path=BindingContext.ClueTappedCommand, Source={x:Reference Name=clueFlexLayout}}"
+                                            CommandParameter="{Binding .}" />
                                     </yummy:PancakeView.GestureRecognizers>
                                 </yummy:PancakeView>
                             </DataTemplate>
@@ -367,7 +409,7 @@
                     FontAttributes="Bold"
                     FontSize="Medium"
                     HorizontalOptions="StartAndExpand"
-                    Text="{Binding DifficultyCommon.DifficultiesTitle}">
+                    Text="{Binding MainPageCommon.Difficulties}">
                     <Label.Margin>
                         <Thickness>
                             10,3,10,0
@@ -390,6 +432,7 @@
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <FlexLayout
+                        x:Name="difficultiesFlexLayout"
                         AlignContent="Start"
                         AlignItems="Start"
                         BindableLayout.ItemsSource="{Binding Difficulties}"
@@ -406,7 +449,9 @@
                                         <Label FontAttributes="Bold" Text="{Binding Title}" />
                                         <Label Text="{Binding Description}" />
                                         <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="OnDifficultyTapped" />
+                                            <TapGestureRecognizer
+                                                Command="{Binding Path=BindingContext.DifficultyTappedCommand, Source={x:Reference Name=difficultiesFlexLayout}}"
+                                                CommandParameter="{Binding .}" />
                                         </StackLayout.GestureRecognizers>
                                     </StackLayout>
                                 </yummy:PancakeView>
@@ -445,6 +490,7 @@
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <FlexLayout
+                        x:Name="patchesFlexLayout"
                         AlignContent="Start"
                         AlignItems="Start"
                         BindableLayout.ItemsSource="{Binding Patches}"
@@ -456,7 +502,9 @@
                                 <StackLayout>
                                     <Label Text="{Binding Title}" TextColor="Blue">
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnPatchTapped" />
+                                            <TapGestureRecognizer
+                                                Command="{Binding Path=BindingContext.PatchTappedCommand, Source={x:Reference Name=patchesFlexLayout}}"
+                                                CommandParameter="{Binding .}" />
                                         </Label.GestureRecognizers>
                                     </Label>
                                 </StackLayout>
@@ -584,7 +632,6 @@
                     </Label.Margin>
                 </Label>
                 <yummy:PancakeView
-                    Grid.Column="1"
                     Padding="10,10,10,10"
                     BackgroundColor="White"
                     CornerRadius="16">
@@ -598,6 +645,7 @@
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <FlexLayout
+                        x:Name="otherFlexLayout"
                         AlignContent="Start"
                         AlignItems="Center"
                         BindableLayout.ItemsSource="{Binding OtherInfos}"
@@ -626,7 +674,9 @@
                                         Text="{Binding Title}"
                                         VerticalOptions="Center" />
                                     <yummy:PancakeView.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnOtherPageTapped" />
+                                        <TapGestureRecognizer
+                                            Command="{Binding Path=BindingContext.OtherPageTappedCommand, Source={x:Reference Name=otherFlexLayout}}"
+                                            CommandParameter="{Binding .}" />
                                     </yummy:PancakeView.GestureRecognizers>
                                 </yummy:PancakeView>
                             </DataTemplate>

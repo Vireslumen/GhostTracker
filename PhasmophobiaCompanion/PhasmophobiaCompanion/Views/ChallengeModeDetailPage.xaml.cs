@@ -1,4 +1,6 @@
-﻿using PhasmophobiaCompanion.Models;
+﻿using System;
+using PhasmophobiaCompanion.Models;
+using PhasmophobiaCompanion.ViewModels;
 using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,9 +15,10 @@ namespace PhasmophobiaCompanion.Views
             try
             {
                 InitializeComponent();
-                BindingContext = challengeMode;
+                var viewModel = new ChallengeModeDetailViewModel(challengeMode);
+                BindingContext = viewModel;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время инициализации ChallengeModeDetailPage.");
                 throw;

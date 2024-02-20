@@ -8,7 +8,7 @@ namespace PhasmophobiaCompanion
 {
     public partial class AppShell : Shell
     {
-        private readonly DataService _dataService;
+        private readonly DataService dataService;
         private bool isShowingLoadingScreen;
 
         public AppShell()
@@ -18,9 +18,8 @@ namespace PhasmophobiaCompanion
                 InitializeComponent();
                 CurrentItem = mainTab;
                 SetNavBarIsVisible(this, false);
-                _dataService = DependencyService.Get<DataService>();
+                dataService = DependencyService.Get<DataService>();
                 Navigating += OnShellNavigation;
-
             }
             catch (Exception ex)
             {
@@ -54,7 +53,7 @@ namespace PhasmophobiaCompanion
             try
             {
                 HideLoadingScreen();
-                _dataService.CursedsDataLoaded -= OnCursedsDataLoaded;
+                dataService.CursedsDataLoaded -= OnCursedsDataLoaded;
                 Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("cursedsTab"); });
             }
             catch (Exception ex)
@@ -72,7 +71,7 @@ namespace PhasmophobiaCompanion
             try
             {
                 HideLoadingScreen();
-                _dataService.EquipmentsDataLoaded -= OnEquipmentsDataLoaded;
+                dataService.EquipmentsDataLoaded -= OnEquipmentsDataLoaded;
                 Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("equipmentsTab"); });
             }
             catch (Exception ex)
@@ -90,7 +89,7 @@ namespace PhasmophobiaCompanion
             try
             {
                 HideLoadingScreen();
-                _dataService.GhostsDataLoaded -= OnGhostsDataLoaded;
+                dataService.GhostsDataLoaded -= OnGhostsDataLoaded;
                 Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("ghostsTab"); });
             }
             catch (Exception ex)
@@ -108,7 +107,7 @@ namespace PhasmophobiaCompanion
             try
             {
                 HideLoadingScreen();
-                _dataService.MapsDataLoaded -= OnMapsDataLoaded;
+                dataService.MapsDataLoaded -= OnMapsDataLoaded;
                 Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("mapsTab"); });
             }
             catch (Exception ex)
@@ -122,28 +121,28 @@ namespace PhasmophobiaCompanion
         {
             try
             {
-                if (e.Target.Location.OriginalString.Contains("ghostsTab") && !_dataService.IsGhostsDataLoaded)
+                if (e.Target.Location.OriginalString.Contains("ghostsTab") && !dataService.IsGhostsDataLoaded)
                 {
-                    _dataService.GhostsDataLoaded += OnGhostsDataLoaded;
+                    dataService.GhostsDataLoaded += OnGhostsDataLoaded;
                     e.Cancel();
                     ShowLoadingScreen();
                 }
                 else if (e.Target.Location.OriginalString.Contains("equipmentsTab") &&
-                         !_dataService.IsEquipmentsDataLoaded)
+                         !dataService.IsEquipmentsDataLoaded)
                 {
-                    _dataService.EquipmentsDataLoaded += OnEquipmentsDataLoaded;
+                    dataService.EquipmentsDataLoaded += OnEquipmentsDataLoaded;
                     e.Cancel();
                     ShowLoadingScreen();
                 }
-                else if (e.Target.Location.OriginalString.Contains("mapsTab") && !_dataService.IsMapsDataLoaded)
+                else if (e.Target.Location.OriginalString.Contains("mapsTab") && !dataService.IsMapsDataLoaded)
                 {
-                    _dataService.MapsDataLoaded += OnMapsDataLoaded;
+                    dataService.MapsDataLoaded += OnMapsDataLoaded;
                     e.Cancel();
                     ShowLoadingScreen();
                 }
-                else if (e.Target.Location.OriginalString.Contains("cursedsTab") && !_dataService.IsCursedsDataLoaded)
+                else if (e.Target.Location.OriginalString.Contains("cursedsTab") && !dataService.IsCursedsDataLoaded)
                 {
-                    _dataService.CursedsDataLoaded += OnCursedsDataLoaded;
+                    dataService.CursedsDataLoaded += OnCursedsDataLoaded;
                     e.Cancel();
                     ShowLoadingScreen();
                 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using PhasmophobiaCompanion.Models;
+using PhasmophobiaCompanion.ViewModels;
 using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,7 +15,8 @@ namespace PhasmophobiaCompanion.Views
             try
             {
                 InitializeComponent();
-                BindingContext = otherInfo;
+                var viewModel = new OtherViewModel(otherInfo);
+                BindingContext = viewModel;
             }
             catch (Exception ex)
             {
@@ -35,7 +37,8 @@ namespace PhasmophobiaCompanion.Views
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время раскрытия или сворачивания списка на некатегоризируемой странице OtherInfoPage.");
+                Log.Error(ex,
+                    "Ошибка во время раскрытия или сворачивания списка на некатегоризируемой странице OtherInfoPage.");
                 throw;
             }
         }

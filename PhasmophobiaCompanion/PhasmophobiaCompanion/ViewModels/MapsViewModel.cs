@@ -5,6 +5,8 @@ using System.Windows.Input;
 using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
+using PhasmophobiaCompanion.Views;
+using Rg.Plugins.Popup.Services;
 using Serilog;
 using Xamarin.Forms;
 
@@ -15,11 +17,10 @@ namespace PhasmophobiaCompanion.ViewModels
     /// </summary>
     public class MapsViewModel : BaseViewModel, ISearchable, IFilterable
     {
-        private readonly DataService _dataService;
+        private readonly DataService dataService;
         private readonly ObservableCollection<Map> maps;
         private double maxRoom = 100;
         private double minRoom;
-        private Map selectedMap;
         private MapCommon mapCommon;
         private ObservableCollection<Map> filteredMaps;
         private ObservableCollection<string> allSizes;
@@ -30,11 +31,11 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                _dataService = DependencyService.Get<DataService>();
+                dataService = DependencyService.Get<DataService>();
                 // Загрузка всех карт.
-                maps = _dataService.GetMaps();
+                maps = dataService.GetMaps();
                 Maps = new ObservableCollection<Map>(maps);
-                MapCommon = _dataService.GetMapCommon();
+                MapCommon = dataService.GetMapCommon();
                 allSizes = new ObservableCollection<string>
                 {
                     "Small",
@@ -43,8 +44,10 @@ namespace PhasmophobiaCompanion.ViewModels
                 };
                 AllSizes = new ObservableCollection<string>(allSizes);
                 SelectedSizes = new ObservableCollection<string>();
-
-                SearchCommand = new Command<string>(query => Search(query));
+                // Инициализация команд
+                SearchCommand = new Command<string>(OnSearchCompleted);
+                MapSelectedCommand = new Command<Map>(OnMapSelected);
+                FilterCommand = new Command(OnFilterTapped);
             }
             catch (Exception ex)
             {
@@ -77,15 +80,8 @@ namespace PhasmophobiaCompanion.ViewModels
                 }
             }
         }
-        public Map SelectedMap
-        {
-            get => selectedMap;
-            set
-            {
-                selectedMap = value;
-                OnPropertyChanged();
-            }
-        }
+        public ICommand FilterCommand { get; private set; }
+        public ICommand MapSelectedCommand { get; private set; }
         /// <summary>
         ///     Общие текстовые данные для интерфейса относящегося к картам.
         /// </summary>
@@ -125,14 +121,14 @@ namespace PhasmophobiaCompanion.ViewModels
             try
             {
                 //Фильтрация по размеру карты.
-                var filteredSize = maps.Where(maps =>
-                    !SelectedSizes.Any() || SelectedSizes.Any(selectedSize => maps.Size == selectedSize)).ToList();
+                var filteredSize = maps.Where(m =>
+                    !SelectedSizes.Any() || SelectedSizes.Any(selectedSize => m.Size == selectedSize)).ToList();
                 //Фильтрация по количеству комнат на карте.
                 var filteredRoom = filteredSize
-                    .Where(maps => MinRoom <= maps.RoomCount && MaxRoom >= maps.RoomCount).ToList();
+                    .Where(m => MinRoom <= m.RoomCount && MaxRoom >= m.RoomCount).ToList();
                 Maps = new ObservableCollection<Map>(filteredRoom);
                 //Загрузка данных для интерфейса.
-                MapCommon = _dataService.GetMapCommon();
+                MapCommon = dataService.GetMapCommon();
             }
             catch (Exception ex)
             {
@@ -150,13 +146,13 @@ namespace PhasmophobiaCompanion.ViewModels
                 SearchMaps();
             }
         }
-        public ICommand SearchCommand { get; set; }
+        public ICommand SearchCommand { get; }
 
         /// <summary>
         ///     Установка поискового запроса и активация поиска.
         /// </summary>
         /// <param name="query">Поисковый запрос.</param>
-        public void Search(string query)
+        public void OnSearchCompleted(string query)
         {
             try
             {
@@ -165,6 +161,47 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время установки поискового запроса MapsViewModel.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Открытие страницы фильтра карт.
+        /// </summary>
+        private async void OnFilterTapped()
+        {
+            try
+            {
+                // Логика для открытия страницы фильтра
+                var filterPage = new FilterMapPage(this);
+                await PopupNavigation.Instance.PushAsync(filterPage);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время открытия фильтра на странице карт MapsPage.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Переход на подробную страницу выбранной карты.
+        /// </summary>
+        /// <param name="selectedMap">Выбранная карта.</param>
+        private async void OnMapSelected(Map selectedMap)
+        {
+            try
+            {
+                if (selectedMap != null)
+                {
+                    // Логика для открытия страницы деталей карты
+                    var detailPage = new MapDetailPage(selectedMap);
+                    await Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex,
+                    "Ошибка во время перехода на подробную страницу карты из страницы карт MapsPage.");
                 throw;
             }
         }
@@ -184,7 +221,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 {
                     //Поиск по названию проклятого карты.
                     var filtered = maps
-                        .Where(maps => maps.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant())).ToList();
+                        .Where(m => m.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant())).ToList();
                     Maps = new ObservableCollection<Map>(filtered);
                 }
             }

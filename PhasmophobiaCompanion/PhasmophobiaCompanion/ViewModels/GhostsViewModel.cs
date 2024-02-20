@@ -5,6 +5,8 @@ using System.Windows.Input;
 using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
+using PhasmophobiaCompanion.Views;
+using Rg.Plugins.Popup.Services;
 using Serilog;
 using Xamarin.Forms;
 
@@ -15,7 +17,7 @@ namespace PhasmophobiaCompanion.ViewModels
     /// </summary>
     public class GhostsViewModel : BaseViewModel, ISearchable, IFilterable
     {
-        private readonly DataService _dataService;
+        private readonly DataService dataService;
         private readonly ObservableCollection<Ghost> ghosts;
         private GhostCommon ghostCommon;
         private ObservableCollection<Clue> allClues;
@@ -27,21 +29,24 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                _dataService = DependencyService.Get<DataService>();
+                dataService = DependencyService.Get<DataService>();
                 //Загрузка всех призраков и улик.
-                ghosts = _dataService.GetGhosts();
-                allClues = _dataService.GetClues();
+                ghosts = dataService.GetGhosts();
+                allClues = dataService.GetClues();
                 SelectedClues = new ObservableCollection<Clue>();
                 Ghosts = new ObservableCollection<Ghost>(ghosts);
                 AllClues = new ObservableCollection<Clue>(allClues);
                 //Загрузка данных для интерфейса.
-                GhostCommon = _dataService.GetGhostCommon();
-
-                SearchCommand = new Command<string>(query => Search(query));
+                GhostCommon = dataService.GetGhostCommon();
+                // Инициализация команд
+                SearchCommand = new Command<string>(OnSearchCompleted);
+                GhostSelectedCommand = new Command<Ghost>(OnGhostSelected);
+                FilterCommand = new Command(OnFilterTapped);
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время инициализации GhostsViewModel.");
+                throw;
             }
         }
 
@@ -57,6 +62,8 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
+        public ICommand FilterCommand { get; private set; }
+        public ICommand GhostSelectedCommand { get; private set; }
         public ObservableCollection<Clue> AllClues
         {
             get => allClues;
@@ -84,9 +91,9 @@ namespace PhasmophobiaCompanion.ViewModels
             try
             {
                 var filtered = ghosts.Where(ghost => !SelectedClues.Any() ||
-                                                         SelectedClues.All(selectedClue =>
-                                                             ghost.Clues.Any(clue => clue.Title == selectedClue.Title)))
-                        .ToList();
+                                                     SelectedClues.All(selectedClue =>
+                                                         ghost.Clues.Any(clue => clue.Title == selectedClue.Title)))
+                    .ToList();
                 Ghosts = new ObservableCollection<Ghost>(filtered);
             }
             catch (Exception ex)
@@ -96,6 +103,7 @@ namespace PhasmophobiaCompanion.ViewModels
             }
         }
 
+        public ICommand SearchCommand { get; }
         public string SearchQuery
         {
             get => searchQuery;
@@ -105,13 +113,12 @@ namespace PhasmophobiaCompanion.ViewModels
                 SearchGhosts();
             }
         }
-        public ICommand SearchCommand { get; set; }
 
         /// <summary>
         ///     Установка поискового запроса и активация поиска.
         /// </summary>
         /// <param name="query">Поисковый запрос.</param>
-        public void Search(string query)
+        public void OnSearchCompleted(string query)
         {
             try
             {
@@ -120,6 +127,45 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время установки поискового запроса GhostsViewModel.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Открытие страницы фильтра призраков.
+        /// </summary>
+        private async void OnFilterTapped()
+        {
+            try
+            {
+                // Логика для открытия страницы фильтра
+                var filterPage = new FilterPage(this);
+                await PopupNavigation.Instance.PushAsync(filterPage);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время открытия фильтра на странице призраков GhostPage.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Переход на подробную страницу выбранного призрака.
+        /// </summary>
+        /// <param name="selectedGhost">Выбранный призрак.</param>
+        private async void OnGhostSelected(Ghost selectedGhost)
+        {
+            try
+            {
+                if (selectedGhost == null) return;
+                // Логика для открытия страницы деталей призрака
+                var detailPage = new GhostDetailPage(selectedGhost);
+                await Application.Current.MainPage.Navigation.PushAsync(detailPage);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex,
+                    "Ошибка во время перехода на подробную страницу призрак из страницы призраков GhostPage.");
                 throw;
             }
         }
@@ -139,7 +185,8 @@ namespace PhasmophobiaCompanion.ViewModels
                 {
                     // Поиск по названию призрака.
                     var filtered = ghosts
-                        .Where(ghost => ghost.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant())).ToList();
+                        .Where(ghost => ghost.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant()))
+                        .ToList();
                     Ghosts = new ObservableCollection<Ghost>(filtered);
                 }
             }

@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <popup:PopupPage
     x:Class="PhasmophobiaCompanion.Views.FilterPage"
     xmlns="http://xamarin.com/schemas/2014/forms"

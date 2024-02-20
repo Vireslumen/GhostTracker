@@ -16,7 +16,7 @@
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Special Mode: " />
-                        <Span Text="{Binding Title}" />
+                        <Span Text="{Binding ChallengeMode.Title}" />
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
@@ -41,13 +41,13 @@
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <StackLayout>
-                        <Image HeightRequest="150" Source="{Binding ChallengeMap.ImageFilePath}" />
+                        <Image HeightRequest="150" Source="{Binding ChallengeMode.ChallengeMap.ImageFilePath}" />
                         <Label
                             FontAttributes="Bold"
                             FontSize="20"
                             HorizontalOptions="CenterAndExpand"
                             HorizontalTextAlignment="Center"
-                            Text="{Binding ChallengeMap.Title}"
+                            Text="{Binding ChallengeMode.ChallengeMap.Title}"
                             TextColor="Black"
                             VerticalOptions="CenterAndExpand" />
                     </StackLayout>
@@ -74,7 +74,7 @@
                         FontAttributes="Italic"
                         FontSize="16"
                         HorizontalOptions="Center"
-                        Text="{Binding Description}"
+                        Text="{Binding ChallengeMode.Description}"
                         VerticalOptions="Center" />
                 </yummy:PancakeView>
             </Grid>
@@ -94,7 +94,7 @@
                 <yummy:PancakeView.Border>
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
-                <StackLayout BindableLayout.ItemsSource="{Binding ChallengeEquipments}">
+                <StackLayout BindableLayout.ItemsSource="{Binding ChallengeMode.ChallengeEquipments}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
@@ -134,7 +134,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="ActivityMonitorWork: " />
-                                <Span Text="{Binding ChallengeDifficulty.ActivityMonitorWork}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ActivityMonitorWork}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -143,7 +143,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="DeadCashBack: " />
-                                <Span Text="{Binding ChallengeDifficulty.DeadCashBack}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.DeadCashBack}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -152,7 +152,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="DoorOpenedCount: " />
-                                <Span Text="{Binding ChallengeDifficulty.DoorOpenedCount}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.DoorOpenedCount}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -161,7 +161,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="ElectricityBlockNotShowedOnMap: " />
-                                <Span Text="{Binding ChallengeDifficulty.ElectricityBlockNotShowedOnMap}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ElectricityBlockNotShowedOnMap}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -170,7 +170,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="ElectricityOn: " />
-                                <Span Text="{Binding ChallengeDifficulty.ElectricityOn}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ElectricityOn}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -179,7 +179,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="EvidenceAvailable: " />
-                                <Span Text="{Binding ChallengeDifficulty.EvidenceAvailable}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.EvidenceAvailable}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -188,7 +188,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="FingerPrints: " />
-                                <Span Text="{Binding ChallengeDifficulty.FingerPrints}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.FingerPrints}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -197,7 +197,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="GhostActivity: " />
-                                <Span Text="{Binding ChallengeDifficulty.GhostActivity}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.GhostActivity}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -206,7 +206,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="GhostHuntTime: " />
-                                <Span Text="{Binding ChallengeDifficulty.GhostHuntTime}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.GhostHuntTime}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -215,7 +215,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="HidingSpotBlocked: " />
-                                <Span Text="{Binding ChallengeDifficulty.HidingSpotBlocked}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.HidingSpotBlocked}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -224,7 +224,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="HuntExtendByKilling: " />
-                                <Span Text="{Binding ChallengeDifficulty.HuntExtendByKilling}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.HuntExtendByKilling}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -233,7 +233,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="ActivityMonitorWork: " />
-                                <Span Text="{Binding ChallengeDifficulty.ActivityMonitorWork}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ActivityMonitorWork}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -242,7 +242,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="ObjectiveBoardPendingAloneAll: " />
-                                <Span Text="{Binding ChallengeDifficulty.ObjectiveBoardPendingAloneAll}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ObjectiveBoardPendingAloneAll}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -251,7 +251,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="RewardMultiplier: " />
-                                <Span Text="{Binding ChallengeDifficulty.RewardMultiplier}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.RewardMultiplier}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -260,7 +260,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="SanityConsumption: " />
-                                <Span Text="{Binding ChallengeDifficulty.SanityConsumption}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityConsumption}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -269,7 +269,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="SanityMonitorWork: " />
-                                <Span Text="{Binding ChallengeDifficulty.SanityMonitorWork}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityMonitorWork}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -278,7 +278,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="SanityRestoration: " />
-                                <Span Text="{Binding ChallengeDifficulty.SanityRestoration}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityRestoration}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -287,7 +287,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="SanityStartAt: " />
-                                <Span Text="{Binding ChallengeDifficulty.SanityStartAt}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityStartAt}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -296,7 +296,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="SetupTime: " />
-                                <Span Text="{Binding ChallengeDifficulty.SetupTime}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SetupTime}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -305,7 +305,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="UnlockLevel: " />
-                                <Span Text="{Binding ChallengeDifficulty.UnlockLevel}" />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.UnlockLevel}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>

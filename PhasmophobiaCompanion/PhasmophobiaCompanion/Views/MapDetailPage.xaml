@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.MapDetailPage"
@@ -14,7 +14,7 @@
                 FontAttributes="Bold"
                 FontSize="Large"
                 HorizontalOptions="CenterAndExpand"
-                Text="{Binding SelectedMap.Title}" />
+                Text="{Binding Map.Title}" />
             <Grid>
                 <!--  Изображение карты  -->
                 <yummy:PancakeView
@@ -35,7 +35,7 @@
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <StackLayout>
-                        <Image HeightRequest="150" Source="{Binding SelectedMap.ImageUrl}" />
+                        <Image HeightRequest="150" Source="{Binding Map.ImageUrl}" />
                     </StackLayout>
 
                 </yummy:PancakeView>
@@ -64,7 +64,7 @@
                                     <FormattedString>
                                         <Span Text="{Binding MapCommon.MapSize}" />
                                         <Span Text=": " />
-                                        <Span Text="{Binding SelectedMap.Size}" />
+                                        <Span Text="{Binding Map.Size}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -73,7 +73,7 @@
                                     <FormattedString>
                                         <Span Text="{Binding MapCommon.RoomNumber}" />
                                         <Span Text=": " />
-                                        <Span Text="{Binding SelectedMap.RoomCount}" />
+                                        <Span Text="{Binding Map.RoomCount}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -82,7 +82,7 @@
                                     <FormattedString>
                                         <Span Text="{Binding MapCommon.UnlockLvl}" />
                                         <Span Text=": " />
-                                        <Span Text="{Binding SelectedMap.UnlockLevel}" />
+                                        <Span Text="{Binding Map.UnlockLevel}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -91,7 +91,7 @@
                                     <FormattedString>
                                         <Span Text="{Binding MapCommon.Floors}" />
                                         <Span Text=": " />
-                                        <Span Text="{Binding SelectedMap.Floors}" />
+                                        <Span Text="{Binding Map.Floors}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -100,7 +100,7 @@
                                     <FormattedString>
                                         <Span Text="{Binding MapCommon.Exits}" />
                                         <Span Text=": " />
-                                        <Span Text="{Binding SelectedMap.Exits}" />
+                                        <Span Text="{Binding Map.Exits}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -109,7 +109,7 @@
                                     <FormattedString>
                                         <Span Text="{Binding MapCommon.HidenSpot}" />
                                         <Span Text=": " />
-                                        <Span Text="{Binding SelectedMap.HidingSpotCount}" />
+                                        <Span Text="{Binding Map.HidingSpotCount}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -125,7 +125,7 @@
                         FontAttributes="Italic"
                         FontSize="16"
                         HorizontalOptions="Center"
-                        Text="{Binding SelectedMap.Description}"
+                        Text="{Binding Map.Description}"
                         VerticalOptions="Center" />
                 </ScrollView>
                 <Grid.RowDefinitions>
@@ -138,7 +138,7 @@
 
             </Grid>
             <!--  Список раскрывающихся элементов содержащих список изображений и описаний к ним  -->
-            <StackLayout BindableLayout.ItemsSource="{Binding SelectedMap.ExpandFieldsWithImages}">
+            <StackLayout BindableLayout.ItemsSource="{Binding Map.ExpandFieldsWithImages}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
@@ -193,7 +193,7 @@
                 </BindableLayout.ItemTemplate>
             </StackLayout>
             <!--  Список раскрывающихся элементов, содержащих текст в них  -->
-            <StackLayout BindableLayout.ItemsSource="{Binding SelectedMap.UnfoldingItems}">
+            <StackLayout BindableLayout.ItemsSource="{Binding Map.UnfoldingItems}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>

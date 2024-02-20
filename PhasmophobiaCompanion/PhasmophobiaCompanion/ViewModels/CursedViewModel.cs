@@ -5,6 +5,7 @@ using System.Windows.Input;
 using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
+using PhasmophobiaCompanion.Views;
 using Serilog;
 using Xamarin.Forms;
 
@@ -15,22 +16,24 @@ namespace PhasmophobiaCompanion.ViewModels
     /// </summary>
     internal class CursedViewModel : BaseViewModel, ISearchable
     {
-        private readonly DataService _dataService;
+        private readonly DataService dataService;
         private readonly ObservableCollection<CursedPossession> curseds;
+        private CursedPossessionCommon cursedPossessionCommon;
         private ObservableCollection<CursedPossession> filteredCurseds;
         private string searchQuery;
-        private CursedPossessionCommon cursedPossessionCommon;
 
         public CursedViewModel()
         {
             try
             {
-                _dataService = DependencyService.Get<DataService>();
+                dataService = DependencyService.Get<DataService>();
                 //Загрузка всех проклятых предметов.
-                curseds = _dataService.GetCurseds();
+                curseds = dataService.GetCurseds();
                 Curseds = new ObservableCollection<CursedPossession>(curseds);
-                cursedPossessionCommon = _dataService.GetCursedCommon();
-                SearchCommand = new Command<string>(query => Search(query));
+                cursedPossessionCommon = dataService.GetCursedCommon();
+                // Инициализация команд
+                SearchCommand = new Command<string>(OnSearchCompleted);
+                CursedSelectedCommand = new Command<CursedPossession>(OnCursedSelected);
             }
             catch (Exception ex)
             {
@@ -48,6 +51,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
+        public ICommand CursedSelectedCommand { get; private set; }
         public ObservableCollection<CursedPossession> Curseds
         {
             get => filteredCurseds;
@@ -62,13 +66,13 @@ namespace PhasmophobiaCompanion.ViewModels
                 SearchCurseds();
             }
         }
-        public ICommand SearchCommand { get; set; }
+        public ICommand SearchCommand { get; }
 
         /// <summary>
         ///     Установка поискового запроса и активация поиска.
         /// </summary>
         /// <param name="query">Поисковый запрос.</param>
-        public void Search(string query)
+        public void OnSearchCompleted(string query)
         {
             try
             {
@@ -77,6 +81,29 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время установки поискового запроса у CursedViewModel.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Переход на подробную страницу выбранного проклятого предмета.
+        /// </summary>
+        /// <param name="selectedCursed">Выбранный проклятый предмет.</param>
+        private async void OnCursedSelected(CursedPossession selectedCursed)
+        {
+            try
+            {
+                if (selectedCursed != null)
+                {
+                    // Логика для открытия страницы деталей проклятого предмета
+                    var detailPage = new CursedDetailPage(selectedCursed);
+                    await Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex,
+                    "Ошибка во время перехода на подробную страницу проклятого предмета из страницы проклятых предметов CursedsPage.");
                 throw;
             }
         }

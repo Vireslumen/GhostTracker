@@ -1,9 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
+using PhasmophobiaCompanion.Views;
+using Rg.Plugins.Popup.Services;
 using Serilog;
 using Xamarin.Forms;
 
@@ -14,11 +17,10 @@ namespace PhasmophobiaCompanion.ViewModels
     /// </summary>
     public class EquipmentsViewModel : BaseViewModel, ISearchable, IFilterable
     {
-        private readonly DataService _dataService;
+        private readonly DataService dataService;
         private readonly ObservableCollection<Equipment> equipments;
         private double maxUnlockLevel = 100;
         private double minUnlockLevel;
-        private Equipment selectedEquipment;
         private EquipmentCommon equipmentCommon;
         private ObservableCollection<Equipment> filteredEquipments;
         private ObservableCollection<string> allTiers;
@@ -29,25 +31,27 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                _dataService = DependencyService.Get<DataService>();
+                dataService = DependencyService.Get<DataService>();
                 //TODO: Нужно сделать, чтобы варианты тиров загружались не из кода.
                 allTiers = new ObservableCollection<string>
-            {
-                "I",
-                "II",
-                "III"
-            };
+                {
+                    "I",
+                    "II",
+                    "III"
+                };
                 //Загрузка данных для интерфейса.
-                EquipmentCommon = _dataService.GetEquipmentCommon();
+                EquipmentCommon = dataService.GetEquipmentCommon();
                 //Загрузка всего снаряжения.
-                equipments = _dataService.GetEquipments();
+                equipments = dataService.GetEquipments();
                 AllTiers = new ObservableCollection<string>(allTiers);
                 Equipments = new ObservableCollection<Equipment>(equipments);
                 SelectedTiers = new ObservableCollection<string>();
-
-                SearchCommand = new Command<string>(query => Search(query));
+                // Инициализация команд
+                SearchCommand = new Command<string>(OnSearchCompleted);
+                EquipmentSelectedCommand = new Command<Equipment>(OnEquipmentSelected);
+                FilterCommand = new Command(OnFilterTapped);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время инициализации EquipmentsViewModel.");
                 throw;
@@ -78,15 +82,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 }
             }
         }
-        public Equipment SelectedEquipment
-        {
-            get => selectedEquipment;
-            set
-            {
-                selectedEquipment = value;
-                OnPropertyChanged();
-            }
-        }
         /// <summary>
         ///     Общие текстовые данные для интерфейса относящегося к снаряжению.
         /// </summary>
@@ -99,6 +94,8 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
+        public ICommand EquipmentSelectedCommand { get; private set; }
+        public ICommand FilterCommand { get; private set; }
         /// <summary>
         ///     Коллекция отображаемого снаряжения, которая может быть отфильтрована.
         /// </summary>
@@ -140,7 +137,7 @@ namespace PhasmophobiaCompanion.ViewModels
 
                 Equipments = new ObservableCollection<Equipment>(filteredLevel);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время фильтрации снаряжения.");
                 throw;
@@ -156,20 +153,62 @@ namespace PhasmophobiaCompanion.ViewModels
                 SearchEquipments();
             }
         }
-        public ICommand SearchCommand { get; set; }
+        public ICommand SearchCommand { get; }
+
         /// <summary>
         ///     Установка поискового запроса и активация поиска.
         /// </summary>
         /// <param name="query">Поисковый запрос.</param>
-        public void Search(string query)
+        public void OnSearchCompleted(string query)
         {
             try
             {
                 SearchQuery = query;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время установки поискового запроса у EquipmentsViewModel.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Переход на подробную страницу выбранного снаряжения.
+        /// </summary>
+        /// <param name="selectedEquipment">Выбранное снаряжение.</param>
+        private async void OnEquipmentSelected(Equipment selectedEquipment)
+        {
+            try
+            {
+                if (selectedEquipment != null)
+                {
+                    // Логика для открытия страницы деталей снаряжения
+                    var detailPage = new EquipmentDetailPage(selectedEquipment);
+                    await Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex,
+                    "Ошибка во время перехода на подробную страницу снаряжения из страницы снаряжения EquipmentPage.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Открытие страницы фильтра снаряжения.
+        /// </summary>
+        private async void OnFilterTapped()
+        {
+            try
+            {
+                // Логика для открытия страницы фильтра
+                var filterPage = new FilterEquipmentPage(this);
+                await PopupNavigation.Instance.PushAsync(filterPage);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время открытия фильтра на странице снаряжения EquipmentPage.");
                 throw;
             }
         }
@@ -192,7 +231,7 @@ namespace PhasmophobiaCompanion.ViewModels
                     Equipments = new ObservableCollection<Equipment>(filtered);
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время поиска снаряжения.");
                 throw;

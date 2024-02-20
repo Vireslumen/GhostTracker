@@ -4,8 +4,8 @@ namespace PhasmophobiaCompanion.Interfaces
 {
     public interface ISearchable
     {
-        ICommand SearchCommand { get; set; }
+        ICommand SearchCommand { get; }
         string SearchQuery { get; set; }
-        void Search(string query);
+        void OnSearchCompleted(string query);
     }
 }

@@ -15,6 +15,10 @@
         /// </summary>
         public string DailyQuest { get; set; }
         /// <summary>
+        ///     Название списка сложностей на главной странице. Примеры: "Difficulties", "Сложности".
+        /// </summary>
+        public string Difficulties { get; set; }
+        /// <summary>
         ///     Название списка некатегоризованных страниц на главной странице. Примеры: "Other Pages", "Другие страницы".
         /// </summary>
         public string OtherPages { get; set; }

@@ -42,20 +42,20 @@
                     </yummy:PancakeView.Border>
                     <StackLayout>
                         <!--  Изображение призрака  -->
-                        <Image HeightRequest="150" Source="{Binding ImageFilePath}" />
+                        <Image HeightRequest="150" Source="{Binding Ghost.ImageFilePath}" />
                         <!--  Название призркак  -->
                         <Label
                             FontAttributes="Bold"
                             FontSize="20"
                             HorizontalOptions="CenterAndExpand"
                             HorizontalTextAlignment="Center"
-                            Text="{Binding Title}"
+                            Text="{Binding Ghost.Title}"
                             TextColor="Black"
                             VerticalOptions="CenterAndExpand" />
                         <!--  Список улик призрака  -->
                         <FlexLayout
                             AlignItems="Stretch"
-                            BindableLayout.ItemsSource="{Binding Clues}"
+                            BindableLayout.ItemsSource="{Binding Ghost.Clues}"
                             JustifyContent="Center">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
@@ -104,7 +104,7 @@
                 FontAttributes="Italic"
                 FontSize="16"
                 HorizontalOptions="Center"
-                Text="{Binding Description}"
+                Text="{Binding Ghost.Description}"
                 VerticalOptions="Center" />
             <BoxView
                 Grid.Row="1"
@@ -118,7 +118,7 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="9">
                 <!--  Список раскрывающихся элементов, содержащих текст в них  -->
-                <CollectionView ItemsSource="{Binding UnfoldingItems}">
+                <CollectionView ItemsSource="{Binding Ghost.UnfoldingItems}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>

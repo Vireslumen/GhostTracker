@@ -106,7 +106,8 @@ namespace PhasmophobiaCompanion.Views
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время изменения списка выбранных тиров в фильтре снаряжения FilterEquipmentPage.");
+                Log.Error(ex,
+                    "Ошибка во время изменения списка выбранных тиров в фильтре снаряжения FilterEquipmentPage.");
                 throw;
             }
         }

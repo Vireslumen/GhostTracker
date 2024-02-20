@@ -12,7 +12,7 @@
             FontAttributes="Bold"
             FontSize="Large"
             HorizontalOptions="CenterAndExpand"
-            Text="{Binding SelectedEquipment.Title}" />
+            Text="{Binding Equipment.Title}" />
         <ScrollView>
             <Grid>
                 <!--  Изображение снаряжение с его описанием  -->
@@ -35,14 +35,14 @@
                     </yummy:PancakeView.Border>
                     <StackLayout>
                         <!--  Изображение снаряжение  -->
-                        <Image HeightRequest="100" Source="{Binding SelectedEquipment.ImageUrl}" />
+                        <Image HeightRequest="100" Source="{Binding Equipment.ImageUrl}" />
                         <!--  Описание снаряжения  -->
                         <ScrollView>
                             <Label
                                 FontAttributes="Italic"
                                 FontSize="16"
                                 HorizontalOptions="Center"
-                                Text="{Binding SelectedEquipment.Description}"
+                                Text="{Binding Equipment.Description}"
                                 VerticalOptions="Center" />
                         </ScrollView>
                     </StackLayout>
@@ -73,7 +73,7 @@
                                     <FormattedString>
                                         <Span Text="{Binding EquipmentCommon.Price}" />
                                         <Span Text=": " />
-                                        <Span Text="{Binding SelectedEquipment.Cost}" />
+                                        <Span Text="{Binding Equipment.Cost}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -82,7 +82,7 @@
                                     <FormattedString>
                                         <Span Text="{Binding EquipmentCommon.PriceUnlock}" />
                                         <Span Text=": " />
-                                        <Span Text="{Binding SelectedEquipment.UnlockCost}" />
+                                        <Span Text="{Binding Equipment.UnlockCost}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -91,7 +91,7 @@
                                     <FormattedString>
                                         <Span Text="{Binding EquipmentCommon.UnlockLevel}" />
                                         <Span Text=": " />
-                                        <Span Text="{Binding SelectedEquipment.UnlockLevel}" />
+                                        <Span Text="{Binding Equipment.UnlockLevel}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -100,7 +100,7 @@
                                     <FormattedString>
                                         <Span Text="{Binding EquipmentCommon.Tier}" />
                                         <Span Text=": " />
-                                        <Span Text="{Binding SelectedEquipment.Tier}" />
+                                        <Span Text="{Binding Equipment.Tier}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -109,12 +109,12 @@
                                     <FormattedString>
                                         <Span Text="{Binding EquipmentCommon.MaxLimit}" />
                                         <Span Text=": " />
-                                        <Span Text="{Binding SelectedEquipment.MaxLimit}" />
+                                        <Span Text="{Binding Equipment.MaxLimit}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
                             <!--  Уникальные параметры снаряжения  -->
-                            <StackLayout BackgroundColor="Beige" BindableLayout.ItemsSource="{Binding SelectedEquipment.OtherEquipmentStats}">
+                            <StackLayout BackgroundColor="Beige" BindableLayout.ItemsSource="{Binding Equipment.OtherEquipmentStats}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
                                         <Label Text="{Binding Stat}" />
@@ -132,7 +132,7 @@
                     Grid.ColumnSpan="2">
                     <!--  Список раскрывающихся элементов, содержащих текст в них  -->
 
-                    <CollectionView ItemsSource="{Binding SelectedEquipment.UnfoldingItems}">
+                    <CollectionView ItemsSource="{Binding Equipment.UnfoldingItems}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <StackLayout>

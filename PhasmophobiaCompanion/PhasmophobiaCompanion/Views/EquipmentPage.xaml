@@ -4,6 +4,7 @@
     x:Class="PhasmophobiaCompanion.Views.EquipmentPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="http://xamarin.com/schemas/2020/toolkit"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     x:Name="EquipmentPageName"
     Padding="0,20,0,0"
@@ -29,10 +30,14 @@
                 <Entry
                     x:Name="searchEntry"
                     BackgroundColor="White"
-                    Completed="OnSearchCompleted"
                     HorizontalOptions="FillAndExpand"
                     Placeholder="{Binding EquipmentCommon.Search}"
-                    Text="{Binding SearchQuery, Mode=TwoWay}" />
+                    Text="{Binding SearchQuery, Mode=TwoWay}">
+                    <Entry.Behaviors>
+                        <behaviors:EventToCommandBehavior Command="{Binding SearchCommand}" />
+                    </Entry.Behaviors>
+                </Entry>
+
                 <!--  Кнопка фильтрации снаряжения  -->
                 <Image
                     HeightRequest="25"
@@ -44,7 +49,7 @@
                         0,0,10,0
                     </Image.Margin>
                     <Image.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="FilterTapped" />
+                        <TapGestureRecognizer Command="{Binding FilterCommand}" />
                     </Image.GestureRecognizers>
                 </Image>
             </StackLayout>
@@ -70,7 +75,10 @@
                             TextColor="#791AE5"
                             VerticalOptions="Center" />
                         <!--  Список снаряжения  -->
-                        <CollectionView ItemsSource="{Binding Equipments}" SelectionMode="Single">
+                        <CollectionView
+                            x:Name="collectionView"
+                            ItemsSource="{Binding Equipments}"
+                            SelectionMode="Single">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
                                     <StackLayout>
@@ -93,7 +101,7 @@
                                                 <yummy:Border Thickness="1" Color="Color.Default" />
                                             </yummy:PancakeView.Border>
                                             <yummy:PancakeView.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="OnEquipmentTapped" />
+                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.EquipmentSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
                                             </yummy:PancakeView.GestureRecognizers>
                                             <StackLayout>
                                                 <AbsoluteLayout>

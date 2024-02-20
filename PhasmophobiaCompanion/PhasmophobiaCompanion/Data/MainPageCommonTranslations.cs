@@ -10,6 +10,7 @@ namespace PhasmophobiaCompanion.Data
         [Key] public int ID { get; set; }
         public string Clue { get; set; }
         public string DailyQuest { get; set; }
+        public string Difficulties { get; set; }
         public string LanguageCode { get; set; }
         public string OtherPages { get; set; }
         public string Patches { get; set; }

@@ -10,11 +10,12 @@ namespace PhasmophobiaCompanion.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapDetailPage : ContentPage
     {
-        public MapDetailPage(MapsViewModel viewModel)
+        public MapDetailPage(Map map)
         {
             try
             {
                 InitializeComponent();
+                var viewModel = new MapDetailViewModel(map);
                 BindingContext = viewModel;
             }
             catch (Exception ex)

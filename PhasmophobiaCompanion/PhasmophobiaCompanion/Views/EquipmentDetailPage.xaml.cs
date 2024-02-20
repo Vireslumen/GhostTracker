@@ -10,11 +10,12 @@ namespace PhasmophobiaCompanion.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EquipmentDetailPage : ContentPage
     {
-        public EquipmentDetailPage(EquipmentsViewModel viewModel)
+        public EquipmentDetailPage(Equipment equipment)
         {
             try
             {
                 InitializeComponent();
+                var viewModel = new EquipmentDetailViewModel(equipment);
                 BindingContext = viewModel;
             }
             catch (Exception ex)

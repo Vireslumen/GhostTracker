@@ -24,7 +24,7 @@ namespace PhasmophobiaCompanion
                 Log.Logger = logger;
                 // Регистрация DataService
                 DependencyService.Register<DataService>();
-                // Устанановка загрузочной страницы, как начальной
+                // Установка загрузочной страницы, как начальной
                 MainPage = new LoadingScreenPage();
             }
             catch (Exception ex)

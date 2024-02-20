@@ -39,7 +39,7 @@
                     CornerRadius="20"
                     HorizontalOptions="Center"
                     VerticalOptions="Center">
-                    <Image Aspect="AspectFill" Source="{Binding ImageUrl}" />
+                    <Image Aspect="AspectFill" Source="{Binding OtherInfo.ImageUrl}" />
                 </yummy:PancakeView>
 
                 <!--  Описание  -->
@@ -53,12 +53,12 @@
                     <Label
                         FontSize="Medium"
                         HorizontalOptions="Start"
-                        Text="{Binding Description}"
+                        Text="{Binding OtherInfo.Description}"
                         VerticalOptions="Start" />
                 </ScrollView>
             </Grid>
             <!--  Список раскрывающихся элементов содержащих список изображений и описаний к ним  -->
-            <StackLayout BindableLayout.ItemsSource="{Binding ExpandFieldsWithImages}">
+            <StackLayout BindableLayout.ItemsSource="{Binding OtherInfo.ExpandFieldsWithImages}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
@@ -113,7 +113,7 @@
                 </BindableLayout.ItemTemplate>
             </StackLayout>
             <!--  Список раскрывающихся элементов, содержащих текст в них  -->
-            <StackLayout BindableLayout.ItemsSource="{Binding UnfoldingItems}">
+            <StackLayout BindableLayout.ItemsSource="{Binding OtherInfo.UnfoldingItems}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>

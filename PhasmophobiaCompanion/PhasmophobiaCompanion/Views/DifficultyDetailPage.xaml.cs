@@ -1,4 +1,5 @@
 ﻿using System;
+using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.ViewModels;
 using Serilog;
 using Xamarin.Forms;
@@ -9,11 +10,12 @@ namespace PhasmophobiaCompanion.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DifficultyDetailPage : ContentPage
     {
-        public DifficultyDetailPage(MainPageViewModel viewModel)
+        public DifficultyDetailPage(Difficulty difficulty)
         {
             try
             {
                 InitializeComponent();
+                var viewModel = new DifficultyDetailViewModel(difficulty);
                 BindingContext = viewModel;
             }
             catch (Exception ex)

@@ -14,12 +14,12 @@
                 <Image
                     HeightRequest="30"
                     HorizontalOptions="EndAndExpand"
-                    Source="{Binding IconFilePath}" />
+                    Source="{Binding Clue.IconFilePath}" />
                 <Label
                     FontAttributes="Bold"
                     FontSize="Large"
                     HorizontalOptions="StartAndExpand"
-                    Text="{Binding Title}" />
+                    Text="{Binding Clue.Title}" />
             </StackLayout>
 
             <Grid>
@@ -42,7 +42,7 @@
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <StackLayout>
-                        <Image HeightRequest="150" Source="{Binding ImageUrl}" />
+                        <Image HeightRequest="150" Source="{Binding Clue.ImageUrl}" />
                     </StackLayout>
 
                 </yummy:PancakeView>
@@ -69,7 +69,7 @@
                             FontAttributes="Italic"
                             FontSize="16"
                             HorizontalOptions="Center"
-                            Text="{Binding Description}"
+                            Text="{Binding Clue.Description}"
                             VerticalOptions="Center" />
                     </ScrollView>
                 </yummy:PancakeView>
@@ -83,7 +83,7 @@
 
             </Grid>
             <!--  Список раскрывающихся элементов содержащих список изображений и описаний к ним  -->
-            <StackLayout BindableLayout.ItemsSource="{Binding ExpandFieldsWithImages}">
+            <StackLayout BindableLayout.ItemsSource="{Binding Clue.ExpandFieldsWithImages}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
@@ -138,7 +138,7 @@
                 </BindableLayout.ItemTemplate>
             </StackLayout>
             <!--  Список раскрывающихся элементов, содержащих текст в них  -->
-            <StackLayout BindableLayout.ItemsSource="{Binding UnfoldingItems}">
+            <StackLayout BindableLayout.ItemsSource="{Binding Clue.UnfoldingItems}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
@@ -180,7 +180,7 @@
                 <yummy:PancakeView.Border>
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
-                <CollectionView ItemsSource="{Binding Ghosts}">
+                <CollectionView x:Name="ghostCollectionView" ItemsSource="{Binding Clue.Ghosts}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -199,11 +199,12 @@
                                     VerticalOptions="CenterAndExpand">
                                     <Label FontAttributes="Bold" Text="{Binding Title}" />
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnGhostTapped" />
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSelectedCommand, Source={x:Reference Name=ghostCollectionView}}" CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
                                 <!--  Список улик призраков  -->
                                 <FlexLayout
+                                    x:Name="clueFlexLayout"
                                     Grid.Column="1"
                                     BindableLayout.ItemsSource="{Binding Clues}"
                                     Direction="Column"
@@ -228,7 +229,7 @@
                                                     Text="{Binding Title}"
                                                     VerticalOptions="Center" />
                                                 <StackLayout.GestureRecognizers>
-                                                    <TapGestureRecognizer Tapped="OnClueTapped" />
+                                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.ClueSelectedCommand, Source={x:Reference Name=ghostCollectionView}}" CommandParameter="{Binding .}" />
                                                 </StackLayout.GestureRecognizers>
                                             </StackLayout>
                                         </DataTemplate>

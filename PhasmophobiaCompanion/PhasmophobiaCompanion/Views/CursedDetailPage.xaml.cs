@@ -1,5 +1,6 @@
 ﻿using System;
 using PhasmophobiaCompanion.Models;
+using PhasmophobiaCompanion.ViewModels;
 using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -9,12 +10,13 @@ namespace PhasmophobiaCompanion.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CursedDetailPage : ContentPage
     {
-        public CursedDetailPage(CursedPossession selectedCursed)
+        public CursedDetailPage(CursedPossession cursed)
         {
             try
             {
                 InitializeComponent();
-                BindingContext = selectedCursed;
+                var viewModel = new CursedDetailViewModel(cursed);
+                BindingContext = viewModel;
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <popup:PopupPage
     x:Class="PhasmophobiaCompanion.Views.TooltipPopup"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -10,7 +11,7 @@
             BackgroundColor="White"
             CornerRadius="10">
             <!--  Текст подсказки  -->
-            <Label HorizontalTextAlignment="Center" Text="{Binding Message}" />
+            <Label HorizontalTextAlignment="Center" Text="{Binding .}" />
         </Frame>
     </StackLayout>
 </popup:PopupPage>

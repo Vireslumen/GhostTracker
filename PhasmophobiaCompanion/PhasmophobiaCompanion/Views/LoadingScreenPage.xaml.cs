@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using System;
+using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,7 +14,7 @@ namespace PhasmophobiaCompanion.Views
             {
                 InitializeComponent();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время инициализации LoadingScreenPage.");
                 throw;

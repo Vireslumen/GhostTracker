@@ -15,13 +15,13 @@ namespace PhasmophobiaCompanion.Services
     /// </summary>
     public class DatabaseLoader
     {
-        private readonly PhasmaDB _phasmaDbContext;
+        private readonly PhasmaDB phasmaDbContext;
 
         public DatabaseLoader(PhasmaDB context)
         {
             try
             {
-                _phasmaDbContext = context;
+                phasmaDbContext = context;
             }
             catch (Exception ex)
             {
@@ -34,22 +34,19 @@ namespace PhasmophobiaCompanion.Services
         ///     Асинхронно возвращает список особых режимов - ChallengeMode на основе языка.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>
-        /// <param name="equipments">Список всего снаряжения - Equipment.</param>
-        /// <param name="maps">Список всех карт - Map.</param>
-        /// <param name="difficulties">Список всех сложностей - Difficulty.</param>
         /// <returns>Список особых режимов.</returns>
         public async Task<List<ChallengeMode>> GetChallengeModesAsync(string languageCode)
         {
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var challangeModeData = await _phasmaDbContext.ChallengeModeBase
+                var challengeModeData = await phasmaDbContext.ChallengeModeBase
                     .Include(c => c.Translations.Where(t => t.LanguageCode == languageCode))
                     .Include(c => c.EquipmentBase)
                     .ToListAsync();
 
                 // Преобразование данных в список объектов ChallengeMode.
-                return challangeModeData
+                return challengeModeData
                     .Select(c => new ChallengeMode
                         {
                             ID = c.ID,
@@ -78,7 +75,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var cluesData = await _phasmaDbContext.ClueBase
+                var cluesData = await phasmaDbContext.ClueBase
                     .Include(c => c.Translations.Where(t => t.LanguageCode == languageCode))
                     .Include(c => c.GhostBase)
                     .Include(c => c.UnfoldingItemBase)
@@ -122,7 +119,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var cursedCommonData = await _phasmaDbContext.CursedPossessionCommonTranslations
+                var cursedCommonData = await phasmaDbContext.CursedPossessionCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект CursedPossessionCommon.
@@ -149,7 +146,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var cursedPossessionData = await _phasmaDbContext.CursedPossessionBase
+                var cursedPossessionData = await phasmaDbContext.CursedPossessionBase
                     .Include(c => c.Translations.Where(t => t.LanguageCode == languageCode))
                     .Include(c => c.ExpandFieldWithImagesBase)
                     .ThenInclude(e => e.Translations.Where(t => t.LanguageCode == languageCode))
@@ -189,7 +186,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var difficultyData = await _phasmaDbContext.DifficultyBase
+                var difficultyData = await phasmaDbContext.DifficultyBase
                     .Include(d => d.Translations.Where(t => t.LanguageCode == languageCode))
                     .ToListAsync();
 
@@ -241,7 +238,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var difficultyCommonData = await _phasmaDbContext.DifficultyCommonTranslations
+                var difficultyCommonData = await phasmaDbContext.DifficultyCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект DifficultyCommon.
@@ -287,7 +284,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var equipmentData = await _phasmaDbContext.EquipmentBase
+                var equipmentData = await phasmaDbContext.EquipmentBase
                     .Include(e => e.Translations.Where(t => t.LanguageCode == languageCode))
                     .Include(e => e.OtherEquipmentStatBase)
                     .Include(e => e.UnfoldingItemBase)
@@ -329,7 +326,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var equipmentCommonData = await _phasmaDbContext.EquipmentCommonTranslations
+                var equipmentCommonData = await phasmaDbContext.EquipmentCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект EquipmentCommon.
@@ -364,7 +361,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var ghostCommonData = await _phasmaDbContext.GhostCommonTranslations
+                var ghostCommonData = await phasmaDbContext.GhostCommonTranslations
                     .Where(g => g.LanguageCode == languageCode).ToListAsync();
 
                 // Преобразование данных в объект GhostCommon.
@@ -398,14 +395,13 @@ namespace PhasmophobiaCompanion.Services
         ///     Асинхронно возвращает список призраков - Ghost на основе кода языка, а также всех улик.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>
-        /// <param name="clues">Список всех улик, который будет записан методом.</param>
         /// <returns>Список призраков.</returns>
         public async Task<List<Ghost>> GetGhostsAsync(string languageCode)
         {
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var ghostData = await _phasmaDbContext.GhostBase
+                var ghostData = await phasmaDbContext.GhostBase
                     .Include(g => g.Translations.Where(t => t.LanguageCode == languageCode))
                     .Include(g => g.ClueBase)
                     .ThenInclude(c => c.Translations.Where(t => t.LanguageCode == languageCode))
@@ -463,7 +459,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var mainPageCommonData = await _phasmaDbContext.MainPageCommonTranslations
+                var mainPageCommonData = await phasmaDbContext.MainPageCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект MainPageCommon.
@@ -478,7 +474,8 @@ namespace PhasmophobiaCompanion.Services
                     SpecialMode = m.SpecialMode,
                     Theme = m.Theme,
                     Tip = m.Tip,
-                    WeeklyQuest = m.WeeklyQuest
+                    WeeklyQuest = m.WeeklyQuest,
+                    Difficulties = m.Difficulties
                 }).FirstOrDefault();
             }
             catch (Exception ex)
@@ -498,7 +495,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var mapCommonData = await _phasmaDbContext.MapCommonTranslations
+                var mapCommonData = await phasmaDbContext.MapCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект MapCommon.
@@ -534,7 +531,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var mapData = await _phasmaDbContext.MapBase
+                var mapData = await phasmaDbContext.MapBase
                     .Include(m => m.Translations.Where(t => t.LanguageCode == languageCode))
                     .Include(m => m.ExpandFieldWithImagesBase)
                     .ThenInclude(e => e.Translations.Where(t => t.LanguageCode == languageCode))
@@ -581,7 +578,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var otherInfoData = await _phasmaDbContext.OtherInfoBase
+                var otherInfoData = await phasmaDbContext.OtherInfoBase
                     .Include(o => o.Translations.Where(t => t.LanguageCode == languageCode))
                     .Include(o => o.ExpandFieldWithImagesBase)
                     .ThenInclude(e => e.Translations.Where(t => t.LanguageCode == languageCode))
@@ -621,7 +618,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var patchData = await _phasmaDbContext.PatchBase.ToListAsync();
+                var patchData = await phasmaDbContext.PatchBase.ToListAsync();
 
                 // Преобразование данных в список объектов Patch.
                 return patchData
@@ -650,7 +647,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var questData = await _phasmaDbContext.QuestBase
+                var questData = await phasmaDbContext.QuestBase
                     .Include(q =>
                         q.Translations.Where(t => t.LanguageCode == languageCode))
                     .ToListAsync();
@@ -682,7 +679,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var tipsData = await _phasmaDbContext.TipsTranslations.Where(t => t.LanguageCode == languageCode)
+                var tipsData = await phasmaDbContext.TipsTranslations.Where(t => t.LanguageCode == languageCode)
                     .ToListAsync();
 
                 // Преобразование данных в список строк.
@@ -696,10 +693,8 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
-        ///     Преобразует коллекцию объектов ExpandFieldWithImagesBase в ObservableCollection
-        ///     <ExpandFieldWithImages>
-        ///         ,
-        ///         используя заданный код языка для выбора подходящих переводов.
+        ///     Преобразует коллекцию объектов ExpandFieldWithImagesBase в ObservableCollection ExpandFieldWithImages, используя
+        ///     заданный код языка для выбора подходящих переводов.
         /// </summary>
         /// <param name="expandFieldWithImages">Коллекция базовых объектов ExpandFieldWithImagesBase для преобразования.</param>
         /// <param name="languageCode">Код языка, который используется для выбора соответствующих переводов.</param>
@@ -726,10 +721,8 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
-        ///     Преобразует коллекцию объектов ImageWithDescriptionBase в ObservableCollection
-        ///     <ImageWithDescription>
-        ///         ,
-        ///         используя заданный код языка для выбора подходящих переводов.
+        ///     Преобразует коллекцию объектов ImageWithDescriptionBase в ObservableCollection ImageWithDescription, используя
+        ///     заданный код языка для выбора подходящих переводов.
         /// </summary>
         /// <param name="imageWithDescriptions">Коллекция базовых объектов ImageWithDescriptionBase для преобразования.</param>
         /// <param name="languageCode">Код языка, который используется для выбора соответствующих переводов.</param>
@@ -754,10 +747,8 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
-        ///     Преобразует коллекцию объектов OtherEquipmentStatBase в ObservableCollection
-        ///     <OtherEquipmentStat>
-        ///         ,
-        ///         используя заданный код языка для выбора подходящих переводов.
+        ///     Преобразует коллекцию объектов OtherEquipmentStatBase в ObservableCollection OtherEquipmentStat, используя заданный
+        ///     код языка для выбора подходящих переводов.
         /// </summary>
         /// <param name="otherEquipmentStats">Коллекция базовых объектов OtherEquipmentStatBase для преобразования.</param>
         /// <param name="languageCode">Код языка, который используется для выбора соответствующих переводов.</param>
@@ -783,10 +774,8 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
-        ///     Преобразует коллекцию объектов UnfoldingItemBase в ObservableCollection
-        ///     <UnfoldingItem>
-        ///         ,
-        ///         используя заданный код языка для выбора подходящих переводов.
+        ///     Преобразует коллекцию объектов UnfoldingItemBase в ObservableCollection UnfoldingItem, используя заданный код языка
+        ///     для выбора подходящих переводов.
         /// </summary>
         /// <param name="unfoldingItems">Коллекция базовых объектов UnfoldingItemBase для преобразования.</param>
         /// <param name="languageCode">Код языка, который используется для выбора соответствующих переводов.</param>

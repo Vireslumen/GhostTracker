@@ -12,18 +12,18 @@
                 FontAttributes="Bold"
                 FontSize="Large"
                 HorizontalOptions="CenterAndExpand"
-                Text="{Binding Title}" />
+                Text="{Binding CursedPossession.Title}" />
             <!--  Изображение проклятого предмета  -->
-            <Image HeightRequest="150" Source="{Binding ImageUrl}" />
+            <Image HeightRequest="150" Source="{Binding CursedPossession.ImageUrl}" />
             <!--  Описание проклятого предмета  -->
             <Label
                 FontAttributes="Italic"
                 FontSize="16"
                 HorizontalOptions="Center"
-                Text="{Binding Description}"
+                Text="{Binding CursedPossession.Description}"
                 VerticalOptions="Center" />
             <!--  Список раскрывающихся элементов содержащих список изображений и описаний к ним  -->
-            <StackLayout BindableLayout.ItemsSource="{Binding ExpandFieldsWithImages}">
+            <StackLayout BindableLayout.ItemsSource="{Binding CursedPossession.ExpandFieldsWithImages}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
@@ -79,7 +79,7 @@
                 </BindableLayout.ItemTemplate>
             </StackLayout>
             <!--  Список раскрывающихся элементов, содержащих текст в них  -->
-            <StackLayout BindableLayout.ItemsSource="{Binding UnfoldingItems}">
+            <StackLayout BindableLayout.ItemsSource="{Binding CursedPossession.UnfoldingItems}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
