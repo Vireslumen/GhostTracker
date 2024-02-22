@@ -54,6 +54,7 @@
                             VerticalOptions="CenterAndExpand" />
                         <!--  Список улик призрака  -->
                         <FlexLayout
+                            x:Name="ghostFlexLayout"
                             AlignItems="Stretch"
                             BindableLayout.ItemsSource="{Binding Ghost.Clues}"
                             JustifyContent="Center">
@@ -82,6 +83,9 @@
                                                 HorizontalOptions="Center"
                                                 Source="{Binding IconFilePath}" />
                                         </yummy:PancakeView>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.ClueSelectedCommand, Source={x:Reference Name=ghostFlexLayout}}" CommandParameter="{Binding .}" />
+                                        </StackLayout.GestureRecognizers>
                                     </StackLayout>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
