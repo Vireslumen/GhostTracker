@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.MainPage"
@@ -10,16 +10,136 @@
 
 
     <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        <yummy:PancakeView
-            Margin="0,30,0,0"
-            Padding="0,0,0,0"
-            BackgroundColor="White"
-            CornerRadius="16"
-            VerticalOptions="FillAndExpand">
-            <StackLayout Spacing="10">
-                <!--  Поле особого режима  -->
+
+        <StackLayout Spacing="10">
+            <!--  Поле особого режима  -->
+            <yummy:PancakeView
+                Padding="10,10,10,10"
+                BackgroundColor="White"
+                CornerRadius="16">
+                <yummy:PancakeView.Shadow>
+                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                </yummy:PancakeView.Shadow>
+                <yummy:PancakeView.Margin>
+                    <Thickness>
+                        10,3,10,10
+                    </Thickness>
+                </yummy:PancakeView.Margin>
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="Color.Default" />
+                </yummy:PancakeView.Border>
+                <StackLayout>
+                    <!--  Название особого режима  -->
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span FontAttributes="Bold" Text="{Binding MainPageCommon.SpecialMode}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding Path=ChallengeMode.Title}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <!--  Описание особого режима  -->
+                    <Label Text="{Binding ChallengeMode.Description}" />
+                </StackLayout>
+
+                <yummy:PancakeView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChallengeModeTappedCommand}" />
+                </yummy:PancakeView.GestureRecognizers>
+            </yummy:PancakeView>
+
+
+            <!--  Рандомная подсказка  -->
+            <Label
+                Padding="10,10,10,0"
+                FontAttributes="Bold"
+                FontSize="Medium"
+                HorizontalOptions="StartAndExpand"
+                Text="{Binding MainPageCommon.Tip}">
+                <Label.Margin>
+                    <Thickness>
+                        10,3,10,0
+                    </Thickness>
+                </Label.Margin>
+            </Label>
+            <yummy:PancakeView
+                Padding="10,10,10,10"
+                BackgroundColor="White"
+                CornerRadius="16">
+                <yummy:PancakeView.Shadow>
+                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                </yummy:PancakeView.Shadow>
+                <yummy:PancakeView.Margin>
+                    <Thickness>
+                        10,3,10,10
+                    </Thickness>
+                </yummy:PancakeView.Margin>
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="Color.Default" />
+                </yummy:PancakeView.Border>
+                <Label Text="{Binding DisplayedTip}" />
+            </yummy:PancakeView>
+            <!--  Строка поиска  -->
+            <yummy:PancakeView
+                Padding="10,10,10,10"
+                BackgroundColor="White"
+                CornerRadius="16">
+                <yummy:PancakeView.Shadow>
+                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                </yummy:PancakeView.Shadow>
+                <yummy:PancakeView.Margin>
+                    <Thickness>
+                        10,3,10,10
+                    </Thickness>
+                </yummy:PancakeView.Margin>
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="Color.Default" />
+                </yummy:PancakeView.Border>
+                <StackLayout>
+                    <SearchBar
+                        Placeholder="{Binding MainPageCommon.Search}"
+                        SearchCommand="{Binding SearchCommand}"
+                        Text="{Binding SearchText, Mode=TwoWay}" />
+                    <Frame
+                        Padding="0"
+                        BackgroundColor="White"
+                        CornerRadius="5"
+                        HasShadow="True"
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="{Binding IsSearchResultVisible}"
+                        VerticalOptions="Start">
+                        <ListView ItemsSource="{Binding SearchResults}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextCell Text="{Binding Title}" />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Frame>
+                </StackLayout>
+            </yummy:PancakeView>
+            <!--  Таблицы скоростей призраков и рассудка для начала охоты  -->
+            <Grid HeightRequest="300">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <!--  Заголовок таблице скоростей призрака  -->
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding GhostCommon.Speed}" />
+                <!--  Таблицы скоростей призрака  -->
                 <yummy:PancakeView
-                    Padding="10,10,10,10"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Padding="0,10,0,10"
                     BackgroundColor="White"
                     CornerRadius="16">
                     <yummy:PancakeView.Shadow>
@@ -27,48 +147,97 @@
                     </yummy:PancakeView.Shadow>
                     <yummy:PancakeView.Margin>
                         <Thickness>
-                            10,3,10,10
+                            10,3,5,10
                         </Thickness>
                     </yummy:PancakeView.Margin>
                     <yummy:PancakeView.Border>
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
-                    <StackLayout>
-                        <!--  Название особого режима  -->
-                        <Label>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label FontAttributes="Bold">
+                            <Label.Padding>
+                                10,0,10,0
+                            </Label.Padding>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding MainPageCommon.SpecialMode}" />
+                                    <Span Text="{Binding GhostCommon.GhostTitle}" />
                                     <Span Text=": " />
-                                    <Span Text="{Binding Path=ChallengeMode.Title}" />
+                                    <Span Text="{Binding GhostCommon.Min}">
+                                        <Span.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding MinSpeedHeaderTappedCommand}" />
+                                        </Span.GestureRecognizers>
+                                    </Span>
+                                    <Span Text=" - " />
+                                    <Span Text="{Binding GhostCommon.Max}">
+                                        <Span.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding MaxSpeedHeaderTappedCommand}" />
+                                        </Span.GestureRecognizers>
+                                    </Span>
+                                    <Span Text="{Binding GhostCommon.LoS}">
+                                        <Span.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding MaxSpeedLoSHeaderTappedCommand}" />
+                                        </Span.GestureRecognizers>
+                                    </Span>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <!--  Описание особого режима  -->
-                        <Label Text="{Binding ChallengeMode.Description}" />
+                        <ListView x:Name="ghostListViewSpeed" ItemsSource="{Binding Ghosts}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Label Padding="10" LineBreakMode="NoWrap">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding Title}">
+                                                        <Span.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}" CommandParameter="{Binding .}" />
+                                                        </Span.GestureRecognizers>
+                                                    </Span>
+                                                    <Span Text=": " />
+                                                    <Span Text="{Binding MinGhostSpeed}">
+                                                        <Span.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.MinGhostSpeedTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}" CommandParameter="{Binding .}" />
+                                                        </Span.GestureRecognizers>
+                                                    </Span>
+                                                    <Span Text=" - " />
+                                                    <Span Text="{Binding MaxGhostSpeed}">
+                                                        <Span.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.MaxGhostSpeedTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}" CommandParameter="{Binding .}" />
+                                                        </Span.GestureRecognizers>
+                                                    </Span>
+                                                    <Span Text=" (" />
+                                                    <Span Text="{Binding MaxGhostSpeedLoS}">
+                                                        <Span.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.MaxGhostSpeedLoSTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}" CommandParameter="{Binding .}" />
+                                                        </Span.GestureRecognizers>
+                                                    </Span>
+                                                    <Span Text=")" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
                     </StackLayout>
-
-                    <yummy:PancakeView.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ChallengeModeTappedCommand}" />
-                    </yummy:PancakeView.GestureRecognizers>
                 </yummy:PancakeView>
-
-
-                <!--  Рандомная подсказка  -->
+                <!--  Заголовок рассудка для начала охоты  -->
                 <Label
-                    Padding="10,10,10,0"
+                    Grid.Row="0"
+                    Grid.Column="1"
                     FontAttributes="Bold"
-                    FontSize="Medium"
-                    HorizontalOptions="StartAndExpand"
-                    Text="{Binding MainPageCommon.Tip}">
-                    <Label.Margin>
-                        <Thickness>
-                            10,3,10,0
-                        </Thickness>
-                    </Label.Margin>
-                </Label>
+                    FontSize="Header"
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding GhostCommon.SanityHunt}" />
+                <!--  Таблица рассудков для начала охоты  -->
+
+
                 <yummy:PancakeView
-                    Padding="10,10,10,10"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Padding="0,10,0,10"
                     BackgroundColor="White"
                     CornerRadius="16">
                     <yummy:PancakeView.Shadow>
@@ -76,615 +245,417 @@
                     </yummy:PancakeView.Shadow>
                     <yummy:PancakeView.Margin>
                         <Thickness>
-                            10,3,10,10
-                        </Thickness>
-                    </yummy:PancakeView.Margin>
-                    <yummy:PancakeView.Border>
-                        <yummy:Border Thickness="1" Color="Color.Default" />
-                    </yummy:PancakeView.Border>
-                    <Label Text="{Binding DisplayedTip}" />
-                </yummy:PancakeView>
-                <!--  Строка поиска  -->
-                <yummy:PancakeView
-                    Padding="10,10,10,10"
-                    BackgroundColor="White"
-                    CornerRadius="16">
-                    <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow Offset="0,3" Color="#000000" />
-                    </yummy:PancakeView.Shadow>
-                    <yummy:PancakeView.Margin>
-                        <Thickness>
-                            10,3,10,10
+                            5,3,10,10
                         </Thickness>
                     </yummy:PancakeView.Margin>
                     <yummy:PancakeView.Border>
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <StackLayout>
-                        <SearchBar
-                            Placeholder="{Binding MainPageCommon.Search}"
-                            SearchCommand="{Binding SearchCommand}"
-                            Text="{Binding SearchText, Mode=TwoWay}" />
-                        <Frame
-                            Padding="0"
-                            BackgroundColor="White"
-                            CornerRadius="5"
-                            HasShadow="True"
-                            HorizontalOptions="FillAndExpand"
-                            IsVisible="{Binding IsSearchResultVisible}"
-                            VerticalOptions="Start">
-                            <ListView ItemsSource="{Binding SearchResults}"
-                                      SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextCell Text="{Binding Title}" />
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </Frame>
+                        <Label FontAttributes="Bold">
+                            <Label.Padding>
+                                10,0,10,0
+                            </Label.Padding>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding GhostCommon.GhostTitle}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding GhostCommon.Min}">
+                                        <Span.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding MinSanityHeaderTappedCommand}" />
+                                        </Span.GestureRecognizers>
+                                    </Span>
+                                    <Span Text=" - " />
+                                    <Span Text="{Binding GhostCommon.Max}">
+                                        <Span.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding MaxSanityHeaderTappedCommand}" />
+                                        </Span.GestureRecognizers>
+                                    </Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <ListView x:Name="ghostListViewSanity" ItemsSource="{Binding Ghosts}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Label Padding="10" LineBreakMode="NoWrap">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding Title}">
+                                                        <Span.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostTappedCommand, Source={x:Reference Name=ghostListViewSanity}}" CommandParameter="{Binding .}" />
+                                                        </Span.GestureRecognizers>
+                                                    </Span>
+                                                    <Span Text=": " />
+                                                    <Span Text="{Binding MinSanityHunt}">
+                                                        <Span.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.MinSanityHuntTappedCommand, Source={x:Reference Name=ghostListViewSanity}}" CommandParameter="{Binding .}" />
+                                                        </Span.GestureRecognizers>
+                                                    </Span>
+                                                    <Span Text=" - " />
+                                                    <Span Text="{Binding MaxSanityHunt}">
+                                                        <Span.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.MaxSanityHuntTappedCommand, Source={x:Reference Name=ghostListViewSanity}}" CommandParameter="{Binding .}" />
+                                                        </Span.GestureRecognizers>
+                                                    </Span>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </StackLayout>
                 </yummy:PancakeView>
-                <!--  Таблицы скоростей призраков и рассудка для начала охоты  -->
-                <Grid HeightRequest="300">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="4*" />
-                        <ColumnDefinition Width="3*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <!--  Заголовок таблице скоростей призрака  -->
-                    <Label
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        FontAttributes="Bold"
-                        HorizontalTextAlignment="Center"
-                        Text="{Binding GhostCommon.Speed}" />
-                    <!--  Таблицы скоростей призрака  -->
-                    <yummy:PancakeView
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Padding="0,10,0,10"
-                        BackgroundColor="White"
-                        CornerRadius="16">
-                        <yummy:PancakeView.Shadow>
-                            <yummy:DropShadow Offset="0,3" Color="#000000" />
-                        </yummy:PancakeView.Shadow>
-                        <yummy:PancakeView.Margin>
-                            <Thickness>
-                                10,3,5,10
-                            </Thickness>
-                        </yummy:PancakeView.Margin>
-                        <yummy:PancakeView.Border>
-                            <yummy:Border Thickness="1" Color="Color.Default" />
-                        </yummy:PancakeView.Border>
-
-                        <StackLayout Orientation="Vertical">
-                            <Label FontAttributes="Bold">
-                                <Label.Padding>
-                                    10,0,10,0
-                                </Label.Padding>
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="{Binding GhostCommon.GhostTitle}" />
-                                        <Span Text=": " />
-                                        <Span Text="{Binding GhostCommon.Min}">
-                                            <Span.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding MinSpeedHeaderTappedCommand}" />
-                                            </Span.GestureRecognizers>
-                                        </Span>
-                                        <Span Text=" - " />
-                                        <Span Text="{Binding GhostCommon.Max}">
-                                            <Span.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding MaxSpeedHeaderTappedCommand}" />
-                                            </Span.GestureRecognizers>
-                                        </Span>
-                                        <Span Text="{Binding GhostCommon.LoS}">
-                                            <Span.GestureRecognizers>
-                                                <TapGestureRecognizer
-                                                    Command="{Binding MaxSpeedLoSHeaderTappedCommand}" />
-                                            </Span.GestureRecognizers>
-                                        </Span>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                            <ListView x:Name="ghostListViewSpeed" ItemsSource="{Binding Ghosts}">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <ViewCell>
-                                            <Label Padding="10" LineBreakMode="NoWrap">
-                                                <Label.FormattedText>
-                                                    <FormattedString>
-                                                        <Span Text="{Binding Title}">
-                                                            <Span.GestureRecognizers>
-                                                                <TapGestureRecognizer
-                                                                    Command="{Binding Path=BindingContext.GhostTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}"
-                                                                    CommandParameter="{Binding .}" />
-                                                            </Span.GestureRecognizers>
-                                                        </Span>
-                                                        <Span Text=": " />
-                                                        <Span Text="{Binding MinGhostSpeed}">
-                                                            <Span.GestureRecognizers>
-                                                                <TapGestureRecognizer
-                                                                    Command="{Binding Path=BindingContext.MinGhostSpeedTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}"
-                                                                    CommandParameter="{Binding .}" />
-                                                            </Span.GestureRecognizers>
-                                                        </Span>
-                                                        <Span Text=" - " />
-                                                        <Span Text="{Binding MaxGhostSpeed}">
-                                                            <Span.GestureRecognizers>
-                                                                <TapGestureRecognizer
-                                                                    Command="{Binding Path=BindingContext.MaxGhostSpeedTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}"
-                                                                    CommandParameter="{Binding .}" />
-                                                            </Span.GestureRecognizers>
-                                                        </Span>
-                                                        <Span Text=" (" />
-                                                        <Span Text="{Binding MaxGhostSpeedLoS}">
-                                                            <Span.GestureRecognizers>
-                                                                <TapGestureRecognizer
-                                                                    Command="{Binding Path=BindingContext.MaxGhostSpeedLoSTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}"
-                                                                    CommandParameter="{Binding .}" />
-                                                            </Span.GestureRecognizers>
-                                                        </Span>
-                                                        <Span Text=")" />
-                                                    </FormattedString>
-                                                </Label.FormattedText>
-                                            </Label>
-                                        </ViewCell>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-
-                        </StackLayout>
-                    </yummy:PancakeView>
-                    <!--  Заголовок рассудка для начала охоты  -->
-                    <Label
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        FontAttributes="Bold"
-                        FontSize="Header"
-                        HorizontalTextAlignment="Center"
-                        Text="{Binding GhostCommon.SanityHunt}" />
-                    <!--  Таблица рассудков для начала охоты  -->
-
-
-                    <yummy:PancakeView
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Padding="0,10,0,10"
-                        BackgroundColor="White"
-                        CornerRadius="16">
-                        <yummy:PancakeView.Shadow>
-                            <yummy:DropShadow Offset="0,3" Color="#000000" />
-                        </yummy:PancakeView.Shadow>
-                        <yummy:PancakeView.Margin>
-                            <Thickness>
-                                5,3,10,10
-                            </Thickness>
-                        </yummy:PancakeView.Margin>
-                        <yummy:PancakeView.Border>
-                            <yummy:Border Thickness="1" Color="Color.Default" />
-                        </yummy:PancakeView.Border>
-                        <StackLayout>
-                            <Label FontAttributes="Bold">
-                                <Label.Padding>
-                                    10,0,10,0
-                                </Label.Padding>
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="{Binding GhostCommon.GhostTitle}" />
-                                        <Span Text=": " />
-                                        <Span Text="{Binding GhostCommon.Min}">
-                                            <Span.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding MinSanityHeaderTappedCommand}" />
-                                            </Span.GestureRecognizers>
-                                        </Span>
-                                        <Span Text=" - " />
-                                        <Span Text="{Binding GhostCommon.Max}">
-                                            <Span.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding MaxSanityHeaderTappedCommand}" />
-                                            </Span.GestureRecognizers>
-                                        </Span>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                            <ListView x:Name="ghostListViewSanity" ItemsSource="{Binding Ghosts}">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <ViewCell>
-                                            <Label Padding="10" LineBreakMode="NoWrap">
-                                                <Label.FormattedText>
-                                                    <FormattedString>
-                                                        <Span Text="{Binding Title}">
-                                                            <Span.GestureRecognizers>
-                                                                <TapGestureRecognizer
-                                                                    Command="{Binding Path=BindingContext.GhostTappedCommand, Source={x:Reference Name=ghostListViewSanity}}"
-                                                                    CommandParameter="{Binding .}" />
-                                                            </Span.GestureRecognizers>
-                                                        </Span>
-                                                        <Span Text=": " />
-                                                        <Span Text="{Binding MinSanityHunt}">
-                                                            <Span.GestureRecognizers>
-                                                                <TapGestureRecognizer
-                                                                    Command="{Binding Path=BindingContext.MinSanityHuntTappedCommand, Source={x:Reference Name=ghostListViewSanity}}"
-                                                                    CommandParameter="{Binding .}" />
-                                                            </Span.GestureRecognizers>
-                                                        </Span>
-                                                        <Span Text=" - " />
-                                                        <Span Text="{Binding MaxSanityHunt}">
-                                                            <Span.GestureRecognizers>
-                                                                <TapGestureRecognizer
-                                                                    Command="{Binding Path=BindingContext.MaxSanityHuntTappedCommand, Source={x:Reference Name=ghostListViewSanity}}"
-                                                                    CommandParameter="{Binding .}" />
-                                                            </Span.GestureRecognizers>
-                                                        </Span>
-                                                    </FormattedString>
-                                                </Label.FormattedText>
-                                            </Label>
-                                        </ViewCell>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </StackLayout>
-                    </yummy:PancakeView>
-                </Grid>
-                <!--  Список улик  -->
-                <Label
-                    Padding="10,10,10,0"
-                    FontAttributes="Bold"
-                    FontSize="Medium"
-                    HorizontalOptions="StartAndExpand"
-                    Text="{Binding MainPageCommon.Clue}">
-                    <Label.Margin>
-                        <Thickness>
-                            10,3,10,0
-                        </Thickness>
-                    </Label.Margin>
-                </Label>
-                <yummy:PancakeView
-                    Padding="10,10,10,10"
-                    BackgroundColor="White"
-                    CornerRadius="16">
-                    <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow Offset="0,3" Color="#000000" />
-                    </yummy:PancakeView.Shadow>
-                    <yummy:PancakeView.Margin>
-                        <Thickness>
-                            10,3,10,10
-                        </Thickness>
-                    </yummy:PancakeView.Margin>
-                    <yummy:PancakeView.Border>
-                        <yummy:Border Thickness="1" Color="Color.Default" />
-                    </yummy:PancakeView.Border>
-                    <FlexLayout
-                        x:Name="clueFlexLayout"
-                        AlignContent="Start"
-                        AlignItems="Start"
-                        BindableLayout.ItemsSource="{Binding Clues}"
-                        Direction="Row"
-                        JustifyContent="Start"
-                        Wrap="Wrap">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <yummy:PancakeView
-                                    Padding="5,5,5,5"
-                                    BackgroundColor="White"
-                                    CornerRadius="10">
-                                    <yummy:PancakeView.Shadow>
-                                        <yummy:DropShadow Offset="0,3" Color="#000000" />
-                                    </yummy:PancakeView.Shadow>
-                                    <yummy:PancakeView.Margin>
-                                        <Thickness>
-                                            10,3,5,10
-                                        </Thickness>
-                                    </yummy:PancakeView.Margin>
-                                    <yummy:PancakeView.Border>
-                                        <yummy:Border Thickness="1" Color="Color.Default" />
-                                    </yummy:PancakeView.Border>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Image
-                                            HeightRequest="30"
-                                            Source="{Binding IconFilePath}"
-                                            WidthRequest="30" />
-                                        <Label
-                                            HorizontalTextAlignment="Center"
-                                            Text="{Binding Title}"
-                                            VerticalOptions="Center" />
-                                    </StackLayout>
-                                    <yummy:PancakeView.GestureRecognizers>
-                                        <TapGestureRecognizer
-                                            Command="{Binding Path=BindingContext.ClueTappedCommand, Source={x:Reference Name=clueFlexLayout}}"
-                                            CommandParameter="{Binding .}" />
-                                    </yummy:PancakeView.GestureRecognizers>
-                                </yummy:PancakeView>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </FlexLayout>
-
-                </yummy:PancakeView>
-                <!--  Список сложностей  -->
-                <Label
-                    Padding="10,10,10,0"
-                    FontAttributes="Bold"
-                    FontSize="Medium"
-                    HorizontalOptions="StartAndExpand"
-                    Text="{Binding MainPageCommon.Difficulties}">
-                    <Label.Margin>
-                        <Thickness>
-                            10,3,10,0
-                        </Thickness>
-                    </Label.Margin>
-                </Label>
-                <yummy:PancakeView
-                    Padding="10,10,10,10"
-                    BackgroundColor="White"
-                    CornerRadius="16">
-                    <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow Offset="0,3" Color="#000000" />
-                    </yummy:PancakeView.Shadow>
-                    <yummy:PancakeView.Margin>
-                        <Thickness>
-                            10,3,10,10
-                        </Thickness>
-                    </yummy:PancakeView.Margin>
-                    <yummy:PancakeView.Border>
-                        <yummy:Border Thickness="1" Color="Color.Default" />
-                    </yummy:PancakeView.Border>
-                    <FlexLayout
-                        x:Name="difficultiesFlexLayout"
-                        AlignContent="Start"
-                        AlignItems="Start"
-                        BindableLayout.ItemsSource="{Binding Difficulties}"
-                        Direction="Column"
-                        JustifyContent="Start"
-                        Wrap="NoWrap">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <yummy:PancakeView
-                                    Padding="10,10,10,10"
-                                    BackgroundColor="White"
-                                    CornerRadius="16">
-                                    <StackLayout Orientation="Vertical">
-                                        <Label FontAttributes="Bold" Text="{Binding Title}" />
-                                        <Label Text="{Binding Description}" />
-                                        <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer
-                                                Command="{Binding Path=BindingContext.DifficultyTappedCommand, Source={x:Reference Name=difficultiesFlexLayout}}"
-                                                CommandParameter="{Binding .}" />
-                                        </StackLayout.GestureRecognizers>
-                                    </StackLayout>
-                                </yummy:PancakeView>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </FlexLayout>
-
-                </yummy:PancakeView>
-
-                <!--  Список патчей  -->
-                <Label
-                    Padding="10,10,10,0"
-                    FontAttributes="Bold"
-                    FontSize="Medium"
-                    HorizontalOptions="StartAndExpand"
-                    Text="{Binding MainPageCommon.Patches}">
-                    <Label.Margin>
-                        <Thickness>
-                            10,3,10,0
-                        </Thickness>
-                    </Label.Margin>
-                </Label>
-                <yummy:PancakeView
-                    Padding="10,10,10,10"
-                    BackgroundColor="White"
-                    CornerRadius="16">
-                    <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow Offset="0,3" Color="#000000" />
-                    </yummy:PancakeView.Shadow>
-                    <yummy:PancakeView.Margin>
-                        <Thickness>
-                            10,3,10,10
-                        </Thickness>
-                    </yummy:PancakeView.Margin>
-                    <yummy:PancakeView.Border>
-                        <yummy:Border Thickness="1" Color="Color.Default" />
-                    </yummy:PancakeView.Border>
-                    <FlexLayout
-                        x:Name="patchesFlexLayout"
-                        AlignContent="Start"
-                        AlignItems="Start"
-                        BindableLayout.ItemsSource="{Binding Patches}"
-                        Direction="Column"
-                        JustifyContent="Start"
-                        Wrap="NoWrap">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <StackLayout>
-                                    <Label Text="{Binding Title}" TextColor="Blue">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer
-                                                Command="{Binding Path=BindingContext.PatchTappedCommand, Source={x:Reference Name=patchesFlexLayout}}"
-                                                CommandParameter="{Binding .}" />
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                </StackLayout>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </FlexLayout>
-                </yummy:PancakeView>
-
-                <!--  Список ежедневных и недельных квестов  -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <!--  Ежедневные квесты  -->
-                    <Label
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Padding="10,10,10,0"
-                        FontAttributes="Bold"
-                        FontSize="Header"
-                        HorizontalOptions="CenterAndExpand"
-                        Text="{Binding MainPageCommon.DailyQuest}">
-                        <Label.Margin>
-                            <Thickness>
-                                10,3,10,0
-                            </Thickness>
-                        </Label.Margin>
-                    </Label>
-                    <yummy:PancakeView
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Padding="10,10,10,10"
-                        BackgroundColor="White"
-                        CornerRadius="16">
-                        <yummy:PancakeView.Shadow>
-                            <yummy:DropShadow Offset="0,3" Color="#000000" />
-                        </yummy:PancakeView.Shadow>
-                        <yummy:PancakeView.Margin>
-                            <Thickness>
-                                10,3,10,10
-                            </Thickness>
-                        </yummy:PancakeView.Margin>
-                        <yummy:PancakeView.Border>
-                            <yummy:Border Thickness="1" Color="Color.Default" />
-                        </yummy:PancakeView.Border>
-                        <FlexLayout
-                            AlignContent="Start"
-                            AlignItems="Start"
-                            BindableLayout.ItemsSource="{Binding DailyQuest}"
-                            Direction="Column"
-                            JustifyContent="Start"
-                            Wrap="NoWrap">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    <Label Text="{Binding Description}" />
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </FlexLayout>
-                    </yummy:PancakeView>
-
-                    <!--  Еженедельные квесты  -->
-                    <Label
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Padding="10,10,10,0"
-                        FontAttributes="Bold"
-                        FontSize="Header"
-                        HorizontalOptions="CenterAndExpand"
-                        Text="{Binding MainPageCommon.WeeklyQuest}">
-                        <Label.Margin>
-                            <Thickness>
-                                10,3,10,0
-                            </Thickness>
-                        </Label.Margin>
-                    </Label>
-                    <yummy:PancakeView
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Padding="10,10,10,10"
-                        BackgroundColor="White"
-                        CornerRadius="16">
-                        <yummy:PancakeView.Shadow>
-                            <yummy:DropShadow Offset="0,3" Color="#000000" />
-                        </yummy:PancakeView.Shadow>
-                        <yummy:PancakeView.Margin>
-                            <Thickness>
-                                10,3,10,10
-                            </Thickness>
-                        </yummy:PancakeView.Margin>
-                        <yummy:PancakeView.Border>
-                            <yummy:Border Thickness="1" Color="Color.Default" />
-                        </yummy:PancakeView.Border>
-                        <FlexLayout
-                            AlignContent="Start"
-                            AlignItems="Start"
-                            BindableLayout.ItemsSource="{Binding WeeklyQuest}"
-                            Direction="Column"
-                            JustifyContent="Start"
-                            Wrap="NoWrap">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    <Label Text="{Binding Description}" />
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </FlexLayout>
-                    </yummy:PancakeView>
-                </Grid>
-                <!--  Горизонтальная прокрутная некатегоризованных страниц  -->
-                <Label
-                    Padding="10,10,10,0"
-                    FontAttributes="Bold"
-                    FontSize="Medium"
-                    HorizontalOptions="StartAndExpand"
-                    Text="{Binding MainPageCommon.OtherPages}">
-                    <Label.Margin>
-                        <Thickness>
-                            10,3,10,0
-                        </Thickness>
-                    </Label.Margin>
-                </Label>
-                <yummy:PancakeView
-                    Padding="10,10,10,10"
-                    BackgroundColor="White"
-                    CornerRadius="16">
-                    <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow Offset="0,3" Color="#000000" />
-                    </yummy:PancakeView.Shadow>
-                    <yummy:PancakeView.Margin>
-                        <Thickness>10,3,10,10</Thickness>
-                    </yummy:PancakeView.Margin>
-                    <yummy:PancakeView.Border>
-                        <yummy:Border Thickness="1" Color="Color.Default" />
-                    </yummy:PancakeView.Border>
-                    <FlexLayout
-                        x:Name="otherFlexLayout"
-                        AlignContent="Start"
-                        AlignItems="Center"
-                        BindableLayout.ItemsSource="{Binding OtherInfos}"
-                        Direction="Row"
-                        JustifyContent="Start"
-                        Wrap="NoWrap">
-
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <yummy:PancakeView
-                                    BackgroundColor="White"
-                                    CornerRadius="50"
-                                    HeightRequest="100"
-                                    WidthRequest="100">
-                                    <yummy:PancakeView.Shadow>
-                                        <yummy:DropShadow Offset="0,3" Color="#000000" />
-                                    </yummy:PancakeView.Shadow>
-                                    <yummy:PancakeView.Margin>
-                                        <Thickness>10,3,10,10</Thickness>
-                                    </yummy:PancakeView.Margin>
-                                    <yummy:PancakeView.Border>
-                                        <yummy:Border Thickness="1" Color="Color.Default" />
-                                    </yummy:PancakeView.Border>
+            </Grid>
+            <!--  Список улик  -->
+            <Label
+                Padding="10,10,10,0"
+                FontAttributes="Bold"
+                FontSize="Medium"
+                HorizontalOptions="StartAndExpand"
+                Text="{Binding MainPageCommon.Clue}">
+                <Label.Margin>
+                    <Thickness>
+                        10,3,10,0
+                    </Thickness>
+                </Label.Margin>
+            </Label>
+            <yummy:PancakeView
+                Padding="10,10,10,10"
+                BackgroundColor="White"
+                CornerRadius="16">
+                <yummy:PancakeView.Shadow>
+                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                </yummy:PancakeView.Shadow>
+                <yummy:PancakeView.Margin>
+                    <Thickness>
+                        10,3,10,10
+                    </Thickness>
+                </yummy:PancakeView.Margin>
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="Color.Default" />
+                </yummy:PancakeView.Border>
+                <FlexLayout
+                    x:Name="clueFlexLayout"
+                    AlignContent="Start"
+                    AlignItems="Start"
+                    BindableLayout.ItemsSource="{Binding Clues}"
+                    Direction="Row"
+                    JustifyContent="Start"
+                    Wrap="Wrap">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <yummy:PancakeView
+                                Padding="5,5,5,5"
+                                BackgroundColor="White"
+                                CornerRadius="10">
+                                <yummy:PancakeView.Shadow>
+                                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                                </yummy:PancakeView.Shadow>
+                                <yummy:PancakeView.Margin>
+                                    <Thickness>
+                                        10,3,5,10
+                                    </Thickness>
+                                </yummy:PancakeView.Margin>
+                                <yummy:PancakeView.Border>
+                                    <yummy:Border Thickness="1" Color="Color.Default" />
+                                </yummy:PancakeView.Border>
+                                <StackLayout Orientation="Horizontal">
+                                    <Image
+                                        HeightRequest="30"
+                                        Source="{Binding IconFilePath}"
+                                        WidthRequest="30" />
                                     <Label
-                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
                                         Text="{Binding Title}"
                                         VerticalOptions="Center" />
-                                    <yummy:PancakeView.GestureRecognizers>
-                                        <TapGestureRecognizer
-                                            Command="{Binding Path=BindingContext.OtherPageTappedCommand, Source={x:Reference Name=otherFlexLayout}}"
-                                            CommandParameter="{Binding .}" />
-                                    </yummy:PancakeView.GestureRecognizers>
-                                </yummy:PancakeView>
+                                </StackLayout>
+                                <yummy:PancakeView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.ClueTappedCommand, Source={x:Reference Name=clueFlexLayout}}" CommandParameter="{Binding .}" />
+                                </yummy:PancakeView.GestureRecognizers>
+                            </yummy:PancakeView>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+
+            </yummy:PancakeView>
+            <!--  Список сложностей  -->
+            <Label
+                Padding="10,10,10,0"
+                FontAttributes="Bold"
+                FontSize="Medium"
+                HorizontalOptions="StartAndExpand"
+                Text="{Binding MainPageCommon.Difficulties}">
+                <Label.Margin>
+                    <Thickness>
+                        10,3,10,0
+                    </Thickness>
+                </Label.Margin>
+            </Label>
+            <yummy:PancakeView
+                Padding="10,10,10,10"
+                BackgroundColor="White"
+                CornerRadius="16">
+                <yummy:PancakeView.Shadow>
+                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                </yummy:PancakeView.Shadow>
+                <yummy:PancakeView.Margin>
+                    <Thickness>
+                        10,3,10,10
+                    </Thickness>
+                </yummy:PancakeView.Margin>
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="Color.Default" />
+                </yummy:PancakeView.Border>
+                <FlexLayout
+                    x:Name="difficultiesFlexLayout"
+                    AlignContent="Start"
+                    AlignItems="Start"
+                    BindableLayout.ItemsSource="{Binding Difficulties}"
+                    Direction="Column"
+                    JustifyContent="Start"
+                    Wrap="NoWrap">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <yummy:PancakeView
+                                Padding="10,10,10,10"
+                                BackgroundColor="White"
+                                CornerRadius="16">
+                                <StackLayout Orientation="Vertical">
+                                    <Label FontAttributes="Bold" Text="{Binding Title}" />
+                                    <Label Text="{Binding Description}" />
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.DifficultyTappedCommand, Source={x:Reference Name=difficultiesFlexLayout}}" CommandParameter="{Binding .}" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                            </yummy:PancakeView>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+
+            </yummy:PancakeView>
+
+            <!--  Список патчей  -->
+            <Label
+                Padding="10,10,10,0"
+                FontAttributes="Bold"
+                FontSize="Medium"
+                HorizontalOptions="StartAndExpand"
+                Text="{Binding MainPageCommon.Patches}">
+                <Label.Margin>
+                    <Thickness>
+                        10,3,10,0
+                    </Thickness>
+                </Label.Margin>
+            </Label>
+            <yummy:PancakeView
+                Padding="10,10,10,10"
+                BackgroundColor="White"
+                CornerRadius="16">
+                <yummy:PancakeView.Shadow>
+                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                </yummy:PancakeView.Shadow>
+                <yummy:PancakeView.Margin>
+                    <Thickness>
+                        10,3,10,10
+                    </Thickness>
+                </yummy:PancakeView.Margin>
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="Color.Default" />
+                </yummy:PancakeView.Border>
+                <FlexLayout
+                    x:Name="patchesFlexLayout"
+                    AlignContent="Start"
+                    AlignItems="Start"
+                    BindableLayout.ItemsSource="{Binding Patches}"
+                    Direction="Column"
+                    JustifyContent="Start"
+                    Wrap="NoWrap">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Label Text="{Binding Title}" TextColor="Blue">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.PatchTappedCommand, Source={x:Reference Name=patchesFlexLayout}}" CommandParameter="{Binding .}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </StackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </yummy:PancakeView>
+
+            <!--  Список ежедневных и недельных квестов  -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--  Ежедневные квесты  -->
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Padding="10,10,10,0"
+                    FontAttributes="Bold"
+                    FontSize="Header"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="{Binding MainPageCommon.DailyQuest}">
+                    <Label.Margin>
+                        <Thickness>
+                            10,3,10,0
+                        </Thickness>
+                    </Label.Margin>
+                </Label>
+                <yummy:PancakeView
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Padding="10,10,10,10"
+                    BackgroundColor="White"
+                    CornerRadius="16">
+                    <yummy:PancakeView.Shadow>
+                        <yummy:DropShadow Offset="0,3" Color="#000000" />
+                    </yummy:PancakeView.Shadow>
+                    <yummy:PancakeView.Margin>
+                        <Thickness>
+                            10,3,10,10
+                        </Thickness>
+                    </yummy:PancakeView.Margin>
+                    <yummy:PancakeView.Border>
+                        <yummy:Border Thickness="1" Color="Color.Default" />
+                    </yummy:PancakeView.Border>
+                    <FlexLayout
+                        AlignContent="Start"
+                        AlignItems="Start"
+                        BindableLayout.ItemsSource="{Binding DailyQuest}"
+                        Direction="Column"
+                        JustifyContent="Start"
+                        Wrap="NoWrap">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Label Text="{Binding Description}" />
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </FlexLayout>
                 </yummy:PancakeView>
-            </StackLayout>
-        </yummy:PancakeView>
+
+                <!--  Еженедельные квесты  -->
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Padding="10,10,10,0"
+                    FontAttributes="Bold"
+                    FontSize="Header"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="{Binding MainPageCommon.WeeklyQuest}">
+                    <Label.Margin>
+                        <Thickness>
+                            10,3,10,0
+                        </Thickness>
+                    </Label.Margin>
+                </Label>
+                <yummy:PancakeView
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Padding="10,10,10,10"
+                    BackgroundColor="White"
+                    CornerRadius="16">
+                    <yummy:PancakeView.Shadow>
+                        <yummy:DropShadow Offset="0,3" Color="#000000" />
+                    </yummy:PancakeView.Shadow>
+                    <yummy:PancakeView.Margin>
+                        <Thickness>
+                            10,3,10,10
+                        </Thickness>
+                    </yummy:PancakeView.Margin>
+                    <yummy:PancakeView.Border>
+                        <yummy:Border Thickness="1" Color="Color.Default" />
+                    </yummy:PancakeView.Border>
+                    <FlexLayout
+                        AlignContent="Start"
+                        AlignItems="Start"
+                        BindableLayout.ItemsSource="{Binding WeeklyQuest}"
+                        Direction="Column"
+                        JustifyContent="Start"
+                        Wrap="NoWrap">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Label Text="{Binding Description}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </yummy:PancakeView>
+            </Grid>
+            <!--  Горизонтальная прокрутная некатегоризованных страниц  -->
+            <Label
+                Padding="10,10,10,0"
+                FontAttributes="Bold"
+                FontSize="Medium"
+                HorizontalOptions="StartAndExpand"
+                Text="{Binding MainPageCommon.OtherPages}">
+                <Label.Margin>
+                    <Thickness>
+                        10,3,10,0
+                    </Thickness>
+                </Label.Margin>
+            </Label>
+            <yummy:PancakeView
+                Padding="10,10,10,10"
+                BackgroundColor="White"
+                CornerRadius="16">
+                <yummy:PancakeView.Shadow>
+                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                </yummy:PancakeView.Shadow>
+                <yummy:PancakeView.Margin>
+                    <Thickness>10,3,10,10</Thickness>
+                </yummy:PancakeView.Margin>
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="Color.Default" />
+                </yummy:PancakeView.Border>
+                <FlexLayout
+                    x:Name="otherFlexLayout"
+                    AlignContent="Start"
+                    AlignItems="Center"
+                    BindableLayout.ItemsSource="{Binding OtherInfos}"
+                    Direction="Row"
+                    JustifyContent="Start"
+                    Wrap="NoWrap">
+
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <yummy:PancakeView
+                                BackgroundColor="White"
+                                CornerRadius="50"
+                                HeightRequest="100"
+                                WidthRequest="100">
+                                <yummy:PancakeView.Shadow>
+                                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                                </yummy:PancakeView.Shadow>
+                                <yummy:PancakeView.Margin>
+                                    <Thickness>10,3,10,10</Thickness>
+                                </yummy:PancakeView.Margin>
+                                <yummy:PancakeView.Border>
+                                    <yummy:Border Thickness="1" Color="Color.Default" />
+                                </yummy:PancakeView.Border>
+                                <Label
+                                    HorizontalOptions="Center"
+                                    Text="{Binding Title}"
+                                    VerticalOptions="Center" />
+                                <yummy:PancakeView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.OtherPageTappedCommand, Source={x:Reference Name=otherFlexLayout}}" CommandParameter="{Binding .}" />
+                                </yummy:PancakeView.GestureRecognizers>
+                            </yummy:PancakeView>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </yummy:PancakeView>
+        </StackLayout>
+
 
     </ScrollView>
 
