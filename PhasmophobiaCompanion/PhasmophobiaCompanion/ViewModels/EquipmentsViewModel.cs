@@ -37,19 +37,14 @@ namespace PhasmophobiaCompanion.ViewModels
             try
             {
                 dataService = DependencyService.Get<DataService>();
-                //TODO: Нужно сделать, чтобы варианты тиров загружались не из кода.
-                allTiers = new ObservableCollection<string>
-                {
-                    "I",
-                    "II",
-                    "III"
-                };
                 //Загрузка данных для интерфейса.
                 EquipmentCommon = dataService.GetEquipmentCommon();
                 //Загрузка всего снаряжения.
                 equipments = dataService.GetEquipments();
+                allTiers = dataService.GetTiers();
                 AllTiers = new ObservableCollection<string>(allTiers);
                 Equipments = new ObservableCollection<Equipment>(equipments);
+                //Инициализация элементов фильтра
                 SelectedTiers = new ObservableCollection<object>();
                 maxUnlockLevelSaved = MaxUnlockLevelDefault;
                 minUnlockLevelSaved = MinUnlockLevelDefault;

@@ -274,6 +274,18 @@ namespace PhasmophobiaCompanion.Services
             }
         }
 
+        /// <summary>
+        ///     Получение всех уникальных Тиров, что есть среди всех элементов снаряжения.
+        /// </summary>
+        /// <returns>Список Тиров.</returns>
+        public ObservableCollection<string> GetTiers()
+        {
+            var uniqueTiers = new HashSet<string>();
+            foreach (var equip in equipments) uniqueTiers.Add(equip.Tier);
+
+            return new ObservableCollection<string>(uniqueTiers);
+        }
+
         public ObservableCollection<string> GetTips()
         {
             try
@@ -756,7 +768,8 @@ namespace PhasmophobiaCompanion.Services
                     equipments.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
                 results.AddRange(maps.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
                 results.AddRange(curseds.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
-                results.AddRange(challengeModes.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
+                results.AddRange(challengeModes.Where(item =>
+                    item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
                 return results;
             }
             catch (Exception ex)
