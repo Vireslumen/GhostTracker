@@ -49,6 +49,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 };
                 AllSizes = new ObservableCollection<string>(allSizes);
                 SelectedSizes = new ObservableCollection<object>();
+                selectedSizesSaved = new ObservableCollection<object>();
                 maxRoomSaved = MaxRoomDefault;
                 minRoomSaved = MinRoomDefault;
                 maxRoom = MaxRoomDefault.ToString();

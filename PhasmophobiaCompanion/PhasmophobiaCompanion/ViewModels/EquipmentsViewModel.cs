@@ -46,6 +46,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 Equipments = new ObservableCollection<Equipment>(equipments);
                 //Инициализация элементов фильтра
                 SelectedTiers = new ObservableCollection<object>();
+                selectedTiersSaved = new ObservableCollection<object>();
                 maxUnlockLevelSaved = MaxUnlockLevelDefault;
                 minUnlockLevelSaved = MinUnlockLevelDefault;
                 maxUnlockLevel = MaxUnlockLevelDefault.ToString();
