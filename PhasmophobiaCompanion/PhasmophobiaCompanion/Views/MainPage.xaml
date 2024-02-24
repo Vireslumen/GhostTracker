@@ -96,10 +96,7 @@
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
                 <StackLayout>
-                    <SearchBar
-                        Placeholder="{Binding MainPageCommon.Search}"
-                        SearchCommand="{Binding SearchCommand}"
-                        Text="{Binding SearchText, Mode=TwoWay}" />
+                    <SearchBar Placeholder="{Binding MainPageCommon.Search}" Text="{Binding SearchText, Mode=TwoWay}" />
                     <Frame
                         Padding="0"
                         BackgroundColor="White"

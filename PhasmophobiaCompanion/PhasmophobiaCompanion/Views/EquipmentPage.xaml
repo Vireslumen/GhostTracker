@@ -13,7 +13,7 @@
     <StackLayout>
         <!--  Строка поиска и фильтрации снаряжения  -->
         <yummy:PancakeView
-            Margin="20,0,20,20"
+            Margin="5,0,5,20"
             Padding="10,0,0,0"
             BackgroundColor="White"
             CornerRadius="25"
@@ -21,28 +21,17 @@
             VerticalOptions="EndAndExpand">
             <StackLayout Orientation="Horizontal">
                 <!--  Строка поиска снаряжения  -->
-                <Image
-                    HeightRequest="25"
-                    HorizontalOptions="Start"
-                    Source="search"
-                    VerticalOptions="CenterAndExpand"
-                    WidthRequest="25" />
-                <Entry
-                    x:Name="searchEntry"
+                <SearchBar
                     BackgroundColor="White"
-                    HorizontalOptions="FillAndExpand"
+                    HorizontalOptions="StartAndExpand"
                     Placeholder="{Binding EquipmentCommon.Search}"
-                    Text="{Binding SearchQuery, Mode=TwoWay}">
-                    <Entry.Behaviors>
-                        <behaviors:EventToCommandBehavior Command="{Binding SearchCommand}" />
-                    </Entry.Behaviors>
-                </Entry>
+                    Text="{Binding SearchText, Mode=TwoWay}" />
 
                 <!--  Кнопка фильтрации снаряжения  -->
                 <Image
                     BackgroundColor="{Binding FilterColor}"
                     HeightRequest="25"
-                    HorizontalOptions="End"
+                    HorizontalOptions="StartAndExpand"
                     Source="filter_icon"
                     VerticalOptions="CenterAndExpand"
                     WidthRequest="25">

@@ -15,7 +15,7 @@ namespace PhasmophobiaCompanion.ViewModels
     /// <summary>
     ///     ViewModel для страницы списка призраков, поддерживает поиск и фильтрацию.
     /// </summary>
-    public class GhostsViewModel : BaseViewModel, ISearchable, IFilterable
+    public class GhostsViewModel : SearchableViewModel, IFilterable
     {
         private readonly DataService dataService;
         private readonly ObservableCollection<Ghost> ghosts;
@@ -24,7 +24,6 @@ namespace PhasmophobiaCompanion.ViewModels
         private ObservableCollection<Ghost> filteredGhosts;
         private ObservableCollection<object> selectedClues;
         private ObservableCollection<object> selectedCluesSaved;
-        private string searchQuery;
 
         public GhostsViewModel()
         {
@@ -41,7 +40,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 //Загрузка данных для интерфейса.
                 GhostCommon = dataService.GetGhostCommon();
                 // Инициализация команд
-                SearchCommand = new Command<string>(OnSearchCompleted);
                 GhostSelectedCommand = new Command<Ghost>(OnGhostSelected);
                 FilterCommand = new Command(OnFilterTapped);
                 FilterApplyCommand = new Command(OnFilterApplyTapped);
@@ -104,34 +102,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время фильтрации призраков.");
-                throw;
-            }
-        }
-
-        public ICommand SearchCommand { get; }
-        public string SearchQuery
-        {
-            get => searchQuery;
-            set
-            {
-                SetProperty(ref searchQuery, value);
-                SearchGhosts();
-            }
-        }
-
-        /// <summary>
-        ///     Установка поискового запроса и активация поиска.
-        /// </summary>
-        /// <param name="query">Поисковый запрос.</param>
-        public void OnSearchCompleted(string query)
-        {
-            try
-            {
-                SearchQuery = query;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время установки поискового запроса GhostsViewModel.");
                 throw;
             }
         }
@@ -233,7 +203,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Фильтрация коллекции в соответствии с поисковым запросом.
         /// </summary>
-        private void SearchGhosts()
+        protected override void PerformSearch()
         {
             try
             {
@@ -253,9 +223,9 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                var filtered = ghosts.Where(ghost => (string.IsNullOrWhiteSpace(SearchQuery) ||
+                var filtered = ghosts.Where(ghost => (string.IsNullOrWhiteSpace(SearchText) ||
                                                       ghost.Title.ToLowerInvariant()
-                                                          .Contains(SearchQuery.ToLowerInvariant()))
+                                                          .Contains(SearchText.ToLowerInvariant()))
                                                      &&
                                                      (!selectedCluesSaved.Any() ||
                                                       selectedCluesSaved.All(selectedClue =>

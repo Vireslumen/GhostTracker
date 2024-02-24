@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
@@ -15,7 +16,7 @@ namespace PhasmophobiaCompanion.ViewModels
     /// <summary>
     ///     ViewModel для страницы списка снаряжения, поддерживает поиск и фильтрацию.
     /// </summary>
-    public class EquipmentsViewModel : BaseViewModel, ISearchable, IFilterable
+    public class EquipmentsViewModel : SearchableViewModel, IFilterable
     {
         private const int MaxUnlockLevelDefault = 100;
         private const int MinUnlockLevelDefault = 0;
@@ -30,7 +31,6 @@ namespace PhasmophobiaCompanion.ViewModels
         private ObservableCollection<string> allTiers;
         private string maxUnlockLevel;
         private string minUnlockLevel;
-        private string searchQuery;
 
         public EquipmentsViewModel()
         {
@@ -52,7 +52,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 maxUnlockLevel = MaxUnlockLevelDefault.ToString();
                 minUnlockLevel = MinUnlockLevelDefault.ToString();
                 // Инициализация команд
-                SearchCommand = new Command<string>(OnSearchCompleted);
                 EquipmentSelectedCommand = new Command<Equipment>(OnEquipmentSelected);
                 FilterCommand = new Command(OnFilterTapped);
                 FilterApplyCommand = new Command(OnFilterApplyTapped);
@@ -149,34 +148,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время фильтрации снаряжения.");
-                throw;
-            }
-        }
-
-        public string SearchQuery
-        {
-            get => searchQuery;
-            set
-            {
-                SetProperty(ref searchQuery, value);
-                SearchEquipments();
-            }
-        }
-        public ICommand SearchCommand { get; }
-
-        /// <summary>
-        ///     Установка поискового запроса и активация поиска.
-        /// </summary>
-        /// <param name="query">Поисковый запрос.</param>
-        public void OnSearchCompleted(string query)
-        {
-            try
-            {
-                SearchQuery = query;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время установки поискового запроса у EquipmentsViewModel.");
                 throw;
             }
         }
@@ -286,7 +257,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Фильтрация коллекции в соответствии с поисковым запросом.
         /// </summary>
-        private void SearchEquipments()
+        protected override void PerformSearch()
         {
             try
             {
@@ -312,10 +283,10 @@ namespace PhasmophobiaCompanion.ViewModels
                         minUnlockLevelSaved <= equipment.UnlockLevel && maxUnlockLevelSaved >= equipment.UnlockLevel)
                     .ToList();
 
-                var finalFiltered = string.IsNullOrWhiteSpace(SearchQuery)
+                var finalFiltered = string.IsNullOrWhiteSpace(SearchText)
                     ? filteredByTierAndLevel
                     : filteredByTierAndLevel.Where(equipment =>
-                        equipment.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant())).ToList();
+                        equipment.Title.ToLowerInvariant().Contains(SearchText.ToLowerInvariant())).ToList();
 
                 Equipments = new ObservableCollection<Equipment>(finalFiltered);
             }

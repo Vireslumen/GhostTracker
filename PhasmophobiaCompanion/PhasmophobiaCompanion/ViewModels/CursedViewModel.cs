@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
 using PhasmophobiaCompanion.Views;
@@ -14,13 +13,12 @@ namespace PhasmophobiaCompanion.ViewModels
     /// <summary>
     ///     ViewModel для страницы списка проклятых предметов, поддерживает поиск.
     /// </summary>
-    internal class CursedViewModel : BaseViewModel, ISearchable
+    internal class CursedViewModel : SearchableViewModel
     {
         private readonly DataService dataService;
         private readonly ObservableCollection<CursedPossession> curseds;
         private CursedPossessionCommon cursedPossessionCommon;
         private ObservableCollection<CursedPossession> filteredCurseds;
-        private string searchQuery;
 
         public CursedViewModel()
         {
@@ -32,7 +30,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 Curseds = new ObservableCollection<CursedPossession>(curseds);
                 cursedPossessionCommon = dataService.GetCursedCommon();
                 // Инициализация команд
-                SearchCommand = new Command<string>(OnSearchCompleted);
                 CursedSelectedCommand = new Command<CursedPossession>(OnCursedSelected);
             }
             catch (Exception ex)
@@ -56,33 +53,6 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             get => filteredCurseds;
             set => SetProperty(ref filteredCurseds, value);
-        }
-        public string SearchQuery
-        {
-            get => searchQuery;
-            set
-            {
-                SetProperty(ref searchQuery, value);
-                SearchCurseds();
-            }
-        }
-        public ICommand SearchCommand { get; }
-
-        /// <summary>
-        ///     Установка поискового запроса и активация поиска.
-        /// </summary>
-        /// <param name="query">Поисковый запрос.</param>
-        public void OnSearchCompleted(string query)
-        {
-            try
-            {
-                SearchQuery = query;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время установки поискового запроса у CursedViewModel.");
-                throw;
-            }
         }
 
         /// <summary>
@@ -111,11 +81,11 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Фильтрация коллекции в соответствии с поисковым запросом.
         /// </summary>
-        private void SearchCurseds()
+        protected override void PerformSearch()
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(SearchQuery))
+                if (string.IsNullOrWhiteSpace(SearchText))
                 {
                     Curseds = new ObservableCollection<CursedPossession>(curseds);
                 }
@@ -123,7 +93,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 {
                     //Поиск по названию проклятого предмета.
                     var filtered = curseds
-                        .Where(cursed => cursed.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant()))
+                        .Where(cursed => cursed.Title.ToLowerInvariant().Contains(SearchText.ToLowerInvariant()))
                         .ToList();
                     Curseds = new ObservableCollection<CursedPossession>(filtered);
                 }

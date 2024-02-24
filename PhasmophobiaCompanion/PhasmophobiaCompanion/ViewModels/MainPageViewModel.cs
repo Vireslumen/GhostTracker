@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
@@ -16,13 +17,12 @@ namespace PhasmophobiaCompanion.ViewModels
     /// <summary>
     ///     ViewModel для главной страницы.
     /// </summary>
-    public class MainPageViewModel : BaseViewModel
+    public class MainPageViewModel : SearchableViewModel
     {
         public readonly DataService dataService;
         private bool isSearchResultVisible;
         private object selectedItem;
         private ObservableCollection<object> searchResults;
-        private string searchText;
 
         public MainPageViewModel()
         {
@@ -126,16 +126,6 @@ namespace PhasmophobiaCompanion.ViewModels
         public ObservableCollection<Quest> WeeklyQuest { get; set; }
         public ObservableCollection<string> Tips { get; set; }
         public string DisplayedTip { get; set; }
-        public string SearchText
-        {
-            get => searchText;
-            set
-            {
-                searchText = value;
-                OnPropertyChanged();
-                PerformSearch();
-            }
-        }
 
         /// <summary>
         ///     Смена отображаемой подсказки на случайную из списка всех подсказок.
@@ -509,7 +499,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Глобальный поиск среди на главной странице.
         /// </summary>
-        private void PerformSearch()
+        protected override void PerformSearch()
         {
             try
             {
@@ -531,6 +521,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 throw;
             }
         }
+
 
         /// <summary>
         ///     Установка карты, снаряжения и сложности для выбранного особого режима.

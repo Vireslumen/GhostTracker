@@ -15,7 +15,7 @@ namespace PhasmophobiaCompanion.ViewModels
     /// <summary>
     ///     ViewModel для страницы списка карт, поддерживающий поиск и фильтрацию.
     /// </summary>
-    public class MapsViewModel : BaseViewModel, ISearchable, IFilterable
+    public class MapsViewModel : SearchableViewModel, IFilterable
     {
         private const int MaxRoomDefault = 100;
         private const int MinRoomDefault = 0;
@@ -30,7 +30,6 @@ namespace PhasmophobiaCompanion.ViewModels
         private ObservableCollection<string> allSizes;
         private string maxRoom;
         private string minRoom;
-        private string searchQuery;
 
         public MapsViewModel()
         {
@@ -55,7 +54,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 maxRoom = MaxRoomDefault.ToString();
                 minRoom = MinRoomDefault.ToString();
                 // Инициализация команд
-                SearchCommand = new Command<string>(OnSearchCompleted);
                 MapSelectedCommand = new Command<Map>(OnMapSelected);
                 FilterCommand = new Command(OnFilterTapped);
                 FilterApplyCommand = new Command(OnFilterApplyTapped);
@@ -143,34 +141,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время фильтрации карт.");
-                throw;
-            }
-        }
-
-        public string SearchQuery
-        {
-            get => searchQuery;
-            set
-            {
-                SetProperty(ref searchQuery, value);
-                SearchMaps();
-            }
-        }
-        public ICommand SearchCommand { get; }
-
-        /// <summary>
-        ///     Установка поискового запроса и активация поиска.
-        /// </summary>
-        /// <param name="query">Поисковый запрос.</param>
-        public void OnSearchCompleted(string query)
-        {
-            try
-            {
-                SearchQuery = query;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время установки поискового запроса MapsViewModel.");
                 throw;
             }
         }
@@ -280,7 +250,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Фильтрация коллекции в соответствии с поисковым запросом.
         /// </summary>
-        private void SearchMaps()
+        protected override void PerformSearch()
         {
             try
             {
@@ -305,10 +275,10 @@ namespace PhasmophobiaCompanion.ViewModels
                      selectedSizesSaved.Any(selectedSize => map.Size == selectedSize.ToString())) &&
                     minRoomSaved <= map.RoomCount && maxRoomSaved >= map.RoomCount).ToList();
 
-                var finalFiltered = string.IsNullOrWhiteSpace(SearchQuery)
+                var finalFiltered = string.IsNullOrWhiteSpace(SearchText)
                     ? filteredBySizeAndRoom
                     : filteredBySizeAndRoom.Where(map =>
-                        map.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant())).ToList();
+                        map.Title.ToLowerInvariant().Contains(SearchText.ToLowerInvariant())).ToList();
 
                 Maps = new ObservableCollection<Map>(finalFiltered);
             }
