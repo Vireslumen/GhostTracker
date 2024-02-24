@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.MapsPage"
@@ -38,6 +38,7 @@
                 </Entry>
                 <!--  Кнопка фильтрации карт  -->
                 <Image
+                    BackgroundColor="{Binding FilterColor}"
                     HeightRequest="25"
                     HorizontalOptions="End"
                     Source="filter_icon"
@@ -98,7 +99,9 @@
                                                 <yummy:Border Thickness="1" Color="Color.Default" />
                                             </yummy:PancakeView.Border>
                                             <yummy:PancakeView.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.MapSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Path=BindingContext.MapSelectedCommand, Source={x:Reference Name=collectionView}}"
+                                                    CommandParameter="{Binding .}" />
                                             </yummy:PancakeView.GestureRecognizers>
                                             <StackLayout>
                                                 <AbsoluteLayout>
@@ -118,7 +121,8 @@
                                                                 Offset="0,5"
                                                                 Color="Black" />
                                                         </yummy:PancakeView.Shadow>
-                                                        <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                                                        <StackLayout HorizontalOptions="Center"
+                                                                     Orientation="Horizontal">
                                                             <Image HeightRequest="18" Source="unlock" />
                                                             <Label
                                                                 FontAttributes="Bold"
@@ -143,7 +147,8 @@
                                                                 Offset="0,5"
                                                                 Color="Black" />
                                                         </yummy:PancakeView.Shadow>
-                                                        <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                                                        <StackLayout HorizontalOptions="Center"
+                                                                     Orientation="Horizontal">
                                                             <Image HeightRequest="18" Source="room" />
                                                             <Label
                                                                 FontAttributes="Bold"

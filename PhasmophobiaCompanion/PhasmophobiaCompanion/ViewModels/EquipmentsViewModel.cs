@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Interfaces;
@@ -19,12 +20,15 @@ namespace PhasmophobiaCompanion.ViewModels
     {
         private readonly DataService dataService;
         private readonly ObservableCollection<Equipment> equipments;
-        private double maxUnlockLevel = 100;
-        private double minUnlockLevel;
+        private double maxUnlockLevelSaved = 100;
+        private double minUnlockLevelSaved;
         private EquipmentCommon equipmentCommon;
         private ObservableCollection<Equipment> filteredEquipments;
         private ObservableCollection<string> allTiers;
-        private ObservableCollection<string> selectedTiers;
+        private ObservableCollection<object> selectedTiers;
+        private ObservableCollection<object> selectedTiersSaved;
+        private string maxUnlockLevel = "100";
+        private string minUnlockLevel = "0";
         private string searchQuery;
 
         public EquipmentsViewModel()
@@ -45,11 +49,14 @@ namespace PhasmophobiaCompanion.ViewModels
                 equipments = dataService.GetEquipments();
                 AllTiers = new ObservableCollection<string>(allTiers);
                 Equipments = new ObservableCollection<Equipment>(equipments);
-                SelectedTiers = new ObservableCollection<string>();
+                SelectedTiers = new ObservableCollection<object>();
+                SelectedTiers.CollectionChanged += SelectedTiers_CollectionChanged;
                 // Инициализация команд
                 SearchCommand = new Command<string>(OnSearchCompleted);
                 EquipmentSelectedCommand = new Command<Equipment>(OnEquipmentSelected);
                 FilterCommand = new Command(OnFilterTapped);
+                FilterApplyCommand = new Command(OnFilterApplyTapped);
+                BackgroundClickCommand = new Command(ExecuteBackgroundClick);
             }
             catch (Exception ex)
             {
@@ -58,30 +65,6 @@ namespace PhasmophobiaCompanion.ViewModels
             }
         }
 
-        public double MaxUnlockLevel
-        {
-            get => maxUnlockLevel;
-            set
-            {
-                if (maxUnlockLevel != value)
-                {
-                    maxUnlockLevel = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        public double MinUnlockLevel
-        {
-            get => minUnlockLevel;
-            set
-            {
-                if (minUnlockLevel != value)
-                {
-                    minUnlockLevel = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
         /// <summary>
         ///     Общие текстовые данные для интерфейса относящегося к снаряжению.
         /// </summary>
@@ -94,7 +77,9 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
+        public ICommand BackgroundClickCommand { get; private set; }
         public ICommand EquipmentSelectedCommand { get; private set; }
+        public ICommand FilterApplyCommand { get; private set; }
         public ICommand FilterCommand { get; private set; }
         /// <summary>
         ///     Коллекция отображаемого снаряжения, которая может быть отфильтрована.
@@ -115,10 +100,36 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Коллекция выбранных тиров для фильтрации.
         /// </summary>
-        public ObservableCollection<string> SelectedTiers
+        public ObservableCollection<object> SelectedTiers
         {
             get => selectedTiers;
             set => SetProperty(ref selectedTiers, value);
+        }
+        public string FilterColor =>
+            SelectedTiers.Any() || minUnlockLevelSaved != 0 || maxUnlockLevelSaved != 100 ? "Yellow" : "White";
+        public string MaxUnlockLevel
+        {
+            get => maxUnlockLevel;
+            set
+            {
+                if (maxUnlockLevel != value)
+                {
+                    maxUnlockLevel = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public string MinUnlockLevel
+        {
+            get => minUnlockLevel;
+            set
+            {
+                if (minUnlockLevel != value)
+                {
+                    minUnlockLevel = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -128,14 +139,7 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                //Фильтрация по выбранным тирам.
-                var filteredTier = equipments.Where(equipment =>
-                    !SelectedTiers.Any() || SelectedTiers.Any(selectedTier => equipment.Tier == selectedTier)).ToList();
-                //Фильтрация по диапазону уровней разблокировки.
-                var filteredLevel = filteredTier.Where(equipment =>
-                    MinUnlockLevel <= equipment.UnlockLevel && MaxUnlockLevel >= equipment.UnlockLevel).ToList();
-
-                Equipments = new ObservableCollection<Equipment>(filteredLevel);
+                UpdateFilteredEquipments();
             }
             catch (Exception ex)
             {
@@ -173,6 +177,22 @@ namespace PhasmophobiaCompanion.ViewModels
         }
 
         /// <summary>
+        ///     При нажатии на фон сбросить параметры фильтра до состояния на момента его открытия.
+        /// </summary>
+        private void ExecuteBackgroundClick()
+        {
+            try
+            {
+                SelectedTiers = new ObservableCollection<object>(selectedTiersSaved);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при сбрасывании параметров фильтра до состояния на момент открытия.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Переход на подробную страницу выбранного снаряжения.
         /// </summary>
         /// <param name="selectedEquipment">Выбранное снаряжение.</param>
@@ -191,6 +211,27 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 Log.Error(ex,
                     "Ошибка во время перехода на подробную страницу снаряжения из страницы снаряжения EquipmentPage.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Принятие фильтрации и закрытие окна фильтра.
+        /// </summary>
+        private void OnFilterApplyTapped()
+        {
+            try
+            {
+                selectedTiersSaved = new ObservableCollection<object>(SelectedTiers);
+                minUnlockLevelSaved = double.TryParse(minUnlockLevel, out var max) ? max : 100;
+                maxUnlockLevelSaved = double.TryParse(maxUnlockLevel, out var min) ? min : 0;
+                Filter();
+                OnPropertyChanged(nameof(FilterColor));
+                PopupNavigation.Instance.PopAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при принятии фильтрации.");
                 throw;
             }
         }
@@ -220,20 +261,43 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(SearchQuery))
-                {
-                    Equipments = new ObservableCollection<Equipment>(equipments);
-                }
-                else
-                {
-                    var filtered = equipments.Where(equipment =>
-                        equipment.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant())).ToList();
-                    Equipments = new ObservableCollection<Equipment>(filtered);
-                }
+                UpdateFilteredEquipments();
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время поиска снаряжения.");
+                throw;
+            }
+        }
+
+        private void SelectedTiers_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(FilterColor));
+        }
+
+        /// <summary>
+        ///     Фильтрация снаряжения по поисковому запросу и выбранным параметрам фильтра.
+        /// </summary>
+        private void UpdateFilteredEquipments()
+        {
+            try
+            {
+                var filteredByTierAndLevel = equipments.Where(equipment =>
+                        (!selectedTiersSaved.Any() ||
+                         selectedTiersSaved.Any(selectedTier => equipment.Tier == selectedTier.ToString())) &&
+                        minUnlockLevelSaved <= equipment.UnlockLevel && maxUnlockLevelSaved >= equipment.UnlockLevel)
+                    .ToList();
+
+                var finalFiltered = string.IsNullOrWhiteSpace(SearchQuery)
+                    ? filteredByTierAndLevel
+                    : filteredByTierAndLevel.Where(equipment =>
+                        equipment.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant())).ToList();
+
+                Equipments = new ObservableCollection<Equipment>(finalFiltered);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время обновления отфильтрованного списка снаряжения.");
                 throw;
             }
         }

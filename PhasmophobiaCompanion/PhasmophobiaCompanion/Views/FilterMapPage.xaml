@@ -4,10 +4,14 @@
     x:Class="PhasmophobiaCompanion.Views.FilterMapPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="http://xamarin.com/schemas/2020/toolkit"
     xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     BackgroundColor="Transparent"
     HasSystemPadding="True">
+    <popup:PopupPage.Behaviors>
+        <behaviors:EventToCommandBehavior Command="{Binding BackgroundClickCommand}" EventName="BackgroundClicked" />
+    </popup:PopupPage.Behaviors>
     <Frame
         Margin="20"
         BackgroundColor="White"
@@ -85,14 +89,12 @@
                     Text="{Binding MapCommon.FilterRoom}" />
                 <!--  Поле минимального количества комнат для фильтрации  -->
                 <Entry
-                    x:Name="minRoom"
                     Margin="0,5,0,5"
                     Keyboard="Numeric"
                     Placeholder="{Binding MinRoom, StringFormat='Min room number: 0'}"
                     Text="{Binding MinRoom}" />
                 <!--  Поле максимального количества комнат для фильтрации  -->
                 <Entry
-                    x:Name="maxRoom"
                     Margin="0,5,0,5"
                     Keyboard="Numeric"
                     Placeholder="{Binding MaxRoom, StringFormat='Max room number: 100'}"
@@ -105,7 +107,7 @@
                 Grid.ColumnSpan="2"
                 Margin="10"
                 BackgroundColor="#791AE5"
-                Clicked="OnApplyFiltersClicked"
+                Command="{Binding FilterApplyCommand}"
                 CornerRadius="5"
                 Text="{Binding MapCommon.Apply}"
                 TextColor="White" />

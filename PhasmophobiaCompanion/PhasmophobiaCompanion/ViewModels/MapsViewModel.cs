@@ -19,12 +19,15 @@ namespace PhasmophobiaCompanion.ViewModels
     {
         private readonly DataService dataService;
         private readonly ObservableCollection<Map> maps;
-        private double maxRoom = 100;
-        private double minRoom;
+        private double maxRoomSaved = 100;
+        private double minRoomSaved;
         private MapCommon mapCommon;
         private ObservableCollection<Map> filteredMaps;
+        private ObservableCollection<object> selectedSizes;
+        private ObservableCollection<object> selectedSizesSaved;
         private ObservableCollection<string> allSizes;
-        private ObservableCollection<string> selectedSizes;
+        private string maxRoom = "100";
+        private string minRoom = "0";
         private string searchQuery;
 
         public MapsViewModel()
@@ -43,11 +46,13 @@ namespace PhasmophobiaCompanion.ViewModels
                     "Large"
                 };
                 AllSizes = new ObservableCollection<string>(allSizes);
-                SelectedSizes = new ObservableCollection<string>();
+                SelectedSizes = new ObservableCollection<object>();
                 // Инициализация команд
                 SearchCommand = new Command<string>(OnSearchCompleted);
                 MapSelectedCommand = new Command<Map>(OnMapSelected);
                 FilterCommand = new Command(OnFilterTapped);
+                FilterApplyCommand = new Command(OnFilterApplyTapped);
+                BackgroundClickCommand = new Command(ExecuteBackgroundClick);
             }
             catch (Exception ex)
             {
@@ -56,30 +61,8 @@ namespace PhasmophobiaCompanion.ViewModels
             }
         }
 
-        public double MaxRoom
-        {
-            get => maxRoom;
-            set
-            {
-                if (maxRoom != value)
-                {
-                    maxRoom = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        public double MinRoom
-        {
-            get => minRoom;
-            set
-            {
-                if (minRoom != value)
-                {
-                    minRoom = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        public ICommand BackgroundClickCommand { get; private set; }
+        public ICommand FilterApplyCommand { get; private set; }
         public ICommand FilterCommand { get; private set; }
         public ICommand MapSelectedCommand { get; private set; }
         /// <summary>
@@ -102,15 +85,41 @@ namespace PhasmophobiaCompanion.ViewModels
             get => filteredMaps;
             set => SetProperty(ref filteredMaps, value);
         }
+        public ObservableCollection<object> SelectedSizes
+        {
+            get => selectedSizes;
+            set => SetProperty(ref selectedSizes, value);
+        }
         public ObservableCollection<string> AllSizes
         {
             get => allSizes;
             set => SetProperty(ref allSizes, value);
         }
-        public ObservableCollection<string> SelectedSizes
+        public string FilterColor =>
+            SelectedSizes.Any() || minRoomSaved != 0 || maxRoomSaved != 100 ? "Yellow" : "White";
+        public string MaxRoom
         {
-            get => selectedSizes;
-            set => SetProperty(ref selectedSizes, value);
+            get => maxRoom;
+            set
+            {
+                if (maxRoom != value)
+                {
+                    maxRoom = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public string MinRoom
+        {
+            get => minRoom;
+            set
+            {
+                if (minRoom != value)
+                {
+                    minRoom = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -120,15 +129,7 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                //Фильтрация по размеру карты.
-                var filteredSize = maps.Where(m =>
-                    !SelectedSizes.Any() || SelectedSizes.Any(selectedSize => m.Size == selectedSize)).ToList();
-                //Фильтрация по количеству комнат на карте.
-                var filteredRoom = filteredSize
-                    .Where(m => MinRoom <= m.RoomCount && MaxRoom >= m.RoomCount).ToList();
-                Maps = new ObservableCollection<Map>(filteredRoom);
-                //Загрузка данных для интерфейса.
-                MapCommon = dataService.GetMapCommon();
+                UpdateFilteredMaps();
             }
             catch (Exception ex)
             {
@@ -161,6 +162,43 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время установки поискового запроса MapsViewModel.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     При нажатии на фон сбросить параметры фильтра до состояния на момента его открытия.
+        /// </summary>
+        private void ExecuteBackgroundClick()
+        {
+            try
+            {
+                SelectedSizes = new ObservableCollection<object>(selectedSizesSaved);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при сбрасывании параметров фильтра до состояния на момент открытия.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Принятие фильтрации и закрытие окна фильтра.
+        /// </summary>
+        private void OnFilterApplyTapped()
+        {
+            try
+            {
+                selectedSizesSaved = new ObservableCollection<object>(SelectedSizes);
+                minRoomSaved = double.TryParse(minRoom, out var max) ? max : 100;
+                maxRoomSaved = double.TryParse(maxRoom, out var min) ? min : 0;
+                Filter();
+                OnPropertyChanged(nameof(FilterColor));
+                PopupNavigation.Instance.PopAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при принятии фильтрации.");
                 throw;
             }
         }
@@ -213,21 +251,36 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(SearchQuery))
-                {
-                    Maps = new ObservableCollection<Map>(maps);
-                }
-                else
-                {
-                    //Поиск по названию проклятого карты.
-                    var filtered = maps
-                        .Where(m => m.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant())).ToList();
-                    Maps = new ObservableCollection<Map>(filtered);
-                }
+                UpdateFilteredMaps();
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время поиска карт.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Фильтрация карт по поисковому запросу и выбранным параметрам фильтра.
+        /// </summary>
+        private void UpdateFilteredMaps()
+        {
+            try
+            {
+                var filteredBySizeAndRoom = maps.Where(map =>
+                    (!selectedSizesSaved.Any() || selectedSizesSaved.Any(selectedSize => map.Size == selectedSize.ToString())) &&
+                    minRoomSaved <= map.RoomCount && maxRoomSaved >= map.RoomCount).ToList();
+
+                var finalFiltered = string.IsNullOrWhiteSpace(SearchQuery)
+                    ? filteredBySizeAndRoom
+                    : filteredBySizeAndRoom.Where(map =>
+                        map.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant())).ToList();
+
+                Maps = new ObservableCollection<Map>(finalFiltered);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время обновления отфильтрованного списка карт.");
                 throw;
             }
         }

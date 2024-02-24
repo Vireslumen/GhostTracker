@@ -40,6 +40,7 @@
 
                 <!--  Кнопка фильтрации снаряжения  -->
                 <Image
+                    BackgroundColor="{Binding FilterColor}"
                     HeightRequest="25"
                     HorizontalOptions="End"
                     Source="filter_icon"

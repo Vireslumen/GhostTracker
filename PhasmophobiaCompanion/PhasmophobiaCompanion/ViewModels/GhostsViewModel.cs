@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Interfaces;
@@ -21,8 +22,9 @@ namespace PhasmophobiaCompanion.ViewModels
         private readonly ObservableCollection<Ghost> ghosts;
         private GhostCommon ghostCommon;
         private ObservableCollection<Clue> allClues;
-        private ObservableCollection<Clue> selectedClues;
         private ObservableCollection<Ghost> filteredGhosts;
+        private ObservableCollection<object> selectedClues;
+        private ObservableCollection<object> selectedCluesSaved;
         private string searchQuery;
 
         public GhostsViewModel()
@@ -33,7 +35,8 @@ namespace PhasmophobiaCompanion.ViewModels
                 //Загрузка всех призраков и улик.
                 ghosts = dataService.GetGhosts();
                 allClues = dataService.GetClues();
-                SelectedClues = new ObservableCollection<Clue>();
+                SelectedClues = new ObservableCollection<object>();
+                selectedCluesSaved = new ObservableCollection<object>();
                 Ghosts = new ObservableCollection<Ghost>(ghosts);
                 AllClues = new ObservableCollection<Clue>(allClues);
                 //Загрузка данных для интерфейса.
@@ -42,6 +45,8 @@ namespace PhasmophobiaCompanion.ViewModels
                 SearchCommand = new Command<string>(OnSearchCompleted);
                 GhostSelectedCommand = new Command<Ghost>(OnGhostSelected);
                 FilterCommand = new Command(OnFilterTapped);
+                FilterApplyCommand = new Command(OnFilterApplyTapped);
+                BackgroundClickCommand = new Command(ExecuteBackgroundClick);
             }
             catch (Exception ex)
             {
@@ -62,17 +67,14 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
+        public ICommand BackgroundClickCommand { get; private set; }
+        public ICommand FilterApplyCommand { get; private set; }
         public ICommand FilterCommand { get; private set; }
         public ICommand GhostSelectedCommand { get; private set; }
         public ObservableCollection<Clue> AllClues
         {
             get => allClues;
             set => SetProperty(ref allClues, value);
-        }
-        public ObservableCollection<Clue> SelectedClues
-        {
-            get => selectedClues;
-            set => SetProperty(ref selectedClues, value);
         }
         /// <summary>
         ///     Отображаемая коллекция призраков, которая может быть отфильтрована на основе заданных критериев.
@@ -82,6 +84,12 @@ namespace PhasmophobiaCompanion.ViewModels
             get => filteredGhosts;
             set => SetProperty(ref filteredGhosts, value);
         }
+        public ObservableCollection<object> SelectedClues
+        {
+            get => selectedClues;
+            set => SetProperty(ref selectedClues, value);
+        }
+        public string FilterColor => SelectedClues.Any() ? "Yellow" : "White";
 
         /// <summary>
         ///     Фильтрация списка призраков на основе выбранных улик.
@@ -90,11 +98,7 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                var filtered = ghosts.Where(ghost => !SelectedClues.Any() ||
-                                                     SelectedClues.All(selectedClue =>
-                                                         ghost.Clues.Any(clue => clue.Title == selectedClue.Title)))
-                    .ToList();
-                Ghosts = new ObservableCollection<Ghost>(filtered);
+                UpdateFilteredGhosts();
             }
             catch (Exception ex)
             {
@@ -127,6 +131,41 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время установки поискового запроса GhostsViewModel.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     При нажатии на фон сбросить параметры фильтра до состояния на момента его открытия.
+        /// </summary>
+        private void ExecuteBackgroundClick()
+        {
+            try
+            {
+                SelectedClues = new ObservableCollection<object>(selectedCluesSaved);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при сбрасывании параметров фильтра до состояния на момент открытия.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Принятие фильтрации и закрытие окна фильтра.
+        /// </summary>
+        private void OnFilterApplyTapped()
+        {
+            try
+            {
+                selectedCluesSaved = new ObservableCollection<object>(SelectedClues);
+                Filter();
+                OnPropertyChanged(nameof(FilterColor));
+                PopupNavigation.Instance.PopAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при принятии фильтрации.");
                 throw;
             }
         }
@@ -177,22 +216,37 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(SearchQuery))
-                {
-                    Ghosts = new ObservableCollection<Ghost>(ghosts);
-                }
-                else
-                {
-                    // Поиск по названию призрака.
-                    var filtered = ghosts
-                        .Where(ghost => ghost.Title.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant()))
-                        .ToList();
-                    Ghosts = new ObservableCollection<Ghost>(filtered);
-                }
+                UpdateFilteredGhosts();
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время поиска призраков.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Фильтрация призраков по поисковому запросу и выбранным параметрам фильтра.
+        /// </summary>
+        private void UpdateFilteredGhosts()
+        {
+            try
+            {
+                var filtered = ghosts.Where(ghost => (string.IsNullOrWhiteSpace(SearchQuery) ||
+                                                      ghost.Title.ToLowerInvariant()
+                                                          .Contains(SearchQuery.ToLowerInvariant()))
+                                                     &&
+                                                     (!selectedCluesSaved.Any() ||
+                                                      selectedCluesSaved.All(selectedClue =>
+                                                          ghost.Clues.Any(clue =>
+                                                              clue.Title == ((Clue) selectedClue).Title))))
+                    .ToList();
+
+                Ghosts = new ObservableCollection<Ghost>(filtered);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время обновления отфильтрованных призраков.");
                 throw;
             }
         }
