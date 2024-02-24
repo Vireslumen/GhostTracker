@@ -17,17 +17,19 @@ namespace PhasmophobiaCompanion.ViewModels
     /// </summary>
     public class MapsViewModel : BaseViewModel, ISearchable, IFilterable
     {
+        private const int MaxRoomDefault = 100;
+        private const int MinRoomDefault = 0;
         private readonly DataService dataService;
         private readonly ObservableCollection<Map> maps;
-        private double maxRoomSaved = 100;
-        private double minRoomSaved;
+        private int maxRoomSaved;
+        private int minRoomSaved;
         private MapCommon mapCommon;
         private ObservableCollection<Map> filteredMaps;
         private ObservableCollection<object> selectedSizes;
         private ObservableCollection<object> selectedSizesSaved;
         private ObservableCollection<string> allSizes;
-        private string maxRoom = "100";
-        private string minRoom = "0";
+        private string maxRoom;
+        private string minRoom;
         private string searchQuery;
 
         public MapsViewModel()
@@ -47,11 +49,16 @@ namespace PhasmophobiaCompanion.ViewModels
                 };
                 AllSizes = new ObservableCollection<string>(allSizes);
                 SelectedSizes = new ObservableCollection<object>();
+                maxRoomSaved = MaxRoomDefault;
+                minRoomSaved = MinRoomDefault;
+                maxRoom = MaxRoomDefault.ToString();
+                minRoom = MinRoomDefault.ToString();
                 // Инициализация команд
                 SearchCommand = new Command<string>(OnSearchCompleted);
                 MapSelectedCommand = new Command<Map>(OnMapSelected);
                 FilterCommand = new Command(OnFilterTapped);
                 FilterApplyCommand = new Command(OnFilterApplyTapped);
+                FilterClearCommand = new Command(OnFilterClearTapped);
                 BackgroundClickCommand = new Command(ExecuteBackgroundClick);
             }
             catch (Exception ex)
@@ -63,6 +70,7 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public ICommand BackgroundClickCommand { get; private set; }
         public ICommand FilterApplyCommand { get; private set; }
+        public ICommand FilterClearCommand { get; private set; }
         public ICommand FilterCommand { get; private set; }
         public ICommand MapSelectedCommand { get; private set; }
         /// <summary>
@@ -190,8 +198,8 @@ namespace PhasmophobiaCompanion.ViewModels
             try
             {
                 selectedSizesSaved = new ObservableCollection<object>(SelectedSizes);
-                minRoomSaved = double.TryParse(minRoom, out var max) ? max : 100;
-                maxRoomSaved = double.TryParse(maxRoom, out var min) ? min : 0;
+                minRoomSaved = int.TryParse(minRoom, out var max) ? max : 100;
+                maxRoomSaved = int.TryParse(maxRoom, out var min) ? min : 0;
                 Filter();
                 OnPropertyChanged(nameof(FilterColor));
                 PopupNavigation.Instance.PopAsync();
@@ -199,6 +207,30 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при принятии фильтрации.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Сброс параметров фильтрации и закрытие окна фильтрации.
+        /// </summary>
+        private void OnFilterClearTapped()
+        {
+            try
+            {
+                selectedSizesSaved = new ObservableCollection<object>();
+                SelectedSizes = new ObservableCollection<object>();
+                maxRoomSaved = MaxRoomDefault;
+                minRoomSaved = MinRoomDefault;
+                MaxRoom = MaxRoomDefault.ToString();
+                MinRoom = MinRoomDefault.ToString();
+                Filter();
+                OnPropertyChanged(nameof(FilterColor));
+                PopupNavigation.Instance.PopAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при сбросе фильтрации.");
                 throw;
             }
         }
@@ -268,7 +300,8 @@ namespace PhasmophobiaCompanion.ViewModels
             try
             {
                 var filteredBySizeAndRoom = maps.Where(map =>
-                    (!selectedSizesSaved.Any() || selectedSizesSaved.Any(selectedSize => map.Size == selectedSize.ToString())) &&
+                    (!selectedSizesSaved.Any() ||
+                     selectedSizesSaved.Any(selectedSize => map.Size == selectedSize.ToString())) &&
                     minRoomSaved <= map.RoomCount && maxRoomSaved >= map.RoomCount).ToList();
 
                 var finalFiltered = string.IsNullOrWhiteSpace(SearchQuery)

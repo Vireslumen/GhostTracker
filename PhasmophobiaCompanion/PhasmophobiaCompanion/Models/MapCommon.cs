@@ -11,6 +11,10 @@
         /// </summary>
         public string Apply { get; set; }
         /// <summary>
+        ///     Текст кнопки сброса фильтров. Примеры: "Clear", "Очистить".
+        /// </summary>
+        public string Clear { get; set; }
+        /// <summary>
         ///     Текст для отображения количества выходов на карте. Примеры: "Exits", "Выходы".
         /// </summary>
         public string Exits { get; set; }

@@ -341,7 +341,8 @@ namespace PhasmophobiaCompanion.Services
                     Search = e.Search,
                     Tier = e.Tier,
                     Apply = e.Apply,
-                    UnlockLevel = e.UnlockLevel
+                    UnlockLevel = e.UnlockLevel,
+                    Clear = e.Clear
                 }).FirstOrDefault();
             }
             catch (Exception ex)
@@ -381,7 +382,8 @@ namespace PhasmophobiaCompanion.Services
                     Min = g.Min,
                     Max = g.Max,
                     GhostTitle = g.GhostTitle,
-                    LoS = g.LoS
+                    LoS = g.LoS,
+                    Clear = g.Clear
                 }).FirstOrDefault();
             }
             catch (Exception ex)
@@ -511,7 +513,8 @@ namespace PhasmophobiaCompanion.Services
                     MapsTitle = m.MapsTitle,
                     RoomNumber = m.RoomNumber,
                     UnlockLvl = m.UnlockLvl,
-                    HidenSpot = m.HidenSpot
+                    HidenSpot = m.HidenSpot,
+                    Clear = m.Clear
                 }).FirstOrDefault();
             }
             catch (Exception ex)

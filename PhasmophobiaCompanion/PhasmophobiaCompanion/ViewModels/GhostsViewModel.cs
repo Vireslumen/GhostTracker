@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Interfaces;
@@ -46,6 +45,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 GhostSelectedCommand = new Command<Ghost>(OnGhostSelected);
                 FilterCommand = new Command(OnFilterTapped);
                 FilterApplyCommand = new Command(OnFilterApplyTapped);
+                FilterClearCommand = new Command(OnFilterClearTapped);
                 BackgroundClickCommand = new Command(ExecuteBackgroundClick);
             }
             catch (Exception ex)
@@ -69,6 +69,7 @@ namespace PhasmophobiaCompanion.ViewModels
         }
         public ICommand BackgroundClickCommand { get; private set; }
         public ICommand FilterApplyCommand { get; private set; }
+        public ICommand FilterClearCommand { get; private set; }
         public ICommand FilterCommand { get; private set; }
         public ICommand GhostSelectedCommand { get; private set; }
         public ObservableCollection<Clue> AllClues
@@ -166,6 +167,26 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при принятии фильтрации.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Сброс параметров фильтрации и закрытие окна фильтрации.
+        /// </summary>
+        private void OnFilterClearTapped()
+        {
+            try
+            {
+                selectedCluesSaved = new ObservableCollection<object>();
+                SelectedClues = new ObservableCollection<object>();
+                Filter();
+                OnPropertyChanged(nameof(FilterColor));
+                PopupNavigation.Instance.PopAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при сбросе фильтрации.");
                 throw;
             }
         }

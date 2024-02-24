@@ -69,14 +69,24 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <!--  Кнопка для принятия фильтрации  -->
-            <Button
-                Margin="0,10,0,0"
-                BackgroundColor="#791AE5"
-                Command="{Binding FilterApplyCommand}"
-                CornerRadius="5"
-                Text="{Binding GhostCommon.ApplyTitle}"
-                TextColor="White" />
+            <!--  Кнопка для принятия и сброса фильтрации  -->
+            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Button
+                    Margin="10"
+                    BackgroundColor="#791AE5"
+                    Command="{Binding FilterApplyCommand}"
+                    CornerRadius="5"
+                    Text="{Binding GhostCommon.ApplyTitle}"
+                    TextColor="White" />
+                <Button
+                    Margin="10"
+                    BackgroundColor="#791AE5"
+                    Command="{Binding FilterClearCommand}"
+                    CornerRadius="5"
+                    Text="{Binding GhostCommon.Clear}"
+                    TextColor="White" />
+
+            </StackLayout>
         </StackLayout>
     </Frame>
 </popup:PopupPage>

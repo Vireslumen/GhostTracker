@@ -11,6 +11,10 @@
         /// </summary>
         public string ApplyTitle { get; set; }
         /// <summary>
+        ///     Текст кнопки сброса фильтров. Примеры: "Clear", "Очистить".
+        /// </summary>
+        public string Clear { get; set; }
+        /// <summary>
         ///     Текст для фильтра по выбранным уликам Clue. Примеры: "Filter by Clue", "Фильтр по Уликам."
         /// </summary>
         public string FilterTitle { get; set; }

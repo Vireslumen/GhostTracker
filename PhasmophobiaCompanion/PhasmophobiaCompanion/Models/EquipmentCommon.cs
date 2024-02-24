@@ -11,6 +11,10 @@
         /// </summary>
         public string Apply { get; set; }
         /// <summary>
+        ///     Текст кнопки сброса фильтров. Примеры: "Clear", "Очистить".
+        /// </summary>
+        public string Clear { get; set; }
+        /// <summary>
         ///     Название списка снаряжения в интерфейсе. Примеры: "Equipments", "Снаряжение".
         /// </summary>
         public string EquipmentsTitle { get; set; }
