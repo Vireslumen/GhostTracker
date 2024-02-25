@@ -1,6 +1,8 @@
 ﻿using System;
 using PhasmophobiaCompanion.Models;
+using PhasmophobiaCompanion.Services;
 using Serilog;
+using Xamarin.Forms;
 
 namespace PhasmophobiaCompanion.ViewModels
 {
@@ -9,12 +11,16 @@ namespace PhasmophobiaCompanion.ViewModels
     /// </summary>
     public class ChallengeModeDetailViewModel : BaseViewModel
     {
+        public readonly DataService dataService;
         private ChallengeMode challengeMode;
+        private DifficultyCommon difficultyCommon;
 
         public ChallengeModeDetailViewModel(ChallengeMode challengeMode)
         {
             try
             {
+                dataService = DependencyService.Get<DataService>();
+                DifficultyCommon = dataService.GetDifficultyCommon();
                 ChallengeMode = challengeMode;
             }
             catch (Exception ex)
@@ -30,6 +36,15 @@ namespace PhasmophobiaCompanion.ViewModels
             set
             {
                 challengeMode = value;
+                OnPropertyChanged();
+            }
+        }
+        public DifficultyCommon DifficultyCommon
+        {
+            get => difficultyCommon;
+            set
+            {
+                difficultyCommon = value;
                 OnPropertyChanged();
             }
         }
