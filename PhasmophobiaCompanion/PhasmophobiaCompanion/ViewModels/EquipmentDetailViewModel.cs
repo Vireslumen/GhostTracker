@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
+using PhasmophobiaCompanion.Views;
 using Serilog;
 using Xamarin.Forms;
 
@@ -14,6 +17,8 @@ namespace PhasmophobiaCompanion.ViewModels
         private readonly DataService dataService;
         private Equipment equipment;
         private EquipmentCommon equipmentCommon;
+        private ObservableCollection<Equipment> equipmentsSameTypeCollection;
+        public ICommand EquipmentSelectedCommand { get; private set; }
 
         public EquipmentDetailViewModel(Equipment equipment)
         {
@@ -21,12 +26,45 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 dataService = DependencyService.Get<DataService>();
                 EquipmentCommon = dataService.GetEquipmentCommon();
+                EquipmentsSameTypeCollection = dataService.GetEquipmentsSameTypeCollection(equipment);
                 Equipment = equipment;
+                EquipmentSelectedCommand = new Command<Equipment>(OnEquipmentSelected);
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время инициализации EquipmentDetailViewModel.");
                 throw;
+            }
+        }
+        /// <summary>
+        ///     Переход на подробную страницу выбранного снаряжения.
+        /// </summary>
+        /// <param name="selectedEquipment">Выбранное снаряжение.</param>
+        private async void OnEquipmentSelected(Equipment selectedEquipment)
+        {
+            try
+            {
+                if (selectedEquipment != null)
+                {
+                    // Логика для открытия страницы деталей снаряжения
+                    var detailPage = new EquipmentDetailPage(selectedEquipment);
+                    await Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex,
+                    "Ошибка во время перехода на подробную страницу снаряжения из другой подробной страницы снаряжения.");
+                throw;
+            }
+        }
+        public ObservableCollection<Equipment> EquipmentsSameTypeCollection
+        {
+            get => equipmentsSameTypeCollection;
+            set
+            {
+                equipmentsSameTypeCollection = value;
+                OnPropertyChanged();
             }
         }
 

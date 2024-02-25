@@ -32,6 +32,11 @@
         /// </summary>
         public string MaxLimit { get; set; }
         /// <summary>
+        ///     Текст для отображения названия списка снаряжения того же типа, но другого тира. Примеры: "Other tiers", "Другие
+        ///     тиры".
+        /// </summary>
+        public string OtherTier { get; set; }
+        /// <summary>
         ///     Текст для отображения цены снаряжения. Примеры: "Price", "Цена".
         /// </summary>
         public string Price { get; set; }

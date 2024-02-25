@@ -36,6 +36,50 @@
                     <StackLayout>
                         <!--  Изображение снаряжение  -->
                         <Image HeightRequest="100" Source="{Binding Equipment.ImageUrl}" />
+                        <!--  Ссылки на снаряжение того же типа, но других тиров  -->
+                        <StackLayout Orientation="Horizontal">
+                            <StackLayout
+                                HorizontalOptions="StartAndExpand"
+                                VerticalOptions="Center"
+                                WidthRequest="700">
+                                <Label FontAttributes="Bold" Text="{Binding EquipmentCommon.OtherTier}" />
+
+                            </StackLayout>
+                            <StackLayout HorizontalOptions="EndAndExpand">
+                                <CollectionView
+                                    x:Name="otherTierCollection"
+                                    HeightRequest="40"
+                                    ItemsLayout="HorizontalList"
+                                    ItemsSource="{Binding EquipmentsSameTypeCollection}"
+                                    VerticalOptions="Start">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <yummy:PancakeView
+                                                Margin="2"
+                                                Padding="1"
+                                                CornerRadius="30"
+                                                HeightRequest="20"
+                                                WidthRequest="30">
+                                                <yummy:PancakeView.Shadow>
+                                                    <yummy:DropShadow
+                                                        BlurRadius="1"
+                                                        Offset="0,5"
+                                                        Color="Black" />
+                                                </yummy:PancakeView.Shadow>
+                                                <Label
+                                                    HorizontalOptions="Center"
+                                                    Text="{Binding Tier}"
+                                                    VerticalOptions="Center" />
+                                                <yummy:PancakeView.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.EquipmentSelectedCommand, Source={x:Reference Name=otherTierCollection}}" CommandParameter="{Binding .}" />
+                                                </yummy:PancakeView.GestureRecognizers>
+                                            </yummy:PancakeView>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+
+                            </StackLayout>
+                        </StackLayout>
                         <!--  Описание снаряжения  -->
                         <ScrollView>
                             <Label

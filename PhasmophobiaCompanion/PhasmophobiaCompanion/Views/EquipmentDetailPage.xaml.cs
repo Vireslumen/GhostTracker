@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.ViewModels;
 using Serilog;

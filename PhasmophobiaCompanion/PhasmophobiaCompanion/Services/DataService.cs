@@ -170,6 +170,20 @@ namespace PhasmophobiaCompanion.Services
             }
         }
 
+        public ObservableCollection<Equipment> GetEquipmentsSameTypeCollection(Equipment equipment)
+        {
+            try
+            {
+                return new ObservableCollection<Equipment>(
+                    equipments.Where(e => e.Title == equipment.Title && e != equipment));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения списка снаряжения того же типа.");
+                throw;
+            }
+        }
+
         public GhostCommon GetGhostCommon()
         {
             try

@@ -15,6 +15,7 @@ namespace PhasmophobiaCompanion.Data
         public string FilterUnlock { get; set; }
         public string LanguageCode { get; set; }
         public string MaxLimit { get; set; }
+        public string OtherTier { get; set; }
         public string Price { get; set; }
         public string PriceUnlock { get; set; }
         public string Search { get; set; }

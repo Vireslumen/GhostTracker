@@ -342,7 +342,8 @@ namespace PhasmophobiaCompanion.Services
                     Tier = e.Tier,
                     Apply = e.Apply,
                     UnlockLevel = e.UnlockLevel,
-                    Clear = e.Clear
+                    Clear = e.Clear,
+                    OtherTier = e.OtherTier
                 }).FirstOrDefault();
             }
             catch (Exception ex)
