@@ -50,6 +50,9 @@
                             Text="{Binding ChallengeMode.ChallengeMap.Title}"
                             TextColor="Black"
                             VerticalOptions="CenterAndExpand" />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding MapSelectedCommand}" />
+                        </StackLayout.GestureRecognizers>
                     </StackLayout>
                 </yummy:PancakeView>
                 <!--  Поле описание особого режима  -->
@@ -94,7 +97,7 @@
                 <yummy:PancakeView.Border>
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
-                <StackLayout BindableLayout.ItemsSource="{Binding ChallengeMode.ChallengeEquipments}">
+                <StackLayout x:Name="equipmentsStackLayout" BindableLayout.ItemsSource="{Binding ChallengeMode.ChallengeEquipments}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
@@ -107,6 +110,9 @@
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.EquipmentSelectedCommand, Source={x:Reference Name=equipmentsStackLayout}}" CommandParameter="{Binding .}" />
+                                </StackLayout.GestureRecognizers>
                             </StackLayout>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
