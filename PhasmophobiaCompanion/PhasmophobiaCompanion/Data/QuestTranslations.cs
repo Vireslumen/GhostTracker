@@ -12,5 +12,7 @@ namespace PhasmophobiaCompanion.Data
         public string Clause { get; set; }
         public string Description { get; set; }
         public string LanguageCode { get; set; }
+        public string Tip { get; set; }
+        public string Type { get; set; }
     }
 }

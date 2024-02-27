@@ -669,7 +669,9 @@ namespace PhasmophobiaCompanion.Services
                         ID = q.ID,
                         Description = q.Translations.FirstOrDefault()?.Description,
                         Clause = q.Translations.FirstOrDefault()?.Clause,
-                        Reward = q.Reward
+                        Reward = q.Reward,
+                        Tip = q.Translations.FirstOrDefault()?.Tip,
+                        Type = q.Translations.FirstOrDefault()?.Type
                     }
                 ).ToList();
             }

@@ -12,5 +12,13 @@
         /// </summary>
         public string Clause { get; set; }
         public string Description { get; set; }
+        /// <summary>
+        ///     Подсказка как выполнить квест.
+        /// </summary>
+        public string Tip { get; set; }
+        /// <summary>
+        ///     Еженедельный или ежедневный квест.
+        /// </summary>
+        public string Type { get; set; }
     }
 }

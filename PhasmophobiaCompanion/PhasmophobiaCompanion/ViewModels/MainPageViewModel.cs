@@ -63,6 +63,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 PatchTappedCommand = new Command<Patch>(OnPatchTapped);
                 MaxPlayerSpeedTappedCommand = new Command(OnMaxPlayerSpeedTapped);
                 MinPlayerSpeedTappedCommand = new Command(OnMinPlayerSpeedTapped);
+                QuestTappedCommand = new Command<Quest>(OnQuestTapped);
             }
             catch (Exception ex)
             {
@@ -100,6 +101,7 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand MinSpeedHeaderTappedCommand { get; private set; }
         public ICommand OtherPageTappedCommand { get; private set; }
         public ICommand PatchTappedCommand { get; private set; }
+        public ICommand QuestTappedCommand { get; private set; }
         public MainPageCommon MainPageCommon { get; set; }
         public object SelectedItem
         {
@@ -314,6 +316,22 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxGhostSpeedLoSClause.");
+                throw;
+            }
+        }
+        /// <summary>
+        ///     Отображение всплывающей подсказки о прохождении квеста на экране.
+        /// </summary>
+        private async void OnQuestTapped(Quest questItem)
+        {
+            try
+            {
+                var questTip = questItem.Tip;
+                await PopupNavigation.Instance.PushAsync(new TooltipPopup(questTip));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxGhostSpeedClause.");
                 throw;
             }
         }

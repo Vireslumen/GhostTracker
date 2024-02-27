@@ -549,6 +549,7 @@
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <FlexLayout
+                        x:Name="dailyQuestFlexLayout"
                         AlignContent="Start"
                         AlignItems="Start"
                         BindableLayout.ItemsSource="{Binding DailyQuest}"
@@ -557,7 +558,11 @@
                         Wrap="NoWrap">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <Label Text="{Binding Description}" />
+                                <Label Text="{Binding Description}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=dailyQuestFlexLayout}}" CommandParameter="{Binding .}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </FlexLayout>
@@ -596,6 +601,7 @@
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <FlexLayout
+                        x:Name="weeklyQuestFlexLayout"
                         AlignContent="Start"
                         AlignItems="Start"
                         BindableLayout.ItemsSource="{Binding WeeklyQuest}"
@@ -604,7 +610,11 @@
                         Wrap="NoWrap">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <Label Text="{Binding Description}" />
+                                <Label Text="{Binding Description}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=dailyQuestFlexLayout}}" CommandParameter="{Binding .}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </FlexLayout>
