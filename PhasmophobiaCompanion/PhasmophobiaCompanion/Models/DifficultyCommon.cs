@@ -67,6 +67,11 @@
         /// </summary>
         public string HuntExtendByKilling { get; set; }
         /// <summary>
+        ///     Текст для отображения доступны ли проклятые предметы на этой сложности. Примеры "Is Cursed Possession available",
+        ///     "Доступны ли проклятые предметы.".
+        /// </summary>
+        public string IsCursedAvailable { get; set; }
+        /// <summary>
         ///     Текст для отображения показывает ли доска задач отвечает ли призрак всем или одному. Примеры:
         ///     "ObjectiveBoardPendingAloneAll", "Показывает ли доска требования ответа".
         /// </summary>

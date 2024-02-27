@@ -205,6 +205,7 @@ namespace PhasmophobiaCompanion.Services
                         ActivityMonitorWork = d.ActivityMonitorWork,
                         EvidenceAvailable = d.EvidenceAvailable,
                         SanityRestoration = d.SanityRestoration,
+                        IsCursedAvailable = d.IsCursedAvailable,
                         Title = d.Translations.FirstOrDefault()?.Title,
                         Description = d.Translations.FirstOrDefault()?.Description,
                         GhostActivity = d.Translations.FirstOrDefault()?.GhostActivity,
@@ -264,7 +265,8 @@ namespace PhasmophobiaCompanion.Services
                     SanityRestoration = d.SanityRestoration,
                     SanityStartAt = d.SanityStartAt,
                     SetupTime = d.SetupTime,
-                    UnlockLevel = d.UnlockLevel
+                    UnlockLevel = d.UnlockLevel,
+                    IsCursedAvailable = d.IsCursedAvailable
                 }).FirstOrDefault();
             }
             catch (Exception ex)

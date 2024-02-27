@@ -30,5 +30,6 @@ namespace PhasmophobiaCompanion.Data
         public string SanityStartAt { get; set; }
         public string SetupTime { get; set; }
         public string UnlockLevel { get; set; }
+        public string IsCursedAvailable { get; set; }
     }
 }

@@ -186,6 +186,15 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding DifficultyCommon.IsCursedAvailable}" />
+                                <Span Text=": " />
+                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.IsCursedAvailable}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
 
                     <Label>
                         <Label.FormattedText>

@@ -14,6 +14,10 @@
         /// </summary>
         public bool ElectricityOn { get; set; }
         /// <summary>
+        ///     Доступны ли проклятые предметы на этой сложности.
+        /// </summary>
+        public bool IsCursedAvailable { get; set; }
+        /// <summary>
         ///     Работает ли монитор рассудка игроков.
         /// </summary>
         public bool SanityMonitorWork { get; set; }

@@ -10,6 +10,7 @@ namespace PhasmophobiaCompanion.Data
     {
         public bool ActivityMonitorWork { get; set; }
         public bool ElectricityOn { get; set; }
+        public bool IsCursedAvailable { get; set; }
         public bool SanityMonitorWork { get; set; }
         public float RewardMultiplier { get; set; }
         public float SanityConsumption { get; set; }
