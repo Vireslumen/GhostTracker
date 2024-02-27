@@ -179,6 +179,28 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
+                        <Label>
+                            <Label.Padding>
+                                10,0,10,0
+                            </Label.Padding>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding MainPageCommon.PlayerTitle}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding MainPageCommon.PlayerMinSpeed}">
+                                        <Span.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding MinPlayerSpeedTappedCommand}" />
+                                        </Span.GestureRecognizers>
+                                    </Span>
+                                    <Span Text=" - " />
+                                    <Span Text="{Binding MainPageCommon.PlayerMaxSpeed}">
+                                        <Span.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding MaxPlayerSpeedTappedCommand}" />
+                                        </Span.GestureRecognizers>
+                                    </Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
                         <ListView x:Name="ghostListViewSpeed" ItemsSource="{Binding Ghosts}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>

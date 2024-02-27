@@ -61,6 +61,8 @@ namespace PhasmophobiaCompanion.ViewModels
                 MinSpeedHeaderTappedCommand = new Command(OnMinSpeedHeaderTapped);
                 OtherPageTappedCommand = new Command<OtherInfo>(OnOtherPageTapped);
                 PatchTappedCommand = new Command<Patch>(OnPatchTapped);
+                MaxPlayerSpeedTappedCommand = new Command(OnMaxPlayerSpeedTapped);
+                MinPlayerSpeedTappedCommand = new Command(OnMinPlayerSpeedTapped);
             }
             catch (Exception ex)
             {
@@ -86,6 +88,8 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand GhostTappedCommand { get; private set; }
         public ICommand MaxGhostSpeedLoSTappedCommand { get; private set; }
         public ICommand MaxGhostSpeedTappedCommand { get; private set; }
+        public ICommand MaxPlayerSpeedTappedCommand { get; private set; }
+        public ICommand MinPlayerSpeedTappedCommand { get; private set; }
         public ICommand MaxSanityHeaderTappedCommand { get; private set; }
         public ICommand MaxSanityHuntTappedCommand { get; private set; }
         public ICommand MaxSpeedHeaderTappedCommand { get; private set; }
@@ -442,6 +446,36 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время отображение всплывающей подсказки minSanityHuntClause.");
+                throw;
+            }
+        }
+        /// <summary>
+        ///     Отображение всплывающей подсказки по минимальной скорости игрока на экране.
+        /// </summary>
+        private async void OnMinPlayerSpeedTapped()
+        {
+            try
+            {
+                await PopupNavigation.Instance.PushAsync(new TooltipPopup(MainPageCommon.PlayerMinSpeedTip));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки PlayerMinSpeedTip.");
+                throw;
+            }
+        }        
+        /// <summary>
+        ///     Отображение всплывающей подсказки по минимальной скорости игрока на экране.
+        /// </summary>
+        private async void OnMaxPlayerSpeedTapped()
+        {
+            try
+            {
+                await PopupNavigation.Instance.PushAsync(new TooltipPopup(MainPageCommon.PlayerMaxSpeedTip));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки PlayerMaxSpeedTip.");
                 throw;
             }
         }

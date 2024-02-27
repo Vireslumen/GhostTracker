@@ -8,12 +8,17 @@ namespace PhasmophobiaCompanion.Data
     public class MainPageCommonTranslations
     {
         [Key] public int ID { get; set; }
+        public int PlayerMaxSpeed { get; set; }
+        public int PlayerMinSpeed { get; set; }
         public string Clue { get; set; }
         public string DailyQuest { get; set; }
         public string Difficulties { get; set; }
         public string LanguageCode { get; set; }
         public string OtherPages { get; set; }
         public string Patches { get; set; }
+        public string PlayerMaxSpeedTip { get; set; }
+        public string PlayerMinSpeedTip { get; set; }
+        public string PlayerTitle { get; set; }
         public string Search { get; set; }
         public string Settings { get; set; }
         public string SpecialMode { get; set; }

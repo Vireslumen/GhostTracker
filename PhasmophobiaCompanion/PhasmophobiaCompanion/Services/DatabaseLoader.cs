@@ -480,7 +480,12 @@ namespace PhasmophobiaCompanion.Services
                     Theme = m.Theme,
                     Tip = m.Tip,
                     WeeklyQuest = m.WeeklyQuest,
-                    Difficulties = m.Difficulties
+                    Difficulties = m.Difficulties,
+                    PlayerMinSpeedTip = m.PlayerMinSpeedTip,
+                    PlayerMaxSpeedTip = m.PlayerMaxSpeedTip,
+                    PlayerMaxSpeed = m.PlayerMaxSpeed,
+                    PlayerMinSpeed = m.PlayerMinSpeed,
+                    PlayerTitle = m.PlayerTitle
                 }).FirstOrDefault();
             }
             catch (Exception ex)

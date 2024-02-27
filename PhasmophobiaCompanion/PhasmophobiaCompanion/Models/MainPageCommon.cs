@@ -50,5 +50,25 @@
         ///     Название списка еженедельных заданий на главной странице. Примеры: "Weekly Quests", "Еженедельные задания".
         /// </summary>
         public string WeeklyQuest { get; set; }
+        /// <summary>
+        ///  Минимальная скорость игрока.
+        /// </summary>
+        public int PlayerMinSpeed { get; set; }
+        /// <summary>
+        /// Максимальная скорость игрока.
+        /// </summary>
+        public int PlayerMaxSpeed { get; set; }
+        /// <summary>
+        /// Текст подсказки относительно минимальной скорость игрока.
+        /// </summary>
+        public string PlayerMinSpeedTip { get; set; }
+        /// <summary>
+        /// Текст подсказки относительно максимальной скорости игрока.
+        /// </summary>
+        public string PlayerMaxSpeedTip { get; set; }
+        /// <summary>
+        /// Название обозначения игрока в интерфейсе.
+        /// </summary>
+        public string PlayerTitle { get; set; }
     }
 }
