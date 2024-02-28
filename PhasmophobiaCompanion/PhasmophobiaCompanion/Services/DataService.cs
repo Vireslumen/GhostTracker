@@ -25,11 +25,11 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public string FolderPath;
 
+        private ChallengeModeCommon challengeModeCommon;
         private CursedPossessionCommon cursedPossessionCommon;
         private DifficultyCommon difficultyCommon;
         private EquipmentCommon equipmentCommon;
         private GhostCommon ghostCommon;
-        private QuestCommon questCommon;
         private MainPageCommon mainPageCommon;
         private MapCommon mapCommon;
         private ObservableCollection<ChallengeMode> challengeModes;
@@ -43,6 +43,7 @@ namespace PhasmophobiaCompanion.Services
         private ObservableCollection<Patch> patches;
         private ObservableCollection<Quest> quests;
         private ObservableCollection<string> tips;
+        private QuestCommon questCommon;
 
         public DataService()
         {
@@ -76,6 +77,32 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время получения особого режима.");
+                throw;
+            }
+        }
+
+        public ChallengeModeCommon GetChallengeModeCommon()
+        {
+            try
+            {
+                return challengeModeCommon;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения общих данных для особого режима.");
+                throw;
+            }
+        }
+
+        public ObservableCollection<ChallengeMode> GetChallengeModes()
+        {
+            try
+            {
+                return challengeModes;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения особых режимов.");
                 throw;
             }
         }
@@ -276,19 +303,6 @@ namespace PhasmophobiaCompanion.Services
             }
         }
 
-        public ObservableCollection<Quest> GetQuests()
-        {
-            try
-            {
-                return quests;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения квестов.");
-                throw;
-            }
-        }
-
         public QuestCommon GetQuestCommon()
         {
             try
@@ -298,6 +312,19 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время получения общих данных для квестов.");
+                throw;
+            }
+        }
+
+        public ObservableCollection<Quest> GetQuests()
+        {
+            try
+            {
+                return quests;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения квестов.");
                 throw;
             }
         }
@@ -342,10 +369,31 @@ namespace PhasmophobiaCompanion.Services
                     async () => new ObservableCollection<ChallengeMode>(
                         await databaseLoader.GetChallengeModesAsync(languageCode))
                 );
+                //Загрузка текстовых данных для интерфейса, относящимся к особым режимам - ChallengeMode
+                await LoadChallengeModeCommonAsync();
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки особых режимов.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Загружает текстовые данные для интерфейса, относящиеся к особым режимам - ChallengeMode из базы данных, а затем
+        ///     кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
+        public async Task LoadChallengeModeCommonAsync()
+        {
+            try
+            {
+                challengeModeCommon = await LoadDataAsync("challenge_mode_common_cache.json",
+                    async () => await databaseLoader.GetChallengeModeCommonAsync(languageCode));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки общих названий для особых режимов.");
                 throw;
             }
         }
@@ -534,23 +582,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки снаряжения.");
-                throw;
-            }
-        }
-        /// <summary>
-        ///     Загружает текстовые данные для интерфейса, относящиеся к квестам - Quest из базы данных, а затем кэширует их,
-        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
-        /// </summary>
-        public async Task LoadQuestCommonAsync()
-        {
-            try
-            {
-                questCommon = await LoadDataAsync("quest_common_cache.json",
-                    async () => await databaseLoader.GetQuestCommonAsync(languageCode));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время загрузки общих названий для квестов.");
                 throw;
             }
         }
@@ -746,6 +777,24 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки патчей.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Загружает текстовые данные для интерфейса, относящиеся к квестам - Quest из базы данных, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
+        public async Task LoadQuestCommonAsync()
+        {
+            try
+            {
+                questCommon = await LoadDataAsync("quest_common_cache.json",
+                    async () => await databaseLoader.GetQuestCommonAsync(languageCode));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки общих названий для квестов.");
                 throw;
             }
         }

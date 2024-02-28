@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
@@ -24,6 +26,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 dataService = DependencyService.Get<DataService>();
                 DifficultyCommon = dataService.GetDifficultyCommon();
                 ChallengeMode = challengeMode;
+                SetChallengeModeData();
                 EquipmentSelectedCommand = new Command<Equipment>(OnEquipmentSelected);
                 MapSelectedCommand = new Command(OnMapSelected);
             }
@@ -98,6 +101,21 @@ namespace PhasmophobiaCompanion.ViewModels
                     "Ошибка во время перехода на подробную страницу карты из страницы особого режима ChallengeModeDetailPage.");
                 throw;
             }
+        }
+
+        /// <summary>
+        ///     Установка карты, снаряжения и сложности для выбранного особого режима.
+        /// </summary>
+        private void SetChallengeModeData()
+        {
+            challengeMode.ChallengeMap = dataService.GetMaps()
+                .Where(m => m.ID == challengeMode.MapID)
+                .FirstOrDefault();
+            challengeMode.ChallengeEquipments = new ObservableCollection<Equipment>
+            (dataService.GetEquipments().Where(e => challengeMode.EquipmentsID.Contains(e.ID))
+                .ToList());
+            challengeMode.ChallengeDifficulty = dataService.GetDifficulties()
+                .Where(d => d.ID == challengeMode.DifficultyID).FirstOrDefault();
         }
     }
 }

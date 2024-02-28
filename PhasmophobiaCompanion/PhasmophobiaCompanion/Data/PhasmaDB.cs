@@ -10,10 +10,9 @@ namespace PhasmophobiaCompanion.Data
     /// </summary>
     public class PhasmaDB : DbContext
     {
-        //Определения DbSet для различных сущностей.
-        public DbSet<QuestCommonTranslations> QuestCommonTranslations { get; set; }
-        public DbSet<MainPageCommonTranslations> MainPageCommonTranslations { get; set; }
         public DbSet<ChallengeModeBase> ChallengeModeBase { get; set; }
+        //Определения DbSet для различных сущностей.
+        public DbSet<ChallengeModeCommonTranslations> ChallengeModeCommonTranslations { get; set; }
         public DbSet<ClueBase> ClueBase { get; set; }
         public DbSet<CursedPossessionBase> CursedPossessionBase { get; set; }
         public DbSet<CursedPossessionCommonTranslations> CursedPossessionCommonTranslations { get; set; }
@@ -23,11 +22,13 @@ namespace PhasmophobiaCompanion.Data
         public DbSet<EquipmentCommonTranslations> EquipmentCommonTranslations { get; set; }
         public DbSet<GhostBase> GhostBase { get; set; }
         public DbSet<GhostCommonTranslations> GhostCommonTranslations { get; set; }
+        public DbSet<MainPageCommonTranslations> MainPageCommonTranslations { get; set; }
         public DbSet<MapBase> MapBase { get; set; }
         public DbSet<MapCommonTranslations> MapCommonTranslations { get; set; }
         public DbSet<OtherInfoBase> OtherInfoBase { get; set; }
         public DbSet<PatchBase> PatchBase { get; set; }
         public DbSet<QuestBase> QuestBase { get; set; }
+        public DbSet<QuestCommonTranslations> QuestCommonTranslations { get; set; }
         public DbSet<TipsTranslations> TipsTranslations { get; set; }
 
         private void ConfigureChallengeModeEntity(ModelBuilder modelBuilder)

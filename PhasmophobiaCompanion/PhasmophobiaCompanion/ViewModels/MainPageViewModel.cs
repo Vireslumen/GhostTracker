@@ -38,8 +38,9 @@ namespace PhasmophobiaCompanion.ViewModels
                 Difficulties = dataService.GetDifficulties();
                 Patches = dataService.GetPatches();
                 Quests = dataService.GetQuests();
-                OtherInfos =new ObservableCollection<ITitledItem>( dataService.GetOtherInfos());
+                OtherInfos = new ObservableCollection<ITitledItem>(dataService.GetOtherInfos());
                 OtherInfos.Add(dataService.GetQuestCommon());
+                OtherInfos.Add(dataService.GetChallengeModeCommon());
                 MainPageCommon = dataService.GetMainPageCommon();
                 ChangeTip();
                 SearchResults = new ObservableCollection<object>();
@@ -117,6 +118,7 @@ namespace PhasmophobiaCompanion.ViewModels
         public ObservableCollection<Clue> Clues { get; set; }
         public ObservableCollection<Difficulty> Difficulties { get; set; }
         public ObservableCollection<Ghost> Ghosts { get; set; }
+        public ObservableCollection<ITitledItem> OtherInfos { get; set; }
         public ObservableCollection<object> SearchResults
         {
             get => searchResults;
@@ -126,7 +128,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
-        public ObservableCollection<ITitledItem> OtherInfos { get; set; }
         public ObservableCollection<Patch> Patches { get; set; }
         public ObservableCollection<Quest> DailyQuest { get; set; }
         public ObservableCollection<Quest> Quests { get; set; }
@@ -215,7 +216,6 @@ namespace PhasmophobiaCompanion.ViewModels
                         await Shell.Current.Navigation.PushAsync(detailPage);
                         break;
                     case ChallengeMode challengeMode:
-                        SetChallengeModeData(challengeMode);
                         detailPage = new ChallengeModeDetailPage(challengeMode);
                         await Shell.Current.Navigation.PushAsync(detailPage);
                         break;
@@ -239,7 +239,6 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 if (dataService.IsMapsDataLoaded && dataService.IsEquipmentsDataLoaded)
                 {
-                    SetChallengeModeData(ChallengeMode);
                     var page = new ChallengeModeDetailPage(ChallengeMode);
                     Application.Current.MainPage.Navigation.PushAsync(page);
                 }
@@ -510,12 +509,17 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 if (otherInfoItem is OtherInfo)
                 {
-                    var page = new OtherInfoPage((OtherInfo)otherInfoItem);
+                    var page = new OtherInfoPage((OtherInfo) otherInfoItem);
                     Application.Current.MainPage.Navigation.PushAsync(page);
                 }
                 else if (otherInfoItem is QuestCommon)
                 {
                     var page = new QuestsPage();
+                    Application.Current.MainPage.Navigation.PushAsync(page);
+                }
+                else if (otherInfoItem is ChallengeModeCommon)
+                {
+                    var page = new ChallengeModesPage();
                     Application.Current.MainPage.Navigation.PushAsync(page);
                 }
             }
@@ -584,22 +588,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 Log.Error(ex, "Ошибка во время выполнения глобального поиска на главной странице.");
                 throw;
             }
-        }
-
-        /// <summary>
-        ///     Установка карты, снаряжения и сложности для выбранного особого режима.
-        /// </summary>
-        /// <param name="challengeMode">Выбранный особый режим.</param>
-        private void SetChallengeModeData(ChallengeMode challengeMode)
-        {
-            challengeMode.ChallengeMap = dataService.GetMaps()
-                .Where(m => m.ID == challengeMode.MapID)
-                .FirstOrDefault();
-            challengeMode.ChallengeEquipments = new ObservableCollection<Equipment>
-            (dataService.GetEquipments().Where(e => challengeMode.EquipmentsID.Contains(e.ID))
-                .ToList());
-            challengeMode.ChallengeDifficulty = dataService.GetDifficulties()
-                .Where(d => d.ID == challengeMode.DifficultyID).FirstOrDefault();
         }
     }
 }

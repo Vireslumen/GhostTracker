@@ -31,6 +31,33 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        ///     Асинхронно возвращает общие данные для квестов - ChallengeMode, на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Общие данные для особых режимов.</returns>
+        public async Task<ChallengeModeCommon> GetChallengeModeCommonAsync(string languageCode)
+        {
+            try
+            {
+                // Загрузка данных с учетом перевода и связанных сущностей.
+                var challengeModeCommonData = await phasmaDbContext.ChallengeModeCommonTranslations
+                    .Where(e => e.LanguageCode == languageCode).ToListAsync();
+
+                //Преобразование данных в объект ChallengeModeCommon.
+                return challengeModeCommonData.Select(q => new ChallengeModeCommon
+                {
+                    Title = q.Title,
+                    Description = q.Description
+                }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки из бд общих названия для особых режимов.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Асинхронно возвращает список особых режимов - ChallengeMode на основе языка.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>

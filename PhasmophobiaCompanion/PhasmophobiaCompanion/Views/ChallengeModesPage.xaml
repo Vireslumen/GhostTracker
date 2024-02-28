@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="PhasmophobiaCompanion.Views.ChallengeModesPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    Shell.TabBarIsVisible="False">
+    <ScrollView>
+        <StackLayout>
+            <pancakeView:PancakeView
+                Margin="0,30,0,0"
+                Padding="0,0,0,0"
+                BackgroundColor="White"
+                CornerRadius="40,40,0,0"
+                VerticalOptions="FillAndExpand">
+                <StackLayout>
+                    <!--  Заголовок страницы  -->
+                    <Label
+                        Margin="10"
+                        FontSize="20"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding ChallengeModeCommon.Title}"
+                        VerticalOptions="Center" />
+                    <!--  Описание особых режимов в целом  -->
+                    <Label
+                        FontAttributes="Italic"
+                        FontSize="Header"
+                        HorizontalOptions="CenterAndExpand">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding ChallengeModeCommon.Description}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <!--  Список особых режимов квестов  -->
+                    <pancakeView:PancakeView
+                        Padding="10,10,10,10"
+                        BackgroundColor="White"
+                        CornerRadius="16">
+                        <pancakeView:PancakeView.Shadow>
+                            <pancakeView:DropShadow Offset="0,3" Color="#000000" />
+                        </pancakeView:PancakeView.Shadow>
+                        <pancakeView:PancakeView.Margin>
+                            <Thickness>
+                                10,3,10,10
+                            </Thickness>
+                        </pancakeView:PancakeView.Margin>
+                        <pancakeView:PancakeView.Border>
+                            <pancakeView:Border Thickness="1" Color="Color.Default" />
+                        </pancakeView:PancakeView.Border>
+                        <FlexLayout
+                            x:Name="challengeModeFlexLayout"
+                            AlignContent="Start"
+                            AlignItems="Start"
+                            BindableLayout.ItemsSource="{Binding ChallengeModes}"
+                            Direction="Column"
+                            JustifyContent="Start"
+                            Wrap="NoWrap">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <pancakeView:PancakeView
+                                        Padding="10,10,10,10"
+                                        BackgroundColor="White"
+                                        CornerRadius="16">
+                                        <StackLayout Orientation="Vertical">
+
+                                            <Label FontAttributes="Bold" Text="{Binding Title}" />
+                                            <Label Text="{Binding Description}" />
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.ChallengeModeTappedCommand, Source={x:Reference Name=challengeModeFlexLayout}}" CommandParameter="{Binding .}" />
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+                                    </pancakeView:PancakeView>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+
+                    </pancakeView:PancakeView>
+                </StackLayout>
+            </pancakeView:PancakeView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
