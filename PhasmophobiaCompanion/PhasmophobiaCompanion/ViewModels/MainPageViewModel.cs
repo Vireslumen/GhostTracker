@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using System.Windows.Input;
+using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
 using PhasmophobiaCompanion.Views;
@@ -38,7 +38,8 @@ namespace PhasmophobiaCompanion.ViewModels
                 Difficulties = dataService.GetDifficulties();
                 Patches = dataService.GetPatches();
                 Quests = dataService.GetQuests();
-                OtherInfos = dataService.GetOtherInfos();
+                OtherInfos =new ObservableCollection<ITitledItem>( dataService.GetOtherInfos());
+                OtherInfos.Add(dataService.GetQuestCommon());
                 MainPageCommon = dataService.GetMainPageCommon();
                 ChangeTip();
                 SearchResults = new ObservableCollection<object>();
@@ -59,7 +60,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 MinSanityHeaderTappedCommand = new Command(OnMinSanityHeaderTapped);
                 MinSanityHuntTappedCommand = new Command<Ghost>(OnMinSanityHuntTapped);
                 MinSpeedHeaderTappedCommand = new Command(OnMinSpeedHeaderTapped);
-                OtherPageTappedCommand = new Command<OtherInfo>(OnOtherPageTapped);
+                OtherPageTappedCommand = new Command<ITitledItem>(OnOtherPageTapped);
                 PatchTappedCommand = new Command<Patch>(OnPatchTapped);
                 MaxPlayerSpeedTappedCommand = new Command(OnMaxPlayerSpeedTapped);
                 MinPlayerSpeedTappedCommand = new Command(OnMinPlayerSpeedTapped);
@@ -90,12 +91,12 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand MaxGhostSpeedLoSTappedCommand { get; private set; }
         public ICommand MaxGhostSpeedTappedCommand { get; private set; }
         public ICommand MaxPlayerSpeedTappedCommand { get; private set; }
-        public ICommand MinPlayerSpeedTappedCommand { get; private set; }
         public ICommand MaxSanityHeaderTappedCommand { get; private set; }
         public ICommand MaxSanityHuntTappedCommand { get; private set; }
         public ICommand MaxSpeedHeaderTappedCommand { get; private set; }
         public ICommand MaxSpeedLoSHeaderTappedCommand { get; private set; }
         public ICommand MinGhostSpeedTappedCommand { get; private set; }
+        public ICommand MinPlayerSpeedTappedCommand { get; private set; }
         public ICommand MinSanityHeaderTappedCommand { get; private set; }
         public ICommand MinSanityHuntTappedCommand { get; private set; }
         public ICommand MinSpeedHeaderTappedCommand { get; private set; }
@@ -125,7 +126,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
-        public ObservableCollection<OtherInfo> OtherInfos { get; set; }
+        public ObservableCollection<ITitledItem> OtherInfos { get; set; }
         public ObservableCollection<Patch> Patches { get; set; }
         public ObservableCollection<Quest> DailyQuest { get; set; }
         public ObservableCollection<Quest> Quests { get; set; }
@@ -319,22 +320,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 throw;
             }
         }
-        /// <summary>
-        ///     Отображение всплывающей подсказки о прохождении квеста на экране.
-        /// </summary>
-        private async void OnQuestTapped(Quest questItem)
-        {
-            try
-            {
-                var questTip = questItem.Tip;
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(questTip));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxGhostSpeedClause.");
-                throw;
-            }
-        }
 
         /// <summary>
         ///     Отображение всплывающей подсказки по максимальной скорости призрака на экране.
@@ -349,6 +334,22 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxGhostSpeedClause.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Отображение всплывающей подсказки по минимальной скорости игрока на экране.
+        /// </summary>
+        private async void OnMaxPlayerSpeedTapped()
+        {
+            try
+            {
+                await PopupNavigation.Instance.PushAsync(new TooltipPopup(MainPageCommon.PlayerMaxSpeedTip));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки PlayerMaxSpeedTip.");
                 throw;
             }
         }
@@ -436,6 +437,22 @@ namespace PhasmophobiaCompanion.ViewModels
         }
 
         /// <summary>
+        ///     Отображение всплывающей подсказки по минимальной скорости игрока на экране.
+        /// </summary>
+        private async void OnMinPlayerSpeedTapped()
+        {
+            try
+            {
+                await PopupNavigation.Instance.PushAsync(new TooltipPopup(MainPageCommon.PlayerMinSpeedTip));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки PlayerMinSpeedTip.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Отображение всплывающей подсказки по заголовку минимума минимального порога рассудка для начала охоты.
         /// </summary>
         private async void OnMinSanityHeaderTapped()
@@ -467,36 +484,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 throw;
             }
         }
-        /// <summary>
-        ///     Отображение всплывающей подсказки по минимальной скорости игрока на экране.
-        /// </summary>
-        private async void OnMinPlayerSpeedTapped()
-        {
-            try
-            {
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(MainPageCommon.PlayerMinSpeedTip));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки PlayerMinSpeedTip.");
-                throw;
-            }
-        }        
-        /// <summary>
-        ///     Отображение всплывающей подсказки по минимальной скорости игрока на экране.
-        /// </summary>
-        private async void OnMaxPlayerSpeedTapped()
-        {
-            try
-            {
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(MainPageCommon.PlayerMaxSpeedTip));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки PlayerMaxSpeedTip.");
-                throw;
-            }
-        }
 
         /// <summary>
         ///     Отображение всплывающей подсказки по заголовку минимальной скорости призрака на экране.
@@ -517,12 +504,20 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Переход на подробную некатегоризованную страницу по нажатию на неё.
         /// </summary>
-        private void OnOtherPageTapped(OtherInfo otherInfo)
+        private void OnOtherPageTapped(ITitledItem otherInfoItem)
         {
             try
             {
-                var page = new OtherInfoPage(otherInfo);
-                Application.Current.MainPage.Navigation.PushAsync(page);
+                if (otherInfoItem is OtherInfo)
+                {
+                    var page = new OtherInfoPage((OtherInfo)otherInfoItem);
+                    Application.Current.MainPage.Navigation.PushAsync(page);
+                }
+                else if (otherInfoItem is QuestCommon)
+                {
+                    var page = new QuestsPage();
+                    Application.Current.MainPage.Navigation.PushAsync(page);
+                }
             }
             catch (Exception ex)
             {
@@ -544,6 +539,23 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время перехода на страницу(в браузере) патча Patch.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Отображение всплывающей подсказки о прохождении квеста на экране.
+        /// </summary>
+        private async void OnQuestTapped(Quest questItem)
+        {
+            try
+            {
+                var questTip = questItem.Tip;
+                await PopupNavigation.Instance.PushAsync(new TooltipPopup(questTip));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxGhostSpeedClause.");
                 throw;
             }
         }
@@ -573,7 +585,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 throw;
             }
         }
-
 
         /// <summary>
         ///     Установка карты, снаряжения и сложности для выбранного особого режима.

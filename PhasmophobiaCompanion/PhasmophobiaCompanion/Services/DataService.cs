@@ -29,6 +29,7 @@ namespace PhasmophobiaCompanion.Services
         private DifficultyCommon difficultyCommon;
         private EquipmentCommon equipmentCommon;
         private GhostCommon ghostCommon;
+        private QuestCommon questCommon;
         private MainPageCommon mainPageCommon;
         private MapCommon mapCommon;
         private ObservableCollection<ChallengeMode> challengeModes;
@@ -288,6 +289,19 @@ namespace PhasmophobiaCompanion.Services
             }
         }
 
+        public QuestCommon GetQuestCommon()
+        {
+            try
+            {
+                return questCommon;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения общих данных для квестов.");
+                throw;
+            }
+        }
+
         /// <summary>
         ///     Получение всех уникальных Тиров, что есть среди всех элементов снаряжения.
         /// </summary>
@@ -523,6 +537,23 @@ namespace PhasmophobiaCompanion.Services
                 throw;
             }
         }
+        /// <summary>
+        ///     Загружает текстовые данные для интерфейса, относящиеся к квестам - Quest из базы данных, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
+        public async Task LoadQuestCommonAsync()
+        {
+            try
+            {
+                questCommon = await LoadDataAsync("quest_common_cache.json",
+                    async () => await databaseLoader.GetQuestCommonAsync(languageCode));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки общих названий для квестов.");
+                throw;
+            }
+        }
 
         /// <summary>
         ///     Загружает текстовые данные для интерфейса, относящиеся к призракам - Ghost из базы данных, а затем кэширует их,
@@ -731,6 +762,8 @@ namespace PhasmophobiaCompanion.Services
                     "quest_cache.json",
                     async () => new ObservableCollection<Quest>(await databaseLoader.GetQuestsAsync(languageCode))
                 );
+                //Загрузка текстовых данных для интерфейса, относящимся к квестам - Quest
+                await LoadQuestCommonAsync();
             }
             catch (Exception ex)
             {

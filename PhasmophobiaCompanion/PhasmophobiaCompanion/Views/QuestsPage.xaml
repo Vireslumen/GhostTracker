@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="PhasmophobiaCompanion.Views.QuestsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    Shell.TabBarIsVisible="False">
+    <ScrollView>
+        <StackLayout>
+            <pancakeView:PancakeView
+                Margin="0,30,0,0"
+                Padding="0,0,0,0"
+                BackgroundColor="White"
+                CornerRadius="40,40,0,0"
+                VerticalOptions="FillAndExpand">
+                <StackLayout>
+                    <!--  Заголовок страницы  -->
+                    <Label
+                        Margin="10"
+                        FontSize="20"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding QuestCommon.Title}"
+                        VerticalOptions="Center" />
+                    <!--  Описание квестов в целом  -->
+                    <Label
+                        FontAttributes="Italic"
+                        FontSize="Header"
+                        HorizontalOptions="CenterAndExpand">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding QuestCommon.Description}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <!--  Список ежедневных квестов  -->
+                    <Label
+                        Padding="10,10,10,0"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding QuestCommon.Daily}">
+                        <Label.Margin>
+                            <Thickness>
+                                10,3,10,0
+                            </Thickness>
+                        </Label.Margin>
+                    </Label>
+                    <pancakeView:PancakeView
+                        Padding="10,10,10,10"
+                        BackgroundColor="White"
+                        CornerRadius="16">
+                        <pancakeView:PancakeView.Shadow>
+                            <pancakeView:DropShadow Offset="0,3" Color="#000000" />
+                        </pancakeView:PancakeView.Shadow>
+                        <pancakeView:PancakeView.Margin>
+                            <Thickness>
+                                10,3,10,10
+                            </Thickness>
+                        </pancakeView:PancakeView.Margin>
+                        <pancakeView:PancakeView.Border>
+                            <pancakeView:Border Thickness="1" Color="Color.Default" />
+                        </pancakeView:PancakeView.Border>
+                        <FlexLayout
+                            x:Name="dailyQuestFlexLayout"
+                            AlignContent="Start"
+                            AlignItems="Start"
+                            BindableLayout.ItemsSource="{Binding DailyQuests}"
+                            Direction="Column"
+                            JustifyContent="Start"
+                            Wrap="NoWrap">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <pancakeView:PancakeView
+                                        Padding="10,10,10,10"
+                                        BackgroundColor="White"
+                                        CornerRadius="16">
+                                        <StackLayout Orientation="Vertical">
+                                            <Label FontAttributes="Bold">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Description}" />
+                                                        <Span Text=": " />
+                                                        <Span Text="{Binding Reward}" />
+                                                        <Span Text="$" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Label Text="{Binding Clause}" />
+                                            <Label Text="{Binding Tip}" />
+                                        </StackLayout>
+                                    </pancakeView:PancakeView>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+
+                    </pancakeView:PancakeView>
+                    <!--  Список еженедельных квестов  -->
+                    <Label
+                        Padding="10,10,10,0"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding QuestCommon.Weekly}">
+                        <Label.Margin>
+                            <Thickness>
+                                10,3,10,0
+                            </Thickness>
+                        </Label.Margin>
+                    </Label>
+                    <pancakeView:PancakeView
+                        Padding="10,10,10,10"
+                        BackgroundColor="White"
+                        CornerRadius="16">
+                        <pancakeView:PancakeView.Shadow>
+                            <pancakeView:DropShadow Offset="0,3" Color="#000000" />
+                        </pancakeView:PancakeView.Shadow>
+                        <pancakeView:PancakeView.Margin>
+                            <Thickness>
+                                10,3,10,10
+                            </Thickness>
+                        </pancakeView:PancakeView.Margin>
+                        <pancakeView:PancakeView.Border>
+                            <pancakeView:Border Thickness="1" Color="Color.Default" />
+                        </pancakeView:PancakeView.Border>
+                        <FlexLayout
+                            x:Name="weeklyQuestFlexLayout"
+                            AlignContent="Start"
+                            AlignItems="Start"
+                            BindableLayout.ItemsSource="{Binding WeeklyQuests}"
+                            Direction="Column"
+                            JustifyContent="Start"
+                            Wrap="NoWrap">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <pancakeView:PancakeView
+                                        Padding="10,10,10,10"
+                                        BackgroundColor="White"
+                                        CornerRadius="16">
+                                        <StackLayout Orientation="Vertical">
+                                            <Label FontAttributes="Bold">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Description}" />
+                                                        <Span Text=": " />
+                                                        <Span Text="{Binding Reward}" />
+                                                        <Span Text="$" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Label Text="{Binding Clause}" />
+                                            <Label Text="{Binding Tip}" />
+                                        </StackLayout>
+                                    </pancakeView:PancakeView>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+
+                    </pancakeView:PancakeView>
+                </StackLayout>
+            </pancakeView:PancakeView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

@@ -649,6 +649,35 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        ///     Асинхронно возвращает общие данные для квестов - QuestCommon, на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Общие данные для квестов.</returns>
+        public async Task<QuestCommon> GetQuestCommonAsync(string languageCode)
+        {
+            try
+            {
+                // Загрузка данных с учетом перевода и связанных сущностей.
+                var questCommonData = await phasmaDbContext.QuestCommonTranslations
+                    .Where(e => e.LanguageCode == languageCode).ToListAsync();
+
+                //Преобразование данных в объект QuestCommon.
+                return questCommonData.Select(q => new QuestCommon
+                {
+                    Daily = q.Daily,
+                    Title = q.Title,
+                    Weekly = q.Weekly,
+                    Description = q.Description
+                }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки из бд общих названия для квестов.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Асинхронно возвращает список квестов - Quest на основе кода языка.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>
