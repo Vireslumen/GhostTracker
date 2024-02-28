@@ -646,42 +646,45 @@
                 <yummy:PancakeView.Border>
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
-                <FlexLayout
-                    x:Name="otherFlexLayout"
-                    AlignContent="Start"
-                    AlignItems="Center"
-                    BindableLayout.ItemsSource="{Binding OtherInfos}"
-                    Direction="Row"
-                    JustifyContent="Start"
-                    Wrap="NoWrap">
+                <ScrollView Orientation="Horizontal">
+                    <FlexLayout
+                        x:Name="otherFlexLayout"
+                        AlignContent="Start"
+                        AlignItems="Center"
+                        BindableLayout.ItemsSource="{Binding OtherInfos}"
+                        Direction="Row"
+                        JustifyContent="Start"
+                        Wrap="NoWrap">
 
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate>
-                            <yummy:PancakeView
-                                BackgroundColor="White"
-                                CornerRadius="50"
-                                HeightRequest="100"
-                                WidthRequest="100">
-                                <yummy:PancakeView.Shadow>
-                                    <yummy:DropShadow Offset="0,3" Color="#000000" />
-                                </yummy:PancakeView.Shadow>
-                                <yummy:PancakeView.Margin>
-                                    <Thickness>10,3,10,10</Thickness>
-                                </yummy:PancakeView.Margin>
-                                <yummy:PancakeView.Border>
-                                    <yummy:Border Thickness="1" Color="Color.Default" />
-                                </yummy:PancakeView.Border>
-                                <Label
-                                    HorizontalOptions="Center"
-                                    Text="{Binding Title}"
-                                    VerticalOptions="Center" />
-                                <yummy:PancakeView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.OtherPageTappedCommand, Source={x:Reference Name=otherFlexLayout}}" CommandParameter="{Binding .}" />
-                                </yummy:PancakeView.GestureRecognizers>
-                            </yummy:PancakeView>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </FlexLayout>
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <yummy:PancakeView
+                                    BackgroundColor="White"
+                                    CornerRadius="50"
+                                    HeightRequest="100"
+                                    WidthRequest="100">
+                                    <yummy:PancakeView.Shadow>
+                                        <yummy:DropShadow Offset="0,3" Color="#000000" />
+                                    </yummy:PancakeView.Shadow>
+                                    <yummy:PancakeView.Margin>
+                                        <Thickness>10,3,10,10</Thickness>
+                                    </yummy:PancakeView.Margin>
+                                    <yummy:PancakeView.Border>
+                                        <yummy:Border Thickness="1" Color="Color.Default" />
+                                    </yummy:PancakeView.Border>
+                                    <Label
+                                        HorizontalOptions="Center"
+                                        Text="{Binding Title}"
+                                        VerticalOptions="Center" />
+                                    <yummy:PancakeView.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.OtherPageTappedCommand, Source={x:Reference Name=otherFlexLayout}}" CommandParameter="{Binding .}" />
+                                    </yummy:PancakeView.GestureRecognizers>
+                                </yummy:PancakeView>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+
+                </ScrollView>
             </yummy:PancakeView>
         </StackLayout>
 
