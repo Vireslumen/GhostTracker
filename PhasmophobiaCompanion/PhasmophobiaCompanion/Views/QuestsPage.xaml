@@ -80,7 +80,7 @@
                                             <Label FontAttributes="Bold">
                                                 <Label.FormattedText>
                                                     <FormattedString>
-                                                        <Span Text="{Binding Description}" />
+                                                        <Span Text="{Binding Title}" />
                                                         <Span Text=": " />
                                                         <Span Text="{Binding Reward}" />
                                                         <Span Text="$" />
@@ -142,7 +142,7 @@
                                             <Label FontAttributes="Bold">
                                                 <Label.FormattedText>
                                                     <FormattedString>
-                                                        <Span Text="{Binding Description}" />
+                                                        <Span Text="{Binding Title}" />
                                                         <Span Text=": " />
                                                         <Span Text="{Binding Reward}" />
                                                         <Span Text="$" />

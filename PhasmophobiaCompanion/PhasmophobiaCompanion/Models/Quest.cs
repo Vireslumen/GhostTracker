@@ -11,7 +11,7 @@
         ///     Условие выполнения квеста.
         /// </summary>
         public string Clause { get; set; }
-        public string Description { get; set; }
+        public string Title { get; set; }
         /// <summary>
         ///     Подсказка как выполнить квест.
         /// </summary>

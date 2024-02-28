@@ -723,7 +723,7 @@ namespace PhasmophobiaCompanion.Services
                     q => new Quest
                     {
                         ID = q.ID,
-                        Description = q.Translations.FirstOrDefault()?.Description,
+                        Title = q.Translations.FirstOrDefault()?.Title,
                         Clause = q.Translations.FirstOrDefault()?.Clause,
                         Reward = q.Reward,
                         Tip = q.Translations.FirstOrDefault()?.Tip,

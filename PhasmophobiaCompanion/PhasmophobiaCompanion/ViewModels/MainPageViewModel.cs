@@ -219,6 +219,10 @@ namespace PhasmophobiaCompanion.ViewModels
                         detailPage = new ChallengeModeDetailPage(challengeMode);
                         await Shell.Current.Navigation.PushAsync(detailPage);
                         break;
+                    case Quest quest:
+                        detailPage = new QuestsPage();
+                        await Shell.Current.Navigation.PushAsync(detailPage);
+                        break;
                 }
 
                 SelectedItem = null;

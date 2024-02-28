@@ -558,7 +558,7 @@
                         Wrap="NoWrap">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <Label Text="{Binding Description}">
+                                <Label Text="{Binding Title}">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=dailyQuestFlexLayout}}" CommandParameter="{Binding .}" />
                                     </Label.GestureRecognizers>
@@ -610,7 +610,7 @@
                         Wrap="NoWrap">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <Label Text="{Binding Description}">
+                                <Label Text="{Binding Title}">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=dailyQuestFlexLayout}}" CommandParameter="{Binding .}" />
                                     </Label.GestureRecognizers>

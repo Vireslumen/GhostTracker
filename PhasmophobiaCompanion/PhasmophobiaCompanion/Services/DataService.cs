@@ -866,6 +866,8 @@ namespace PhasmophobiaCompanion.Services
                 results.AddRange(curseds.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
                 results.AddRange(challengeModes.Where(item =>
                     item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
+                results.AddRange(quests.Where(item =>
+                    item.Clause.Contains(query, StringComparison.OrdinalIgnoreCase)));
                 return results;
             }
             catch (Exception ex)
