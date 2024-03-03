@@ -32,7 +32,8 @@ namespace PhasmophobiaCompanion.Views
         {
             try
             {
-                if (sender is StackLayout layout && layout.BindingContext is UnfoldingItem unfoldingItem)
+                if (sender is StackLayout layout && layout.BindingContext is UnfoldingItem unfoldingItem &&
+                    unfoldingItem.CanExpand)
                     unfoldingItem.IsExpanded = !unfoldingItem.IsExpanded;
             }
             catch (Exception ex)

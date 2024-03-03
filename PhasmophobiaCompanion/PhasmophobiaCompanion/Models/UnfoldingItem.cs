@@ -8,6 +8,8 @@ namespace PhasmophobiaCompanion.Models
     public class UnfoldingItem : INotifyPropertyChanged
     {
         private bool isExpanded;
+        private string body;
+        public bool CanExpand => !string.IsNullOrWhiteSpace(Body);
         public bool IsExpanded
         {
             get => isExpanded;
@@ -18,9 +20,19 @@ namespace PhasmophobiaCompanion.Models
                 OnPropertyChanged(nameof(Icon));
             }
         }
-        public string Body { get; set; }
+        public string Body
+        {
+            get => body;
+            set
+            {
+                body = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(CanExpand));
+                OnPropertyChanged(nameof(Icon));
+            }
+        }
         public string Header { get; set; }
-        public string Icon => IsExpanded ? "collapse_icon.png" : "expand_icon.png";
+        public string Icon => CanExpand ? IsExpanded ? "collapse_icon.png" : "expand_icon.png" : null;
         public string Title { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
