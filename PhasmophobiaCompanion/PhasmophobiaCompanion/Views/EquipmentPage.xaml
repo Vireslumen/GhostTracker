@@ -100,7 +100,7 @@
                                                         AbsoluteLayout.LayoutBounds="0,0,1,1"
                                                         AbsoluteLayout.LayoutFlags="All"
                                                         HeightRequest="150"
-                                                        Source="{Binding ImageUrl}">
+                                                        Source="{Binding ImageFilePath}">
                                                         <Image.Margin>
                                                             0,20,0,20
                                                         </Image.Margin>
