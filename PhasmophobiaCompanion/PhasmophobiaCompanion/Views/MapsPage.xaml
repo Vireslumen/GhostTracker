@@ -66,15 +66,14 @@
                             SelectionMode="Single">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackLayout HeightRequest="260">
+                                    <StackLayout>
                                         <StackLayout.Padding>
                                             0,0,0,10
                                         </StackLayout.Padding>
                                         <yummy:PancakeView
                                             Padding="10,10,10,10"
                                             BackgroundColor="White"
-                                            CornerRadius="16"
-                                            HeightRequest="260">
+                                            CornerRadius="16">
                                             <yummy:PancakeView.Shadow>
                                                 <yummy:DropShadow Offset="0,3" Color="#000000" />
                                             </yummy:PancakeView.Shadow>
@@ -92,7 +91,7 @@
                                             <StackLayout>
                                                 <AbsoluteLayout>
                                                     <!--  Изображение карты  -->
-                                                    <Image HeightRequest="150" Source="{Binding ImageUrl}" />
+                                                    <Image HeightRequest="150" Source="{Binding ImageFilePath}" />
                                                     <!--  Уровень разблокировки карты  -->
                                                     <yummy:PancakeView
                                                         AbsoluteLayout.LayoutBounds="0.99,0.99,-1,-1"
@@ -125,7 +124,7 @@
                                                         BackgroundColor="White"
                                                         CornerRadius="30"
                                                         HeightRequest="30"
-                                                        WidthRequest="60">
+                                                        WidthRequest="50">
                                                         <yummy:PancakeView.Shadow>
                                                             <yummy:DropShadow
                                                                 BlurRadius="3"
@@ -147,7 +146,7 @@
                                                 </AbsoluteLayout>
                                                 <!--  Название карты  -->
                                                 <Label
-                                                    FontSize="20"
+                                                    FontSize="18"
                                                     HorizontalOptions="CenterAndExpand"
                                                     HorizontalTextAlignment="Center"
                                                     Text="{Binding Title}"
@@ -160,7 +159,7 @@
                                                     HorizontalTextAlignment="Center"
                                                     Text="{Binding Size}"
                                                     TextColor="Black"
-                                                    VerticalOptions="CenterAndExpand" />
+                                                    VerticalOptions="StartAndExpand" />
                                             </StackLayout>
                                         </yummy:PancakeView>
                                     </StackLayout>

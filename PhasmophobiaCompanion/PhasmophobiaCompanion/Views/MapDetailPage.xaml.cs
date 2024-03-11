@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.ViewModels;
 using Serilog;
@@ -41,5 +42,21 @@ namespace PhasmophobiaCompanion.Views
                 throw;
             }
         }
+
+        private void OnImageTapped(object sender, EventArgs e)
+        {
+            var gesture = (TapGestureRecognizer)((Image)sender).GestureRecognizers.FirstOrDefault();
+            if (gesture != null && gesture.CommandParameter is ImageWithDescription imageWithDescription)
+            {
+                if (this.BindingContext is MapDetailViewModel viewModel)
+                {
+                    if (viewModel.ImageTappedCommand.CanExecute(imageWithDescription))
+                    {
+                        viewModel.ImageTappedCommand.Execute(imageWithDescription);
+                    }
+                }
+            }
+        }
+
     }
 }
