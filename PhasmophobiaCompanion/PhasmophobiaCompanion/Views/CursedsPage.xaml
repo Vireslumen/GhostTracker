@@ -49,18 +49,14 @@
                             SelectionMode="Single">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackLayout
-                                        Margin="10"
-                                        HeightRequest="210"
-                                        WidthRequest="170">
+                                    <StackLayout>
                                         <StackLayout.Padding>
-                                            5,0,5,10
+                                            0,0,0,10
                                         </StackLayout.Padding>
                                         <yummy:PancakeView
                                             Padding="10,10,10,10"
                                             BackgroundColor="White"
-                                            CornerRadius="16"
-                                            HeightRequest="210">
+                                            CornerRadius="16">
                                             <yummy:PancakeView.Shadow>
                                                 <yummy:DropShadow Offset="0,3" Color="#000000" />
                                             </yummy:PancakeView.Shadow>
@@ -83,6 +79,7 @@
                                                     VerticalOptions="Start" />
                                                 <!--  Название проклятого предмета  -->
                                                 <Label
+                                                    Padding="0,10,0,10"
                                                     FontSize="18"
                                                     HorizontalOptions="CenterAndExpand"
                                                     HorizontalTextAlignment="Center"

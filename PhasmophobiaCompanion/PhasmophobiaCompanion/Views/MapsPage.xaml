@@ -170,7 +170,6 @@
                             </CollectionView.Margin>
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout
-                                    HorizontalItemSpacing="10"
                                     Orientation="Vertical"
                                     Span="2"
                                     VerticalItemSpacing="0" />
