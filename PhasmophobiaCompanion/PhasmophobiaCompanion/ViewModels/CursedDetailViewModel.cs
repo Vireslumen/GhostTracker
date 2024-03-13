@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Windows.Input;
 using PhasmophobiaCompanion.Models;
+using PhasmophobiaCompanion.Views;
 using Serilog;
+using Xamarin.Forms;
 
 namespace PhasmophobiaCompanion.ViewModels
 {
@@ -9,6 +12,7 @@ namespace PhasmophobiaCompanion.ViewModels
     /// </summary>
     public class CursedDetailViewModel : BaseViewModel
     {
+        public ICommand ImageTappedCommand;
         private CursedPossession cursedPossession;
 
         public CursedDetailViewModel(CursedPossession cursedPossession)
@@ -16,6 +20,7 @@ namespace PhasmophobiaCompanion.ViewModels
             try
             {
                 CursedPossession = cursedPossession;
+                ImageTappedCommand = new Command<ImageWithDescription>(OpenImagePage);
             }
             catch (Exception ex)
             {
@@ -32,6 +37,11 @@ namespace PhasmophobiaCompanion.ViewModels
                 cursedPossession = value;
                 OnPropertyChanged();
             }
+        }
+
+        private async void OpenImagePage(ImageWithDescription image)
+        {
+            await Application.Current.MainPage.Navigation.PushModalAsync(new ImagePage(image));
         }
     }
 }

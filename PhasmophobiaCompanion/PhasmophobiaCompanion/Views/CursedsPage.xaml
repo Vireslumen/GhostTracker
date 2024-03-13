@@ -49,15 +49,18 @@
                             SelectionMode="Single">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackLayout HeightRequest="260">
+                                    <StackLayout
+                                        Margin="10"
+                                        HeightRequest="210"
+                                        WidthRequest="170">
                                         <StackLayout.Padding>
-                                            0,0,0,10
+                                            5,0,5,10
                                         </StackLayout.Padding>
                                         <yummy:PancakeView
                                             Padding="10,10,10,10"
                                             BackgroundColor="White"
                                             CornerRadius="16"
-                                            HeightRequest="260">
+                                            HeightRequest="210">
                                             <yummy:PancakeView.Shadow>
                                                 <yummy:DropShadow Offset="0,3" Color="#000000" />
                                             </yummy:PancakeView.Shadow>
@@ -74,10 +77,13 @@
                                             </yummy:PancakeView.GestureRecognizers>
                                             <StackLayout>
                                                 <!--  Изображение проклятого предмета  -->
-                                                <Image HeightRequest="150" Source="{Binding ImageUrl}" />
+                                                <Image
+                                                    HeightRequest="150"
+                                                    Source="{Binding ImageFilePath}"
+                                                    VerticalOptions="Start" />
                                                 <!--  Название проклятого предмета  -->
                                                 <Label
-                                                    FontSize="20"
+                                                    FontSize="18"
                                                     HorizontalOptions="CenterAndExpand"
                                                     HorizontalTextAlignment="Center"
                                                     Text="{Binding Title}"
@@ -93,7 +99,6 @@
                             </CollectionView.Margin>
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout
-                                    HorizontalItemSpacing="10"
                                     Orientation="Vertical"
                                     Span="2"
                                     VerticalItemSpacing="0" />
