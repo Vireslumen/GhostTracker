@@ -13,7 +13,8 @@
             <Label
                 FontAttributes="Bold"
                 FontSize="Large"
-                HorizontalOptions="CenterAndExpand">
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center">
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="{Binding ChallengeModeCommon.Title}" />
