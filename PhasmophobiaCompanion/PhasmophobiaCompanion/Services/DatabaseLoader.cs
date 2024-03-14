@@ -44,10 +44,12 @@ namespace PhasmophobiaCompanion.Services
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект ChallengeModeCommon.
-                return challengeModeCommonData.Select(q => new ChallengeModeCommon
+                return challengeModeCommonData.Select(c => new ChallengeModeCommon
                 {
-                    Title = q.Title,
-                    Description = q.Description
+                    Title = c.Title,
+                    Description = c.Description,
+                    DiffucltyParams = c.DiffucltyParams,
+                    EquipmentProvided = c.EquipmentProvided
                 }).FirstOrDefault();
             }
             catch (Exception ex)

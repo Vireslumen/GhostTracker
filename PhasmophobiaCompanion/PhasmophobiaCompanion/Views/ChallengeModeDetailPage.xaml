@@ -16,36 +16,49 @@
                 HorizontalOptions="CenterAndExpand">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="Special Mode: " />
+                        <Span Text="{Binding ChallengeModeCommon.Title}" />
+                        <Span Text=": " />
                         <Span Text="{Binding ChallengeMode.Title}" />
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-
-            <Grid>
-                <!--  Поле информации о карте особого режима  -->
-                <yummy:PancakeView
-                    Grid.Column="0"
-                    Padding="10,10,10,10"
-                    BackgroundColor="White"
-                    CornerRadius="16"
-                    HeightRequest="260">
-                    <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow Offset="0,3" Color="#000000" />
-                    </yummy:PancakeView.Shadow>
-                    <yummy:PancakeView.Margin>
-                        <Thickness>
-                            10,3,10,10
-                        </Thickness>
-                    </yummy:PancakeView.Margin>
-                    <yummy:PancakeView.Border>
-                        <yummy:Border Thickness="1" Color="Color.Default" />
-                    </yummy:PancakeView.Border>
-                    <StackLayout>
+            <!--  Поле информации о карте особого режима  -->
+            <yummy:PancakeView
+                Padding="12,10,12,5"
+                BackgroundColor="White"
+                CornerRadius="16">
+                <yummy:PancakeView.Shadow>
+                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                </yummy:PancakeView.Shadow>
+                <yummy:PancakeView.Margin>
+                    <Thickness>
+                        10,3,10,10
+                    </Thickness>
+                </yummy:PancakeView.Margin>
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="Color.Default" />
+                </yummy:PancakeView.Border>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="1" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackLayout
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="0,5,5,5"
+                        VerticalOptions="Center">
+                        <!--  Изображение карты  -->
                         <Image HeightRequest="150" Source="{Binding ChallengeMode.ChallengeMap.ImageFilePath}" />
+                        <!--  Название карты  -->
                         <Label
                             FontAttributes="Bold"
-                            FontSize="20"
+                            FontSize="18"
                             HorizontalOptions="CenterAndExpand"
                             HorizontalTextAlignment="Center"
                             Text="{Binding ChallengeMode.ChallengeMap.Title}"
@@ -55,33 +68,25 @@
                             <TapGestureRecognizer Command="{Binding MapSelectedCommand}" />
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
-                </yummy:PancakeView>
-                <!--  Поле описание особого режима  -->
-                <yummy:PancakeView
-                    Grid.Column="1"
-                    Padding="10,10,10,10"
-                    BackgroundColor="White"
-                    CornerRadius="16"
-                    HeightRequest="260">
-                    <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow Offset="0,3" Color="#000000" />
-                    </yummy:PancakeView.Shadow>
-                    <yummy:PancakeView.Margin>
-                        <Thickness>
-                            10,3,10,10
-                        </Thickness>
-                    </yummy:PancakeView.Margin>
-                    <yummy:PancakeView.Border>
-                        <yummy:Border Thickness="1" Color="Color.Default" />
-                    </yummy:PancakeView.Border>
+                    <BoxView
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        BackgroundColor="Gainsboro"
+                        VerticalOptions="FillAndExpand" />
+                    <!--  Описание особого режима  -->
                     <Label
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Margin="5,5,0,5"
                         FontAttributes="Italic"
                         FontSize="16"
-                        HorizontalOptions="Center"
+                        HorizontalOptions="CenterAndExpand"
                         Text="{Binding ChallengeMode.Description}"
+                        TextColor="#444"
                         VerticalOptions="Center" />
-                </yummy:PancakeView>
-            </Grid>
+
+                </Grid>
+            </yummy:PancakeView>
             <!--  Список снаряжения выдаваемого в особом режиме  -->
             <yummy:PancakeView
                 Padding="10,10,10,10"
@@ -98,25 +103,36 @@
                 <yummy:PancakeView.Border>
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
-                <StackLayout x:Name="equipmentsStackLayout" BindableLayout.ItemsSource="{Binding ChallengeMode.ChallengeEquipments}">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout>
-                                <Label>
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span Text="{Binding Title}" />
-                                            <Span Text=" Tier " />
-                                            <Span Text="{Binding Tier}" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.EquipmentSelectedCommand, Source={x:Reference Name=equipmentsStackLayout}}" CommandParameter="{Binding .}" />
-                                </StackLayout.GestureRecognizers>
-                            </StackLayout>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
+                <StackLayout Padding="5" Spacing="20">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        Text="{Binding ChallengeModeCommon.EquipmentProvided}" />
+                    <StackLayout
+                        x:Name="equipmentsStackLayout"
+                        Padding="5"
+                        BindableLayout.ItemsSource="{Binding ChallengeMode.ChallengeEquipments}"
+                        Spacing="15">
+
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <Label>
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span FontAttributes="Bold" Text="{Binding Title}" />
+                                                <Span Text=" Tier " />
+                                                <Span Text="{Binding Tier}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.EquipmentSelectedCommand, Source={x:Reference Name=equipmentsStackLayout}}" CommandParameter="{Binding .}" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
                 </StackLayout>
             </yummy:PancakeView>
             <!--  Настройки сложности особого режима  -->
@@ -136,215 +152,223 @@
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
 
-                <StackLayout>
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ActivityMonitorWork}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                <StackLayout Padding="5" Spacing="20">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        Text="{Binding ChallengeModeCommon.DiffucltyParams}" />
+                    <StackLayout Padding="5" Spacing="15">
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ActivityMonitorWork}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.DeadCashBack}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.DeadCashBack}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.DeadCashBack}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.DeadCashBack}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.DoorOpenedCount}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.DoorOpenedCount}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.DoorOpenedCount}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.DoorOpenedCount}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.ElectricityBlockNotShowedOnMap}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ElectricityBlockNotShowedOnMap}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.ElectricityBlockNotShowedOnMap}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ElectricityBlockNotShowedOnMap}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.ElectricityOn}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ElectricityOn}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.IsCursedAvailable}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.IsCursedAvailable}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.ElectricityOn}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ElectricityOn}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.IsCursedAvailable}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.IsCursedAvailable}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.EvidenceAvailable}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.EvidenceAvailable}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.EvidenceAvailable}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.EvidenceAvailable}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.FingerPrints}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.FingerPrints}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.FingerPrints}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.FingerPrints}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.GhostActivity}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.GhostActivity}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.GhostActivity}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.GhostActivity}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.GhostHuntTime}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.GhostHuntTime}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.GhostHuntTime}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.GhostHuntTime}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.HidingSpotBlocked}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.HidingSpotBlocked}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.HidingSpotBlocked}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.HidingSpotBlocked}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.HuntExtendByKilling}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.HuntExtendByKilling}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.HuntExtendByKilling}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.HuntExtendByKilling}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ActivityMonitorWork}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ActivityMonitorWork}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.ObjectiveBoardPendingAloneAll}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ObjectiveBoardPendingAloneAll}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.ObjectiveBoardPendingAloneAll}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ObjectiveBoardPendingAloneAll}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.RewardMultiplier}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.RewardMultiplier}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.RewardMultiplier}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.RewardMultiplier}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.SanityConsumption}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityConsumption}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.SanityConsumption}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityConsumption}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.SanityMonitorWork}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityMonitorWork}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.SanityMonitorWork}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityMonitorWork}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.SanityRestoration}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityRestoration}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.SanityRestoration}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityRestoration}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.SanityStartAt}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityStartAt}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.SanityStartAt}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityStartAt}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.SetupTime}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SetupTime}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.SetupTime}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SetupTime}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding DifficultyCommon.UnlockLevel}" />
-                                <Span Text=": " />
-                                <Span Text="{Binding ChallengeMode.ChallengeDifficulty.UnlockLevel}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.UnlockLevel}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding ChallengeMode.ChallengeDifficulty.UnlockLevel}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                    </StackLayout>
+
                 </StackLayout>
 
             </yummy:PancakeView>

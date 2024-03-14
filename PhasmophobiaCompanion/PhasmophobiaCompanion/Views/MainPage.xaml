@@ -674,6 +674,7 @@
                                     </yummy:PancakeView.Border>
                                     <Label
                                         HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
                                         Text="{Binding Title}"
                                         VerticalOptions="Center" />
                                     <yummy:PancakeView.GestureRecognizers>

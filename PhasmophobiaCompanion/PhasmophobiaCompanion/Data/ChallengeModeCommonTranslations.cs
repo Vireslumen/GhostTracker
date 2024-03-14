@@ -7,6 +7,8 @@
     {
         public int ID { get; set; }
         public string Description { get; set; }
+        public string DiffucltyParams { get; set; }
+        public string EquipmentProvided { get; set; }
         public string LanguageCode { get; set; }
         public string Title { get; set; }
     }
