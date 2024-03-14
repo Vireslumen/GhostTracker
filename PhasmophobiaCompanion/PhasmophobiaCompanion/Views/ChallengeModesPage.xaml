@@ -6,12 +6,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     Shell.TabBarIsVisible="False">
-
-    <!--  ScrollView for scrollable content  -->
     <ScrollView>
         <StackLayout Padding="10,10,10,0">
 
-            <!--  Page Title  -->
+            <!--  Заголовок страницы  -->
             <Label
                 Margin="0,20,0,0"
                 FontAttributes="Bold"
@@ -19,7 +17,7 @@
                 HorizontalOptions="Center"
                 Text="{Binding ChallengeModeCommon.Title}" />
 
-            <!--  Page Description  -->
+            <!--  Описание особого режима в целом  -->
             <Label
                 Margin="10"
                 FontSize="14"
@@ -27,7 +25,7 @@
                 HorizontalTextAlignment="Center"
                 Text="{Binding ChallengeModeCommon.Description}" />
 
-            <!--  CollectionView for list of challenges  -->
+            <!--  Список особых режимов  -->
             <CollectionView
                 x:Name="challengeModeCollection"
                 Margin="10"
@@ -52,13 +50,13 @@
                                 </pancakeView:PancakeView.Shadow>
 
                                 <StackLayout>
-                                    <!--  Challenge Mode Title  -->
+                                    <!--  Название особого режима  -->
                                     <Label
                                         FontAttributes="Bold"
                                         FontSize="16"
                                         Text="{Binding Title}" />
 
-                                    <!--  Challenge Mode Description  -->
+                                    <!--  Описание особого режима  -->
                                     <Label FontSize="12" Text="{Binding Description}" />
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Path=BindingContext.ChallengeModeTappedCommand, Source={x:Reference Name=challengeModeCollection}}" CommandParameter="{Binding .}" />
