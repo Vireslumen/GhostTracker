@@ -5,7 +5,6 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    Padding="0,20,0,0"
     NavigationPage.HasNavigationBar="False">
 
 
@@ -248,11 +247,10 @@
                     Grid.Column="1"
                     FontAttributes="Bold"
                     FontSize="Header"
+                    HorizontalOptions="Center"
                     HorizontalTextAlignment="Center"
                     Text="{Binding GhostCommon.SanityHunt}" />
                 <!--  Таблица рассудков для начала охоты  -->
-
-
                 <yummy:PancakeView
                     Grid.Row="1"
                     Grid.Column="1"
@@ -438,12 +436,12 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <yummy:PancakeView
-                                Padding="10,10,10,10"
+                                Padding="5,10,10,10"
                                 BackgroundColor="White"
                                 CornerRadius="16">
                                 <StackLayout Orientation="Vertical">
                                     <Label FontAttributes="Bold" Text="{Binding Title}" />
-                                    <Label Text="{Binding Description}" />
+                                    <Label Padding="10,5,5,5" Text="{Binding Description}" />
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Path=BindingContext.DifficultyTappedCommand, Source={x:Reference Name=difficultiesFlexLayout}}" CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
@@ -522,7 +520,7 @@
                     Grid.Column="0"
                     Padding="10,10,10,0"
                     FontAttributes="Bold"
-                    FontSize="Header"
+                    FontSize="16"
                     HorizontalOptions="CenterAndExpand"
                     Text="{Binding MainPageCommon.DailyQuest}">
                     <Label.Margin>
@@ -574,7 +572,7 @@
                     Grid.Column="1"
                     Padding="10,10,10,0"
                     FontAttributes="Bold"
-                    FontSize="Header"
+                    FontSize="16"
                     HorizontalOptions="CenterAndExpand"
                     Text="{Binding MainPageCommon.WeeklyQuest}">
                     <Label.Margin>

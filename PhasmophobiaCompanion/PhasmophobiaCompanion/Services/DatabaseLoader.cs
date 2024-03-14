@@ -295,7 +295,8 @@ namespace PhasmophobiaCompanion.Services
                     SanityStartAt = d.SanityStartAt,
                     SetupTime = d.SetupTime,
                     UnlockLevel = d.UnlockLevel,
-                    IsCursedAvailable = d.IsCursedAvailable
+                    IsCursedAvailable = d.IsCursedAvailable,
+                    DifficultyParams = d.DifficultyParams
                 }).FirstOrDefault();
             }
             catch (Exception ex)
