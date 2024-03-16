@@ -546,25 +546,19 @@
                     <yummy:PancakeView.Border>
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
-                    <FlexLayout
-                        x:Name="dailyQuestFlexLayout"
-                        AlignContent="Start"
-                        AlignItems="Start"
-                        BindableLayout.ItemsSource="{Binding DailyQuest}"
-                        Direction="Column"
-                        JustifyContent="Start"
-                        Wrap="NoWrap">
+                    <StackLayout x:Name="dailyQuestStackLayout" BindableLayout.ItemsSource="{Binding DailyQuest}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <Label Text="{Binding Title}">
                                     <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=dailyQuestFlexLayout}}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=dailyQuestStackLayout}}" CommandParameter="{Binding .}" />
                                     </Label.GestureRecognizers>
                                 </Label>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
-                    </FlexLayout>
+                    </StackLayout>
                 </yummy:PancakeView>
+
 
                 <!--  Еженедельные квесты  -->
                 <Label
@@ -598,24 +592,17 @@
                     <yummy:PancakeView.Border>
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
-                    <FlexLayout
-                        x:Name="weeklyQuestFlexLayout"
-                        AlignContent="Start"
-                        AlignItems="Start"
-                        BindableLayout.ItemsSource="{Binding WeeklyQuest}"
-                        Direction="Column"
-                        JustifyContent="Start"
-                        Wrap="NoWrap">
+                    <StackLayout x:Name="weeklyQuestStackLayout" BindableLayout.ItemsSource="{Binding WeeklyQuest}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <Label Text="{Binding Title}">
                                     <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=dailyQuestFlexLayout}}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=weeklyQuestStackLayout}}" CommandParameter="{Binding .}" />
                                     </Label.GestureRecognizers>
                                 </Label>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
-                    </FlexLayout>
+                    </StackLayout>
                 </yummy:PancakeView>
             </Grid>
             <!--  Горизонтальная прокрутная некатегоризованных страниц  -->
