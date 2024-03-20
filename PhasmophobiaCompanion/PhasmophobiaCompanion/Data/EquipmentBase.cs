@@ -10,6 +10,7 @@ namespace PhasmophobiaCompanion.Data
     public class EquipmentBase
     {
         public ICollection<ChallengeModeBase> ChallengeModeBase { get; set; }
+        public ICollection<ClueBase> ClueBase { get; set; }
         public ICollection<EquipmentTranslations> Translations { get; set; }
         public int Cost { get; set; }
         [Key] public int ID { get; set; }

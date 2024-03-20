@@ -26,6 +26,7 @@ namespace PhasmophobiaCompanion.Services
         public string FolderPath;
 
         private ChallengeModeCommon challengeModeCommon;
+        private ClueCommon clueCommon;
         private CursedPossessionCommon cursedPossessionCommon;
         private DifficultyCommon difficultyCommon;
         private EquipmentCommon equipmentCommon;
@@ -103,6 +104,19 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время получения особых режимов.");
+                throw;
+            }
+        }
+
+        public ClueCommon GetClueCommon()
+        {
+            try
+            {
+                return clueCommon;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения общих названий для улик.");
                 throw;
             }
         }
@@ -399,6 +413,25 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        ///     Загружает текстовые данные для интерфейса, относящиеся к уликам - Clue из базы данных, а
+        ///     затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
+        public async Task LoadClueCommonAsync()
+        {
+            try
+            {
+                clueCommon = await LoadDataAsync("clue_common_cache.json",
+                    async () => await databaseLoader.GetClueCommonAsync(languageCode));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки общих названий для улик.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Загружает список улик  - Clue, а затем кэширует их,
         ///     либо загружает данные из кэша, в зависимости от наличия кэша.
         /// </summary>
@@ -410,6 +443,8 @@ namespace PhasmophobiaCompanion.Services
                     "clues_cache.json",
                     async () => new ObservableCollection<Clue>(await databaseLoader.GetCluesAsync(languageCode))
                 );
+                //Загрузка текстовых данных для интерфейса, относящимся к уликам - Clue
+                await LoadClueCommonAsync();
             }
             catch (Exception ex)
             {

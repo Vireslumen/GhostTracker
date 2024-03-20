@@ -10,10 +10,11 @@ namespace PhasmophobiaCompanion.Data
     /// </summary>
     public class PhasmaDB : DbContext
     {
-        public DbSet<ChallengeModeBase> ChallengeModeBase { get; set; }
         //Определения DbSet для различных сущностей.
+        public DbSet<ChallengeModeBase> ChallengeModeBase { get; set; }
         public DbSet<ChallengeModeCommonTranslations> ChallengeModeCommonTranslations { get; set; }
         public DbSet<ClueBase> ClueBase { get; set; }
+        public DbSet<ClueCommonTranslations> ClueCommonTranslations { get; set; }
         public DbSet<CursedPossessionBase> CursedPossessionBase { get; set; }
         public DbSet<CursedPossessionCommonTranslations> CursedPossessionCommonTranslations { get; set; }
         public DbSet<DifficultyBase> DifficultyBase { get; set; }
@@ -41,6 +42,10 @@ namespace PhasmophobiaCompanion.Data
 
         private void ConfigureClueEntity(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ClueBase>()
+                .HasMany(c => c.EquipmentBase)
+                .WithMany(c => c.ClueBase)
+                .UsingEntity(j => j.ToTable("ClueToEquipmentLink"));
             modelBuilder.Entity<ClueBase>()
                 .HasMany(c => c.UnfoldingItemBase)
                 .WithMany(u => u.ClueBase)

@@ -25,7 +25,9 @@ namespace PhasmophobiaCompanion.Models
         }
 
         public int ID { get; set; }
+        public List<int> EquipmentsID { get; set; }
         public List<int> GhostsID { get; set; }
+        public ObservableCollection<Equipment> ClueRelatedEquipments { get; set; }
         public ObservableCollection<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }
         public ObservableCollection<Ghost> Ghosts { get; set; }
         public ObservableCollection<UnfoldingItem> UnfoldingItems { get; set; }

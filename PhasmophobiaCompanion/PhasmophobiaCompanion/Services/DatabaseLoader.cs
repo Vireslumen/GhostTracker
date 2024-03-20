@@ -95,6 +95,33 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        ///     Асинхронно возвращает общие данные для улик - Clue, на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Общие данные для улик.</returns>
+        public async Task<ClueCommon> GetClueCommonAsync(string languageCode)
+        {
+            try
+            {
+                // Загрузка данных с учетом перевода и связанных сущностей.
+                var clueCommonData = await phasmaDbContext.ClueCommonTranslations
+                    .Where(e => e.LanguageCode == languageCode).ToListAsync();
+
+                //Преобразование данных в объект ClueCommon.
+                return clueCommonData.Select(c => new ClueCommon
+                {
+                    OtherGhosts = c.OtherGhosts,
+                    RelatedEquipment = c.RelatedEquipment
+                }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки из бд общих названия для улик.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Асинхронно возвращает список улик - Clue на основе языка.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>
@@ -114,6 +141,7 @@ namespace PhasmophobiaCompanion.Services
                     .Include(c => c.ExpandFieldWithImagesBase)
                     .ThenInclude(e => e.ImageWithDescriptionBase)
                     .ThenInclude(i => i.Translations.Where(t => t.LanguageCode == languageCode))
+                    .Include(c => c.EquipmentBase)
                     .ToListAsync();
 
                 // Преобразование данных в список объектов Clue.
@@ -123,6 +151,7 @@ namespace PhasmophobiaCompanion.Services
                         ID = c.ID,
                         IconFilePath = c.IconFilePath,
                         ImageFilePath = c.ImageFilePath,
+                        EquipmentsID = c.EquipmentBase.Select(e => e.ID).ToList(),
                         Title = c.Translations.FirstOrDefault()?.Title,
                         Description = c.Translations.FirstOrDefault()?.Description,
                         UnfoldingItems = MapUnfoldingItems(c.UnfoldingItemBase, languageCode),

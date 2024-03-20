@@ -4,7 +4,6 @@
     x:Class="PhasmophobiaCompanion.Views.ClueDetailPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:pinch="clr-namespace:Xamarin.Forms.PinchZoomImage;assembly=Xamarin.Forms.PinchZoomImage"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     x:Name="ClueDetailPageName"
     Shell.TabBarIsVisible="False">
@@ -174,6 +173,54 @@
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>
+            <!--  Список снаряжения связанного с данной уликой  -->
+            <yummy:PancakeView
+                Padding="10,10,10,10"
+                BackgroundColor="White"
+                CornerRadius="16">
+                <yummy:PancakeView.Shadow>
+                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                </yummy:PancakeView.Shadow>
+                <yummy:PancakeView.Margin>
+                    <Thickness>
+                        10,3,10,10
+                    </Thickness>
+                </yummy:PancakeView.Margin>
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="Color.Default" />
+                </yummy:PancakeView.Border>
+                <StackLayout Padding="5" Spacing="20">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        Text="{Binding ClueCommon.RelatedEquipment}" />
+                    <StackLayout
+                        x:Name="equipmentsStackLayout"
+                        Padding="5"
+                        BindableLayout.ItemsSource="{Binding Clue.ClueRelatedEquipments}"
+                        Spacing="15">
+
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <Label>
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span FontAttributes="Bold" Text="{Binding Title}" />
+                                                <Span Text=" " />
+                                                <Span Text="{Binding Tier}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.EquipmentSelectedCommand, Source={x:Reference Name=equipmentsStackLayout}}" CommandParameter="{Binding .}" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </StackLayout>
+            </yummy:PancakeView>
             <!--  Поле содержащее список призраков у которых есть данная улика, а также список улик этих призраков  -->
             <yummy:PancakeView
                 Padding="5,5,5,5"
@@ -190,62 +237,70 @@
                 <yummy:PancakeView.Border>
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
-                <StackLayout
-                    x:Name="ghostCollectionView"
-                    Padding="5"
-                    BindableLayout.ItemsSource="{Binding Clue.Ghosts}">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="4*" />
-                                </Grid.ColumnDefinitions>
-                                <!--  Список призраков  -->
-                                <StackLayout
-                                    Grid.Column="0"
-                                    Orientation="Vertical"
-                                    VerticalOptions="CenterAndExpand">
-                                    <Label FontAttributes="Bold" Text="{Binding Title}" />
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSelectedCommand, Source={x:Reference Name=ghostCollectionView}}" CommandParameter="{Binding .}" />
-                                    </StackLayout.GestureRecognizers>
-                                </StackLayout>
-                                <!--  Список улик призраков  -->
-                                <FlexLayout
-                                    x:Name="clueFlexLayout"
-                                    Grid.Column="1"
-                                    BindableLayout.ItemsSource="{Binding Clues}"
-                                    Direction="Column"
-                                    JustifyContent="Start"
-                                    Wrap="Wrap">
-                                    <BindableLayout.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
-                                                <!--  Иконка улики  -->
-                                                <Image
-                                                    HeightRequest="30"
-                                                    Source="{Binding IconFilePath}"
-                                                    WidthRequest="30" />
-                                                <!--  Название улики  -->
-                                                <Label
-                                                    HorizontalOptions="CenterAndExpand"
-                                                    HorizontalTextAlignment="Center"
-                                                    LineBreakMode="WordWrap"
-                                                    Text="{Binding Title}"
-                                                    VerticalOptions="Center" />
-                                                <!--  Костыль  -->
-                                                <Label Text=" " />
-                                                <StackLayout.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.ClueSelectedCommand, Source={x:Reference Name=ghostCollectionView}}" CommandParameter="{Binding .}" />
-                                                </StackLayout.GestureRecognizers>
-                                            </StackLayout>
-                                        </DataTemplate>
-                                    </BindableLayout.ItemTemplate>
-                                </FlexLayout>
-                            </Grid>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
+                <StackLayout>
+                    <Label
+                        Padding="8,10,0,15"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="{Binding ClueCommon.OtherGhosts}"
+                        VerticalOptions="CenterAndExpand" />
+                    <StackLayout
+                        x:Name="ghostCollectionView"
+                        Padding="5"
+                        BindableLayout.ItemsSource="{Binding Clue.Ghosts}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="4*" />
+                                    </Grid.ColumnDefinitions>
+                                    <!--  Список призраков  -->
+                                    <StackLayout
+                                        Grid.Column="0"
+                                        Orientation="Vertical"
+                                        VerticalOptions="CenterAndExpand">
+                                        <Label FontAttributes="Bold" Text="{Binding Title}" />
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSelectedCommand, Source={x:Reference Name=ghostCollectionView}}" CommandParameter="{Binding .}" />
+                                        </StackLayout.GestureRecognizers>
+                                    </StackLayout>
+                                    <!--  Список улик призраков  -->
+                                    <FlexLayout
+                                        x:Name="clueFlexLayout"
+                                        Grid.Column="1"
+                                        BindableLayout.ItemsSource="{Binding Clues}"
+                                        Direction="Column"
+                                        JustifyContent="Start"
+                                        Wrap="Wrap">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
+                                                    <!--  Иконка улики  -->
+                                                    <Image
+                                                        HeightRequest="30"
+                                                        Source="{Binding IconFilePath}"
+                                                        WidthRequest="30" />
+                                                    <!--  Название улики  -->
+                                                    <Label
+                                                        HorizontalOptions="CenterAndExpand"
+                                                        HorizontalTextAlignment="Center"
+                                                        LineBreakMode="WordWrap"
+                                                        Text="{Binding Title}"
+                                                        VerticalOptions="Center" />
+                                                    <!--  Костыль  -->
+                                                    <Label Text=" " />
+                                                    <StackLayout.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.ClueSelectedCommand, Source={x:Reference Name=ghostCollectionView}}" CommandParameter="{Binding .}" />
+                                                    </StackLayout.GestureRecognizers>
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </FlexLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
                 </StackLayout>
             </yummy:PancakeView>
         </StackLayout>
