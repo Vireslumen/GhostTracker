@@ -16,7 +16,7 @@
                 BackgroundColor="White"
                 CornerRadius="5">
                 <yummy:PancakeView.Shadow>
-                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                    <yummy:DropShadow />
                 </yummy:PancakeView.Shadow>
                 <yummy:PancakeView.Margin>
                     <Thickness>
@@ -73,10 +73,7 @@
                                                 </Thickness>
                                             </yummy:PancakeView.Margin>
                                             <yummy:PancakeView.Shadow>
-                                                <yummy:DropShadow
-                                                    BlurRadius="3"
-                                                    Offset="0,5"
-                                                    Color="Black" />
+                                                <yummy:DropShadow BlurRadius="3" />
                                             </yummy:PancakeView.Shadow>
                                             <Image
                                                 Aspect="AspectFit"
@@ -120,8 +117,8 @@
                 </Grid>
             </yummy:PancakeView>
             <!--  Список раскрывающихся элементов, содержащих текст в них  -->
-            <CollectionView ItemsSource="{Binding Ghost.UnfoldingItems}">
-                <CollectionView.ItemTemplate>
+            <StackLayout BindableLayout.ItemsSource="{Binding Ghost.UnfoldingItems}">
+                <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="10,5">
                             <Frame
@@ -160,8 +157,8 @@
                             </Frame>
                         </StackLayout>
                     </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
 
 
         </StackLayout>

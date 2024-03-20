@@ -16,7 +16,7 @@
                     BackgroundColor="White"
                     CornerRadius="5">
                     <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow Offset="0,3" Color="#000000" />
+                        <yummy:DropShadow />
                     </yummy:PancakeView.Shadow>
                     <yummy:PancakeView.Margin>
                         <Thickness>
@@ -28,9 +28,9 @@
                     </yummy:PancakeView.Border>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="5*" />
                             <ColumnDefinition Width="1" />
-                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="3*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -88,10 +88,7 @@
                                                     <yummy:Border Thickness="1" Color="Color.Default" />
                                                 </yummy:PancakeView.Border>
                                                 <yummy:PancakeView.Shadow>
-                                                    <yummy:DropShadow
-                                                        BlurRadius="1"
-                                                        Offset="0,3"
-                                                        Color="Black" />
+                                                    <yummy:DropShadow BlurRadius="1" />
                                                 </yummy:PancakeView.Shadow>
                                                 <Label
                                                     FontAttributes="Bold"
@@ -188,9 +185,8 @@
                     </Grid>
                 </yummy:PancakeView>
                 <!--  Список раскрывающихся элементов, содержащих текст в них  -->
-
-                <CollectionView ItemsSource="{Binding Equipment.UnfoldingItems}">
-                    <CollectionView.ItemTemplate>
+                <StackLayout BindableLayout.ItemsSource="{Binding Equipment.UnfoldingItems}">
+                    <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Padding="10,5">
                                 <Frame
@@ -229,8 +225,8 @@
                                 </Frame>
                             </StackLayout>
                         </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
 
             </StackLayout>
         </ScrollView>

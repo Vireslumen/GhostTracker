@@ -5,14 +5,22 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    Padding="0,20,0,0"
-    BackgroundColor="#791AE5"
+    BackgroundColor="Black"
     NavigationPage.HasNavigationBar="False">
     <StackLayout>
+        <!--  Заголовок страницы  -->
+        <Label
+            Margin="5"
+            FontAttributes="Bold"
+            FontSize="24"
+            HorizontalOptions="CenterAndExpand"
+            HorizontalTextAlignment="Center"
+            Text="{Binding MapCommon.MapsTitle}"
+            TextColor="White"
+            VerticalOptions="Center" />
         <!--  Строка поиска и фильтрации карт  -->
         <yummy:PancakeView
-            Margin="5,0,5,20"
-            Padding="10,0,0,0"
+            Margin="5,0,5,5"
             BackgroundColor="White"
             CornerRadius="25"
             HeightRequest="50"
@@ -43,139 +51,122 @@
         </yummy:PancakeView>
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
-
                 <yummy:PancakeView
-                    Margin="0,30,0,0"
-                    Padding="0,0,0,0"
                     BackgroundColor="White"
                     CornerRadius="40,40,0,0"
                     VerticalOptions="FillAndExpand">
-                    <StackLayout>
-                        <!--  Заголовок страницы  -->
-                        <Label
-                            Margin="10"
-                            FontSize="20"
-                            HorizontalOptions="CenterAndExpand"
-                            HorizontalTextAlignment="Center"
-                            Text="{Binding MapCommon.MapsTitle}"
-                            VerticalOptions="Center" />
-                        <!--  Список карт  -->
-                        <CollectionView
-                            x:Name="collectionView"
-                            ItemsSource="{Binding Maps}"
-                            SelectionMode="Single">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackLayout>
-                                        <StackLayout.Padding>
-                                            0,0,0,10
-                                        </StackLayout.Padding>
-                                        <yummy:PancakeView
-                                            Padding="10,10,10,10"
-                                            BackgroundColor="White"
-                                            CornerRadius="16">
-                                            <yummy:PancakeView.Shadow>
-                                                <yummy:DropShadow Offset="0,3" Color="#000000" />
-                                            </yummy:PancakeView.Shadow>
-                                            <yummy:PancakeView.Margin>
-                                                <Thickness>
-                                                    10,3,10,10
-                                                </Thickness>
-                                            </yummy:PancakeView.Margin>
-                                            <yummy:PancakeView.Border>
-                                                <yummy:Border Thickness="1" Color="Color.Default" />
-                                            </yummy:PancakeView.Border>
-                                            <yummy:PancakeView.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.MapSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
-                                            </yummy:PancakeView.GestureRecognizers>
-                                            <StackLayout>
-                                                <AbsoluteLayout>
-                                                    <!--  Изображение карты  -->
-                                                    <Image HeightRequest="150" Source="{Binding ImageFilePath}" />
-                                                    <!--  Уровень разблокировки карты  -->
-                                                    <yummy:PancakeView
-                                                        AbsoluteLayout.LayoutBounds="0.99,0.99,-1,-1"
-                                                        AbsoluteLayout.LayoutFlags="PositionProportional"
-                                                        BackgroundColor="White"
-                                                        CornerRadius="30"
-                                                        HeightRequest="30"
-                                                        WidthRequest="50">
-                                                        <yummy:PancakeView.Shadow>
-                                                            <yummy:DropShadow
-                                                                BlurRadius="3"
-                                                                Offset="0,5"
-                                                                Color="Black" />
-                                                        </yummy:PancakeView.Shadow>
-                                                        <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                                                            <Image HeightRequest="18" Source="unlock" />
-                                                            <Label
-                                                                FontAttributes="Bold"
-                                                                FontSize="13"
-                                                                HorizontalOptions="Center"
-                                                                Text="{Binding UnlockLevel}"
-                                                                TextColor="Black"
-                                                                VerticalOptions="Center" />
-                                                        </StackLayout>
-                                                    </yummy:PancakeView>
-                                                    <!--  Количество комнат на карте  -->
-                                                    <yummy:PancakeView
-                                                        AbsoluteLayout.LayoutBounds="0.01,0.99,-1,-1"
-                                                        AbsoluteLayout.LayoutFlags="PositionProportional"
-                                                        BackgroundColor="White"
-                                                        CornerRadius="30"
-                                                        HeightRequest="30"
-                                                        WidthRequest="50">
-                                                        <yummy:PancakeView.Shadow>
-                                                            <yummy:DropShadow
-                                                                BlurRadius="3"
-                                                                Offset="0,5"
-                                                                Color="Black" />
-                                                        </yummy:PancakeView.Shadow>
-                                                        <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                                                            <Image HeightRequest="18" Source="room" />
-                                                            <Label
-                                                                FontAttributes="Bold"
-                                                                FontSize="13"
-                                                                HorizontalOptions="Center"
-                                                                Text="{Binding RoomCount}"
-                                                                TextColor="Black"
-                                                                VerticalOptions="Center" />
-                                                        </StackLayout>
-                                                    </yummy:PancakeView>
+                    <!--  Список карт  -->
+                    <CollectionView
+                        x:Name="collectionView"
+                        ItemsSource="{Binding Maps}"
+                        SelectionMode="Single">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <StackLayout.Padding>
+                                        0,0,0,10
+                                    </StackLayout.Padding>
+                                    <yummy:PancakeView
+                                        Padding="10,10,10,10"
+                                        BackgroundColor="White"
+                                        CornerRadius="16">
+                                        <yummy:PancakeView.Shadow>
+                                            <yummy:DropShadow />
+                                        </yummy:PancakeView.Shadow>
+                                        <yummy:PancakeView.Margin>
+                                            <Thickness>
+                                                10,3,10,10
+                                            </Thickness>
+                                        </yummy:PancakeView.Margin>
+                                        <yummy:PancakeView.Border>
+                                            <yummy:Border Thickness="1" Color="Color.Default" />
+                                        </yummy:PancakeView.Border>
+                                        <yummy:PancakeView.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.MapSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
+                                        </yummy:PancakeView.GestureRecognizers>
+                                        <StackLayout>
+                                            <AbsoluteLayout>
+                                                <!--  Изображение карты  -->
+                                                <Image HeightRequest="150" Source="{Binding ImageFilePath}" />
+                                                <!--  Уровень разблокировки карты  -->
+                                                <yummy:PancakeView
+                                                    AbsoluteLayout.LayoutBounds="0.99,0.99,-1,-1"
+                                                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                    BackgroundColor="White"
+                                                    CornerRadius="30"
+                                                    HeightRequest="30"
+                                                    WidthRequest="50">
+                                                    <yummy:PancakeView.Shadow>
+                                                        <yummy:DropShadow
+                                                            BlurRadius="3" />
+                                                    </yummy:PancakeView.Shadow>
+                                                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                                                        <Image HeightRequest="18" Source="unlock" />
+                                                        <Label
+                                                            FontAttributes="Bold"
+                                                            FontSize="13"
+                                                            HorizontalOptions="Center"
+                                                            Text="{Binding UnlockLevel}"
+                                                            TextColor="Black"
+                                                            VerticalOptions="Center" />
+                                                    </StackLayout>
+                                                </yummy:PancakeView>
+                                                <!--  Количество комнат на карте  -->
+                                                <yummy:PancakeView
+                                                    AbsoluteLayout.LayoutBounds="0.01,0.99,-1,-1"
+                                                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                    BackgroundColor="White"
+                                                    CornerRadius="30"
+                                                    HeightRequest="30"
+                                                    WidthRequest="50">
+                                                    <yummy:PancakeView.Shadow>
+                                                        <yummy:DropShadow
+                                                            BlurRadius="3" />
+                                                    </yummy:PancakeView.Shadow>
+                                                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                                                        <Image HeightRequest="18" Source="room" />
+                                                        <Label
+                                                            FontAttributes="Bold"
+                                                            FontSize="13"
+                                                            HorizontalOptions="Center"
+                                                            Text="{Binding RoomCount}"
+                                                            TextColor="Black"
+                                                            VerticalOptions="Center" />
+                                                    </StackLayout>
+                                                </yummy:PancakeView>
 
-                                                </AbsoluteLayout>
-                                                <!--  Название карты  -->
-                                                <Label
-                                                    FontSize="18"
-                                                    HorizontalOptions="CenterAndExpand"
-                                                    HorizontalTextAlignment="Center"
-                                                    Text="{Binding Title}"
-                                                    TextColor="Black"
-                                                    VerticalOptions="CenterAndExpand" />
-                                                <!--  Размер карты  -->
-                                                <Label
-                                                    FontSize="16"
-                                                    HorizontalOptions="CenterAndExpand"
-                                                    HorizontalTextAlignment="Center"
-                                                    Text="{Binding Size}"
-                                                    TextColor="Black"
-                                                    VerticalOptions="StartAndExpand" />
-                                            </StackLayout>
-                                        </yummy:PancakeView>
-                                    </StackLayout>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                            <CollectionView.Margin>
-                                <Thickness>5</Thickness>
-                            </CollectionView.Margin>
-                            <CollectionView.ItemsLayout>
-                                <GridItemsLayout
-                                    Orientation="Vertical"
-                                    Span="2"
-                                    VerticalItemSpacing="0" />
-                            </CollectionView.ItemsLayout>
-                        </CollectionView>
-                    </StackLayout>
+                                            </AbsoluteLayout>
+                                            <!--  Название карты  -->
+                                            <Label
+                                                FontSize="18"
+                                                HorizontalOptions="CenterAndExpand"
+                                                HorizontalTextAlignment="Center"
+                                                Text="{Binding Title}"
+                                                TextColor="Black"
+                                                VerticalOptions="CenterAndExpand" />
+                                            <!--  Размер карты  -->
+                                            <Label
+                                                FontSize="16"
+                                                HorizontalOptions="CenterAndExpand"
+                                                HorizontalTextAlignment="Center"
+                                                Text="{Binding Size}"
+                                                TextColor="Black"
+                                                VerticalOptions="StartAndExpand" />
+                                        </StackLayout>
+                                    </yummy:PancakeView>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.Margin>
+                            <Thickness>5</Thickness>
+                        </CollectionView.Margin>
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout
+                                Orientation="Vertical"
+                                Span="2"
+                                VerticalItemSpacing="0" />
+                        </CollectionView.ItemsLayout>
+                    </CollectionView>
                 </yummy:PancakeView>
             </StackLayout>
         </ScrollView>

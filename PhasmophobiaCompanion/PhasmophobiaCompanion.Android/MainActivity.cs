@@ -80,11 +80,21 @@ namespace PhasmophobiaCompanion.Droid
                 // Копирование базы данных, если она еще не существует
                 CopyOrUpdateDatabase(dbPath);
                 LoadApplication(new App());
+
+                UpdateStatusBarColor();
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при создании приложения.");
                 throw;
+            }
+        }
+        private void UpdateStatusBarColor()
+        {
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
+            {
+                var statusBarColor = (Color)Xamarin.Forms.Application.Current.Resources["StatusBarColorDark"];
+                Window.SetStatusBarColor(statusBarColor.ToAndroid());
             }
         }
 

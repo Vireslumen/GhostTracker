@@ -48,7 +48,7 @@
                                 CornerRadius="16"
                                 HeightRequest="50">
                                 <yummy:PancakeView.Shadow>
-                                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                                    <yummy:DropShadow />
                                 </yummy:PancakeView.Shadow>
                                 <yummy:PancakeView.Border>
                                     <yummy:Border Thickness="1" Color="Color.Default" />

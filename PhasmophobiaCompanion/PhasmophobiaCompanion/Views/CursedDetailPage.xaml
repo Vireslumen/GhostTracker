@@ -14,7 +14,7 @@
                 BackgroundColor="White"
                 CornerRadius="5">
                 <pancakeView:PancakeView.Shadow>
-                    <pancakeView:DropShadow Offset="0,3" Color="#000000" />
+                    <pancakeView:DropShadow />
                 </pancakeView:PancakeView.Shadow>
                 <pancakeView:PancakeView.Margin>
                     <Thickness>

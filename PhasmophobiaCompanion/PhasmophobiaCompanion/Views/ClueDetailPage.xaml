@@ -14,7 +14,7 @@
                 BackgroundColor="White"
                 CornerRadius="5">
                 <yummy:PancakeView.Shadow>
-                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                    <yummy:DropShadow />
                 </yummy:PancakeView.Shadow>
                 <yummy:PancakeView.Margin>
                     <Thickness>
@@ -179,7 +179,7 @@
                 BackgroundColor="White"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
-                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                    <yummy:DropShadow />
                 </yummy:PancakeView.Shadow>
                 <yummy:PancakeView.Margin>
                     <Thickness>
@@ -227,7 +227,7 @@
                 BackgroundColor="White"
                 CornerRadius="8">
                 <yummy:PancakeView.Shadow>
-                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                    <yummy:DropShadow />
                 </yummy:PancakeView.Shadow>
                 <yummy:PancakeView.Margin>
                     <Thickness>
@@ -245,7 +245,7 @@
                         Text="{Binding ClueCommon.OtherGhosts}"
                         VerticalOptions="CenterAndExpand" />
                     <StackLayout
-                        x:Name="ghostCollectionView"
+                        x:Name="ghostStackLayoutView"
                         Padding="5"
                         BindableLayout.ItemsSource="{Binding Clue.Ghosts}">
                         <BindableLayout.ItemTemplate>
@@ -262,7 +262,7 @@
                                         VerticalOptions="CenterAndExpand">
                                         <Label FontAttributes="Bold" Text="{Binding Title}" />
                                         <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSelectedCommand, Source={x:Reference Name=ghostCollectionView}}" CommandParameter="{Binding .}" />
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSelectedCommand, Source={x:Reference Name=ghostStackLayoutView}}" CommandParameter="{Binding .}" />
                                         </StackLayout.GestureRecognizers>
                                     </StackLayout>
                                     <!--  Список улик призраков  -->
@@ -291,7 +291,7 @@
                                                     <!--  Костыль  -->
                                                     <Label Text=" " />
                                                     <StackLayout.GestureRecognizers>
-                                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.ClueSelectedCommand, Source={x:Reference Name=ghostCollectionView}}" CommandParameter="{Binding .}" />
+                                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.ClueSelectedCommand, Source={x:Reference Name=ghostStackLayoutView}}" CommandParameter="{Binding .}" />
                                                     </StackLayout.GestureRecognizers>
                                                 </StackLayout>
                                             </DataTemplate>

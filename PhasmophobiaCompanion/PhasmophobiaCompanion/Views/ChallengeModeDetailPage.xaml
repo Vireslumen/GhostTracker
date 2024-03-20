@@ -29,7 +29,7 @@
                 BackgroundColor="White"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
-                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                    <yummy:DropShadow />
                 </yummy:PancakeView.Shadow>
                 <yummy:PancakeView.Margin>
                     <Thickness>
@@ -94,7 +94,7 @@
                 BackgroundColor="White"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
-                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                    <yummy:DropShadow />
                 </yummy:PancakeView.Shadow>
                 <yummy:PancakeView.Margin>
                     <Thickness>
@@ -142,7 +142,7 @@
                 BackgroundColor="White"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
-                    <yummy:DropShadow Offset="0,3" Color="#000000" />
+                    <yummy:DropShadow  />
                 </yummy:PancakeView.Shadow>
                 <yummy:PancakeView.Margin>
                     <Thickness>

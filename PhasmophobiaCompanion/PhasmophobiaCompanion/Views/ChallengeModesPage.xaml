@@ -44,9 +44,7 @@
                                 VerticalOptions="FillAndExpand">
                                 <pancakeView:PancakeView.Shadow>
                                     <pancakeView:DropShadow
-                                        BlurRadius="10"
-                                        Offset="0,4"
-                                        Color="#33000000" />
+                                        BlurRadius="10"/>
                                 </pancakeView:PancakeView.Shadow>
 
                                 <StackLayout>

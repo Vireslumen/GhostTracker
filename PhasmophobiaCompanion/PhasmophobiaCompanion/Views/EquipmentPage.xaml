@@ -6,14 +6,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     x:Name="EquipmentPageName"
-    Padding="0,20,0,0"
-    BackgroundColor="#791AE5"
+    BackgroundColor="Black"
     NavigationPage.HasNavigationBar="False">
     <StackLayout>
+        <!--  Заголовок страницы  -->
+        <Label
+            Margin="5"
+            FontAttributes="Bold"
+            FontSize="24"
+            HorizontalOptions="CenterAndExpand"
+            HorizontalTextAlignment="Center"
+            Text="{Binding EquipmentCommon.EquipmentsTitle}"
+            TextColor="White"
+            VerticalOptions="Center" />
         <!--  Строка поиска и фильтрации снаряжения  -->
         <yummy:PancakeView
-            Margin="5,0,5,20"
-            Padding="10,0,0,0"
+            Margin="5,0,5,5"
             BackgroundColor="White"
             CornerRadius="25"
             HeightRequest="50"
@@ -45,221 +53,198 @@
         </yummy:PancakeView>
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
-
                 <yummy:PancakeView
-                    Margin="0,30,0,0"
-                    Padding="0,0,0,0"
                     BackgroundColor="White"
                     CornerRadius="40,40,0,0"
                     VerticalOptions="FillAndExpand">
-                    <StackLayout>
-                        <!--  Заголовок страницы  -->
-                        <Label
-                            Margin="10"
-                            FontAttributes="Bold"
-                            FontSize="20"
-                            HorizontalOptions="CenterAndExpand"
-                            HorizontalTextAlignment="Center"
-                            Text="{Binding EquipmentCommon.EquipmentsTitle}"
-                            TextColor="#791AE5"
-                            VerticalOptions="Center" />
-                        <!--  Список снаряжения  -->
-                        <CollectionView
-                            x:Name="collectionView"
-                            ItemsSource="{Binding Equipments}"
-                            SelectionMode="Single">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackLayout>
-                                        <StackLayout.Padding>
-                                            0,0,0,10
-                                        </StackLayout.Padding>
-                                        <yummy:PancakeView
-                                            Padding="10,10,10,10"
-                                            BackgroundColor="White"
-                                            CornerRadius="16">
-                                            <yummy:PancakeView.Shadow>
-                                                <yummy:DropShadow Offset="0,3" Color="#000000" />
-                                            </yummy:PancakeView.Shadow>
-                                            <yummy:PancakeView.Margin>
-                                                <Thickness>
-                                                    10,3,10,10
-                                                </Thickness>
-                                            </yummy:PancakeView.Margin>
-                                            <yummy:PancakeView.Border>
-                                                <yummy:Border Thickness="1" Color="Color.Default" />
-                                            </yummy:PancakeView.Border>
-                                            <yummy:PancakeView.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.EquipmentSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
-                                            </yummy:PancakeView.GestureRecognizers>
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto" />
-                                                    <RowDefinition Height="Auto" />
-                                                    <RowDefinition Height="1" />
-                                                    <RowDefinition Height="Auto" />
-                                                </Grid.RowDefinitions>
-                                                <AbsoluteLayout Grid.Row="0">
-                                                    <!--  Изображения снаряжения  -->
-                                                    <Image
-                                                        AbsoluteLayout.LayoutBounds="0,0,1,1"
-                                                        AbsoluteLayout.LayoutFlags="All"
-                                                        HeightRequest="150"
-                                                        Source="{Binding ImageFilePath}">
-                                                        <Image.Margin>
-                                                            0,20,0,20
-                                                        </Image.Margin>
-                                                    </Image>
-                                                    <!--  Уровень разблокировки снаряжения  -->
-                                                    <yummy:PancakeView
-                                                        AbsoluteLayout.LayoutBounds="0.01,0.01,-1,-1"
-                                                        AbsoluteLayout.LayoutFlags="PositionProportional"
-                                                        BackgroundColor="White"
-                                                        CornerRadius="30"
-                                                        HeightRequest="30"
-                                                        WidthRequest="50">
-                                                        <yummy:PancakeView.Shadow>
-                                                            <yummy:DropShadow
-                                                                BlurRadius="3"
-                                                                Offset="0,5"
-                                                                Color="Black" />
-                                                        </yummy:PancakeView.Shadow>
-                                                        <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                                                            <Image HeightRequest="18" Source="unlock" />
-                                                            <Label
-                                                                FontAttributes="Bold"
-                                                                FontSize="13"
-                                                                HorizontalOptions="Center"
-                                                                Text="{Binding UnlockLevel}"
-                                                                TextColor="Black"
-                                                                VerticalOptions="Center" />
-                                                        </StackLayout>
-                                                    </yummy:PancakeView>
-                                                    <!--  Тир снаряжения  -->
-                                                    <yummy:PancakeView
-                                                        AbsoluteLayout.LayoutBounds="0.99,0.01,-1,-1"
-                                                        AbsoluteLayout.LayoutFlags="PositionProportional"
-                                                        BackgroundColor="White"
-                                                        CornerRadius="30"
-                                                        HeightRequest="30"
-                                                        WidthRequest="50">
-                                                        <yummy:PancakeView.Shadow>
-                                                            <yummy:DropShadow
-                                                                BlurRadius="3"
-                                                                Offset="0,5"
-                                                                Color="Black" />
-                                                        </yummy:PancakeView.Shadow>
+                    <!--  Список снаряжения  -->
+                    <CollectionView
+                        x:Name="collectionView"
+                        ItemsSource="{Binding Equipments}"
+                        SelectionMode="Single">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <StackLayout.Padding>
+                                        0,0,0,10
+                                    </StackLayout.Padding>
+                                    <yummy:PancakeView
+                                        Padding="10,10,10,10"
+                                        BackgroundColor="White"
+                                        CornerRadius="16">
+                                        <yummy:PancakeView.Shadow>
+                                            <yummy:DropShadow />
+                                        </yummy:PancakeView.Shadow>
+                                        <yummy:PancakeView.Margin>
+                                            <Thickness>
+                                                10,3,10,10
+                                            </Thickness>
+                                        </yummy:PancakeView.Margin>
+                                        <yummy:PancakeView.Border>
+                                            <yummy:Border Thickness="1" Color="Color.Default" />
+                                        </yummy:PancakeView.Border>
+                                        <yummy:PancakeView.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.EquipmentSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
+                                        </yummy:PancakeView.GestureRecognizers>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="1" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <AbsoluteLayout Grid.Row="0">
+                                                <!--  Изображения снаряжения  -->
+                                                <Image
+                                                    AbsoluteLayout.LayoutBounds="0,0,1,1"
+                                                    AbsoluteLayout.LayoutFlags="All"
+                                                    HeightRequest="150"
+                                                    Source="{Binding ImageFilePath}">
+                                                    <Image.Margin>
+                                                        0,20,0,20
+                                                    </Image.Margin>
+                                                </Image>
+                                                <!--  Уровень разблокировки снаряжения  -->
+                                                <yummy:PancakeView
+                                                    AbsoluteLayout.LayoutBounds="0.01,0.01,-1,-1"
+                                                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                    BackgroundColor="White"
+                                                    CornerRadius="30"
+                                                    HeightRequest="30"
+                                                    WidthRequest="50">
+                                                    <yummy:PancakeView.Shadow>
+                                                        <yummy:DropShadow
+                                                            BlurRadius="3"/>
+                                                    </yummy:PancakeView.Shadow>
+                                                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                                                        <Image HeightRequest="18" Source="unlock" />
                                                         <Label
                                                             FontAttributes="Bold"
                                                             FontSize="13"
                                                             HorizontalOptions="Center"
+                                                            Text="{Binding UnlockLevel}"
                                                             TextColor="Black"
-                                                            VerticalOptions="Center">
-                                                            <Label.FormattedText>
-                                                                <FormattedString>
-                                                                    <Span Text="{Binding Source={x:Reference EquipmentPageName}, Path=BindingContext.EquipmentCommon.Tier}" />
-                                                                    <Span Text=" " />
-                                                                    <Span Text="{Binding Tier}" />
-                                                                </FormattedString>
-                                                            </Label.FormattedText>
-                                                        </Label>
-                                                    </yummy:PancakeView>
-                                                    <!--  Цена снаряжения  -->
-                                                    <yummy:PancakeView
-                                                        AbsoluteLayout.LayoutBounds="0.99,0.99,-1,-1"
-                                                        AbsoluteLayout.LayoutFlags="PositionProportional"
-                                                        BackgroundColor="White"
-                                                        CornerRadius="30"
-                                                        HeightRequest="30"
-                                                        WidthRequest="50">
-                                                        <yummy:PancakeView.Shadow>
-                                                            <yummy:DropShadow
-                                                                BlurRadius="3"
-                                                                Offset="0,5"
-                                                                Color="Black" />
-                                                        </yummy:PancakeView.Shadow>
-                                                        <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                                                            <Image HeightRequest="18" Source="dollar" />
-                                                            <Label
-                                                                FontAttributes="Bold"
-                                                                FontSize="13"
-                                                                HorizontalOptions="Center"
-                                                                Text="{Binding Cost}"
-                                                                TextColor="Black"
-                                                                VerticalOptions="Center" />
-                                                        </StackLayout>
-                                                    </yummy:PancakeView>
-                                                    <!--  Цена разблокировки снаряжения  -->
-                                                    <yummy:PancakeView
-                                                        AbsoluteLayout.LayoutBounds="0.01,0.99,-1,-1"
-                                                        AbsoluteLayout.LayoutFlags="PositionProportional"
-                                                        BackgroundColor="White"
-                                                        CornerRadius="30"
-                                                        HeightRequest="30"
-                                                        WidthRequest="60">
-                                                        <yummy:PancakeView.Shadow>
-                                                            <yummy:DropShadow
-                                                                BlurRadius="3"
-                                                                Offset="0,5"
-                                                                Color="Black" />
-                                                        </yummy:PancakeView.Shadow>
-                                                        <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                                                            <Image HeightRequest="18" Source="unlockdollar" />
-                                                            <Label
-                                                                FontAttributes="Bold"
-                                                                FontSize="13"
-                                                                HorizontalOptions="Center"
-                                                                Text="{Binding UnlockCost}"
-                                                                TextColor="Black"
-                                                                VerticalOptions="Center" />
-                                                        </StackLayout>
-                                                    </yummy:PancakeView>
-                                                </AbsoluteLayout>
-                                                <!--  Название снаряжения  -->
-                                                <Label
-                                                    Grid.Row="1"
-                                                    FontAttributes="Bold"
-                                                    FontSize="18"
-                                                    HorizontalOptions="CenterAndExpand"
-                                                    HorizontalTextAlignment="Center"
-                                                    Text="{Binding Title}"
-                                                    TextColor="Black"
-                                                    VerticalOptions="EndAndExpand" />
+                                                            VerticalOptions="Center" />
+                                                    </StackLayout>
+                                                </yummy:PancakeView>
+                                                <!--  Тир снаряжения  -->
+                                                <yummy:PancakeView
+                                                    AbsoluteLayout.LayoutBounds="0.99,0.01,-1,-1"
+                                                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                    BackgroundColor="White"
+                                                    CornerRadius="30"
+                                                    HeightRequest="30"
+                                                    WidthRequest="50">
+                                                    <yummy:PancakeView.Shadow>
+                                                        <yummy:DropShadow
+                                                            BlurRadius="3"/>
+                                                    </yummy:PancakeView.Shadow>
+                                                    <Label
+                                                        FontAttributes="Bold"
+                                                        FontSize="13"
+                                                        HorizontalOptions="Center"
+                                                        TextColor="Black"
+                                                        VerticalOptions="Center">
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="{Binding Source={x:Reference EquipmentPageName}, Path=BindingContext.EquipmentCommon.Tier}" />
+                                                                <Span Text=" " />
+                                                                <Span Text="{Binding Tier}" />
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+                                                </yummy:PancakeView>
+                                                <!--  Цена снаряжения  -->
+                                                <yummy:PancakeView
+                                                    AbsoluteLayout.LayoutBounds="0.99,0.99,-1,-1"
+                                                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                    BackgroundColor="White"
+                                                    CornerRadius="30"
+                                                    HeightRequest="30"
+                                                    WidthRequest="50">
+                                                    <yummy:PancakeView.Shadow>
+                                                        <yummy:DropShadow
+                                                            BlurRadius="3" />
+                                                    </yummy:PancakeView.Shadow>
+                                                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                                                        <Image HeightRequest="18" Source="dollar" />
+                                                        <Label
+                                                            FontAttributes="Bold"
+                                                            FontSize="13"
+                                                            HorizontalOptions="Center"
+                                                            Text="{Binding Cost}"
+                                                            TextColor="Black"
+                                                            VerticalOptions="Center" />
+                                                    </StackLayout>
+                                                </yummy:PancakeView>
+                                                <!--  Цена разблокировки снаряжения  -->
+                                                <yummy:PancakeView
+                                                    AbsoluteLayout.LayoutBounds="0.01,0.99,-1,-1"
+                                                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                    BackgroundColor="White"
+                                                    CornerRadius="30"
+                                                    HeightRequest="30"
+                                                    WidthRequest="60">
+                                                    <yummy:PancakeView.Shadow>
+                                                        <yummy:DropShadow
+                                                            BlurRadius="3"/>
+                                                    </yummy:PancakeView.Shadow>
+                                                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                                                        <Image HeightRequest="18" Source="unlockdollar" />
+                                                        <Label
+                                                            FontAttributes="Bold"
+                                                            FontSize="13"
+                                                            HorizontalOptions="Center"
+                                                            Text="{Binding UnlockCost}"
+                                                            TextColor="Black"
+                                                            VerticalOptions="Center" />
+                                                    </StackLayout>
+                                                </yummy:PancakeView>
+                                            </AbsoluteLayout>
+                                            <!--  Название снаряжения  -->
+                                            <Label
+                                                Grid.Row="1"
+                                                FontAttributes="Bold"
+                                                FontSize="18"
+                                                HorizontalOptions="CenterAndExpand"
+                                                HorizontalTextAlignment="Center"
+                                                Text="{Binding Title}"
+                                                TextColor="Black"
+                                                VerticalOptions="EndAndExpand" />
 
-                                                <BoxView
-                                                    Grid.Row="2"
-                                                    BackgroundColor="Gainsboro"
-                                                    VerticalOptions="FillAndExpand" />
-                                                <!--  TODO: Сделай чтобы это было нормально  -->
-                                                <StackLayout Grid.Row="3" BindableLayout.ItemsSource="{Binding OtherEquipmentStats}">
-                                                    <BindableLayout.ItemTemplate>
-                                                        <DataTemplate>
-                                                            <Label
-                                                                Padding="30,0,30,0"
-                                                                FontSize="12"
-                                                                HorizontalOptions="CenterAndExpand"
-                                                                HorizontalTextAlignment="Center"
-                                                                Text="{Binding Stat}"
-                                                                TextColor="Black" />
-                                                        </DataTemplate>
-                                                    </BindableLayout.ItemTemplate>
-                                                </StackLayout>
-                                            </Grid>
-                                        </yummy:PancakeView>
-                                    </StackLayout>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                            <CollectionView.Margin>
-                                <Thickness>5</Thickness>
-                            </CollectionView.Margin>
-                            <CollectionView.ItemsLayout>
-                                <GridItemsLayout
-                                    Orientation="Vertical"
-                                    Span="2"
-                                    VerticalItemSpacing="0" />
-                            </CollectionView.ItemsLayout>
-                        </CollectionView>
-                    </StackLayout>
+                                            <BoxView
+                                                Grid.Row="2"
+                                                BackgroundColor="Gainsboro"
+                                                VerticalOptions="FillAndExpand" />
+                                            <!--  TODO: Сделай чтобы это было нормально  -->
+                                            <StackLayout Grid.Row="3" BindableLayout.ItemsSource="{Binding OtherEquipmentStats}">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Label
+                                                            Padding="30,0,30,0"
+                                                            FontSize="12"
+                                                            HorizontalOptions="CenterAndExpand"
+                                                            HorizontalTextAlignment="Center"
+                                                            Text="{Binding Stat}"
+                                                            TextColor="Black" />
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+                                        </Grid>
+                                    </yummy:PancakeView>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.Margin>
+                            <Thickness>5</Thickness>
+                        </CollectionView.Margin>
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout
+                                Orientation="Vertical"
+                                Span="2"
+                                VerticalItemSpacing="0" />
+                        </CollectionView.ItemsLayout>
+                    </CollectionView>
                 </yummy:PancakeView>
             </StackLayout>
         </ScrollView>
