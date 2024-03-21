@@ -356,7 +356,7 @@
                 <CollectionView
                     x:Name="clueFlexLayout"
                     Margin="10"
-                    HeightRequest="170"
+                    HeightRequest="175"
                     ItemsSource="{Binding Clues}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
@@ -635,9 +635,9 @@
                             <DataTemplate>
                                 <yummy:PancakeView
                                     BackgroundColor="White"
-                                    CornerRadius="50"
-                                    HeightRequest="100"
-                                    WidthRequest="100">
+                                    CornerRadius="40"
+                                    HeightRequest="80"
+                                    WidthRequest="80">
                                     <yummy:PancakeView.Shadow>
                                         <yummy:DropShadow />
                                     </yummy:PancakeView.Shadow>
@@ -645,12 +645,14 @@
                                         <Thickness>10,3,10,10</Thickness>
                                     </yummy:PancakeView.Margin>
                                     <yummy:PancakeView.Border>
-                                        <yummy:Border Thickness="1" Color="Color.Default" />
+                                        <yummy:Border Thickness="3" Color="White" />
                                     </yummy:PancakeView.Border>
                                     <Label
+                                        Padding="2"
                                         HorizontalOptions="Center"
                                         HorizontalTextAlignment="Center"
                                         Text="{Binding Title}"
+                                        TextColor="Black"
                                         VerticalOptions="Center" />
                                     <yummy:PancakeView.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Path=BindingContext.OtherPageTappedCommand, Source={x:Reference Name=otherFlexLayout}}" CommandParameter="{Binding .}" />

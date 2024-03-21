@@ -27,6 +27,9 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
+            <!--<Style TargetType="Label">
+                <Setter Property="FontFamily" Value="RomanANT" />
+            </Style>-->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

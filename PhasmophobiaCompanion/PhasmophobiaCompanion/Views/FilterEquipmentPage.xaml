@@ -22,31 +22,32 @@
         VerticalOptions="Center"
         WidthRequest="300">
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <!--  Фильтрация по тирам  -->
             <StackLayout
                 Grid.Row="0"
-                Grid.RowSpan="4"
                 Grid.Column="0"
-                BackgroundColor="White"
-                WidthRequest="200">
-                <StackLayout.Margin>
-                    10
-                </StackLayout.Margin>
+                BackgroundColor="White">
                 <!--  Название фильтрации по тирам  -->
                 <Label
-                    Margin="0,10,0,10"
+                    Margin="0,0,0,10"
                     FontAttributes="Bold"
                     FontSize="18"
                     HorizontalOptions="Center"
                     Text="{Binding EquipmentCommon.FilterTier}" />
                 <!--  Список тиров  -->
                 <CollectionView
+                    HeightRequest="200"
                     ItemsSource="{Binding AllTiers}"
                     SelectedItems="{Binding SelectedTiers, Mode=TwoWay}"
                     SelectionMode="Multiple">
+
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout>
+                            <StackLayout Padding="0,0,0,5" behaviors:CornerRadiusEffect.CornerRadius="16">
                                 <yummy:PancakeView
                                     Padding="10,5,10,5"
                                     BackgroundColor="White"
@@ -71,34 +72,41 @@
                                         </Label.FormattedText>
                                     </Label>
                                 </yummy:PancakeView>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Normal" />
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="Gray" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
                             </StackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </StackLayout>
             <!--  Фильтрация по диапазону уровней разблокировки  -->
-            <StackLayout
-                Grid.Row="0"
-                Grid.RowSpan="4"
-                Grid.Column="1">
-                <StackLayout.Margin>
-                    10
-                </StackLayout.Margin>
+            <StackLayout Grid.Row="0" Grid.Column="1">
                 <!--  Название фильтрации по диапазону уровней разблокировки  -->
                 <Label
-                    Margin="0,10,0,10"
+                    Margin="0,0,0,10"
                     FontAttributes="Bold"
                     FontSize="18"
                     HorizontalOptions="Center"
                     HorizontalTextAlignment="Center"
                     Text="{Binding EquipmentCommon.FilterUnlock}" />
                 <!--  Поле ввода минимального уровня  -->
-                <Entry
-                    x:Name="minUnlockLevel"
-                    Margin="0,5,0,5"
-                    Keyboard="Numeric"
-                    Placeholder="{Binding MinUnlockLevel, StringFormat='Min Unlock Level: 0'}"
-                    Text="{Binding MinUnlockLevel}" />
+                <yummy:PancakeView CornerRadius="10">
+                    <Entry
+                        x:Name="minUnlockLevel"
+                        Margin="0,5,0,5"
+                        Keyboard="Numeric"
+                        Placeholder="{Binding MinUnlockLevel, StringFormat='Min Unlock Level: 0'}"
+                        Text="{Binding MinUnlockLevel}" />
+
+                </yummy:PancakeView>
                 <!--  Поле ввода максимального уровня  -->
                 <Entry
                     x:Name="maxUnlockLevel"
@@ -109,26 +117,31 @@
             </StackLayout>
             <!--  Кнопка принятия и сброса условий фильтрации  -->
             <StackLayout
-                Grid.Row="4"
+                Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                HorizontalOptions="CenterAndExpand"
-                Orientation="Horizontal">
+                Padding="0,20,0,0"
+                HorizontalOptions="Center"
+                Orientation="Horizontal"
+                VerticalOptions="CenterAndExpand">
 
                 <Button
                     Margin="10"
-                    BackgroundColor="#791AE5"
+                    behaviors:ShadowEffect.Color="Black"
+                    BackgroundColor="White"
                     Command="{Binding FilterApplyCommand}"
                     CornerRadius="5"
                     Text="{Binding EquipmentCommon.Apply}"
-                    TextColor="White" />
+                    TextColor="Black"
+                    VerticalOptions="Center" />
                 <Button
                     Margin="10"
-                    BackgroundColor="#791AE5"
+                    behaviors:ShadowEffect.Color="Black"
+                    BackgroundColor="White"
                     Command="{Binding FilterClearCommand}"
                     CornerRadius="5"
                     Text="{Binding EquipmentCommon.Clear}"
-                    TextColor="White" />
+                    TextColor="Black" />
 
             </StackLayout>
         </Grid>

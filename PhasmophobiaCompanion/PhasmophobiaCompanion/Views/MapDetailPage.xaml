@@ -127,10 +127,16 @@
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="10,5">
-                            <Frame
+                            <yummy:PancakeView
                                 Padding="13"
                                 BackgroundColor="White"
                                 CornerRadius="8">
+                                <yummy:PancakeView.Shadow>
+                                    <yummy:DropShadow />
+                                </yummy:PancakeView.Shadow>
+                                <yummy:PancakeView.Border>
+                                    <yummy:Border Thickness="1" Color="Color.Default" />
+                                </yummy:PancakeView.Border>
                                 <StackLayout Orientation="Vertical">
                                     <!--  Название раскрывающегося элемента  -->
                                     <Label
@@ -184,7 +190,8 @@
                                         <TapGestureRecognizer Tapped="OnItemTapped" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
-                            </Frame>
+                            </yummy:PancakeView>
+
                         </StackLayout>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
@@ -194,10 +201,16 @@
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="10,5">
-                            <Frame
+                            <yummy:PancakeView
                                 Padding="13"
                                 BackgroundColor="White"
                                 CornerRadius="8">
+                                <yummy:PancakeView.Shadow>
+                                    <yummy:DropShadow />
+                                </yummy:PancakeView.Shadow>
+                                <yummy:PancakeView.Border>
+                                    <yummy:Border Thickness="1" Color="Color.Default" />
+                                </yummy:PancakeView.Border>
                                 <StackLayout Orientation="Vertical">
                                     <!--  Название раскрывающегося элемента  -->
                                     <Label
@@ -227,7 +240,8 @@
                                         <TapGestureRecognizer Tapped="OnItemTapped" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
-                            </Frame>
+                            </yummy:PancakeView>
+
                         </StackLayout>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>

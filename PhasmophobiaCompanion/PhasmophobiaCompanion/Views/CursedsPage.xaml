@@ -61,7 +61,7 @@
                                             </Thickness>
                                         </yummy:PancakeView.Margin>
                                         <yummy:PancakeView.Border>
-                                            <yummy:Border Thickness="1" Color="Color.Default" />
+                                            <yummy:Border Thickness="5" Color="White" />
                                         </yummy:PancakeView.Border>
                                         <yummy:PancakeView.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding Path=BindingContext.CursedSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />

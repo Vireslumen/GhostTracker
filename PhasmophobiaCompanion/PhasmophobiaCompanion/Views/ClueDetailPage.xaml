@@ -9,69 +9,81 @@
     Shell.TabBarIsVisible="False">
     <ScrollView>
         <StackLayout>
-            <yummy:PancakeView
-                Padding="12,10,12,5"
-                BackgroundColor="White"
-                CornerRadius="5">
-                <yummy:PancakeView.Shadow>
-                    <yummy:DropShadow />
-                </yummy:PancakeView.Shadow>
-                <yummy:PancakeView.Margin>
-                    <Thickness>
-                        10,3,10,10
-                    </Thickness>
-                </yummy:PancakeView.Margin>
-                <yummy:PancakeView.Border>
-                    <yummy:Border Thickness="1" Color="Color.Default" />
-                </yummy:PancakeView.Border>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="1" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <StackLayout
-                        Grid.Column="0"
-                        Margin="0,5,5,5"
-                        VerticalOptions="Center">
-                        <!--  Изображение улики  -->
-                        <Image HeightRequest="150" Source="{Binding Clue.ImageFilePath}" />
-                        <!--  Название улики  -->
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="20"
-                            HorizontalOptions="CenterAndExpand"
-                            HorizontalTextAlignment="Center"
-                            Text="{Binding Clue.Title}"
-                            TextColor="Black"
-                            VerticalOptions="StartAndExpand" />
-                    </StackLayout>
-                    <BoxView
-                        Grid.Column="1"
-                        BackgroundColor="Gainsboro"
-                        VerticalOptions="FillAndExpand" />
-                    <!--  Описание улики  -->
-                    <Label
-                        Grid.Column="2"
-                        Margin="5,5,0,5"
-                        FontAttributes="Italic"
-                        FontSize="16"
-                        HorizontalOptions="CenterAndExpand"
-                        Text="{Binding Clue.Description}"
-                        TextColor="#444"
-                        VerticalOptions="Center" />
+            <StackLayout>
+                <yummy:PancakeView
+                    Padding="12,10,12,10"
+                    BackgroundColor="White"
+                    CornerRadius="5">
+                    <yummy:PancakeView.Shadow>
+                        <yummy:DropShadow />
+                    </yummy:PancakeView.Shadow>
+                    <yummy:PancakeView.Margin>
+                        <Thickness>
+                            10,3,10,10
+                        </Thickness>
+                    </yummy:PancakeView.Margin>
+                    <yummy:PancakeView.Border>
+                        <yummy:Border Thickness="1" Color="Color.Default" />
+                    </yummy:PancakeView.Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="1" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout Grid.Column="0" VerticalOptions="Center">
+                            <!--  Изображение улики  -->
+                            <Image
+                                HeightRequest="150"
+                                Source="{Binding Clue.ImageFilePath}"
+                                VerticalOptions="Center" />
+                            <!--  Название улики  -->
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="20"
+                                HorizontalOptions="CenterAndExpand"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding Clue.Title}"
+                                TextColor="Black"
+                                VerticalOptions="StartAndExpand" />
+                        </StackLayout>
+                        <BoxView
+                            Grid.Column="1"
+                            BackgroundColor="Gainsboro"
+                            VerticalOptions="FillAndExpand" />
+                        <!--  Описание улики  -->
+                        <ScrollView Grid.Row="0" Grid.Column="2">
+                            <Label
+                                Margin="5,5,0,5"
+                                FontAttributes="Italic"
+                                FontSize="16"
+                                HorizontalOptions="CenterAndExpand"
+                                Text="{Binding Clue.Description}"
+                                TextColor="#444"
+                                VerticalOptions="CenterAndExpand" />
 
-                </Grid>
-            </yummy:PancakeView>
+                        </ScrollView>
+
+                    </Grid>
+                </yummy:PancakeView>
+
+
+            </StackLayout>
             <!--  Список раскрывающихся элементов содержащих список изображений и описаний к ним  -->
             <StackLayout BindableLayout.ItemsSource="{Binding Clue.ExpandFieldsWithImages}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="10,5">
-                            <Frame
+                            <yummy:PancakeView
                                 Padding="13"
                                 BackgroundColor="White"
                                 CornerRadius="8">
+                                <yummy:PancakeView.Shadow>
+                                    <yummy:DropShadow />
+                                </yummy:PancakeView.Shadow>
+                                <yummy:PancakeView.Border>
+                                    <yummy:Border Thickness="1" Color="Color.Default" />
+                                </yummy:PancakeView.Border>
                                 <StackLayout Orientation="Vertical">
                                     <!--  Название раскрывающегося элемента  -->
                                     <Label
@@ -125,7 +137,8 @@
                                         <TapGestureRecognizer Tapped="OnItemTapped" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
-                            </Frame>
+                            </yummy:PancakeView>
+
                         </StackLayout>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
@@ -135,10 +148,16 @@
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="10,5">
-                            <Frame
+                            <yummy:PancakeView
                                 Padding="13"
                                 BackgroundColor="White"
                                 CornerRadius="8">
+                                <yummy:PancakeView.Shadow>
+                                    <yummy:DropShadow />
+                                </yummy:PancakeView.Shadow>
+                                <yummy:PancakeView.Border>
+                                    <yummy:Border Thickness="1" Color="Color.Default" />
+                                </yummy:PancakeView.Border>
                                 <StackLayout Orientation="Vertical">
                                     <!--  Название раскрывающегося элемента  -->
                                     <Label
@@ -168,7 +187,8 @@
                                         <TapGestureRecognizer Tapped="OnItemTapped" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
-                            </Frame>
+                            </yummy:PancakeView>
+
                         </StackLayout>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>

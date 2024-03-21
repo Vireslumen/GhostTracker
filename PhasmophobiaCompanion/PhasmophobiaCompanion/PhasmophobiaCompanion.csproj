@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <None Remove="C:\Users\sanyo\.nuget\packages\nlog.config\4.7.15\contentFiles\any\any\NLog.config" />
+    <None Remove="Fonts\Roman_Antique.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Fonts\Roman_Antique.ttf" />
   </ItemGroup>
 
   <ItemGroup>

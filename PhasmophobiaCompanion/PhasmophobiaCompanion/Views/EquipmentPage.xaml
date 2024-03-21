@@ -22,14 +22,12 @@
         <!--  Строка поиска и фильтрации снаряжения  -->
         <yummy:PancakeView
             Margin="5,0,5,5"
-            BackgroundColor="White"
             CornerRadius="25"
             HeightRequest="50"
             VerticalOptions="EndAndExpand">
-            <StackLayout Orientation="Horizontal">
+            <StackLayout BackgroundColor="White" Orientation="Horizontal">
                 <!--  Строка поиска снаряжения  -->
                 <SearchBar
-                    BackgroundColor="White"
                     HorizontalOptions="StartAndExpand"
                     Placeholder="{Binding EquipmentCommon.Search}"
                     Text="{Binding SearchText, Mode=TwoWay}" />
@@ -81,7 +79,7 @@
                                             </Thickness>
                                         </yummy:PancakeView.Margin>
                                         <yummy:PancakeView.Border>
-                                            <yummy:Border Thickness="1" Color="Color.Default" />
+                                            <yummy:Border Thickness="5" Color="White" />
                                         </yummy:PancakeView.Border>
                                         <yummy:PancakeView.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding Path=BindingContext.EquipmentSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
@@ -113,8 +111,7 @@
                                                     HeightRequest="30"
                                                     WidthRequest="50">
                                                     <yummy:PancakeView.Shadow>
-                                                        <yummy:DropShadow
-                                                            BlurRadius="3"/>
+                                                        <yummy:DropShadow BlurRadius="3" />
                                                     </yummy:PancakeView.Shadow>
                                                     <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
                                                         <Image HeightRequest="18" Source="unlock" />
@@ -136,8 +133,7 @@
                                                     HeightRequest="30"
                                                     WidthRequest="50">
                                                     <yummy:PancakeView.Shadow>
-                                                        <yummy:DropShadow
-                                                            BlurRadius="3"/>
+                                                        <yummy:DropShadow BlurRadius="3" />
                                                     </yummy:PancakeView.Shadow>
                                                     <Label
                                                         FontAttributes="Bold"
@@ -163,8 +159,7 @@
                                                     HeightRequest="30"
                                                     WidthRequest="50">
                                                     <yummy:PancakeView.Shadow>
-                                                        <yummy:DropShadow
-                                                            BlurRadius="3" />
+                                                        <yummy:DropShadow BlurRadius="3" />
                                                     </yummy:PancakeView.Shadow>
                                                     <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
                                                         <Image HeightRequest="18" Source="dollar" />
@@ -186,8 +181,7 @@
                                                     HeightRequest="30"
                                                     WidthRequest="60">
                                                     <yummy:PancakeView.Shadow>
-                                                        <yummy:DropShadow
-                                                            BlurRadius="3"/>
+                                                        <yummy:DropShadow BlurRadius="3" />
                                                     </yummy:PancakeView.Shadow>
                                                     <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
                                                         <Image HeightRequest="18" Source="unlockdollar" />

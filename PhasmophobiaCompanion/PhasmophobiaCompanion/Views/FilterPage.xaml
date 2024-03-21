@@ -21,13 +21,10 @@
         VerticalOptions="Center"
         WidthRequest="300">
         <!--  Фильтрация по уликам  -->
-        <StackLayout
-            Padding="10"
-            BackgroundColor="White"
-            WidthRequest="200">
+        <StackLayout BackgroundColor="White" WidthRequest="200">
             <!--  Название фильтрации по уликам  -->
             <Label
-                Margin="0,10,0,10"
+                Margin="0,0,0,10"
                 FontAttributes="Bold"
                 FontSize="18"
                 HorizontalOptions="Center"
@@ -40,7 +37,7 @@
                 SelectionMode="Multiple">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout>
+                        <StackLayout Padding="0,0,0,10" behaviors:CornerRadiusEffect.CornerRadius="16">
                             <yummy:PancakeView
                                 Margin="20,5,20,5"
                                 Padding="10,5,10,5"
@@ -63,8 +60,19 @@
                                         FontSize="16"
                                         Text="{Binding Title}"
                                         VerticalOptions="CenterAndExpand" />
+
                                 </StackLayout>
                             </yummy:PancakeView>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal" />
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="Gray" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -73,18 +81,20 @@
             <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
                 <Button
                     Margin="10"
-                    BackgroundColor="#791AE5"
+                    behaviors:ShadowEffect.Color="Black"
+                    BackgroundColor="White"
                     Command="{Binding FilterApplyCommand}"
                     CornerRadius="5"
                     Text="{Binding GhostCommon.ApplyTitle}"
-                    TextColor="White" />
+                    TextColor="Black" />
                 <Button
                     Margin="10"
-                    BackgroundColor="#791AE5"
+                    behaviors:ShadowEffect.Color="Black"
+                    BackgroundColor="White"
                     Command="{Binding FilterClearCommand}"
                     CornerRadius="5"
                     Text="{Binding GhostCommon.Clear}"
-                    TextColor="White" />
+                    TextColor="Black" />
 
             </StackLayout>
         </StackLayout>
