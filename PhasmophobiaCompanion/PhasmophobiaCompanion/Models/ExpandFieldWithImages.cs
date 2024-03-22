@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace PhasmophobiaCompanion.Models
 {
@@ -8,6 +9,6 @@ namespace PhasmophobiaCompanion.Models
     /// </summary>
     public class ExpandFieldWithImages : UnfoldingItem
     {
-        public ObservableCollection<ImageWithDescription> ImageWithDescriptions { get; set; }
+        public List<ImageWithDescription> ImageWithDescriptions { get; set; }
     }
 }

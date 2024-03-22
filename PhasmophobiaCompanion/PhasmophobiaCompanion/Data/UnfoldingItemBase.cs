@@ -11,11 +11,11 @@ namespace PhasmophobiaCompanion.Data
     {
         public ICollection<UnfoldingItemTranslations> Translations { get; set; }
         [Key] public int ID { get; set; }
-        public ObservableCollection<ClueBase> ClueBase { get; set; }
-        public ObservableCollection<CursedPossessionBase> CursedPossessionBase { get; set; }
-        public ObservableCollection<EquipmentBase> EquipmentBase { get; set; }
-        public ObservableCollection<GhostBase> GhostBase { get; set; }
-        public ObservableCollection<MapBase> MapBase { get; set; }
-        public ObservableCollection<OtherInfoBase> OtherInfoBase { get; set; }
+        public List<ClueBase> ClueBase { get; set; }
+        public List<CursedPossessionBase> CursedPossessionBase { get; set; }
+        public List<EquipmentBase> EquipmentBase { get; set; }
+        public List<GhostBase> GhostBase { get; set; }
+        public List<MapBase> MapBase { get; set; }
+        public List<OtherInfoBase> OtherInfoBase { get; set; }
     }
 }

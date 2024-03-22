@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace PhasmophobiaCompanion.Models
 {
@@ -15,8 +16,8 @@ namespace PhasmophobiaCompanion.Models
         /// <summary>
         ///     Прочие характеристики снаряжения.
         /// </summary>
-        public ObservableCollection<OtherEquipmentStat> OtherEquipmentStats { get; set; }
-        public ObservableCollection<UnfoldingItem> UnfoldingItems { get; set; }
+        public List<OtherEquipmentStat> OtherEquipmentStats { get; set; }
+        public List<UnfoldingItem> UnfoldingItems { get; set; }
         public string Tier { get; set; }
     }
 }

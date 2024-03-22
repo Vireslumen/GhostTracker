@@ -15,8 +15,8 @@ namespace PhasmophobiaCompanion.Data
         [Key] public int ID { get; set; }
         public int RoomCount { get; set; }
         public int UnlockLevel { get; set; }
-        public ObservableCollection<ExpandFieldWithImagesBase> ExpandFieldWithImagesBase { get; set; }
-        public ObservableCollection<UnfoldingItemBase> UnfoldingItemBase { get; set; }
+        public List<ExpandFieldWithImagesBase> ExpandFieldWithImagesBase { get; set; }
+        public List<UnfoldingItemBase> UnfoldingItemBase { get; set; }
         public string ImageFilePath { get; set; }
     }
 }

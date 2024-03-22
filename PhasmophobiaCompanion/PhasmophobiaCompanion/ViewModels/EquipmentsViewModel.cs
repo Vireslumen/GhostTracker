@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -21,14 +22,14 @@ namespace PhasmophobiaCompanion.ViewModels
         private const int MaxUnlockLevelDefault = 100;
         private const int MinUnlockLevelDefault = 0;
         private readonly DataService dataService;
-        private readonly ObservableCollection<Equipment> equipments;
+        private readonly List<Equipment> equipments;
         private EquipmentCommon equipmentCommon;
         private int maxUnlockLevelSaved;
         private int minUnlockLevelSaved;
         private ObservableCollection<Equipment> filteredEquipments;
         private ObservableCollection<object> selectedTiers;
-        private ObservableCollection<object> selectedTiersSaved;
-        private ObservableCollection<string> allTiers;
+        private List<object> selectedTiersSaved;
+        private List<string> allTiers;
         private string maxUnlockLevel;
         private string minUnlockLevel;
 
@@ -40,13 +41,13 @@ namespace PhasmophobiaCompanion.ViewModels
                 //Загрузка данных для интерфейса.
                 EquipmentCommon = dataService.GetEquipmentCommon();
                 //Загрузка всего снаряжения.
-                equipments = dataService.GetEquipments();
+                equipments = dataService.GetEquipments().OrderBy(e => e.Title).ToList();
                 allTiers = dataService.GetTiers();
-                AllTiers = new ObservableCollection<string>(allTiers);
+                AllTiers = new List<string>(allTiers);
                 Equipments = new ObservableCollection<Equipment>(equipments);
                 //Инициализация элементов фильтра
                 SelectedTiers = new ObservableCollection<object>();
-                selectedTiersSaved = new ObservableCollection<object>();
+                selectedTiersSaved = new List<object>();
                 maxUnlockLevelSaved = MaxUnlockLevelDefault;
                 minUnlockLevelSaved = MinUnlockLevelDefault;
                 maxUnlockLevel = MaxUnlockLevelDefault.ToString();
@@ -101,7 +102,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Коллекция всех доступных тиров оборудования.
         /// </summary>
-        public ObservableCollection<string> AllTiers
+        public List<string> AllTiers
         {
             get => allTiers;
             set => SetProperty(ref allTiers, value);
@@ -198,7 +199,7 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                selectedTiersSaved = new ObservableCollection<object>(SelectedTiers);
+                selectedTiersSaved = new List<object>(SelectedTiers);
                 minUnlockLevelSaved = int.TryParse(minUnlockLevel, out var max) ? max : MaxUnlockLevelDefault;
                 maxUnlockLevelSaved = int.TryParse(maxUnlockLevel, out var min) ? min : MinUnlockLevelDefault;
                 Filter();
@@ -219,7 +220,7 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                selectedTiersSaved = new ObservableCollection<object>();
+                selectedTiersSaved = new List<object>();
                 SelectedTiers = new ObservableCollection<object>();
                 maxUnlockLevelSaved = MaxUnlockLevelDefault;
                 minUnlockLevelSaved = MinUnlockLevelDefault;

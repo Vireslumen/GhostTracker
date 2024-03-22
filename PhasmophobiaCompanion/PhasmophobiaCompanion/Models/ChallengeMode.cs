@@ -14,7 +14,7 @@ namespace PhasmophobiaCompanion.Models
         public int MapID { get; set; }
         public List<int> EquipmentsID { get; set; }
         public Map ChallengeMap { get; set; }
-        public ObservableCollection<Equipment> ChallengeEquipments { get; set; }
+        public List<Equipment> ChallengeEquipments { get; set; }
         public string Description { get; set; }
         public string Title { get; set; }
     }

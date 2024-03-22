@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -16,7 +17,7 @@ namespace PhasmophobiaCompanion.ViewModels
     internal class CursedViewModel : SearchableViewModel
     {
         private readonly DataService dataService;
-        private readonly ObservableCollection<CursedPossession> curseds;
+        private readonly List<CursedPossession> curseds;
         private CursedPossessionCommon cursedPossessionCommon;
         private ObservableCollection<CursedPossession> filteredCurseds;
 
@@ -26,7 +27,7 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 dataService = DependencyService.Get<DataService>();
                 //Загрузка всех проклятых предметов.
-                curseds = dataService.GetCurseds();
+                curseds = dataService.GetCurseds().OrderBy(c => c.Title).ToList(); ;
                 Curseds = new ObservableCollection<CursedPossession>(curseds);
                 cursedPossessionCommon = dataService.GetCursedCommon();
                 // Инициализация команд

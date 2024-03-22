@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -18,12 +19,12 @@ namespace PhasmophobiaCompanion.ViewModels
     public class GhostsViewModel : SearchableViewModel, IFilterable
     {
         private readonly DataService dataService;
-        private readonly ObservableCollection<Ghost> ghosts;
+        private readonly List<Ghost> ghosts;
         private GhostCommon ghostCommon;
-        private ObservableCollection<Clue> allClues;
+        private List<Clue> allClues;
         private ObservableCollection<Ghost> filteredGhosts;
         private ObservableCollection<object> selectedClues;
-        private ObservableCollection<object> selectedCluesSaved;
+        private List<object> selectedCluesSaved;
 
         public GhostsViewModel()
         {
@@ -31,12 +32,12 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 dataService = DependencyService.Get<DataService>();
                 //Загрузка всех призраков и улик.
-                ghosts = dataService.GetGhosts();
+                ghosts = dataService.GetGhosts().OrderBy(g=>g.Title).ToList();
                 allClues = dataService.GetClues();
                 SelectedClues = new ObservableCollection<object>();
-                selectedCluesSaved = new ObservableCollection<object>();
+                selectedCluesSaved = new List<object>();
                 Ghosts = new ObservableCollection<Ghost>(ghosts);
-                AllClues = new ObservableCollection<Clue>(allClues);
+                AllClues = new List<Clue>(allClues);
                 //Загрузка данных для интерфейса.
                 GhostCommon = dataService.GetGhostCommon();
                 // Инициализация команд
@@ -70,7 +71,7 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand FilterClearCommand { get; private set; }
         public ICommand FilterCommand { get; private set; }
         public ICommand GhostSelectedCommand { get; private set; }
-        public ObservableCollection<Clue> AllClues
+        public List<Clue> AllClues
         {
             get => allClues;
             set => SetProperty(ref allClues, value);
@@ -129,7 +130,7 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                selectedCluesSaved = new ObservableCollection<object>(SelectedClues);
+                selectedCluesSaved = new List<object>(SelectedClues);
                 Filter();
                 OnPropertyChanged(nameof(FilterColor));
                 PopupNavigation.Instance.PopAsync();
@@ -148,7 +149,7 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                selectedCluesSaved = new ObservableCollection<object>();
+                selectedCluesSaved = new List<object>();
                 SelectedClues = new ObservableCollection<object>();
                 Filter();
                 OnPropertyChanged(nameof(FilterColor));

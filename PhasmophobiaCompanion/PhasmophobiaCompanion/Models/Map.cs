@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace PhasmophobiaCompanion.Models
 {
@@ -21,8 +22,8 @@ namespace PhasmophobiaCompanion.Models
         /// </summary>
         public int RoomCount { get; set; }
         public int UnlockLevel { get; set; }
-        public ObservableCollection<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }
-        public ObservableCollection<UnfoldingItem> UnfoldingItems { get; set; }
+        public List<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }
+        public List<UnfoldingItem> UnfoldingItems { get; set; }
         /// <summary>
         ///     Количество мест для прятания.
         /// </summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using PhasmophobiaCompanion.Models;
@@ -11,9 +12,9 @@ namespace PhasmophobiaCompanion.ViewModels
     public class QuestsViewModel : BaseViewModel
     {
         private readonly DataService dataService;
-        private ObservableCollection<Quest> dailyQuests;
-        private ObservableCollection<Quest> quests;
-        private ObservableCollection<Quest> weeklyQuests;
+        private List<Quest> dailyQuests;
+        private List<Quest> quests;
+        private List<Quest> weeklyQuests;
         private QuestCommon questCommon;
 
         public QuestsViewModel()
@@ -33,17 +34,17 @@ namespace PhasmophobiaCompanion.ViewModels
             }
         }
 
-        public ObservableCollection<Quest> DailyQuests
+        public List<Quest> DailyQuests
         {
             get => dailyQuests;
             set => SetProperty(ref dailyQuests, value);
         }
-        public ObservableCollection<Quest> Quests
+        public List<Quest> Quests
         {
             get => quests;
             set => SetProperty(ref quests, value);
         }
-        public ObservableCollection<Quest> WeeklyQuests
+        public List<Quest> WeeklyQuests
         {
             get => weeklyQuests;
             set => SetProperty(ref weeklyQuests, value);
@@ -59,7 +60,7 @@ namespace PhasmophobiaCompanion.ViewModels
             try
             {
                 var daily = Quests.Where(q => q.Type == QuestCommon.Daily).ToList();
-                DailyQuests = new ObservableCollection<Quest>(daily);
+                DailyQuests = new List<Quest>(daily);
             }
             catch (Exception ex)
             {
@@ -73,7 +74,7 @@ namespace PhasmophobiaCompanion.ViewModels
             try
             {
                 var weekly = Quests.Where(q => q.Type == QuestCommon.Weekly).ToList();
-                WeeklyQuests = new ObservableCollection<Quest>(weekly);
+                WeeklyQuests = new List<Quest>(weekly);
             }
             catch (Exception ex)
             {

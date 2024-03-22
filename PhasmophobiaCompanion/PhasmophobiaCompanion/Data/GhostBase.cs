@@ -16,8 +16,8 @@ namespace PhasmophobiaCompanion.Data
         public int MaxSanityHunt { get; set; }
         public int MinGhostSpeed { get; set; }
         public int MinSanityHunt { get; set; }
-        public ObservableCollection<ClueBase> ClueBase { get; set; }
-        public ObservableCollection<UnfoldingItemBase> UnfoldingItemBase { get; set; }
+        public List<ClueBase> ClueBase { get; set; }
+        public List<UnfoldingItemBase> UnfoldingItemBase { get; set; }
         public string ImageFilePath { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Models;
@@ -13,7 +14,7 @@ namespace PhasmophobiaCompanion.ViewModels
     {
         private readonly DataService dataService;
         private ChallengeModeCommon challengeModeCommon;
-        private ObservableCollection<ChallengeMode> challengeModes;
+        private List<ChallengeMode> challengeModes;
 
         public ChallengeModeViewModel()
         {
@@ -37,7 +38,7 @@ namespace PhasmophobiaCompanion.ViewModels
             set => SetProperty(ref challengeModeCommon, value);
         }
         public ICommand ChallengeModeTappedCommand { get; private set; }
-        public ObservableCollection<ChallengeMode> ChallengeModes
+        public List<ChallengeMode> ChallengeModes
         {
             get => challengeModes;
             set => SetProperty(ref challengeModes, value);

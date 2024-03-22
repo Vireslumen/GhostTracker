@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -27,7 +28,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 dataService = DependencyService.Get<DataService>();
                 Clue = clue;
                 ClueCommon = dataService.GetClueCommon();
-                Clue.ClueRelatedEquipments = new ObservableCollection<Equipment>
+                Clue.ClueRelatedEquipments = new List<Equipment>
                 (dataService.GetEquipments().Where(e => Clue.EquipmentsID.Contains(e.ID))
                     .ToList());
                 ClueSelectedCommand = new Command<Clue>(OnClueSelected);

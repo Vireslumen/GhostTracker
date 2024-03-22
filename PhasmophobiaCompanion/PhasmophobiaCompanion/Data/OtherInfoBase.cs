@@ -11,8 +11,8 @@ namespace PhasmophobiaCompanion.Data
     {
         public ICollection<OtherInfoTranslations> Translations { get; set; }
         [Key] public int ID { get; set; }
-        public ObservableCollection<ExpandFieldWithImagesBase> ExpandFieldWithImagesBase { get; set; }
-        public ObservableCollection<UnfoldingItemBase> UnfoldingItemBase { get; set; }
+        public List<ExpandFieldWithImagesBase> ExpandFieldWithImagesBase { get; set; }
+        public List<UnfoldingItemBase> UnfoldingItemBase { get; set; }
         public string ImageFilePath { get; set; }
     }
 }

@@ -11,7 +11,7 @@
     <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
         <StackLayout Spacing="10">
-            <!--  Поле особого режима  -->
+            <!--  Строка поиска  -->
             <yummy:PancakeView
                 Padding="10,10,10,10"
                 BackgroundColor="White"
@@ -22,6 +22,42 @@
                 <yummy:PancakeView.Margin>
                     <Thickness>
                         10,10,10,10
+                    </Thickness>
+                </yummy:PancakeView.Margin>
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="Color.Default" />
+                </yummy:PancakeView.Border>
+                <StackLayout>
+                    <SearchBar Placeholder="{Binding MainPageCommon.Search}" Text="{Binding SearchText, Mode=TwoWay}" />
+                    <Frame
+                        Padding="0"
+                        BackgroundColor="White"
+                        CornerRadius="5"
+                        HasShadow="True"
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="{Binding IsSearchResultVisible}"
+                        VerticalOptions="Start">
+                        <ListView ItemsSource="{Binding SearchResults}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextCell Text="{Binding Title}" />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Frame>
+                </StackLayout>
+            </yummy:PancakeView>
+            <!--  Поле особого режима  -->
+            <yummy:PancakeView
+                Padding="10,10,10,10"
+                BackgroundColor="White"
+                CornerRadius="16">
+                <yummy:PancakeView.Shadow>
+                    <yummy:DropShadow />
+                </yummy:PancakeView.Shadow>
+                <yummy:PancakeView.Margin>
+                    <Thickness>
+                        10,3,10,10
                     </Thickness>
                 </yummy:PancakeView.Margin>
                 <yummy:PancakeView.Border>
@@ -46,8 +82,114 @@
                     <TapGestureRecognizer Command="{Binding ChallengeModeTappedCommand}" />
                 </yummy:PancakeView.GestureRecognizers>
             </yummy:PancakeView>
+            <!--  Список ежедневных и недельных квестов  -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--  Ежедневные квесты  -->
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Padding="10,10,10,0"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="{Binding MainPageCommon.DailyQuest}">
+                    <Label.Margin>
+                        <Thickness>
+                            10,0,10,0
+                        </Thickness>
+                    </Label.Margin>
+                </Label>
+                <yummy:PancakeView
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Padding="10,10,10,10"
+                    BackgroundColor="White"
+                    CornerRadius="16">
+                    <yummy:PancakeView.Shadow>
+                        <yummy:DropShadow />
+                    </yummy:PancakeView.Shadow>
+                    <yummy:PancakeView.Margin>
+                        <Thickness>
+                            10,3,10,10
+                        </Thickness>
+                    </yummy:PancakeView.Margin>
+                    <yummy:PancakeView.Border>
+                        <yummy:Border Thickness="1" Color="Color.Default" />
+                    </yummy:PancakeView.Border>
+                    <StackLayout x:Name="dailyQuestStackLayout" BindableLayout.ItemsSource="{Binding DailyQuest}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Label
+                                    Padding="2"
+                                    FontSize="14"
+                                    Text="{Binding Title}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=dailyQuestStackLayout}}" CommandParameter="{Binding .}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </yummy:PancakeView>
 
 
+                <!--  Еженедельные квесты  -->
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Padding="10,10,10,0"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="{Binding MainPageCommon.WeeklyQuest}">
+                    <Label.Margin>
+                        <Thickness>
+                            10,0,10,0
+                        </Thickness>
+                    </Label.Margin>
+                </Label>
+                <yummy:PancakeView
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Padding="10,10,10,10"
+                    BackgroundColor="White"
+                    CornerRadius="16">
+                    <yummy:PancakeView.Shadow>
+                        <yummy:DropShadow />
+                    </yummy:PancakeView.Shadow>
+                    <yummy:PancakeView.Margin>
+                        <Thickness>
+                            10,3,10,10
+                        </Thickness>
+                    </yummy:PancakeView.Margin>
+                    <yummy:PancakeView.Border>
+                        <yummy:Border Thickness="1" Color="Color.Default" />
+                    </yummy:PancakeView.Border>
+                    <StackLayout x:Name="weeklyQuestStackLayout" BindableLayout.ItemsSource="{Binding WeeklyQuest}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Label
+                                    Padding="2"
+                                    FontSize="14"
+                                    Text="{Binding Title}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=weeklyQuestStackLayout}}" CommandParameter="{Binding .}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </yummy:PancakeView>
+            </Grid>
             <!--  Рандомная подсказка  -->
             <Label
                 Padding="10,10,10,0"
@@ -77,42 +219,6 @@
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
                 <Label Text="{Binding DisplayedTip}" />
-            </yummy:PancakeView>
-            <!--  Строка поиска  -->
-            <yummy:PancakeView
-                Padding="10,10,10,10"
-                BackgroundColor="White"
-                CornerRadius="16">
-                <yummy:PancakeView.Shadow>
-                    <yummy:DropShadow />
-                </yummy:PancakeView.Shadow>
-                <yummy:PancakeView.Margin>
-                    <Thickness>
-                        10,3,10,10
-                    </Thickness>
-                </yummy:PancakeView.Margin>
-                <yummy:PancakeView.Border>
-                    <yummy:Border Thickness="1" Color="Color.Default" />
-                </yummy:PancakeView.Border>
-                <StackLayout>
-                    <SearchBar Placeholder="{Binding MainPageCommon.Search}" Text="{Binding SearchText, Mode=TwoWay}" />
-                    <Frame
-                        Padding="0"
-                        BackgroundColor="White"
-                        CornerRadius="5"
-                        HasShadow="True"
-                        HorizontalOptions="FillAndExpand"
-                        IsVisible="{Binding IsSearchResultVisible}"
-                        VerticalOptions="Start">
-                        <ListView ItemsSource="{Binding SearchResults}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <TextCell Text="{Binding Title}" />
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Frame>
-                </StackLayout>
             </yummy:PancakeView>
             <!--  Таблицы скоростей призраков и рассудка для начала охоты  -->
             <Grid HeightRequest="300">
@@ -368,6 +474,8 @@
                                     Source="{Binding IconFilePath}"
                                     WidthRequest="30" />
                                 <Label
+                                    FontAttributes="Bold"
+                                    FontSize="14"
                                     HorizontalTextAlignment="Start"
                                     Text="{Binding Title}"
                                     VerticalOptions="CenterAndExpand" />
@@ -430,7 +538,10 @@
                                 BackgroundColor="White"
                                 CornerRadius="16">
                                 <StackLayout Orientation="Vertical">
-                                    <Label FontAttributes="Bold" Text="{Binding Title}" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        Text="{Binding Title}" />
                                     <Label Padding="10,5,5,5" Text="{Binding Description}" />
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Path=BindingContext.DifficultyTappedCommand, Source={x:Reference Name=difficultiesFlexLayout}}" CommandParameter="{Binding .}" />
@@ -481,7 +592,7 @@
                     Wrap="NoWrap">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout>
+                            <StackLayout Padding="5,5,5,5">
                                 <Label Text="{Binding Title}" TextColor="Blue">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Path=BindingContext.PatchTappedCommand, Source={x:Reference Name=patchesFlexLayout}}" CommandParameter="{Binding .}" />
@@ -493,108 +604,7 @@
                 </FlexLayout>
             </yummy:PancakeView>
 
-            <!--  Список ежедневных и недельных квестов  -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
 
-                <!--  Ежедневные квесты  -->
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Padding="10,10,10,0"
-                    FontAttributes="Bold"
-                    FontSize="16"
-                    HorizontalOptions="CenterAndExpand"
-                    Text="{Binding MainPageCommon.DailyQuest}">
-                    <Label.Margin>
-                        <Thickness>
-                            10,3,10,0
-                        </Thickness>
-                    </Label.Margin>
-                </Label>
-                <yummy:PancakeView
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Padding="10,10,10,10"
-                    BackgroundColor="White"
-                    CornerRadius="16">
-                    <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow />
-                    </yummy:PancakeView.Shadow>
-                    <yummy:PancakeView.Margin>
-                        <Thickness>
-                            10,3,10,10
-                        </Thickness>
-                    </yummy:PancakeView.Margin>
-                    <yummy:PancakeView.Border>
-                        <yummy:Border Thickness="1" Color="Color.Default" />
-                    </yummy:PancakeView.Border>
-                    <StackLayout x:Name="dailyQuestStackLayout" BindableLayout.ItemsSource="{Binding DailyQuest}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <Label Text="{Binding Title}">
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=dailyQuestStackLayout}}" CommandParameter="{Binding .}" />
-                                    </Label.GestureRecognizers>
-                                </Label>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </StackLayout>
-                </yummy:PancakeView>
-
-
-                <!--  Еженедельные квесты  -->
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Padding="10,10,10,0"
-                    FontAttributes="Bold"
-                    FontSize="16"
-                    HorizontalOptions="CenterAndExpand"
-                    Text="{Binding MainPageCommon.WeeklyQuest}">
-                    <Label.Margin>
-                        <Thickness>
-                            10,3,10,0
-                        </Thickness>
-                    </Label.Margin>
-                </Label>
-                <yummy:PancakeView
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Padding="10,10,10,10"
-                    BackgroundColor="White"
-                    CornerRadius="16">
-                    <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow />
-                    </yummy:PancakeView.Shadow>
-                    <yummy:PancakeView.Margin>
-                        <Thickness>
-                            10,3,10,10
-                        </Thickness>
-                    </yummy:PancakeView.Margin>
-                    <yummy:PancakeView.Border>
-                        <yummy:Border Thickness="1" Color="Color.Default" />
-                    </yummy:PancakeView.Border>
-                    <StackLayout x:Name="weeklyQuestStackLayout" BindableLayout.ItemsSource="{Binding WeeklyQuest}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <Label Text="{Binding Title}">
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=weeklyQuestStackLayout}}" CommandParameter="{Binding .}" />
-                                    </Label.GestureRecognizers>
-                                </Label>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </StackLayout>
-                </yummy:PancakeView>
-            </Grid>
             <!--  Горизонтальная прокрутная некатегоризованных страниц  -->
             <Label
                 Padding="10,10,10,0"

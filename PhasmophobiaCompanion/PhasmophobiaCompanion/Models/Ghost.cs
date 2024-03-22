@@ -15,7 +15,7 @@ namespace PhasmophobiaCompanion.Models
         {
             try
             {
-                Clues = new ObservableCollection<Clue>();
+                Clues = new List<Clue>();
             }
             catch (Exception ex)
             {
@@ -51,8 +51,8 @@ namespace PhasmophobiaCompanion.Models
         /// </summary>
         public int MinSanityHunt { get; set; }
         public List<int> CluesID { get; set; }
-        public ObservableCollection<Clue> Clues { get; set; }
-        public ObservableCollection<UnfoldingItem> UnfoldingItems { get; set; }
+        public List<Clue> Clues { get; set; }
+        public List<UnfoldingItem> UnfoldingItems { get; set; }
         /// <summary>
         ///     Текст о том, как лучше определить этот тип призрака.
         /// </summary>
@@ -82,7 +82,7 @@ namespace PhasmophobiaCompanion.Models
         ///     Связывает призраков - Ghost с уликами Clue через имеющийся список Id улик - CluesID.
         /// </summary>
         /// <param name="allClues">Список всех улик.</param>
-        public void PopulateAssociatedClues(ObservableCollection<Clue> allClues)
+        public void PopulateAssociatedClues(List<Clue> allClues)
         {
             try
             {

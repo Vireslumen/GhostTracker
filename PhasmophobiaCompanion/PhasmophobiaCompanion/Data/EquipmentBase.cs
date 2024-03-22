@@ -17,8 +17,8 @@ namespace PhasmophobiaCompanion.Data
         public int MaxLimit { get; set; }
         public int UnlockCost { get; set; }
         public int UnlockLevel { get; set; }
-        public ObservableCollection<OtherEquipmentStatBase> OtherEquipmentStatBase { get; set; }
-        public ObservableCollection<UnfoldingItemBase> UnfoldingItemBase { get; set; }
+        public List<OtherEquipmentStatBase> OtherEquipmentStatBase { get; set; }
+        public List<UnfoldingItemBase> UnfoldingItemBase { get; set; }
         public string ImageFilePath { get; set; }
     }
 }

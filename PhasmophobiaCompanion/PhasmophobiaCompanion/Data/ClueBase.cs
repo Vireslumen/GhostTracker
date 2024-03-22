@@ -12,9 +12,9 @@ namespace PhasmophobiaCompanion.Data
         public ICollection<ClueTranslations> Translations { get; set; }
         [Key] public int ID { get; set; }
         public List<EquipmentBase> EquipmentBase { get; set; }
-        public ObservableCollection<ExpandFieldWithImagesBase> ExpandFieldWithImagesBase { get; set; }
-        public ObservableCollection<GhostBase> GhostBase { get; set; }
-        public ObservableCollection<UnfoldingItemBase> UnfoldingItemBase { get; set; }
+        public List<ExpandFieldWithImagesBase> ExpandFieldWithImagesBase { get; set; }
+        public List<GhostBase> GhostBase { get; set; }
+        public List<UnfoldingItemBase> UnfoldingItemBase { get; set; }
         public string IconFilePath { get; set; }
         public string ImageFilePath { get; set; }
     }

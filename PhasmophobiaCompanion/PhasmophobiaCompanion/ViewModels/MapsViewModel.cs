@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -20,14 +21,14 @@ namespace PhasmophobiaCompanion.ViewModels
         private const int MaxRoomDefault = 100;
         private const int MinRoomDefault = 0;
         private readonly DataService dataService;
-        private readonly ObservableCollection<Map> maps;
+        private readonly List<Map> maps;
         private int maxRoomSaved;
         private int minRoomSaved;
         private MapCommon mapCommon;
         private ObservableCollection<Map> filteredMaps;
         private ObservableCollection<object> selectedSizes;
-        private ObservableCollection<object> selectedSizesSaved;
-        private ObservableCollection<string> allSizes;
+        private List<object> selectedSizesSaved;
+        private List<string> allSizes;
         private string maxRoom;
         private string minRoom;
 
@@ -37,18 +38,13 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 dataService = DependencyService.Get<DataService>();
                 // Загрузка всех карт.
-                maps = dataService.GetMaps();
+                maps = dataService.GetMaps().OrderByDescending(m => m.Size).ToList();
                 Maps = new ObservableCollection<Map>(maps);
                 MapCommon = dataService.GetMapCommon();
-                allSizes = new ObservableCollection<string>
-                {
-                    "Small",
-                    "Medium",
-                    "Large"
-                };
-                AllSizes = new ObservableCollection<string>(allSizes);
+                allSizes = dataService.GetSizes();
+                AllSizes = new List<string>(allSizes);
                 SelectedSizes = new ObservableCollection<object>();
-                selectedSizesSaved = new ObservableCollection<object>();
+                selectedSizesSaved = new List<object>();
                 maxRoomSaved = MaxRoomDefault;
                 minRoomSaved = MinRoomDefault;
                 maxRoom = MaxRoomDefault.ToString();
@@ -97,7 +93,7 @@ namespace PhasmophobiaCompanion.ViewModels
             get => selectedSizes;
             set => SetProperty(ref selectedSizes, value);
         }
-        public ObservableCollection<string> AllSizes
+        public List<string> AllSizes
         {
             get => allSizes;
             set => SetProperty(ref allSizes, value);
@@ -168,7 +164,7 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                selectedSizesSaved = new ObservableCollection<object>(SelectedSizes);
+                selectedSizesSaved = new List<object>(SelectedSizes);
                 minRoomSaved = int.TryParse(minRoom, out var max) ? max : 100;
                 maxRoomSaved = int.TryParse(maxRoom, out var min) ? min : 0;
                 Filter();
@@ -189,7 +185,7 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                selectedSizesSaved = new ObservableCollection<object>();
+                selectedSizesSaved = new List<object>();
                 SelectedSizes = new ObservableCollection<object>();
                 maxRoomSaved = MaxRoomDefault;
                 minRoomSaved = MinRoomDefault;

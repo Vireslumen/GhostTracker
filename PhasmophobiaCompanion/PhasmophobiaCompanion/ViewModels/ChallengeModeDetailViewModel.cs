@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -118,7 +119,7 @@ namespace PhasmophobiaCompanion.ViewModels
             challengeMode.ChallengeMap = dataService.GetMaps()
                 .Where(m => m.ID == challengeMode.MapID)
                 .FirstOrDefault();
-            challengeMode.ChallengeEquipments = new ObservableCollection<Equipment>
+            challengeMode.ChallengeEquipments = new List<Equipment>
             (dataService.GetEquipments().Where(e => challengeMode.EquipmentsID.Contains(e.ID))
                 .ToList());
             challengeMode.ChallengeDifficulty = dataService.GetDifficulties()

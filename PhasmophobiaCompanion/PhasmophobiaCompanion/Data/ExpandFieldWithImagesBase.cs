@@ -11,10 +11,10 @@ namespace PhasmophobiaCompanion.Data
     {
         public ICollection<ExpandFieldWithImagesTranslations> Translations { get; set; }
         [Key] public int ID { get; set; }
-        public ObservableCollection<ClueBase> ClueBase { get; set; }
-        public ObservableCollection<CursedPossessionBase> CursedPossessionBase { get; set; }
-        public ObservableCollection<ImageWithDescriptionBase> ImageWithDescriptionBase { get; set; }
-        public ObservableCollection<MapBase> MapBase { get; set; }
-        public ObservableCollection<OtherInfoBase> OtherInfoBase { get; set; }
+        public List<ClueBase> ClueBase { get; set; }
+        public List<CursedPossessionBase> CursedPossessionBase { get; set; }
+        public List<ImageWithDescriptionBase> ImageWithDescriptionBase { get; set; }
+        public List<MapBase> MapBase { get; set; }
+        public List<OtherInfoBase> OtherInfoBase { get; set; }
     }
 }

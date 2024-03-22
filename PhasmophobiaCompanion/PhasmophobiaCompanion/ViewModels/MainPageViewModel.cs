@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -38,7 +39,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 Difficulties = dataService.GetDifficulties();
                 Patches = dataService.GetPatches();
                 Quests = dataService.GetQuests();
-                OtherInfos = new ObservableCollection<ITitledItem>(dataService.GetOtherInfos());
+                OtherInfos = new List<ITitledItem>(dataService.GetOtherInfos());
                 OtherInfos.Add(dataService.GetQuestCommon());
                 OtherInfos.Add(dataService.GetChallengeModeCommon());
                 MainPageCommon = dataService.GetMainPageCommon();
@@ -115,10 +116,10 @@ namespace PhasmophobiaCompanion.ViewModels
                 NavigateToDetailPage(selectedItem);
             }
         }
-        public ObservableCollection<Clue> Clues { get; set; }
-        public ObservableCollection<Difficulty> Difficulties { get; set; }
-        public ObservableCollection<Ghost> Ghosts { get; set; }
-        public ObservableCollection<ITitledItem> OtherInfos { get; set; }
+        public List<Clue> Clues { get; set; }
+        public List<Difficulty> Difficulties { get; set; }
+        public List<Ghost> Ghosts { get; set; }
+        public List<ITitledItem> OtherInfos { get; set; }
         public ObservableCollection<object> SearchResults
         {
             get => searchResults;
@@ -128,11 +129,11 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
-        public ObservableCollection<Patch> Patches { get; set; }
+        public List<Patch> Patches { get; set; }
         public ObservableCollection<Quest> DailyQuest { get; set; }
-        public ObservableCollection<Quest> Quests { get; set; }
+        public List<Quest> Quests { get; set; }
         public ObservableCollection<Quest> WeeklyQuest { get; set; }
-        public ObservableCollection<string> Tips { get; set; }
+        public List<string> Tips { get; set; }
         public string DisplayedTip { get; set; }
 
         /// <summary>

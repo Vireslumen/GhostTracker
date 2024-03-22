@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Models;
@@ -17,7 +18,7 @@ namespace PhasmophobiaCompanion.ViewModels
         private readonly DataService dataService;
         private Equipment equipment;
         private EquipmentCommon equipmentCommon;
-        private ObservableCollection<Equipment> equipmentsSameTypeCollection;
+        private List<Equipment> equipmentsSameTypeCollection;
         public ICommand EquipmentSelectedCommand { get; private set; }
 
         public EquipmentDetailViewModel(Equipment equipment)
@@ -58,7 +59,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 throw;
             }
         }
-        public ObservableCollection<Equipment> EquipmentsSameTypeCollection
+        public List<Equipment> EquipmentsSameTypeCollection
         {
             get => equipmentsSameTypeCollection;
             set
