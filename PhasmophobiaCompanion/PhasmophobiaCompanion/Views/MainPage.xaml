@@ -219,6 +219,9 @@
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
                 <Label Text="{Binding DisplayedTip}" />
+                <yummy:PancakeView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TipTappedCommand}" />
+                </yummy:PancakeView.GestureRecognizers>
             </yummy:PancakeView>
             <!--  Таблицы скоростей призраков и рассудка для начала охоты  -->
             <Grid HeightRequest="300">

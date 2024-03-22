@@ -24,11 +24,13 @@ namespace PhasmophobiaCompanion.ViewModels
         private bool isSearchResultVisible;
         private object selectedItem;
         private ObservableCollection<object> searchResults;
+        private string displayedTip;
 
         public MainPageViewModel()
         {
             try
             {
+                var random = new Random();
                 dataService = DependencyService.Get<DataService>();
                 //Загрузка всех данных для страницы
                 ChallengeMode = dataService.GetChallengeMode(1);
@@ -43,7 +45,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 OtherInfos.Add(dataService.GetQuestCommon());
                 OtherInfos.Add(dataService.GetChallengeModeCommon());
                 MainPageCommon = dataService.GetMainPageCommon();
-                ChangeTip();
+                displayedTip = Tips[random.Next(Tips.Count)];
                 SearchResults = new ObservableCollection<object>();
                 DailyQuest = GetSomeQuests(new[] {1, 2, 3, 4});
                 WeeklyQuest = GetSomeQuests(new[] {1, 2, 3, 4});
@@ -67,6 +69,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 MaxPlayerSpeedTappedCommand = new Command(OnMaxPlayerSpeedTapped);
                 MinPlayerSpeedTappedCommand = new Command(OnMinPlayerSpeedTapped);
                 QuestTappedCommand = new Command<Quest>(OnQuestTapped);
+                TipTappedCommand = new Command(ChangeTip);
             }
             catch (Exception ex)
             {
@@ -90,6 +93,7 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand ClueTappedCommand { get; private set; }
         public ICommand DifficultyTappedCommand { get; private set; }
         public ICommand GhostTappedCommand { get; private set; }
+        public ICommand TipTappedCommand { get; private set; }
         public ICommand MaxGhostSpeedLoSTappedCommand { get; private set; }
         public ICommand MaxGhostSpeedTappedCommand { get; private set; }
         public ICommand MaxPlayerSpeedTappedCommand { get; private set; }
@@ -134,7 +138,14 @@ namespace PhasmophobiaCompanion.ViewModels
         public List<Quest> Quests { get; set; }
         public ObservableCollection<Quest> WeeklyQuest { get; set; }
         public List<string> Tips { get; set; }
-        public string DisplayedTip { get; set; }
+        public string DisplayedTip {
+            get => displayedTip;
+            set
+            {
+                displayedTip = value;
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         ///     Смена отображаемой подсказки на случайную из списка всех подсказок.
