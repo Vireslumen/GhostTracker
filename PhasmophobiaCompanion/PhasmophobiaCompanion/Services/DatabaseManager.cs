@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +10,13 @@ using Serilog;
 namespace PhasmophobiaCompanion.Services
 {
     /// <summary>
-    ///     Отвечает за загрузку различных типов данных из базы данных PhasmaDB.
+    ///     Отвечает за добавление и загрузку различных типов данных из и в базу данных PhasmaDB.
     /// </summary>
-    public class DatabaseLoader
+    public class DatabaseManager
     {
         private readonly PhasmaDB phasmaDbContext;
 
-        public DatabaseLoader(PhasmaDB context)
+        public DatabaseManager(PhasmaDB context)
         {
             try
             {
@@ -28,6 +27,22 @@ namespace PhasmophobiaCompanion.Services
                 Log.Error(ex, "Ошибка во время определения контекста.");
                 throw;
             }
+        }
+
+        /// <summary>
+        ///     Добавление записи в таблицу патчей в базе данных
+        /// </summary>
+        /// <param name="patch">Патч</param>
+        public async Task AddPatchAsync(Patch patch)
+        {
+            if (patch == null) return;
+
+            phasmaDbContext.PatchBase.Add(new PatchBase
+            {
+                Source = patch.Source,
+                Title = patch.Title
+            });
+            await phasmaDbContext.SaveChangesAsync();
         }
 
         /// <summary>

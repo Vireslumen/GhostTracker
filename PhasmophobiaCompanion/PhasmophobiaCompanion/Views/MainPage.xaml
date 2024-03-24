@@ -29,22 +29,20 @@
                 </yummy:PancakeView.Border>
                 <StackLayout>
                     <SearchBar Placeholder="{Binding MainPageCommon.Search}" Text="{Binding SearchText, Mode=TwoWay}" />
-                    <Frame
-                        Padding="0"
+                    <yummy:PancakeView
                         BackgroundColor="White"
                         CornerRadius="5"
-                        HasShadow="True"
                         HorizontalOptions="FillAndExpand"
                         IsVisible="{Binding IsSearchResultVisible}"
                         VerticalOptions="Start">
                         <ListView ItemsSource="{Binding SearchResults}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <TextCell Text="{Binding Title}" />
+                                    <TextCell Text="{Binding Title}" TextColor="Black" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </Frame>
+                    </yummy:PancakeView>
                 </StackLayout>
             </yummy:PancakeView>
             <!--  Поле особого режима  -->

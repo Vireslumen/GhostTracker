@@ -39,11 +39,13 @@ namespace PhasmophobiaCompanion.ViewModels
                 GhostCommon = dataService.GetGhostCommon();
                 Clues = dataService.GetClues();
                 Difficulties = dataService.GetDifficulties();
-                Patches = dataService.GetPatches();
+                Patches = dataService.GetPatches().TakeLast(5).ToList();
+                Patches.Reverse();
                 Quests = dataService.GetQuests();
-                OtherInfos = new List<ITitledItem>(dataService.GetOtherInfos());
+                OtherInfos = new List<ITitledItem>();
                 OtherInfos.Add(dataService.GetQuestCommon());
                 OtherInfos.Add(dataService.GetChallengeModeCommon());
+                OtherInfos.AddRange(dataService.GetOtherInfos());
                 MainPageCommon = dataService.GetMainPageCommon();
                 displayedTip = Tips[random.Next(Tips.Count)];
                 SearchResults = new ObservableCollection<object>();
@@ -93,7 +95,6 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand ClueTappedCommand { get; private set; }
         public ICommand DifficultyTappedCommand { get; private set; }
         public ICommand GhostTappedCommand { get; private set; }
-        public ICommand TipTappedCommand { get; private set; }
         public ICommand MaxGhostSpeedLoSTappedCommand { get; private set; }
         public ICommand MaxGhostSpeedTappedCommand { get; private set; }
         public ICommand MaxPlayerSpeedTappedCommand { get; private set; }
@@ -109,6 +110,14 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand OtherPageTappedCommand { get; private set; }
         public ICommand PatchTappedCommand { get; private set; }
         public ICommand QuestTappedCommand { get; private set; }
+        public ICommand TipTappedCommand { get; private set; }
+        public List<Clue> Clues { get; set; }
+        public List<Difficulty> Difficulties { get; set; }
+        public List<Ghost> Ghosts { get; set; }
+        public List<ITitledItem> OtherInfos { get; set; }
+        public List<Patch> Patches { get; set; }
+        public List<Quest> Quests { get; set; }
+        public List<string> Tips { get; set; }
         public MainPageCommon MainPageCommon { get; set; }
         public object SelectedItem
         {
@@ -120,10 +129,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 NavigateToDetailPage(selectedItem);
             }
         }
-        public List<Clue> Clues { get; set; }
-        public List<Difficulty> Difficulties { get; set; }
-        public List<Ghost> Ghosts { get; set; }
-        public List<ITitledItem> OtherInfos { get; set; }
         public ObservableCollection<object> SearchResults
         {
             get => searchResults;
@@ -133,12 +138,10 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
-        public List<Patch> Patches { get; set; }
         public ObservableCollection<Quest> DailyQuest { get; set; }
-        public List<Quest> Quests { get; set; }
         public ObservableCollection<Quest> WeeklyQuest { get; set; }
-        public List<string> Tips { get; set; }
-        public string DisplayedTip {
+        public string DisplayedTip
+        {
             get => displayedTip;
             set
             {

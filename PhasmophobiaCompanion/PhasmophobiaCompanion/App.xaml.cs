@@ -41,9 +41,8 @@ namespace PhasmophobiaCompanion
                 // Получение экземпляра DataService
                 var dataService = DependencyService.Get<DataService>();
                 // Загрузка данных
-                await Task.Run(async () => { dataService.LoadInitialDataAsync(); });
+                await Task.Run(async () => { await dataService.LoadInitialDataAsync(); });
                 Task.Run(async () => { dataService.LoadOtherDataAsync(); });
-                //await Task.Delay(50000);
                 // После загрузки данных, загрузка начальной страницы
                 MainPage = new AppShell();
             }

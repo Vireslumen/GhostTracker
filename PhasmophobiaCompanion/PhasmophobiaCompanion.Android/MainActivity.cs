@@ -19,37 +19,26 @@ namespace PhasmophobiaCompanion.Droid
                                ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
     public class MainActivity : FormsAppCompatActivity
     {
-        //private void CopyDatabaseIfNotExists(string dbPath)
-        //{
-        //    if (!File.Exists(dbPath))
-        //    {
-        //        using (var br = new BinaryReader(Android.App.Application.Context.Assets.Open("phasmaDATADB.db")))
-        //        {
-        //            using (var bw = new BinaryWriter(new FileStream(dbPath, FileMode.Create)))
-        //            {
-        //                byte[] buffer = new byte[2048];
-        //                int length = 0;
-        //                while ((length = br.Read(buffer, 0, buffer.Length)) > 0)
-        //                {
-        //                    bw.Write(buffer, 0, length);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-        private void CopyOrUpdateDatabase(string dbPath)
+        /// <summary>
+        ///     Копирование базы данных из ассетов в доступную для обработки директорию, если база данных уже не существует в ней.
+        /// </summary>
+        private void CopyDatabase()
         {
             try
             {
-                using (var br = new BinaryReader(Application.Context.Assets.Open("phasmaDATADB.db")))
-                {
-                    using (var bw = new BinaryWriter(new FileStream(dbPath, FileMode.Create)))
+                // Путь к локальной базе данных
+                var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                var dbPath = Path.Combine(folderPath, "phasmaDATADB.db");
+                if (!File.Exists(dbPath))
+                    using (var br = new BinaryReader(Application.Context.Assets.Open("phasmaDATADB.db")))
                     {
-                        var buffer = new byte[2048];
-                        var length = 0;
-                        while ((length = br.Read(buffer, 0, buffer.Length)) > 0) bw.Write(buffer, 0, length);
+                        using (var bw = new BinaryWriter(new FileStream(dbPath, FileMode.Create)))
+                        {
+                            var buffer = new byte[2048];
+                            var length = 0;
+                            while ((length = br.Read(buffer, 0, buffer.Length)) > 0) bw.Write(buffer, 0, length);
+                        }
                     }
-                }
             }
             catch (Exception ex)
             {
@@ -73,28 +62,16 @@ namespace PhasmophobiaCompanion.Droid
                 Platform.Init(this, savedInstanceState);
                 Forms.Init(this, savedInstanceState);
                 Popup.Init(this);
-                // Путь к локальной базе данных
-                var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                var dbPath = Path.Combine(folderPath, "phasmaDATADB.db");
 
                 // Копирование базы данных, если она еще не существует
-                CopyOrUpdateDatabase(dbPath);
-                LoadApplication(new App());
+                CopyDatabase();
 
-                UpdateStatusBarColor();
+                LoadApplication(new App());
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при создании приложения.");
                 throw;
-            }
-        }
-        private void UpdateStatusBarColor()
-        {
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
-            {
-                var statusBarColor = (Color)Xamarin.Forms.Application.Current.Resources["StatusBarColorDark"];
-                Window.SetStatusBarColor(statusBarColor.ToAndroid());
             }
         }
 
