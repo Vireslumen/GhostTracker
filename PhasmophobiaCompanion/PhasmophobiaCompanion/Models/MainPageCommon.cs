@@ -7,6 +7,14 @@
     public class MainPageCommon
     {
         /// <summary>
+        ///     Максимальная скорость игрока.
+        /// </summary>
+        public int PlayerMaxSpeed { get; set; }
+        /// <summary>
+        ///     Минимальная скорость игрока.
+        /// </summary>
+        public int PlayerMinSpeed { get; set; }
+        /// <summary>
         ///     Название списка улик на главной странице. Примеры: "Clues", "Улики".
         /// </summary>
         public string Clue { get; set; }
@@ -19,6 +27,10 @@
         /// </summary>
         public string Difficulties { get; set; }
         /// <summary>
+        ///     Текст кнопки принятия. Примеры: "OK", "ОК".
+        /// </summary>
+        public string Ok { get; set; }
+        /// <summary>
         ///     Название списка некатегоризованных страниц на главной странице. Примеры: "Other Pages", "Другие страницы".
         /// </summary>
         public string OtherPages { get; set; }
@@ -26,6 +38,26 @@
         ///     Название списка последних патчей на главной странице. Примеры "Last Patches", "Последние Обновления".
         /// </summary>
         public string Patches { get; set; }
+        /// <summary>
+        ///     Текст оповещающий о выходе патча. Примеры: "There is a new update called, "Вышло новое обновление - ".
+        /// </summary>
+        public string PatchIsOut { get; set; }
+        /// <summary>
+        ///     Текст подсказки относительно максимальной скорости игрока. Пример: "Sprint for 3 seconds with 5 second cooldown."
+        /// </summary>
+        public string PlayerMaxSpeedTip { get; set; }
+        /// <summary>
+        ///     Текст подсказки относительно минимальной скорость игрока. Примеры: "Default walk.", "Обычный шаг."
+        /// </summary>
+        public string PlayerMinSpeedTip { get; set; }
+        /// <summary>
+        ///     Название обозначения игрока в интерфейсе. Примеры "Player", "Игрок".
+        /// </summary>
+        public string PlayerTitle { get; set; }
+        /// <summary>
+        ///     Текст кнопки прочтения подробно. Примеры: "Read more", "Прочитать подробнее".
+        /// </summary>
+        public string ReadMore { get; set; }
         /// <summary>
         ///     Текст для поля поиска всего на главной странице. Примеры "Search", "Поиск".
         /// </summary>
@@ -50,25 +82,5 @@
         ///     Название списка еженедельных заданий на главной странице. Примеры: "Weekly Quests", "Еженедельные задания".
         /// </summary>
         public string WeeklyQuest { get; set; }
-        /// <summary>
-        ///  Минимальная скорость игрока.
-        /// </summary>
-        public int PlayerMinSpeed { get; set; }
-        /// <summary>
-        /// Максимальная скорость игрока.
-        /// </summary>
-        public int PlayerMaxSpeed { get; set; }
-        /// <summary>
-        /// Текст подсказки относительно минимальной скорость игрока.
-        /// </summary>
-        public string PlayerMinSpeedTip { get; set; }
-        /// <summary>
-        /// Текст подсказки относительно максимальной скорости игрока.
-        /// </summary>
-        public string PlayerMaxSpeedTip { get; set; }
-        /// <summary>
-        /// Название обозначения игрока в интерфейсе.
-        /// </summary>
-        public string PlayerTitle { get; set; }
     }
 }

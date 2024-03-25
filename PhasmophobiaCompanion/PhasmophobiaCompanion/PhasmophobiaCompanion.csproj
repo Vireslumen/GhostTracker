@@ -39,6 +39,9 @@
     <Compile Update="Views\FilterMapPage.xaml.cs">
       <DependentUpon>FilterMapPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\PatchAlertPage.xaml.cs">
+      <DependentUpon>PatchAlertPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -97,6 +100,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\OtherInfoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\PatchAlertPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\QuestsPage.xaml">

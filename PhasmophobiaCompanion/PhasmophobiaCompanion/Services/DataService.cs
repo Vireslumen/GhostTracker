@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -32,8 +31,6 @@ namespace PhasmophobiaCompanion.Services
         private DifficultyCommon difficultyCommon;
         private EquipmentCommon equipmentCommon;
         private GhostCommon ghostCommon;
-        private MainPageCommon mainPageCommon;
-        private MapCommon mapCommon;
         private List<ChallengeMode> challengeModes;
         private List<Clue> clues;
         private List<CursedPossession> curseds;
@@ -45,12 +42,15 @@ namespace PhasmophobiaCompanion.Services
         private List<Patch> patches;
         private List<Quest> quests;
         private List<string> tips;
+        private MainPageCommon mainPageCommon;
+        private MapCommon mapCommon;
         private QuestCommon questCommon;
 
         public DataService()
         {
             try
             {
+                NewPatch = false;
                 databaseManager = new DatabaseManager(new PhasmaDB());
                 //TODO: Сделать чтобы код языка выбирался изначально исходя из языка системы пользователя, а затем исходя из настроек
                 languageCode = "EN";
@@ -67,6 +67,7 @@ namespace PhasmophobiaCompanion.Services
         public bool IsEquipmentsDataLoaded { get; private set; }
         public bool IsGhostsDataLoaded { get; private set; }
         public bool IsMapsDataLoaded { get; private set; }
+        public bool NewPatch { get; set; }
         public event Action CursedsDataLoaded;
         public event Action EquipmentsDataLoaded;
 
@@ -345,18 +346,6 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
-        ///     Получение всех уникальных Тиров, что есть среди всех элементов снаряжения.
-        /// </summary>
-        /// <returns>Список Тиров.</returns>
-        public List<string> GetTiers()
-        {
-            var uniqueTiers = new HashSet<string>();
-            foreach (var equip in equipments) uniqueTiers.Add(equip.Tier);
-
-            return new List<string>(uniqueTiers);
-        }
-
-        /// <summary>
         ///     Получение всех уникальных Размеров карт, что есть среди всех элементов карт.
         /// </summary>
         /// <returns>Список Тиров.</returns>
@@ -366,6 +355,18 @@ namespace PhasmophobiaCompanion.Services
             foreach (var map in maps) uniqueSize.Add(map.Size);
 
             return new List<string>(uniqueSize);
+        }
+
+        /// <summary>
+        ///     Получение всех уникальных Тиров, что есть среди всех элементов снаряжения.
+        /// </summary>
+        /// <returns>Список Тиров.</returns>
+        public List<string> GetTiers()
+        {
+            var uniqueTiers = new HashSet<string>();
+            foreach (var equip in equipments) uniqueTiers.Add(equip.Tier);
+
+            return new List<string>(uniqueTiers);
         }
 
         public List<string> GetTips()
@@ -837,36 +838,35 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                string url = "https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=739630&count=5";
+                var url = "https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=739630&count=5";
 
                 using (var httpClient = new HttpClient())
                 {
                     var jsonResponse = await httpClient.GetStringAsync(url);
                     var appNews = JsonConvert.DeserializeObject<AppNewsRoot>(jsonResponse);
                     appNews.AppNews.PatchItems.Reverse();
-                    bool patchWasAdded = false;
+                    var patchWasAdded = false;
                     foreach (var patch in appNews.AppNews.PatchItems)
                     {
-                        bool patchWasnot = true;
+                        var patchWasnot = true;
                         foreach (var patchDB in patches)
-                        {
                             if (patch.Source == patchDB.Source)
                             {
                                 patchWasnot = false;
                                 break;
                             }
-                        }
+
                         if (patchWasnot)
                         {
                             patches.Add(patch);
                             await databaseManager.AddPatchAsync(patch);
-                            patchWasAdded=true;
+                            patchWasAdded = true;
                         }
-
                     }
 
                     if (patchWasAdded)
                     {
+                        NewPatch = true;
                         var serializedData = JsonConvert.SerializeObject(patches);
                         var filePath = Path.Combine(FolderPath, "patch_cache.json");
                         File.WriteAllText(filePath, serializedData);

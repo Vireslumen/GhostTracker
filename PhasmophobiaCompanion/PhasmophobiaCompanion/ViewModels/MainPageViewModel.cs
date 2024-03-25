@@ -72,6 +72,9 @@ namespace PhasmophobiaCompanion.ViewModels
                 MinPlayerSpeedTappedCommand = new Command(OnMinPlayerSpeedTapped);
                 QuestTappedCommand = new Command<Quest>(OnQuestTapped);
                 TipTappedCommand = new Command(ChangeTip);
+                ReadMoreCommand = new Command(ToPatchPage);
+                OkCommand = new Command(CloseAlert);
+                CheckPatchUpdate();
             }
             catch (Exception ex)
             {
@@ -107,9 +110,11 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand MinSanityHeaderTappedCommand { get; private set; }
         public ICommand MinSanityHuntTappedCommand { get; private set; }
         public ICommand MinSpeedHeaderTappedCommand { get; private set; }
+        public ICommand OkCommand { get; private set; }
         public ICommand OtherPageTappedCommand { get; private set; }
         public ICommand PatchTappedCommand { get; private set; }
         public ICommand QuestTappedCommand { get; private set; }
+        public ICommand ReadMoreCommand { get; private set; }
         public ICommand TipTappedCommand { get; private set; }
         public List<Clue> Clues { get; set; }
         public List<Difficulty> Difficulties { get; set; }
@@ -140,6 +145,7 @@ namespace PhasmophobiaCompanion.ViewModels
         }
         public ObservableCollection<Quest> DailyQuest { get; set; }
         public ObservableCollection<Quest> WeeklyQuest { get; set; }
+        public Patch LastPatch { get; set; }
         public string DisplayedTip
         {
             get => displayedTip;
@@ -163,6 +169,44 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время смены отображаемой подсказки.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Метод проверки выхода нового патча и открытия алерта.
+        /// </summary>
+        private async void CheckPatchUpdate()
+        {
+            try
+            {
+                if (dataService.NewPatch)
+                {
+                    LastPatch = Patches.First();
+                    // Логика для открытия алерта о выходе нового патча
+                    var alertPage = new PatchAlertPage(this);
+                    await PopupNavigation.Instance.PushAsync(alertPage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время открытия алерта о выходе нового патча PatchAlertPage.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Закрытие алерта о выходе патча.
+        /// </summary>
+        private void CloseAlert()
+        {
+            try
+            {
+                PopupNavigation.Instance.PopAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при закрытии алерта");
                 throw;
             }
         }
@@ -605,6 +649,23 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время выполнения глобального поиска на главной странице.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Переход на страницу последнего патча.
+        /// </summary>
+        private void ToPatchPage()
+        {
+            try
+            {
+                PopupNavigation.Instance.PopAsync();
+                OnPatchTapped(LastPatch);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при переходе на страницы патча из алерта.");
                 throw;
             }
         }

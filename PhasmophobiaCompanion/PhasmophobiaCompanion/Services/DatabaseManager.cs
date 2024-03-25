@@ -559,7 +559,10 @@ namespace PhasmophobiaCompanion.Services
                     PlayerMaxSpeedTip = m.PlayerMaxSpeedTip,
                     PlayerMaxSpeed = m.PlayerMaxSpeed,
                     PlayerMinSpeed = m.PlayerMinSpeed,
-                    PlayerTitle = m.PlayerTitle
+                    PlayerTitle = m.PlayerTitle,
+                    Ok = m.Ok,
+                    PatchIsOut = m.PatchIsOut,
+                    ReadMore = m.ReadMore
                 }).FirstOrDefault();
             }
             catch (Exception ex)
