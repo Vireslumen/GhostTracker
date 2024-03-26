@@ -122,6 +122,16 @@
                         <CollectionView.Margin>
                             <Thickness>5</Thickness>
                         </CollectionView.Margin>
+                        <CollectionView.EmptyView>
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="24"
+                                HorizontalOptions="CenterAndExpand"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding GhostCommon.EmptyView}"
+                                VerticalOptions="CenterAndExpand"
+                                VerticalTextAlignment="Center" />
+                        </CollectionView.EmptyView>
                         <CollectionView.ItemsLayout>
                             <GridItemsLayout
                                 Orientation="Vertical"

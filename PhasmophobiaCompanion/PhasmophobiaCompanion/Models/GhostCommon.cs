@@ -15,6 +15,10 @@
         /// </summary>
         public string Clear { get; set; }
         /// <summary>
+        ///     Текст поля свидетельствующего о том, что список пуст.
+        /// </summary>
+        public string EmptyView { get; set; }
+        /// <summary>
         ///     Текст для фильтра по выбранным уликам Clue. Примеры: "Filter by Clue", "Фильтр по Уликам."
         /// </summary>
         public string FilterTitle { get; set; }

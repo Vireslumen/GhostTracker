@@ -15,6 +15,10 @@
         /// </summary>
         public string Clear { get; set; }
         /// <summary>
+        ///     Текст поля свидетельствующего о том, что список пуст.
+        /// </summary>
+        public string EmptyView { get; set; }
+        /// <summary>
         ///     Название списка снаряжения в интерфейсе. Примеры: "Equipments", "Снаряжение".
         /// </summary>
         public string EquipmentsTitle { get; set; }

@@ -15,6 +15,10 @@
         /// </summary>
         public string Clear { get; set; }
         /// <summary>
+        ///     Текст поля свидетельствующего о том, что список пуст.
+        /// </summary>
+        public string EmptyView { get; set; }
+        /// <summary>
         ///     Текст для отображения количества выходов на карте. Примеры: "Exits", "Выходы".
         /// </summary>
         public string Exits { get; set; }

@@ -229,6 +229,16 @@
                                 </StackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
+                        <CollectionView.EmptyView>
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="24"
+                                HorizontalOptions="CenterAndExpand"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding EquipmentCommon.EmptyView}"
+                                VerticalOptions="CenterAndExpand"
+                                VerticalTextAlignment="Center" />
+                        </CollectionView.EmptyView>
                         <CollectionView.Margin>
                             <Thickness>5</Thickness>
                         </CollectionView.Margin>

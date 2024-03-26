@@ -196,10 +196,11 @@ namespace PhasmophobiaCompanion.Services
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект CursedPossessionCommon.
-                return cursedCommonData.Select(m => new CursedPossessionCommon
+                return cursedCommonData.Select(c => new CursedPossessionCommon
                 {
-                    Search = m.Search,
-                    CursedsTitle = m.CursedsTitle
+                    Search = c.Search,
+                    CursedsTitle = c.CursedsTitle,
+                    EmptyView = c.EmptyView
                 }).FirstOrDefault();
             }
             catch (Exception ex)
@@ -419,7 +420,8 @@ namespace PhasmophobiaCompanion.Services
                     Apply = e.Apply,
                     UnlockLevel = e.UnlockLevel,
                     Clear = e.Clear,
-                    OtherTier = e.OtherTier
+                    OtherTier = e.OtherTier,
+                    EmptyView = e.EmptyView
                 }).FirstOrDefault();
             }
             catch (Exception ex)
@@ -460,7 +462,8 @@ namespace PhasmophobiaCompanion.Services
                     Max = g.Max,
                     GhostTitle = g.GhostTitle,
                     LoS = g.LoS,
-                    Clear = g.Clear
+                    Clear = g.Clear,
+                    EmptyView = g.EmptyView
                 }).FirstOrDefault();
             }
             catch (Exception ex)
@@ -599,7 +602,8 @@ namespace PhasmophobiaCompanion.Services
                     RoomNumber = m.RoomNumber,
                     UnlockLvl = m.UnlockLvl,
                     HidenSpot = m.HidenSpot,
-                    Clear = m.Clear
+                    Clear = m.Clear,
+                    EmptyView = m.EmptyView
                 }).FirstOrDefault();
             }
             catch (Exception ex)

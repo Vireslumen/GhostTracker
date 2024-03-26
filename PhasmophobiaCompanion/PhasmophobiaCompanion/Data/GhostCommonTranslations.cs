@@ -10,6 +10,7 @@ namespace PhasmophobiaCompanion.Data
         [Key] public int ID { get; set; }
         public string ApplyTitle { get; set; }
         public string Clear { get; set; }
+        public string EmptyView { get; set; }
         public string FilterTitle { get; set; }
         public string GhostsTitle { get; set; }
         public string GhostTitle { get; set; }
