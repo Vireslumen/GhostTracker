@@ -366,6 +366,7 @@ namespace PhasmophobiaCompanion.Services
                     .Include(e => e.OtherEquipmentStatBase)
                     .Include(e => e.UnfoldingItemBase)
                     .ThenInclude(u => u.Translations.Where(t => t.LanguageCode == languageCode))
+                    .Include(e => e.ClueBase)
                     .ToListAsync().ConfigureAwait(false);
 
                 // Преобразование данных в список объектов Equipment.
@@ -381,6 +382,7 @@ namespace PhasmophobiaCompanion.Services
                         Title = e.Translations.FirstOrDefault()?.Title,
                         Description = e.Translations.FirstOrDefault()?.Description,
                         Tier = e.Translations.FirstOrDefault()?.Tier,
+                        CluesID = e.ClueBase.Select(c => c.ID).ToList(),
                         OtherEquipmentStats = MapOtherEquipmentStat(e.OtherEquipmentStatBase, languageCode),
                         UnfoldingItems = MapUnfoldingItems(e.UnfoldingItemBase, languageCode)
                     })
@@ -420,6 +422,7 @@ namespace PhasmophobiaCompanion.Services
                     Apply = e.Apply,
                     UnlockLevel = e.UnlockLevel,
                     Clear = e.Clear,
+                    RelatedClues = e.RelatedClues,
                     OtherTier = e.OtherTier,
                     EmptyView = e.EmptyView
                 }).FirstOrDefault();

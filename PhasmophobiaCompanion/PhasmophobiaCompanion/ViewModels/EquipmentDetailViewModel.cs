@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
@@ -19,7 +19,6 @@ namespace PhasmophobiaCompanion.ViewModels
         private Equipment equipment;
         private EquipmentCommon equipmentCommon;
         private List<Equipment> equipmentsSameTypeCollection;
-        public ICommand EquipmentSelectedCommand { get; private set; }
 
         public EquipmentDetailViewModel(Equipment equipment)
         {
@@ -29,7 +28,12 @@ namespace PhasmophobiaCompanion.ViewModels
                 EquipmentCommon = dataService.GetEquipmentCommon();
                 EquipmentsSameTypeCollection = dataService.GetEquipmentsSameTypeCollection(equipment);
                 Equipment = equipment;
+                Equipment.EquipmentRelatedClues = new List<Clue>
+                (dataService.GetClues().Where(c => Equipment.CluesID.Contains(c.ID))
+                    .ToList());
+                if (Equipment.EquipmentRelatedClues.Count > 0) IsRelatedCluesExist = true;
                 EquipmentSelectedCommand = new Command<Equipment>(OnEquipmentSelected);
+                ClueSelectedCommand = new Command<Clue>(OpenCluePage);
             }
             catch (Exception ex)
             {
@@ -37,6 +41,38 @@ namespace PhasmophobiaCompanion.ViewModels
                 throw;
             }
         }
+
+        public bool IsRelatedCluesExist { get; set; }
+        public Equipment Equipment
+        {
+            get => equipment;
+            set
+            {
+                equipment = value;
+                OnPropertyChanged();
+            }
+        }
+        public EquipmentCommon EquipmentCommon
+        {
+            get => equipmentCommon;
+            set
+            {
+                equipmentCommon = value;
+                OnPropertyChanged();
+            }
+        }
+        public ICommand ClueSelectedCommand { get; private set; }
+        public ICommand EquipmentSelectedCommand { get; private set; }
+        public List<Equipment> EquipmentsSameTypeCollection
+        {
+            get => equipmentsSameTypeCollection;
+            set
+            {
+                equipmentsSameTypeCollection = value;
+                OnPropertyChanged();
+            }
+        }
+
         /// <summary>
         ///     Переход на подробную страницу выбранного снаряжения.
         /// </summary>
@@ -59,32 +95,21 @@ namespace PhasmophobiaCompanion.ViewModels
                 throw;
             }
         }
-        public List<Equipment> EquipmentsSameTypeCollection
-        {
-            get => equipmentsSameTypeCollection;
-            set
-            {
-                equipmentsSameTypeCollection = value;
-                OnPropertyChanged();
-            }
-        }
 
-        public Equipment Equipment
+        /// <summary>
+        ///     Переход на страницу связанного со снаряжением улики при нажатии на нее.
+        /// </summary>
+        private void OpenCluePage(Clue clueItem)
         {
-            get => equipment;
-            set
+            try
             {
-                equipment = value;
-                OnPropertyChanged();
+                var page = new ClueDetailPage(clueItem);
+                Application.Current.MainPage.Navigation.PushAsync(page);
             }
-        }
-        public EquipmentCommon EquipmentCommon
-        {
-            get => equipmentCommon;
-            set
+            catch (Exception ex)
             {
-                equipmentCommon = value;
-                OnPropertyChanged();
+                Log.Error(ex, "Ошибка во время перехода на страницу улики с подробной страницы снаряжения.");
+                throw;
             }
         }
     }

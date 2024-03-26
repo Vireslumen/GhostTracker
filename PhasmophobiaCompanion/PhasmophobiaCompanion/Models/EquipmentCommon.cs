@@ -49,6 +49,10 @@
         /// </summary>
         public string PriceUnlock { get; set; }
         /// <summary>
+        ///     Текс для названия списка связанных с снаряжением улик. Примеры: "Related Clues", "Связанные улики".
+        /// </summary>
+        public string RelatedClues { get; set; }
+        /// <summary>
         ///     Текст для поля поиска снаряжения. Примеры: "Search Equipments", "Поиск Снаряжения".
         /// </summary>
         public string Search { get; set; }

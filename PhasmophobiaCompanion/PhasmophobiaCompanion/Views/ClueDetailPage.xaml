@@ -61,7 +61,6 @@
                                 Text="{Binding Clue.Description}"
                                 TextColor="#444"
                                 VerticalOptions="CenterAndExpand" />
-
                         </ScrollView>
 
                     </Grid>

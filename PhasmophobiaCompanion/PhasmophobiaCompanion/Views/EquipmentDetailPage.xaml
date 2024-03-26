@@ -233,7 +233,47 @@
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </StackLayout>
+                <!--  Список улик связанных с данным снаряжением  -->
+                <yummy:PancakeView
+                    Padding="10,10,10,10"
+                    BackgroundColor="White"
+                    CornerRadius="16"
+                    IsVisible="{Binding IsRelatedCluesExist}">
+                    <yummy:PancakeView.Shadow>
+                        <yummy:DropShadow />
+                    </yummy:PancakeView.Shadow>
+                    <yummy:PancakeView.Margin>
+                        <Thickness>
+                            10,3,10,10
+                        </Thickness>
+                    </yummy:PancakeView.Margin>
+                    <yummy:PancakeView.Border>
+                        <yummy:Border Thickness="1" Color="Color.Default" />
+                    </yummy:PancakeView.Border>
+                    <StackLayout Padding="5" Spacing="20">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            Text="{Binding EquipmentCommon.RelatedClues}" />
+                        <StackLayout
+                            x:Name="cluesStackLayout"
+                            Padding="5"
+                            BindableLayout.ItemsSource="{Binding Equipment.EquipmentRelatedClues}"
+                            Spacing="15">
 
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout>
+                                        <Label FontAttributes="Bold" Text="{Binding Title}" />
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.ClueSelectedCommand, Source={x:Reference Name=cluesStackLayout}}" CommandParameter="{Binding .}" />
+                                        </StackLayout.GestureRecognizers>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                    </StackLayout>
+                </yummy:PancakeView>
             </StackLayout>
         </ScrollView>
     </StackLayout>

@@ -19,6 +19,7 @@ namespace PhasmophobiaCompanion.Data
         public string OtherTier { get; set; }
         public string Price { get; set; }
         public string PriceUnlock { get; set; }
+        public string RelatedClues { get; set; }
         public string Search { get; set; }
         public string Tier { get; set; }
         public string UnlockLevel { get; set; }

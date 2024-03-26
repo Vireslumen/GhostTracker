@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace PhasmophobiaCompanion.Models
 {
@@ -13,6 +12,8 @@ namespace PhasmophobiaCompanion.Models
         public int MaxLimit { get; set; }
         public int UnlockCost { get; set; }
         public int UnlockLevel { get; set; }
+        public List<Clue> EquipmentRelatedClues { get; set; }
+        public List<int> CluesID { get; set; }
         /// <summary>
         ///     Прочие характеристики снаряжения.
         /// </summary>
