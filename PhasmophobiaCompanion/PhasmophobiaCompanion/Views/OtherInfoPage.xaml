@@ -70,6 +70,7 @@
                                         <!--  Краткое описание раскрывающегося элемента  -->
                                         <Label
                                             Margin="0,5,0,0"
+                                            Padding="10,0,0,0"
                                             FontSize="14"
                                             Text="{Binding Header}"
                                             VerticalOptions="CenterAndExpand" />
@@ -84,6 +85,7 @@
                                         <!--  Описание раскрывающегося элемента  -->
                                         <Label
                                             Margin="0,10,0,0"
+                                            Padding="10,0,0,0"
                                             FontSize="14"
                                             Text="{Binding Body}" />
                                         <!--  Список изображений и описания к ним  -->
@@ -143,6 +145,7 @@
                                         <!--  Краткое описание раскрывающегося элемента  -->
                                         <Label
                                             Margin="0,5,0,0"
+                                            Padding="10,0,0,0"
                                             FontSize="14"
                                             Text="{Binding Header}" />
                                         <!--  Иконка раскрытия или скрытия тела элемента  -->
@@ -155,6 +158,7 @@
                                     <!--  Раскрывающийся текст  -->
                                     <Label
                                         Margin="0,10,0,0"
+                                        Padding="10,0,0,0"
                                         FontSize="14"
                                         IsVisible="{Binding IsExpanded}"
                                         Text="{Binding Body}" />
