@@ -20,6 +20,7 @@ namespace PhasmophobiaCompanion.ViewModels
         private ChallengeMode challengeMode;
         private ChallengeModeCommon challengeModeCommon;
         private DifficultyCommon difficultyCommon;
+        private EquipmentCommon equipmentCommon;
 
         public ChallengeModeDetailViewModel(ChallengeMode challengeMode)
         {
@@ -27,6 +28,7 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 dataService = DependencyService.Get<DataService>();
                 DifficultyCommon = dataService.GetDifficultyCommon();
+                EquipmentCommon = dataService.GetEquipmentCommon();
                 ChallengeMode = challengeMode;
                 ChallengeModeCommon = dataService.GetChallengeModeCommon();
                 SetChallengeModeData();
@@ -53,6 +55,11 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             get => challengeModeCommon;
             set => SetProperty(ref challengeModeCommon, value);
+        }
+        public EquipmentCommon EquipmentCommon
+        {
+            get => equipmentCommon;
+            set => SetProperty(ref equipmentCommon, value);
         }
         public DifficultyCommon DifficultyCommon
         {

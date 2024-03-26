@@ -122,7 +122,9 @@
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span FontAttributes="Bold" Text="{Binding Title}" />
-                                                <Span Text=" Tier " />
+                                                <Span Text=" " />
+                                                <Span Text="{Binding Path=BindingContext.EquipmentCommon.Tier, Source={x:Reference Name=equipmentsStackLayout}}" />
+                                                <Span Text=" " />
                                                 <Span Text="{Binding Tier}" />
                                             </FormattedString>
                                         </Label.FormattedText>
@@ -142,7 +144,7 @@
                 BackgroundColor="White"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
-                    <yummy:DropShadow  />
+                    <yummy:DropShadow />
                 </yummy:PancakeView.Shadow>
                 <yummy:PancakeView.Margin>
                     <Thickness>
