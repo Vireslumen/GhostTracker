@@ -24,11 +24,11 @@ namespace PhasmophobiaCompanion.ViewModels
         private readonly List<Map> maps;
         private int maxRoomSaved;
         private int minRoomSaved;
+        private List<object> selectedSizesSaved;
+        private List<string> allSizes;
         private MapCommon mapCommon;
         private ObservableCollection<Map> filteredMaps;
         private ObservableCollection<object> selectedSizes;
-        private List<object> selectedSizesSaved;
-        private List<string> allSizes;
         private string maxRoom;
         private string minRoom;
 
@@ -68,6 +68,11 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand FilterClearCommand { get; private set; }
         public ICommand FilterCommand { get; private set; }
         public ICommand MapSelectedCommand { get; private set; }
+        public List<string> AllSizes
+        {
+            get => allSizes;
+            set => SetProperty(ref allSizes, value);
+        }
         /// <summary>
         ///     Общие текстовые данные для интерфейса относящегося к картам.
         /// </summary>
@@ -93,13 +98,16 @@ namespace PhasmophobiaCompanion.ViewModels
             get => selectedSizes;
             set => SetProperty(ref selectedSizes, value);
         }
-        public List<string> AllSizes
+        public string FilterColor
         {
-            get => allSizes;
-            set => SetProperty(ref allSizes, value);
+            get
+            {
+                var currentTheme = Application.Current.RequestedTheme;
+                return SelectedSizes.Any() || minRoomSaved != 0 || maxRoomSaved != 100
+                    ? currentTheme == OSAppTheme.Dark ? "#FD7E14" : "#FD7E14"
+                    : "White";
+            }
         }
-        public string FilterColor =>
-            SelectedSizes.Any() || minRoomSaved != 0 || maxRoomSaved != 100 ? "Yellow" : "White";
         public string MaxRoom
         {
             get => maxRoom;

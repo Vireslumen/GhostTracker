@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
@@ -26,10 +25,10 @@ namespace PhasmophobiaCompanion.ViewModels
         private EquipmentCommon equipmentCommon;
         private int maxUnlockLevelSaved;
         private int minUnlockLevelSaved;
-        private ObservableCollection<Equipment> filteredEquipments;
-        private ObservableCollection<object> selectedTiers;
         private List<object> selectedTiersSaved;
         private List<string> allTiers;
+        private ObservableCollection<Equipment> filteredEquipments;
+        private ObservableCollection<object> selectedTiers;
         private string maxUnlockLevel;
         private string minUnlockLevel;
 
@@ -84,6 +83,14 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand FilterClearCommand { get; private set; }
         public ICommand FilterCommand { get; private set; }
         /// <summary>
+        ///     Коллекция всех доступных тиров оборудования.
+        /// </summary>
+        public List<string> AllTiers
+        {
+            get => allTiers;
+            set => SetProperty(ref allTiers, value);
+        }
+        /// <summary>
         ///     Коллекция отображаемого снаряжения, которая может быть отфильтрована.
         /// </summary>
         public ObservableCollection<Equipment> Equipments
@@ -99,19 +106,17 @@ namespace PhasmophobiaCompanion.ViewModels
             get => selectedTiers;
             set => SetProperty(ref selectedTiers, value);
         }
-        /// <summary>
-        ///     Коллекция всех доступных тиров оборудования.
-        /// </summary>
-        public List<string> AllTiers
+        public string FilterColor
         {
-            get => allTiers;
-            set => SetProperty(ref allTiers, value);
+            get
+            {
+                var currentTheme = Application.Current.RequestedTheme;
+                return SelectedTiers.Any() || minUnlockLevelSaved != MinUnlockLevelDefault ||
+                       maxUnlockLevelSaved != MaxUnlockLevelDefault
+                    ? currentTheme == OSAppTheme.Dark ? "#FD7E14" : "#FD7E14"
+                    : "White";
+            }
         }
-        public string FilterColor =>
-            SelectedTiers.Any() || minUnlockLevelSaved != MinUnlockLevelDefault ||
-            maxUnlockLevelSaved != MaxUnlockLevelDefault
-                ? "Yellow"
-                : "White";
         public string MaxUnlockLevel
         {
             get => maxUnlockLevel;

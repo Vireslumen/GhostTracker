@@ -22,9 +22,9 @@ namespace PhasmophobiaCompanion.ViewModels
         private readonly List<Ghost> ghosts;
         private GhostCommon ghostCommon;
         private List<Clue> allClues;
+        private List<object> selectedCluesSaved;
         private ObservableCollection<Ghost> filteredGhosts;
         private ObservableCollection<object> selectedClues;
-        private List<object> selectedCluesSaved;
 
         public GhostsViewModel()
         {
@@ -32,7 +32,7 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 dataService = DependencyService.Get<DataService>();
                 //Загрузка всех призраков и улик.
-                ghosts = dataService.GetGhosts().OrderBy(g=>g.Title).ToList();
+                ghosts = dataService.GetGhosts().OrderBy(g => g.Title).ToList();
                 allClues = dataService.GetClues();
                 SelectedClues = new ObservableCollection<object>();
                 selectedCluesSaved = new List<object>();
@@ -89,7 +89,14 @@ namespace PhasmophobiaCompanion.ViewModels
             get => selectedClues;
             set => SetProperty(ref selectedClues, value);
         }
-        public string FilterColor => SelectedClues.Any() ? "Yellow" : "White";
+        public string FilterColor
+        {
+            get
+            {
+                var currentTheme = Application.Current.RequestedTheme;
+                return SelectedClues.Any() ? currentTheme == OSAppTheme.Dark ? "#FD7E14" : "#FD7E14" : "White";
+            }
+        }
 
         /// <summary>
         ///     Фильтрация списка призраков на основе выбранных улик.

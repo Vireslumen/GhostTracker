@@ -4,7 +4,6 @@
     x:Class="PhasmophobiaCompanion.Views.GhostPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     BackgroundColor="Black"
     NavigationPage.HasNavigationBar="False">
@@ -33,20 +32,22 @@
                     Placeholder="{Binding GhostCommon.Search}"
                     Text="{Binding SearchText, Mode=TwoWay}" />
                 <!--  Кнопка фильтрации призраков  -->
-                <Image
+                <yummy:PancakeView
+                    Padding="3"
                     BackgroundColor="{Binding FilterColor}"
-                    HeightRequest="25"
+                    CornerRadius="28"
+                    HeightRequest="28"
                     HorizontalOptions="StartAndExpand"
-                    Source="filter_icon"
                     VerticalOptions="CenterAndExpand"
-                    WidthRequest="25">
-                    <Image.Margin>
-                        0,0,10,0
-                    </Image.Margin>
-                    <Image.GestureRecognizers>
+                    WidthRequest="28">
+                    <Image
+                        HeightRequest="25"
+                        Source="filter_icon"
+                        WidthRequest="25" />
+                    <yummy:PancakeView.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding FilterCommand}" />
-                    </Image.GestureRecognizers>
-                </Image>
+                    </yummy:PancakeView.GestureRecognizers>
+                </yummy:PancakeView>
             </StackLayout>
         </yummy:PancakeView>
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">

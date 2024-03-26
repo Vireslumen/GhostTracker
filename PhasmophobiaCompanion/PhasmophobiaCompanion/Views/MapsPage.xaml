@@ -32,20 +32,22 @@
                     Placeholder="{Binding MapCommon.Search}"
                     Text="{Binding SearchText, Mode=TwoWay}" />
                 <!--  Кнопка фильтрации карт  -->
-                <Image
+                <yummy:PancakeView
+                    Padding="3"
                     BackgroundColor="{Binding FilterColor}"
-                    HeightRequest="25"
+                    CornerRadius="28"
+                    HeightRequest="28"
                     HorizontalOptions="StartAndExpand"
-                    Source="filter_icon"
                     VerticalOptions="CenterAndExpand"
-                    WidthRequest="25">
-                    <Image.Margin>
-                        0,0,10,0
-                    </Image.Margin>
-                    <Image.GestureRecognizers>
+                    WidthRequest="28">
+                    <Image
+                        HeightRequest="25"
+                        Source="filter_icon"
+                        WidthRequest="25" />
+                    <yummy:PancakeView.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding FilterCommand}" />
-                    </Image.GestureRecognizers>
-                </Image>
+                    </yummy:PancakeView.GestureRecognizers>
+                </yummy:PancakeView>
             </StackLayout>
         </yummy:PancakeView>
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
