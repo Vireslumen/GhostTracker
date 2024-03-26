@@ -320,26 +320,17 @@
                                                         </Span.GestureRecognizers>
                                                     </Span>
                                                     <Span Text=": " />
-                                                    <Span Text="{Binding MinGhostSpeed}">
-                                                        <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.MinGhostSpeedTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}" CommandParameter="{Binding .}" />
-                                                        </Span.GestureRecognizers>
-                                                    </Span>
+                                                    <Span Text="{Binding MinGhostSpeed}" />
                                                     <Span Text=" - " />
-                                                    <Span Text="{Binding MaxGhostSpeed}">
-                                                        <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.MaxGhostSpeedTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}" CommandParameter="{Binding .}" />
-                                                        </Span.GestureRecognizers>
-                                                    </Span>
+                                                    <Span Text="{Binding MaxGhostSpeed}" />
                                                     <Span Text=" (" />
-                                                    <Span Text="{Binding MaxGhostSpeedLoS}">
-                                                        <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.MaxGhostSpeedLoSTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}" CommandParameter="{Binding .}" />
-                                                        </Span.GestureRecognizers>
-                                                    </Span>
+                                                    <Span Text="{Binding MaxGhostSpeedLoS}" />
                                                     <Span Text=")" />
                                                 </FormattedString>
                                             </Label.FormattedText>
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSpeedTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}" CommandParameter="{Binding .}" />
+                                            </Label.GestureRecognizers>
                                         </Label>
                                     </ViewCell>
                                 </DataTemplate>
@@ -411,19 +402,14 @@
                                                         </Span.GestureRecognizers>
                                                     </Span>
                                                     <Span Text=": " />
-                                                    <Span Text="{Binding MinSanityHunt}">
-                                                        <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.MinSanityHuntTappedCommand, Source={x:Reference Name=ghostListViewSanity}}" CommandParameter="{Binding .}" />
-                                                        </Span.GestureRecognizers>
-                                                    </Span>
+                                                    <Span Text="{Binding MinSanityHunt}" />
                                                     <Span Text=" - " />
-                                                    <Span Text="{Binding MaxSanityHunt}">
-                                                        <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.MaxSanityHuntTappedCommand, Source={x:Reference Name=ghostListViewSanity}}" CommandParameter="{Binding .}" />
-                                                        </Span.GestureRecognizers>
-                                                    </Span>
+                                                    <Span Text="{Binding MaxSanityHunt}" />
                                                 </FormattedString>
                                             </Label.FormattedText>
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.SanityHuntTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}" CommandParameter="{Binding .}" />
+                                            </Label.GestureRecognizers>
                                         </Label>
                                     </ViewCell>
                                 </DataTemplate>

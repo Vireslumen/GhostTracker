@@ -56,15 +56,12 @@ namespace PhasmophobiaCompanion.ViewModels
                 ClueTappedCommand = new Command<Clue>(OnClueTapped);
                 DifficultyTappedCommand = new Command<Difficulty>(OnDifficultyTapped);
                 GhostTappedCommand = new Command<Ghost>(OnGhostTapped);
-                MaxGhostSpeedLoSTappedCommand = new Command<Ghost>(OnMaxGhostSpeedLoSTapped);
-                MaxGhostSpeedTappedCommand = new Command<Ghost>(OnMaxGhostSpeedTapped);
                 MaxSanityHeaderTappedCommand = new Command(OnMaxSanityHeaderTapped);
-                MaxSanityHuntTappedCommand = new Command<Ghost>(OnMaxSanityHuntTapped);
+                SanityHuntTappedCommand = new Command<Ghost>(OnSanityHuntTapped);
                 MaxSpeedHeaderTappedCommand = new Command(OnMaxSpeedHeaderTapped);
                 MaxSpeedLoSHeaderTappedCommand = new Command(OnMaxSpeedLoSHeaderTapped);
-                MinGhostSpeedTappedCommand = new Command<Ghost>(OnMinGhostSpeedTapped);
+                GhostSpeedTappedCommand = new Command<Ghost>(OnGhostSpeedTapped);
                 MinSanityHeaderTappedCommand = new Command(OnMinSanityHeaderTapped);
-                MinSanityHuntTappedCommand = new Command<Ghost>(OnMinSanityHuntTapped);
                 MinSpeedHeaderTappedCommand = new Command(OnMinSpeedHeaderTapped);
                 OtherPageTappedCommand = new Command<ITitledItem>(OnOtherPageTapped);
                 PatchTappedCommand = new Command<Patch>(OnPatchTapped);
@@ -97,24 +94,21 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand ChallengeModeTappedCommand { get; private set; }
         public ICommand ClueTappedCommand { get; private set; }
         public ICommand DifficultyTappedCommand { get; private set; }
+        public ICommand GhostSpeedTappedCommand { get; private set; }
         public ICommand GhostTappedCommand { get; private set; }
-        public ICommand MaxGhostSpeedLoSTappedCommand { get; private set; }
-        public ICommand MaxGhostSpeedTappedCommand { get; private set; }
         public ICommand MaxPlayerSpeedTappedCommand { get; private set; }
         public ICommand MaxSanityHeaderTappedCommand { get; private set; }
-        public ICommand MaxSanityHuntTappedCommand { get; private set; }
         public ICommand MaxSpeedHeaderTappedCommand { get; private set; }
         public ICommand MaxSpeedLoSHeaderTappedCommand { get; private set; }
-        public ICommand MinGhostSpeedTappedCommand { get; private set; }
         public ICommand MinPlayerSpeedTappedCommand { get; private set; }
         public ICommand MinSanityHeaderTappedCommand { get; private set; }
-        public ICommand MinSanityHuntTappedCommand { get; private set; }
         public ICommand MinSpeedHeaderTappedCommand { get; private set; }
         public ICommand OkCommand { get; private set; }
         public ICommand OtherPageTappedCommand { get; private set; }
         public ICommand PatchTappedCommand { get; private set; }
         public ICommand QuestTappedCommand { get; private set; }
         public ICommand ReadMoreCommand { get; private set; }
+        public ICommand SanityHuntTappedCommand { get; private set; }
         public ICommand TipTappedCommand { get; private set; }
         public List<Clue> Clues { get; set; }
         public List<Difficulty> Difficulties { get; set; }
@@ -349,6 +343,29 @@ namespace PhasmophobiaCompanion.ViewModels
         }
 
         /// <summary>
+        ///     Отображение всплывающей подсказки по скорости призрака на экране.
+        /// </summary>
+        private async void OnGhostSpeedTapped(Ghost ghostItem)
+        {
+            try
+            {
+                var ghostSpeedClause = GhostCommon.Min;
+                if (ghostItem.MinGhostSpeedClause == ghostItem.MaxGhostSpeedClause)
+                    ghostSpeedClause += "-" + GhostCommon.Max + ": " + ghostItem.MinGhostSpeedClause;
+                else
+                    ghostSpeedClause += ": " + ghostItem.MinGhostSpeedClause + "\n" + GhostCommon.Max + ": " +
+                                        ghostItem.MaxGhostSpeedClause;
+                ghostSpeedClause += "\n" + GhostCommon.Max + GhostCommon.LoS + ": " + ghostItem.MaxGhostSpeedLoSClause;
+                await PopupNavigation.Instance.PushAsync(new TooltipPopup(ghostSpeedClause));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки ghostSpeedClause.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Переход на подробную страницу призрака по нажатию на него.
         /// </summary>
         private void OnGhostTapped(Ghost ghostItem)
@@ -362,40 +379,6 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 Log.Error(ex,
                     "Ошибка во время перехода на подробную страницу призрака GhostDetailPage с главной страницы MainPage.");
-                throw;
-            }
-        }
-
-        /// <summary>
-        ///     Отображение всплывающей подсказки по максимальной скорости призрака с учётом LoS на экране.
-        /// </summary>
-        private async void OnMaxGhostSpeedLoSTapped(Ghost ghostItem)
-        {
-            try
-            {
-                var maxGhostSpeedLoSClause = ghostItem.MaxGhostSpeedLoSClause;
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(maxGhostSpeedLoSClause));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxGhostSpeedLoSClause.");
-                throw;
-            }
-        }
-
-        /// <summary>
-        ///     Отображение всплывающей подсказки по максимальной скорости призрака на экране.
-        /// </summary>
-        private async void OnMaxGhostSpeedTapped(Ghost ghostItem)
-        {
-            try
-            {
-                var maxGhostSpeedClause = ghostItem.MaxGhostSpeedClause;
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(maxGhostSpeedClause));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxGhostSpeedClause.");
                 throw;
             }
         }
@@ -433,23 +416,6 @@ namespace PhasmophobiaCompanion.ViewModels
         }
 
         /// <summary>
-        ///     Отображение всплывающей подсказки по максимуму минимального порога рассудка для начала охоты на экране.
-        /// </summary>
-        private async void OnMaxSanityHuntTapped(Ghost ghostItem)
-        {
-            try
-            {
-                var maxSanityHuntClause = ghostItem.MaxSanityHuntClause;
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(maxSanityHuntClause));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxSanityHuntClause.");
-                throw;
-            }
-        }
-
-        /// <summary>
         ///     Отображение всплывающей подсказки по заголовку максимальной скорости призрака на экране.
         /// </summary>
         private async void OnMaxSpeedHeaderTapped()
@@ -482,23 +448,6 @@ namespace PhasmophobiaCompanion.ViewModels
         }
 
         /// <summary>
-        ///     Отображение всплывающей подсказки по минимальной скорости призрака на экране.
-        /// </summary>
-        private async void OnMinGhostSpeedTapped(Ghost ghostItem)
-        {
-            try
-            {
-                var minGhostSpeedClause = ghostItem.MinGhostSpeedClause;
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(minGhostSpeedClause));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки minGhostSpeedClause.");
-                throw;
-            }
-        }
-
-        /// <summary>
         ///     Отображение всплывающей подсказки по минимальной скорости игрока на экране.
         /// </summary>
         private async void OnMinPlayerSpeedTapped()
@@ -526,23 +475,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время отображение всплывающей подсказки MinSanityHunt.");
-                throw;
-            }
-        }
-
-        /// <summary>
-        ///     Отображение всплывающей подсказки по минимуму минимального порога рассудка для начала охоты на экране.
-        /// </summary>
-        private async void OnMinSanityHuntTapped(Ghost ghostItem)
-        {
-            try
-            {
-                var minSanityHuntClause = ghostItem.MinSanityHuntClause;
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(minSanityHuntClause));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки minSanityHuntClause.");
                 throw;
             }
         }
@@ -623,6 +555,28 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxGhostSpeedClause.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Отображение всплывающей подсказки по порогу рассудка для начала охоты на экране.
+        /// </summary>
+        private async void OnSanityHuntTapped(Ghost ghostItem)
+        {
+            try
+            {
+                var ghostSanityHuntClause = GhostCommon.Min;
+                if (ghostItem.MinSanityHuntClause == ghostItem.MaxSanityHuntClause)
+                    ghostSanityHuntClause += "-" + GhostCommon.Max + ": " + ghostItem.MinSanityHuntClause;
+                else
+                    ghostSanityHuntClause += ": " + ghostItem.MinSanityHuntClause + "\n" + GhostCommon.Max + ": " +
+                                             ghostItem.MaxSanityHuntClause;
+                await PopupNavigation.Instance.PushAsync(new TooltipPopup(ghostSanityHuntClause));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxSanityHuntClause.");
                 throw;
             }
         }
