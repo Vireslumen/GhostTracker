@@ -30,12 +30,7 @@
                 HorizontalOptions="Center"
                 Orientation="Horizontal"
                 VerticalOptions="Center">
-                <ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand">
-                    <Image
-                        HeightRequest="64"
-                        Source="xamarin_logo.png"
-                        VerticalOptions="Center" />
-                </ContentView>
+                <ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand" />
             </StackLayout>
         </StackLayout>
         <ScrollView Grid.Row="1">
