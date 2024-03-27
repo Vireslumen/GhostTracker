@@ -54,10 +54,13 @@
                             VerticalOptions="StartAndExpand" />
                         <!--  Список улик призрака  -->
                         <StackLayout>
-                            <StackLayout
+                            <FlexLayout
                                 x:Name="ghostFlexLayout"
+                                AlignItems="Start"
                                 BindableLayout.ItemsSource="{Binding Ghost.Clues}"
-                                Orientation="Horizontal">
+                                Direction="Row"
+                                JustifyContent="Start"
+                                Wrap="Wrap">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
                                         <StackLayout
@@ -76,7 +79,7 @@
                                         </StackLayout>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
-                            </StackLayout>
+                            </FlexLayout>
 
                         </StackLayout>
                     </StackLayout>
