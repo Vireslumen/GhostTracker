@@ -523,7 +523,8 @@ namespace PhasmophobiaCompanion.Services
         ///     Этот метод сначала пытается загрузить данные из файла кэша. Если файл кэша не найден,
         ///     данные загружаются из базы данных с помощью предоставленной функции и затем кэшируются.
         /// </remarks>
-        public async Task<T> LoadDataAsync<T>(string cacheFileName, Func<Task<T>> databaseLoadFunction)
+        public async Task<T> LoadDataAsync<T>(string cacheFileName, Func<Task<T>> databaseLoadFunction,
+            bool notAwaitWrite = true)
         {
             try
             {
@@ -531,14 +532,22 @@ namespace PhasmophobiaCompanion.Services
                 // Проверка наличия кэша
                 if (File.Exists(filePath))
                 {
-                    var cachedData = File.ReadAllText(filePath);
+                    var cachedData = await File.ReadAllTextAsync(filePath);
                     return JsonConvert.DeserializeObject<T>(cachedData);
                 }
 
                 // Загрузка данных из базы данных и кэширование
                 var data = await databaseLoadFunction();
                 var serializedData = JsonConvert.SerializeObject(data);
-                File.WriteAllText(filePath, serializedData);
+                if (notAwaitWrite)
+                    File.WriteAllTextAsync(filePath, serializedData).ContinueWith(task =>
+                    {
+                        if (task.Exception != null)
+
+                            Log.Error(task.Exception, "Ошибка во время асинхронной записи в файл.");
+                    });
+                else
+                    await File.WriteAllTextAsync(filePath, serializedData);
                 return data;
             }
             catch (Exception ex)
