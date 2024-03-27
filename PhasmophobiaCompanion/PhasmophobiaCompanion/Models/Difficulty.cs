@@ -6,22 +6,6 @@
     public class Difficulty
     {
         /// <summary>
-        ///     Работает ли монитор активности призрака.
-        /// </summary>
-        public bool ActivityMonitorWork { get; set; }
-        /// <summary>
-        ///     Будет ли включен эл. щиток в начале игровой сессии.
-        /// </summary>
-        public bool ElectricityOn { get; set; }
-        /// <summary>
-        ///     Доступны ли проклятые предметы на этой сложности.
-        /// </summary>
-        public bool IsCursedAvailable { get; set; }
-        /// <summary>
-        ///     Работает ли монитор рассудка игроков.
-        /// </summary>
-        public bool SanityMonitorWork { get; set; }
-        /// <summary>
         ///     Коэффициент награды за завершение игровой сессии.
         /// </summary>
         public float RewardMultiplier { get; set; }
@@ -47,6 +31,10 @@
         /// </summary>
         public int UnlockLevel { get; set; }
         /// <summary>
+        ///     Работает ли монитор активности призрака.
+        /// </summary>
+        public string ActivityMonitorWork { get; set; }
+        /// <summary>
         ///     Какой процент денег потраченных на снаряжение вернется игроку при смерти.
         /// </summary>
         public string DeadCashBack { get; set; }
@@ -59,6 +47,10 @@
         ///     Показывается ли электрический щиток на карте.
         /// </summary>
         public string ElectricityBlockNotShowedOnMap { get; set; }
+        /// <summary>
+        ///     Будет ли включен эл. щиток в начале игровой сессии.
+        /// </summary>
+        public string ElectricityOn { get; set; }
         /// <summary>
         ///     Информация об ультрафиолетовых отпечатках призрака.
         /// </summary>
@@ -80,9 +72,17 @@
         /// </summary>
         public string HuntExtendByKilling { get; set; }
         /// <summary>
+        ///     Доступны ли проклятые предметы на этой сложности.
+        /// </summary>
+        public string IsCursedAvailable { get; set; }
+        /// <summary>
         ///     Показывает ли доска задач отвечает ли призрак всем или одному.
         /// </summary>
         public string ObjectiveBoardPendingAloneAll { get; set; }
+        /// <summary>
+        ///     Работает ли монитор рассудка игроков.
+        /// </summary>
+        public string SanityMonitorWork { get; set; }
         /// <summary>
         ///     Начальное значение рассудка.
         /// </summary>
