@@ -3,11 +3,20 @@
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.LoadingScreenPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="Black">
     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
         <!--  Кружок загрузки  -->
-        <ActivityIndicator IsRunning="True" />
+        <Image
+            HeightRequest="200"
+            IsAnimationPlaying="True"
+            Source="ghostLoading.gif"
+            WidthRequest="200" />
         <!--  Текст загрузки  -->
-        <Label HorizontalOptions="Center" Text="Loading..." />
+        <Label
+            FontSize="18"
+            HorizontalOptions="Center"
+            Text="Loading..."
+            TextColor="White" />
     </StackLayout>
 </ContentPage>
