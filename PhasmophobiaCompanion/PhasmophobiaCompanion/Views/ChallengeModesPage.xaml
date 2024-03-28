@@ -7,7 +7,7 @@
     xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     Shell.TabBarIsVisible="False">
     <ScrollView>
-        <StackLayout Padding="10,10,10,0">
+        <StackLayout Padding="0,10,0,0">
 
             <!--  Заголовок страницы  -->
             <Label
@@ -26,13 +26,12 @@
                 Text="{Binding ChallengeModeCommon.Description}" />
 
             <!--  Список особых режимов  -->
-            <CollectionView
+            <StackLayout
                 x:Name="challengeModeCollection"
                 Margin="10"
-                ItemsSource="{Binding ChallengeModes}"
-                SelectionMode="None">
+                BindableLayout.ItemsSource="{Binding ChallengeModes}">
 
-                <CollectionView.ItemTemplate>
+                <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="10,0,10,15">
                             <pancakeView:PancakeView
@@ -43,8 +42,7 @@
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand">
                                 <pancakeView:PancakeView.Shadow>
-                                    <pancakeView:DropShadow
-                                        BlurRadius="10"/>
+                                    <pancakeView:DropShadow BlurRadius="10" />
                                 </pancakeView:PancakeView.Shadow>
 
                                 <StackLayout>
@@ -64,8 +62,8 @@
 
                         </StackLayout>
                     </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
         </StackLayout>
     </ScrollView>
 </ContentPage>
