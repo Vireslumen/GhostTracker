@@ -46,6 +46,64 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        ///     Асинхронно возвращает общие данные для достижений - Achievement, на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Общие данные для достижений.</returns>
+        public async Task<AchievementCommon> GetAchievementCommonAsync(string languageCode)
+        {
+            try
+            {
+                // Загрузка данных с учетом перевода и связанных сущностей.
+                var achievementCommonData = await phasmaDbContext.AchievementCommonTranslations
+                    .Where(e => e.LanguageCode == languageCode).ToListAsync();
+
+                //Преобразование данных в объект AchievementCommon.
+                return achievementCommonData.Select(a => new AchievementCommon
+                {
+                    Title = a.Title,
+                    Description = a.Description
+                }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки из бд общих названия для достижений.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Асинхронно возвращает список достижений - Achievement на основе кода языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Список достижений.</returns>
+        public async Task<List<Achievement>> GetAchievementsAsync(string languageCode)
+        {
+            try
+            {
+                // Загрузка данных с учетом перевода и связанных сущностей.
+                var achievementData = await phasmaDbContext.AchievementBase
+                    .Include(a => a.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ToListAsync().ConfigureAwait(false);
+
+                // Преобразование данных в список объектов Achievement.
+                return achievementData
+                    .Select(a => new Achievement
+                    {
+                        ImageFilePath = a.ImageFilePath,
+                        Title = a.Translations.FirstOrDefault()?.Title,
+                        Description = a.Translations.FirstOrDefault()?.Description,
+                        Tip = a.Translations.FirstOrDefault()?.Tip
+                    }).ToList();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки из бд достижений.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Асинхронно возвращает общие данные для квестов - ChallengeMode, на основе языка.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>

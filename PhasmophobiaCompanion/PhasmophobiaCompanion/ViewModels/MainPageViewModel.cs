@@ -45,6 +45,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 OtherInfos = new List<ITitledItem>();
                 OtherInfos.Add(dataService.GetQuestCommon());
                 OtherInfos.Add(dataService.GetChallengeModeCommon());
+                OtherInfos.Add(dataService.GetAchievementCommon());
                 OtherInfos.AddRange(dataService.GetOtherInfos());
                 MainPageCommon = dataService.GetMainPageCommon();
                 displayedTip = Tips[random.Next(Tips.Count)];
@@ -515,6 +516,11 @@ namespace PhasmophobiaCompanion.ViewModels
                 else if (otherInfoItem is ChallengeModeCommon)
                 {
                     var page = new ChallengeModesPage();
+                    Application.Current.MainPage.Navigation.PushAsync(page);
+                }
+                else if (otherInfoItem is AchievementCommon)
+                {
+                    var page = new AchievementPage();
                     Application.Current.MainPage.Navigation.PushAsync(page);
                 }
             }

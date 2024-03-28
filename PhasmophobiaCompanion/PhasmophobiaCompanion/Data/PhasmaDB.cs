@@ -11,6 +11,9 @@ namespace PhasmophobiaCompanion.Data
     public class PhasmaDB : DbContext
     {
         //Определения DbSet для различных сущностей.
+        public DbSet<AchievementCommonTranslations> AchievementCommonTranslations { get; set; }
+        public DbSet<AchievementTranslations> AchievementTranslations { get; set; }
+        public DbSet<AchievementBase> AchievementBase { get; set; }
         public DbSet<ChallengeModeBase> ChallengeModeBase { get; set; }
         public DbSet<ChallengeModeCommonTranslations> ChallengeModeCommonTranslations { get; set; }
         public DbSet<ClueBase> ClueBase { get; set; }

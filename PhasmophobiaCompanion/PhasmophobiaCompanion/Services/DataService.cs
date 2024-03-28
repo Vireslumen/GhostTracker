@@ -25,12 +25,14 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public string FolderPath;
 
+        private AchievementCommon achievementCommon;
         private ChallengeModeCommon challengeModeCommon;
         private ClueCommon clueCommon;
         private CursedPossessionCommon cursedPossessionCommon;
         private DifficultyCommon difficultyCommon;
         private EquipmentCommon equipmentCommon;
         private GhostCommon ghostCommon;
+        private List<Achievement> achievements;
         private List<ChallengeMode> challengeModes;
         private List<Clue> clues;
         private List<CursedPossession> curseds;
@@ -70,6 +72,32 @@ namespace PhasmophobiaCompanion.Services
         public bool NewPatch { get; set; }
         public event Action CursedsDataLoaded;
         public event Action EquipmentsDataLoaded;
+
+        public AchievementCommon GetAchievementCommon()
+        {
+            try
+            {
+                return achievementCommon;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения общих данных для достижений.");
+                throw;
+            }
+        }
+
+        public List<Achievement> GetAchievements()
+        {
+            try
+            {
+                return achievements;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения достижений.");
+                throw;
+            }
+        }
 
         public ChallengeMode GetChallengeMode(int challengeID)
         {
@@ -385,6 +413,47 @@ namespace PhasmophobiaCompanion.Services
         public event Action GhostsDataLoaded;
 
         /// <summary>
+        ///     Загружает текстовые данные для интерфейса, относящиеся к достижениям - Achievement из базы данных, а затем
+        ///     кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
+        public async Task LoadAchievementCommonAsync()
+        {
+            try
+            {
+                achievementCommon = await LoadDataAsync("achievement_common_cache.json",
+                    async () => await databaseManager.GetAchievementCommonAsync(languageCode));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки общих названий для достижений.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Загружает список достижений  - Achievement, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
+        public async Task LoadAchievementsAsync()
+        {
+            try
+            {
+                achievements = await LoadDataAsync(
+                    "achievements_cache.json",
+                    async () => new List<Achievement>(await databaseManager.GetAchievementsAsync(languageCode))
+                );
+                //Загрузка текстовых данных для интерфейса, относящихся к достижениям - Achievement
+                await LoadAchievementCommonAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки достижений.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Загружает список особых режимов  - ChallengeMode, а затем кэширует их,
         ///     либо загружает данные из кэша, в зависимости от наличия кэша.
         /// </summary>
@@ -696,6 +765,7 @@ namespace PhasmophobiaCompanion.Services
             {
                 await LoadGhostsDataAsync();
                 await LoadCluesAsync();
+                await LoadAchievementsAsync();
                 await LoadTipsDataAsync();
                 await LoadDifficultiesAsync();
                 await LoadPatchesAsync();

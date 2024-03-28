@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="PhasmophobiaCompanion.Views.AchievementPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    Shell.TabBarIsVisible="False">
+    <ScrollView>
+        <StackLayout Padding="0,10,0,0">
+
+            <!--  Заголовок страницы  -->
+            <Label
+                Margin="0,20,0,0"
+                FontAttributes="Bold"
+                FontSize="Large"
+                HorizontalOptions="Center"
+                Text="{Binding AchievementCommon.Title}" />
+
+            <!--  Описание особого режима в целом  -->
+            <Label
+                Margin="10"
+                FontSize="14"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="{Binding AchievementCommon.Description}" />
+
+            <!--  Список особых режимов  -->
+            <StackLayout
+                x:Name="achievementCollection"
+                Margin="10"
+                BindableLayout.ItemsSource="{Binding Achievements}">
+
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10,0,10,15">
+                            <pancakeView:PancakeView
+                                Margin="5"
+                                Padding="15"
+                                BackgroundColor="White"
+                                CornerRadius="20"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand">
+                                <pancakeView:PancakeView.Shadow>
+                                    <pancakeView:DropShadow BlurRadius="10" />
+                                </pancakeView:PancakeView.Shadow>
+                                <StackLayout Orientation="Horizontal">
+                                    <Image
+                                        HeightRequest="50"
+                                        Source="{Binding ImageFilePath}"
+                                        WidthRequest="50" />
+                                    <StackLayout>
+                                        <!--  Название особого режима  -->
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="16"
+                                            Text="{Binding Title}" />
+                                        <!--  Описание особого режима  -->
+                                        <Label FontSize="12" Text="{Binding Description}" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </pancakeView:PancakeView>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Path=BindingContext.ChallengeModeTappedCommand, Source={x:Reference Name=achievementCollection}}" CommandParameter="{Binding .}" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
