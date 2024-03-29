@@ -35,13 +35,26 @@
                         HorizontalOptions="FillAndExpand"
                         IsVisible="{Binding IsSearchResultVisible}"
                         VerticalOptions="Start">
-                        <ListView ItemsSource="{Binding SearchResults}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-                            <ListView.ItemTemplate>
+                        <StackLayout x:Name="searchStackLayout" BindableLayout.ItemsSource="{Binding SearchResults}">
+                            <BindableLayout.ItemTemplate>
                                 <DataTemplate>
-                                    <TextCell Text="{Binding Title}" TextColor="Black" />
+                                    <StackLayout>
+                                        <BoxView
+                                            BackgroundColor="Gainsboro"
+                                            HeightRequest="1"
+                                            VerticalOptions="FillAndExpand" />
+                                        <Label
+                                            Padding="10"
+                                            FontSize="16"
+                                            Text="{Binding Title}"
+                                            TextColor="Black" />
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.SearchResultTappedCommand, Source={x:Reference Name=searchStackLayout}}" CommandParameter="{Binding .}" />
+                                        </StackLayout.GestureRecognizers>
+                                    </StackLayout>
                                 </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
                     </yummy:PancakeView>
                 </StackLayout>
             </yummy:PancakeView>

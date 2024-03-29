@@ -22,7 +22,6 @@ namespace PhasmophobiaCompanion.ViewModels
     {
         public readonly DataService dataService;
         private bool isSearchResultVisible;
-        private object selectedItem;
         private ObservableCollection<object> searchResults;
         private string displayedTip;
 
@@ -72,6 +71,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 TipTappedCommand = new Command(ChangeTip);
                 ReadMoreCommand = new Command(ToPatchPage);
                 OkCommand = new Command(CloseAlert);
+                SearchResultTappedCommand = new Command<object>(NavigateToDetailPage);
                 CheckPatchUpdate();
             }
             catch (Exception ex)
@@ -107,6 +107,7 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand OkCommand { get; private set; }
         public ICommand OtherPageTappedCommand { get; private set; }
         public ICommand PatchTappedCommand { get; private set; }
+        public ICommand SearchResultTappedCommand { get; private set; }
         public ICommand QuestTappedCommand { get; private set; }
         public ICommand ReadMoreCommand { get; private set; }
         public ICommand SanityHuntTappedCommand { get; private set; }
@@ -119,16 +120,7 @@ namespace PhasmophobiaCompanion.ViewModels
         public List<Quest> Quests { get; set; }
         public List<string> Tips { get; set; }
         public MainPageCommon MainPageCommon { get; set; }
-        public object SelectedItem
-        {
-            get => selectedItem;
-            set
-            {
-                selectedItem = value;
-                OnPropertyChanged();
-                NavigateToDetailPage(selectedItem);
-            }
-        }
+        
         public ObservableCollection<object> SearchResults
         {
             get => searchResults;
@@ -277,9 +269,11 @@ namespace PhasmophobiaCompanion.ViewModels
                         detailPage = new QuestsPage();
                         await Shell.Current.Navigation.PushAsync(detailPage);
                         break;
+                    case Achievement achievement:
+                        detailPage = new AchievementPage();
+                        await Shell.Current.Navigation.PushAsync(detailPage);
+                        break;
                 }
-
-                SelectedItem = null;
             }
             catch (Exception ex)
             {

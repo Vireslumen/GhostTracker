@@ -1046,6 +1046,8 @@ namespace PhasmophobiaCompanion.Services
                     item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
                 results.AddRange(quests.Where(item =>
                     item.Clause.Contains(query, StringComparison.OrdinalIgnoreCase)));
+                results.AddRange(achievements.Where(item =>
+                    item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
                 return results;
             }
             catch (Exception ex)
