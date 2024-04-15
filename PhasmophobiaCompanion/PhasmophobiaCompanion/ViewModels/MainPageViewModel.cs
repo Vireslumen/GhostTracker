@@ -23,7 +23,7 @@ namespace PhasmophobiaCompanion.ViewModels
         public readonly DataService dataService;
         private bool isSearchResultVisible;
         private ObservableCollection<object> searchResults;
-        private string displayedTip;
+        private Tip displayedTip;
 
         public MainPageViewModel()
         {
@@ -47,7 +47,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 OtherInfos.Add(dataService.GetAchievementCommon());
                 OtherInfos.AddRange(dataService.GetOtherInfos());
                 MainPageCommon = dataService.GetMainPageCommon();
-                displayedTip = Tips[random.Next(Tips.Count)];
+                ChangeTip();
                 SearchResults = new ObservableCollection<object>();
                 DailyQuest = GetSomeQuests(new[] {1, 2, 3, 4});
                 WeeklyQuest = GetSomeQuests(new[] {1, 2, 3, 4});
@@ -71,6 +71,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 TipTappedCommand = new Command(ChangeTip);
                 ReadMoreCommand = new Command(ToPatchPage);
                 OkCommand = new Command(CloseAlert);
+                SettingsTappedCommand = new Command(OpenSettings);
                 SearchResultTappedCommand = new Command<object>(NavigateToDetailPage);
                 CheckPatchUpdate();
             }
@@ -107,10 +108,11 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand OkCommand { get; private set; }
         public ICommand OtherPageTappedCommand { get; private set; }
         public ICommand PatchTappedCommand { get; private set; }
-        public ICommand SearchResultTappedCommand { get; private set; }
         public ICommand QuestTappedCommand { get; private set; }
         public ICommand ReadMoreCommand { get; private set; }
         public ICommand SanityHuntTappedCommand { get; private set; }
+        public ICommand SearchResultTappedCommand { get; private set; }
+        public ICommand SettingsTappedCommand { get; private set; }
         public ICommand TipTappedCommand { get; private set; }
         public List<Clue> Clues { get; set; }
         public List<Difficulty> Difficulties { get; set; }
@@ -118,9 +120,8 @@ namespace PhasmophobiaCompanion.ViewModels
         public List<ITitledItem> OtherInfos { get; set; }
         public List<Patch> Patches { get; set; }
         public List<Quest> Quests { get; set; }
-        public List<string> Tips { get; set; }
+        public List<Tip> Tips { get; set; }
         public MainPageCommon MainPageCommon { get; set; }
-        
         public ObservableCollection<object> SearchResults
         {
             get => searchResults;
@@ -133,7 +134,7 @@ namespace PhasmophobiaCompanion.ViewModels
         public ObservableCollection<Quest> DailyQuest { get; set; }
         public ObservableCollection<Quest> WeeklyQuest { get; set; }
         public Patch LastPatch { get; set; }
-        public string DisplayedTip
+        public Tip DisplayedTip
         {
             get => displayedTip;
             set
@@ -151,7 +152,15 @@ namespace PhasmophobiaCompanion.ViewModels
             try
             {
                 var random = new Random();
-                DisplayedTip = Tips[random.Next(Tips.Count)];
+                if (dataService.SelectedTipLevel == dataService.GetSettingsCommon().AnyLevel)
+                {
+                    DisplayedTip = Tips[random.Next(Tips.Count)];
+                }
+                else
+                {
+                    var filteredTips = Tips.Where(t => t.Level == dataService.SelectedTipLevel).ToList();
+                    DisplayedTip = filteredTips[random.Next(filteredTips.Count)];
+                }
             }
             catch (Exception ex)
             {
@@ -577,6 +586,23 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxSanityHuntClause.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Переход на страницу настроек по нажатию на неё.
+        /// </summary>
+        private void OpenSettings()
+        {
+            try
+            {
+                var page = new SettingsPage();
+                Application.Current.MainPage.Navigation.PushAsync(page);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время перехода на страницу настроек с главной страницы MainPage.");
                 throw;
             }
         }

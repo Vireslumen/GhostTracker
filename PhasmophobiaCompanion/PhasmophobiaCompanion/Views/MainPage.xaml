@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.MainPage"
@@ -32,7 +32,11 @@
                     HorizontalOptions="EndAndExpand"
                     Source="settings.png"
                     VerticalOptions="Center"
-                    WidthRequest="35" />
+                    WidthRequest="35">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SettingsTappedCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
             </StackLayout>
             <!--  Строка поиска  -->
             <yummy:PancakeView
@@ -72,7 +76,9 @@
                                             Text="{Binding Title}"
                                             TextColor="Black" />
                                         <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.SearchResultTappedCommand, Source={x:Reference Name=searchStackLayout}}" CommandParameter="{Binding .}" />
+                                            <TapGestureRecognizer
+                                                Command="{Binding Path=BindingContext.SearchResultTappedCommand, Source={x:Reference Name=searchStackLayout}}"
+                                                CommandParameter="{Binding .}" />
                                         </StackLayout.GestureRecognizers>
                                     </StackLayout>
                                 </DataTemplate>
@@ -167,7 +173,9 @@
                                     FontSize="14"
                                     Text="{Binding Title}">
                                     <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=dailyQuestStackLayout}}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer
+                                            Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=dailyQuestStackLayout}}"
+                                            CommandParameter="{Binding .}" />
                                     </Label.GestureRecognizers>
                                 </Label>
                             </DataTemplate>
@@ -216,7 +224,9 @@
                                     FontSize="14"
                                     Text="{Binding Title}">
                                     <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=weeklyQuestStackLayout}}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer
+                                            Command="{Binding Path=BindingContext.QuestTappedCommand, Source={x:Reference Name=weeklyQuestStackLayout}}"
+                                            CommandParameter="{Binding .}" />
                                     </Label.GestureRecognizers>
                                 </Label>
                             </DataTemplate>
@@ -252,7 +262,7 @@
                 <yummy:PancakeView.Border>
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
-                <Label Text="{Binding DisplayedTip}" />
+                <Label Text="{Binding DisplayedTip.TipValue}" />
                 <yummy:PancakeView.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding TipTappedCommand}" />
                 </yummy:PancakeView.GestureRecognizers>
@@ -352,7 +362,9 @@
                                                 <FormattedString>
                                                     <Span Text="{Binding Title}">
                                                         <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}" CommandParameter="{Binding .}" />
+                                                            <TapGestureRecognizer
+                                                                Command="{Binding Path=BindingContext.GhostTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}"
+                                                                CommandParameter="{Binding .}" />
                                                         </Span.GestureRecognizers>
                                                     </Span>
                                                     <Span Text=": " />
@@ -365,7 +377,9 @@
                                                 </FormattedString>
                                             </Label.FormattedText>
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSpeedTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}" CommandParameter="{Binding .}" />
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Path=BindingContext.GhostSpeedTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}"
+                                                    CommandParameter="{Binding .}" />
                                             </Label.GestureRecognizers>
                                         </Label>
                                     </ViewCell>
@@ -434,7 +448,9 @@
                                                 <FormattedString>
                                                     <Span Text="{Binding Title}">
                                                         <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostTappedCommand, Source={x:Reference Name=ghostListViewSanity}}" CommandParameter="{Binding .}" />
+                                                            <TapGestureRecognizer
+                                                                Command="{Binding Path=BindingContext.GhostTappedCommand, Source={x:Reference Name=ghostListViewSanity}}"
+                                                                CommandParameter="{Binding .}" />
                                                         </Span.GestureRecognizers>
                                                     </Span>
                                                     <Span Text=": " />
@@ -444,7 +460,9 @@
                                                 </FormattedString>
                                             </Label.FormattedText>
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.SanityHuntTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}" CommandParameter="{Binding .}" />
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Path=BindingContext.SanityHuntTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}"
+                                                    CommandParameter="{Binding .}" />
                                             </Label.GestureRecognizers>
                                         </Label>
                                     </ViewCell>
@@ -503,7 +521,9 @@
                                     Text="{Binding Title}"
                                     VerticalOptions="CenterAndExpand" />
                                 <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.ClueTappedCommand, Source={x:Reference Name=clueFlexLayout}}" CommandParameter="{Binding .}" />
+                                    <TapGestureRecognizer
+                                        Command="{Binding Path=BindingContext.ClueTappedCommand, Source={x:Reference Name=clueFlexLayout}}"
+                                        CommandParameter="{Binding .}" />
                                 </StackLayout.GestureRecognizers>
                             </StackLayout>
                         </DataTemplate>
@@ -567,7 +587,9 @@
                                         Text="{Binding Title}" />
                                     <Label Padding="10,5,5,5" Text="{Binding Description}" />
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.DifficultyTappedCommand, Source={x:Reference Name=difficultiesFlexLayout}}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer
+                                            Command="{Binding Path=BindingContext.DifficultyTappedCommand, Source={x:Reference Name=difficultiesFlexLayout}}"
+                                            CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </yummy:PancakeView>
@@ -618,7 +640,9 @@
                             <StackLayout Padding="5,5,5,5">
                                 <Label Text="{Binding Title}" TextColor="Blue">
                                     <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.PatchTappedCommand, Source={x:Reference Name=patchesFlexLayout}}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer
+                                            Command="{Binding Path=BindingContext.PatchTappedCommand, Source={x:Reference Name=patchesFlexLayout}}"
+                                            CommandParameter="{Binding .}" />
                                     </Label.GestureRecognizers>
                                 </Label>
                             </StackLayout>
@@ -688,7 +712,9 @@
                                         TextColor="Black"
                                         VerticalOptions="Center" />
                                     <yummy:PancakeView.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.OtherPageTappedCommand, Source={x:Reference Name=otherFlexLayout}}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer
+                                            Command="{Binding Path=BindingContext.OtherPageTappedCommand, Source={x:Reference Name=otherFlexLayout}}"
+                                            CommandParameter="{Binding .}" />
                                     </yummy:PancakeView.GestureRecognizers>
                                 </yummy:PancakeView>
                             </DataTemplate>

@@ -11,9 +11,9 @@ namespace PhasmophobiaCompanion.Data
     public class PhasmaDB : DbContext
     {
         //Определения DbSet для различных сущностей.
+        public DbSet<AchievementBase> AchievementBase { get; set; }
         public DbSet<AchievementCommonTranslations> AchievementCommonTranslations { get; set; }
         public DbSet<AchievementTranslations> AchievementTranslations { get; set; }
-        public DbSet<AchievementBase> AchievementBase { get; set; }
         public DbSet<ChallengeModeBase> ChallengeModeBase { get; set; }
         public DbSet<ChallengeModeCommonTranslations> ChallengeModeCommonTranslations { get; set; }
         public DbSet<ClueBase> ClueBase { get; set; }
@@ -33,6 +33,7 @@ namespace PhasmophobiaCompanion.Data
         public DbSet<PatchBase> PatchBase { get; set; }
         public DbSet<QuestBase> QuestBase { get; set; }
         public DbSet<QuestCommonTranslations> QuestCommonTranslations { get; set; }
+        public DbSet<SettingsCommonTranslations> SettingsCommonTranslations { get; set; }
         public DbSet<TipsTranslations> TipsTranslations { get; set; }
 
         private void ConfigureChallengeModeEntity(ModelBuilder modelBuilder)

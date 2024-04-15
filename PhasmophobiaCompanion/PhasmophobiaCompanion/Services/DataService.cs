@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -13,18 +14,19 @@ namespace PhasmophobiaCompanion.Services
 {
     public class DataService
     {
-        private readonly DatabaseManager databaseManager;
-
         /// <summary>
         ///     Код языка, на котором будут отображаться данные в приложении.
         /// </summary>
-        private readonly string languageCode;
+        public readonly string LanguageCode;
+
+        private readonly DatabaseManager databaseManager;
 
         /// <summary>
         ///     Путь к папке с кэшированными данными.
         /// </summary>
         public string FolderPath;
 
+        public string SelectedTipLevel;
         private AchievementCommon achievementCommon;
         private ChallengeModeCommon challengeModeCommon;
         private ClueCommon clueCommon;
@@ -43,10 +45,11 @@ namespace PhasmophobiaCompanion.Services
         private List<OtherInfo> otherInfos;
         private List<Patch> patches;
         private List<Quest> quests;
-        private List<string> tips;
+        private List<Tip> tips;
         private MainPageCommon mainPageCommon;
         private MapCommon mapCommon;
         private QuestCommon questCommon;
+        private SettingsCommon settingsCommon;
 
         public DataService()
         {
@@ -54,8 +57,12 @@ namespace PhasmophobiaCompanion.Services
             {
                 NewPatch = false;
                 databaseManager = new DatabaseManager(new PhasmaDB());
-                //TODO: Сделать чтобы код языка выбирался изначально исходя из языка системы пользователя, а затем исходя из настроек
-                languageCode = "EN";
+                var userLanguage = LanguageHelper.GetUserLanguage();
+                //Настройка языка приложения
+                if (!string.IsNullOrEmpty(userLanguage))
+                    LanguageCode = userLanguage;
+                else
+                    LanguageCode = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
                 FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             }
             catch (Exception ex)
@@ -373,6 +380,19 @@ namespace PhasmophobiaCompanion.Services
             }
         }
 
+        public SettingsCommon GetSettingsCommon()
+        {
+            try
+            {
+                return settingsCommon;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения общих данных для страницы настроек.");
+                throw;
+            }
+        }
+
         /// <summary>
         ///     Получение всех уникальных Размеров карт, что есть среди всех элементов карт.
         /// </summary>
@@ -397,7 +417,22 @@ namespace PhasmophobiaCompanion.Services
             return new List<string>(uniqueTiers);
         }
 
-        public List<string> GetTips()
+        public List<string> GetTipLevels()
+        {
+            try
+            {
+                var allTipsLevel = tips.Select(t => t.Level).Distinct().ToList();
+                allTipsLevel.Add(settingsCommon.AnyLevel);
+                return allTipsLevel;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения подсказок.");
+                throw;
+            }
+        }
+
+        public List<Tip> GetTips()
         {
             try
             {
@@ -421,8 +456,8 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                achievementCommon = await LoadDataAsync("achievement_common_cache.json",
-                    async () => await databaseManager.GetAchievementCommonAsync(languageCode));
+                achievementCommon = await LoadDataAsync(LanguageCode + "_" + "achievement_common_cache.json",
+                    async () => await databaseManager.GetAchievementCommonAsync(LanguageCode));
             }
             catch (Exception ex)
             {
@@ -440,8 +475,8 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 achievements = await LoadDataAsync(
-                    "achievements_cache.json",
-                    async () => new List<Achievement>(await databaseManager.GetAchievementsAsync(languageCode))
+                    LanguageCode + "_" + "achievements_cache.json",
+                    async () => new List<Achievement>(await databaseManager.GetAchievementsAsync(LanguageCode))
                 );
                 //Загрузка текстовых данных для интерфейса, относящихся к достижениям - Achievement
                 await LoadAchievementCommonAsync();
@@ -462,9 +497,9 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 challengeModes = await LoadDataAsync(
-                    "challenge_mode_cache.json",
+                    LanguageCode + "_" + "challenge_mode_cache.json",
                     async () => new List<ChallengeMode>(
-                        await databaseManager.GetChallengeModesAsync(languageCode))
+                        await databaseManager.GetChallengeModesAsync(LanguageCode))
                 );
                 //Загрузка текстовых данных для интерфейса, относящимся к особым режимам - ChallengeMode
                 await LoadChallengeModeCommonAsync();
@@ -485,8 +520,8 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                challengeModeCommon = await LoadDataAsync("challenge_mode_common_cache.json",
-                    async () => await databaseManager.GetChallengeModeCommonAsync(languageCode));
+                challengeModeCommon = await LoadDataAsync(LanguageCode + "_" + "challenge_mode_common_cache.json",
+                    async () => await databaseManager.GetChallengeModeCommonAsync(LanguageCode));
             }
             catch (Exception ex)
             {
@@ -504,8 +539,8 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                clueCommon = await LoadDataAsync("clue_common_cache.json",
-                    async () => await databaseManager.GetClueCommonAsync(languageCode));
+                clueCommon = await LoadDataAsync(LanguageCode + "_" + "clue_common_cache.json",
+                    async () => await databaseManager.GetClueCommonAsync(LanguageCode));
             }
             catch (Exception ex)
             {
@@ -523,8 +558,8 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 clues = await LoadDataAsync(
-                    "clues_cache.json",
-                    async () => new List<Clue>(await databaseManager.GetCluesAsync(languageCode))
+                    LanguageCode + "_" + "clues_cache.json",
+                    async () => new List<Clue>(await databaseManager.GetCluesAsync(LanguageCode))
                 );
                 //Загрузка текстовых данных для интерфейса, относящимся к уликам - Clue
                 await LoadClueCommonAsync();
@@ -545,8 +580,8 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                cursedPossessionCommon = await LoadDataAsync("cursed_common_cache.json",
-                    async () => await databaseManager.GetCursedPossessionCommonAsync(languageCode));
+                cursedPossessionCommon = await LoadDataAsync(LanguageCode + "_" + "cursed_common_cache.json",
+                    async () => await databaseManager.GetCursedPossessionCommonAsync(LanguageCode));
             }
             catch (Exception ex)
             {
@@ -564,9 +599,9 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 curseds = await LoadDataAsync(
-                    "curseds_cache.json",
+                    LanguageCode + "_" + "curseds_cache.json",
                     async () => new List<CursedPossession>((await databaseManager
-                        .GetCursedPossessionsAsync(languageCode).ConfigureAwait(false)).ToList().OrderBy(c => c.Title))
+                        .GetCursedPossessionsAsync(LanguageCode).ConfigureAwait(false)).ToList().OrderBy(c => c.Title))
                 );
                 //Загрузка текстовых данных для интерфейса, относящимся к проклятым предметам - CursedPossession
                 await LoadCursedCommonAsync();
@@ -635,9 +670,9 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 difficulties = await LoadDataAsync(
-                    "difficulties_cache.json",
+                    LanguageCode + "_" + "difficulties_cache.json",
                     async () => new List<Difficulty>(
-                        await databaseManager.GetDifficultiesAsync(languageCode))
+                        await databaseManager.GetDifficultiesAsync(LanguageCode))
                 );
                 //Загрузка текстовых данных для интерфейса, относящимся к сложностям - Difficulty
                 await LoadDifficultyCommonAsync();
@@ -657,8 +692,8 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                difficultyCommon = await LoadDataAsync("difficulty_common_cache.json",
-                    async () => await databaseManager.GetDifficultyCommonAsync(languageCode).ConfigureAwait(false));
+                difficultyCommon = await LoadDataAsync(LanguageCode + "_" + "difficulty_common_cache.json",
+                    async () => await databaseManager.GetDifficultyCommonAsync(LanguageCode).ConfigureAwait(false));
             }
             catch (Exception ex)
             {
@@ -676,8 +711,8 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                equipmentCommon = await LoadDataAsync("equipment_common_cache.json",
-                    async () => await databaseManager.GetEquipmentCommonAsync(languageCode).ConfigureAwait(false));
+                equipmentCommon = await LoadDataAsync(LanguageCode + "_" + "equipment_common_cache.json",
+                    async () => await databaseManager.GetEquipmentCommonAsync(LanguageCode).ConfigureAwait(false));
             }
             catch (Exception ex)
             {
@@ -695,8 +730,8 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 equipments = await LoadDataAsync(
-                    "equipments_cache.json",
-                    async () => new List<Equipment>((await databaseManager.GetEquipmentAsync(languageCode)
+                    LanguageCode + "_" + "equipments_cache.json",
+                    async () => new List<Equipment>((await databaseManager.GetEquipmentAsync(LanguageCode)
                         .ConfigureAwait(false)).OrderBy(e => e.Title))
                 );
 
@@ -721,8 +756,8 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                ghostCommon = await LoadDataAsync("ghost_common_cache.json",
-                    async () => await databaseManager.GetGhostCommonAsync(languageCode));
+                ghostCommon = await LoadDataAsync(LanguageCode + "_" + "ghost_common_cache.json",
+                    async () => await databaseManager.GetGhostCommonAsync(LanguageCode));
             }
             catch (Exception ex)
             {
@@ -740,8 +775,8 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 ghosts = await LoadDataAsync(
-                    "ghosts_cache.json",
-                    async () => new List<Ghost>(await databaseManager.GetGhostsAsync(languageCode))
+                    LanguageCode + "_" + "ghosts_cache.json",
+                    async () => new List<Ghost>(await databaseManager.GetGhostsAsync(LanguageCode))
                 );
                 //Загрузка текстовых данных для интерфейса, относящимся к призракам - Ghost
                 await LoadGhostCommonAsync();
@@ -772,6 +807,7 @@ namespace PhasmophobiaCompanion.Services
                 await LoadQuestsAsync();
                 await LoadOtherInfoAsync();
                 await LoadChallengeModeAsync();
+                await LoadSettingsCommonAsync();
                 await LoadMainPageCommonAsync();
                 await LoadPatchesSteamAsync();
                 //Добавление связи от призраков Ghost к уликам Clue
@@ -779,6 +815,8 @@ namespace PhasmophobiaCompanion.Services
                 foreach (var ghost in ghosts) ghost.PopulateAssociatedClues(clues);
                 //Добавление связи от улик Clue - к призракам Ghost
                 foreach (var clue in clues) clue.PopulateAssociatedGhosts(ghosts);
+
+                SelectedTipLevel = settingsCommon.SelectedLevel;
             }
             catch (Exception ex)
             {
@@ -796,8 +834,8 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                mainPageCommon = await LoadDataAsync("main_page_common_cache.json",
-                    async () => await databaseManager.GetMainPageCommonAsync(languageCode));
+                mainPageCommon = await LoadDataAsync(LanguageCode + "_" + "main_page_common_cache.json",
+                    async () => await databaseManager.GetMainPageCommonAsync(LanguageCode));
             }
             catch (Exception ex)
             {
@@ -814,8 +852,8 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                mapCommon = await LoadDataAsync("map_common_cache.json",
-                    async () => await databaseManager.GetMapCommonAsync(languageCode));
+                mapCommon = await LoadDataAsync(LanguageCode + "_" + "map_common_cache.json",
+                    async () => await databaseManager.GetMapCommonAsync(LanguageCode));
             }
             catch (Exception ex)
             {
@@ -833,8 +871,8 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 maps = await LoadDataAsync(
-                    "maps_cache.json",
-                    async () => new List<Map>(await databaseManager.GetMapsAsync(languageCode)
+                    LanguageCode + "_" + "maps_cache.json",
+                    async () => new List<Map>(await databaseManager.GetMapsAsync(LanguageCode)
                         .ConfigureAwait(false))
                 );
                 //Загрузка текстовых данных для интерфейса, относящимся к картам - Map
@@ -878,9 +916,9 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 otherInfos = await LoadDataAsync(
-                    "other_infos_cache.json",
+                    LanguageCode + "_" + "other_infos_cache.json",
                     async () => new List<OtherInfo>(
-                        await databaseManager.GetOtherInfosAsync(languageCode))
+                        await databaseManager.GetOtherInfosAsync(LanguageCode))
                 );
             }
             catch (Exception ex)
@@ -899,7 +937,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 patches = await LoadDataAsync(
-                    "patch_cache.json",
+                    LanguageCode + "_" + "patch_cache.json",
                     async () => new List<Patch>(await databaseManager.GetPatchesAsync())
                 );
             }
@@ -947,7 +985,7 @@ namespace PhasmophobiaCompanion.Services
                     {
                         NewPatch = true;
                         var serializedData = JsonConvert.SerializeObject(patches);
-                        var filePath = Path.Combine(FolderPath, "patch_cache.json");
+                        var filePath = Path.Combine(FolderPath, LanguageCode + "_" + "patch_cache.json");
                         File.WriteAllText(filePath, serializedData);
                     }
                 }
@@ -967,8 +1005,8 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                questCommon = await LoadDataAsync("quest_common_cache.json",
-                    async () => await databaseManager.GetQuestCommonAsync(languageCode));
+                questCommon = await LoadDataAsync(LanguageCode + "_" + "quest_common_cache.json",
+                    async () => await databaseManager.GetQuestCommonAsync(LanguageCode));
             }
             catch (Exception ex)
             {
@@ -986,8 +1024,8 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 quests = await LoadDataAsync(
-                    "quest_cache.json",
-                    async () => new List<Quest>(await databaseManager.GetQuestsAsync(languageCode))
+                    LanguageCode + "_" + "quest_cache.json",
+                    async () => new List<Quest>(await databaseManager.GetQuestsAsync(LanguageCode))
                 );
                 //Загрузка текстовых данных для интерфейса, относящимся к квестам - Quest
                 await LoadQuestCommonAsync();
@@ -995,6 +1033,24 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки квестов.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Загружает текстовые данные для интерфейса, относящиеся к странице настроек - SettingsPage из базы данных, а затем
+        ///     кэширует их, либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
+        public async Task LoadSettingsCommonAsync()
+        {
+            try
+            {
+                settingsCommon = await LoadDataAsync(LanguageCode + "_" + "settings_common_cache.json",
+                    async () => await databaseManager.GetSettingsCommonAsync(LanguageCode));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки общих названий для особых режимов.");
                 throw;
             }
         }
@@ -1008,8 +1064,8 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 tips = await LoadDataAsync(
-                    "tips_cache.json",
-                    async () => new List<string>(await databaseManager.GetTipsAsync(languageCode))
+                    LanguageCode + "_" + "tips_cache.json",
+                    async () => new List<Tip>(await databaseManager.GetTipsAsync(LanguageCode))
                 );
             }
             catch (Exception ex)

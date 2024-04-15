@@ -9,6 +9,7 @@ namespace PhasmophobiaCompanion.Data
     {
         [Key] public int ID { get; set; }
         public string LanguageCode { get; set; }
+        public string Level { get; set; }
         public string Tip { get; set; }
     }
 }

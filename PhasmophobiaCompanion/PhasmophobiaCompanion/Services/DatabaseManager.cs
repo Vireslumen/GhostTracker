@@ -115,7 +115,6 @@ namespace PhasmophobiaCompanion.Services
                 // Загрузка данных с учетом перевода и связанных сущностей.
                 var challengeModeCommonData = await phasmaDbContext.ChallengeModeCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
-
                 //Преобразование данных в объект ChallengeModeCommon.
                 return challengeModeCommonData.Select(c => new ChallengeModeCommon
                 {
@@ -854,11 +853,44 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        ///     Асинхронно возвращает общие данные для страницы настроек - SettingsCommon, на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Общие данные для страницы настроек.</returns>
+        public async Task<SettingsCommon> GetSettingsCommonAsync(string languageCode)
+        {
+            try
+            {
+                // Загрузка данных с учетом перевода и связанных сущностей.
+                var settingsCommonData = await phasmaDbContext.SettingsCommonTranslations
+                    .Where(s => s.LanguageCode == languageCode).ToListAsync();
+
+                //Преобразование данных в объект SettingsCommon.
+                return settingsCommonData.Select(s => new SettingsCommon
+                {
+                    AnyLevel = s.AnyLevel,
+                    AppLanguage = s.AppLanguage,
+                    ErrorReport = s.ErrorReport,
+                    TipLevel = s.TipLevel,
+                    SelectLanguage = s.SelectLanguage,
+                    SelectLevel = s.SelectLevel,
+                    SelectedLevel = s.SelectedLevel,
+                    SettingsTitle = s.SettingsTitle
+                }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки из бд общих названия для страницы настроек.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Асинхронно возвращает список подсказок - Tips на основе кода языка.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов</param>
         /// <returns>Список подсказок.</returns>
-        public async Task<List<string>> GetTipsAsync(string languageCode)
+        public async Task<List<Tip>> GetTipsAsync(string languageCode)
         {
             try
             {
@@ -867,7 +899,7 @@ namespace PhasmophobiaCompanion.Services
                     .ToListAsync();
 
                 // Преобразование данных в список строк.
-                return tipsData.Select(t => t.Tip).ToList();
+                return tipsData.Select(t => new Tip {TipValue = t.Tip, Level = t.Level}).ToList();
             }
             catch (Exception ex)
             {
