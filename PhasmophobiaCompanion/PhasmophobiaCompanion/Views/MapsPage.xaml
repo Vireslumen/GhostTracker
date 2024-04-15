@@ -82,9 +82,6 @@
                                         <yummy:PancakeView.Border>
                                             <yummy:Border Thickness="5" Color="White" />
                                         </yummy:PancakeView.Border>
-                                        <yummy:PancakeView.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.MapSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
-                                        </yummy:PancakeView.GestureRecognizers>
                                         <StackLayout>
                                             <AbsoluteLayout>
                                                 <!--  Изображение карты  -->
@@ -153,6 +150,9 @@
                                                 VerticalOptions="StartAndExpand" />
                                         </StackLayout>
                                     </yummy:PancakeView>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.MapSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
+                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>

@@ -83,9 +83,6 @@
                                         <yummy:PancakeView.Border>
                                             <yummy:Border Thickness="5" Color="White" />
                                         </yummy:PancakeView.Border>
-                                        <yummy:PancakeView.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.EquipmentSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
-                                        </yummy:PancakeView.GestureRecognizers>
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
@@ -228,6 +225,9 @@
                                             </StackLayout>
                                         </Grid>
                                     </yummy:PancakeView>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.EquipmentSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
+                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>

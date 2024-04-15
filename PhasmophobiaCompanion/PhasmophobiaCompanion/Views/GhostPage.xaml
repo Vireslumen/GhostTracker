@@ -82,9 +82,6 @@
                                         <yummy:PancakeView.Border>
                                             <yummy:Border Thickness="5" Color="White" />
                                         </yummy:PancakeView.Border>
-                                        <yummy:PancakeView.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
-                                        </yummy:PancakeView.GestureRecognizers>
                                         <StackLayout>
                                             <!--  Изображение призрака  -->
                                             <Image HeightRequest="150" Source="{Binding ImageFilePath}" />
@@ -117,6 +114,9 @@
 
                                         </StackLayout>
                                     </yummy:PancakeView>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
+                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>

@@ -63,9 +63,6 @@
                                         <yummy:PancakeView.Border>
                                             <yummy:Border Thickness="5" Color="White" />
                                         </yummy:PancakeView.Border>
-                                        <yummy:PancakeView.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.CursedSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
-                                        </yummy:PancakeView.GestureRecognizers>
                                         <StackLayout>
                                             <!--  Изображение проклятого предмета  -->
                                             <Image
@@ -83,6 +80,9 @@
                                                 VerticalOptions="CenterAndExpand" />
                                         </StackLayout>
                                     </yummy:PancakeView>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.CursedSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
+                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
