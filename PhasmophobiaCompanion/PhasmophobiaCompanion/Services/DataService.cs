@@ -63,6 +63,11 @@ namespace PhasmophobiaCompanion.Services
                     LanguageCode = userLanguage;
                 else
                     LanguageCode = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
+                //Если в приложении нет такого языка, то язык английский
+                if (!LanguageDictionary.LanguageMap.ContainsValue(LanguageCode))
+                {
+                    LanguageCode = "EN";
+                }
                 FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             }
             catch (Exception ex)
