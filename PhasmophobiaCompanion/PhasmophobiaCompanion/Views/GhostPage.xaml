@@ -94,23 +94,24 @@
                                                 TextColor="Black"
                                                 VerticalOptions="CenterAndExpand" />
                                             <!--  Список улик призрака  -->
-                                            <StackLayout BindableLayout.ItemsSource="{Binding Clues}" Orientation="Horizontal">
+                                            <FlexLayout
+                                                Margin="5"
+                                                BindableLayout.ItemsSource="{Binding Clues}"
+                                                Direction="Column"
+                                                JustifyContent="Start"
+                                                Wrap="Wrap">
                                                 <BindableLayout.ItemTemplate>
                                                     <DataTemplate>
-                                                        <StackLayout
-                                                            Margin="5"
-                                                            Padding="3"
-                                                            HorizontalOptions="End">
+                                                        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
+                                                            <!--  Иконка улики  -->
                                                             <Image
-                                                                Aspect="AspectFit"
                                                                 HeightRequest="30"
-                                                                HorizontalOptions="Center"
                                                                 Source="{Binding IconFilePath}"
                                                                 WidthRequest="30" />
                                                         </StackLayout>
                                                     </DataTemplate>
                                                 </BindableLayout.ItemTemplate>
-                                            </StackLayout>
+                                            </FlexLayout>
 
                                         </StackLayout>
                                     </yummy:PancakeView>
