@@ -978,7 +978,8 @@ namespace PhasmophobiaCompanion.Services
                     .Where(o => o.LanguageCode == languageCode).Select(
                         o => new OtherEquipmentStat
                         {
-                            Stat = o.Stat
+                            Stat = o.Stat,
+                            ShortStat = o.ShortStat
                         }
                     ));
             }

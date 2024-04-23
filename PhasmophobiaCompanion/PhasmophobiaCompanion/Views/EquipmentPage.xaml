@@ -136,7 +136,7 @@
                                                     </yummy:PancakeView.Shadow>
                                                     <Label
                                                         FontAttributes="Bold"
-                                                        FontSize="13"
+                                                        FontSize="12"
                                                         HorizontalOptions="Center"
                                                         TextColor="Black"
                                                         VerticalOptions="Center">
@@ -214,11 +214,11 @@
                                                 <BindableLayout.ItemTemplate>
                                                     <DataTemplate>
                                                         <Label
-                                                            Padding="30,0,30,0"
+                                                            Padding="10,0,10,0"
                                                             FontSize="12"
                                                             HorizontalOptions="CenterAndExpand"
                                                             HorizontalTextAlignment="Center"
-                                                            Text="{Binding Stat}"
+                                                            Text="{Binding ShortStat}"
                                                             TextColor="Black" />
                                                     </DataTemplate>
                                                 </BindableLayout.ItemTemplate>

@@ -6,5 +6,6 @@
     public class OtherEquipmentStat
     {
         public string Stat { get; set; }
+        public string ShortStat { get; set; }
     }
 }

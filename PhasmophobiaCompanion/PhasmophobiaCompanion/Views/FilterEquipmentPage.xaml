@@ -17,7 +17,7 @@
         Margin="20"
         BackgroundColor="White"
         CornerRadius="10"
-        HeightRequest="330"
+        HeightRequest="350"
         HorizontalOptions="Center"
         VerticalOptions="Center"
         WidthRequest="300">
@@ -40,7 +40,7 @@
                     Text="{Binding EquipmentCommon.FilterTier}" />
                 <!--  Список тиров  -->
                 <CollectionView
-                    HeightRequest="200"
+                    HeightRequest="220"
                     ItemsSource="{Binding AllTiers}"
                     SelectedItems="{Binding SelectedTiers, Mode=TwoWay}"
                     SelectionMode="Multiple">
