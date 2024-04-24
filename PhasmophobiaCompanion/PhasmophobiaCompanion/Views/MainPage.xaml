@@ -140,6 +140,7 @@
                     Padding="10,10,10,0"
                     FontAttributes="Bold"
                     FontSize="16"
+                    HorizontalTextAlignment="Center"
                     HorizontalOptions="CenterAndExpand"
                     Text="{Binding MainPageCommon.DailyQuest}">
                     <Label.Margin>
@@ -191,6 +192,7 @@
                     Padding="10,10,10,0"
                     FontAttributes="Bold"
                     FontSize="16"
+                    HorizontalTextAlignment="Center"
                     HorizontalOptions="CenterAndExpand"
                     Text="{Binding MainPageCommon.WeeklyQuest}">
                     <Label.Margin>
@@ -279,8 +281,11 @@
                 </Grid.RowDefinitions>
                 <!--  Заголовок таблице скоростей призрака  -->
                 <Label
+                    Margin="10"
                     Grid.Row="0"
                     Grid.Column="0"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
                     FontAttributes="Bold"
                     HorizontalTextAlignment="Center"
                     Text="{Binding GhostCommon.Speed}" />
@@ -296,7 +301,7 @@
                     </yummy:PancakeView.Shadow>
                     <yummy:PancakeView.Margin>
                         <Thickness>
-                            10,3,5,10
+                            10,0,5,10
                         </Thickness>
                     </yummy:PancakeView.Margin>
                     <yummy:PancakeView.Border>
@@ -304,7 +309,7 @@
                     </yummy:PancakeView.Border>
 
                     <StackLayout Orientation="Vertical">
-                        <Label FontAttributes="Bold">
+                        <Label FontSize="14" FontAttributes="Bold">
                             <Label.Padding>
                                 10,0,10,0
                             </Label.Padding>
@@ -357,7 +362,7 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>
-                                        <Label Padding="10" LineBreakMode="NoWrap">
+                                        <Label FontSize="13" Padding="10" LineBreakMode="NoWrap">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="{Binding Title}">
@@ -391,10 +396,12 @@
                 </yummy:PancakeView>
                 <!--  Заголовок рассудка для начала охоты  -->
                 <Label
+                    Padding="0,0,0,5"
                     Grid.Row="0"
                     Grid.Column="1"
                     FontAttributes="Bold"
                     FontSize="Header"
+                    VerticalOptions="Center"
                     HorizontalOptions="Center"
                     HorizontalTextAlignment="Center"
                     Text="{Binding GhostCommon.SanityHunt}" />
@@ -410,14 +417,14 @@
                     </yummy:PancakeView.Shadow>
                     <yummy:PancakeView.Margin>
                         <Thickness>
-                            5,3,10,10
+                            5,0,10,10
                         </Thickness>
                     </yummy:PancakeView.Margin>
                     <yummy:PancakeView.Border>
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
                     <StackLayout>
-                        <Label FontAttributes="Bold">
+                        <Label FontSize="12" FontAttributes="Bold">
                             <Label.Padding>
                                 10,0,10,0
                             </Label.Padding>
@@ -443,7 +450,7 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>
-                                        <Label Padding="10" LineBreakMode="NoWrap">
+                                        <Label FontSize="13" Padding="10" LineBreakMode="NoWrap">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="{Binding Title}">
@@ -503,7 +510,7 @@
                 <CollectionView
                     x:Name="clueFlexLayout"
                     Margin="10"
-                    HeightRequest="175"
+                    HeightRequest="185"
                     ItemsSource="{Binding Clues}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
@@ -637,8 +644,8 @@
                     Wrap="NoWrap">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Padding="5,5,5,5">
-                                <Label Text="{Binding Title}" TextColor="Blue">
+                            <StackLayout Padding="5,10,5,5">
+                                <Label FontAttributes="Bold" Text="{Binding Title}" TextColor="Blue">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer
                                             Command="{Binding Path=BindingContext.PatchTappedCommand, Source={x:Reference Name=patchesFlexLayout}}"
