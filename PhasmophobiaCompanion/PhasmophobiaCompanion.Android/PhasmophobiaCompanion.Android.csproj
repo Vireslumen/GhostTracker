@@ -181,12 +181,6 @@
     <AndroidResource Include="Resources\drawable\asylum.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\campwood.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\bframhouse.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\cardtarot.png" />
   </ItemGroup>
   <ItemGroup>
@@ -337,6 +331,20 @@
     <AndroidResource Include="Resources\drawable\video1.png" />
     <AndroidResource Include="Resources\drawable\video2.png" />
     <AndroidResource Include="Resources\drawable\video3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\bleasdale.png" />
+    <AndroidResource Include="Resources\drawable\campsite.png" />
+    <AndroidResource Include="Resources\drawable\camp_woodwind.png" />
+    <AndroidResource Include="Resources\drawable\edgefield.png" />
+    <AndroidResource Include="Resources\drawable\grafton.png" />
+    <AndroidResource Include="Resources\drawable\prison.png" />
+    <AndroidResource Include="Resources\drawable\ridgeview.png" />
+    <AndroidResource Include="Resources\drawable\school.png" />
+    <AndroidResource Include="Resources\drawable\sunny.png" />
+    <AndroidResource Include="Resources\drawable\sunny_rest.png" />
+    <AndroidResource Include="Resources\drawable\tangle.png" />
+    <AndroidResource Include="Resources\drawable\willow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

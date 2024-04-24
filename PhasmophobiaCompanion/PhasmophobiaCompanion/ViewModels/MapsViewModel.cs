@@ -38,7 +38,7 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 dataService = DependencyService.Get<DataService>();
                 // Загрузка всех карт.
-                maps = dataService.GetMaps().OrderByDescending(m => m.Size).ToList();
+                maps = dataService.GetMaps().OrderBy(m => m.UnlockLevel).ToList();
                 Maps = new ObservableCollection<Map>(maps);
                 MapCommon = dataService.GetMapCommon();
                 allSizes = dataService.GetSizes();

@@ -83,60 +83,34 @@
                                             <yummy:Border Thickness="5" Color="White" />
                                         </yummy:PancakeView.Border>
                                         <StackLayout>
-                                            <AbsoluteLayout>
-                                                <!--  Изображение карты  -->
-                                                <Image HeightRequest="150" Source="{Binding ImageFilePath}" />
-                                                <!--  Уровень разблокировки карты  -->
-                                                <yummy:PancakeView
-                                                    AbsoluteLayout.LayoutBounds="0.99,0.99,-1,-1"
-                                                    AbsoluteLayout.LayoutFlags="PositionProportional"
-                                                    BackgroundColor="White"
-                                                    CornerRadius="30"
-                                                    HeightRequest="30"
-                                                    WidthRequest="50">
-                                                    <yummy:PancakeView.Shadow>
-                                                        <yummy:DropShadow BlurRadius="3" />
-                                                    </yummy:PancakeView.Shadow>
-                                                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                                                        <Image HeightRequest="18" Source="unlock" />
-                                                        <Label
-                                                            FontAttributes="Bold"
-                                                            FontSize="13"
-                                                            HorizontalOptions="Center"
-                                                            Text="{Binding UnlockLevel}"
-                                                            TextColor="Black"
-                                                            VerticalOptions="Center" />
-                                                    </StackLayout>
-                                                </yummy:PancakeView>
-                                                <!--  Количество комнат на карте  -->
-                                                <yummy:PancakeView
-                                                    AbsoluteLayout.LayoutBounds="0.01,0.99,-1,-1"
-                                                    AbsoluteLayout.LayoutFlags="PositionProportional"
-                                                    BackgroundColor="White"
-                                                    CornerRadius="30"
-                                                    HeightRequest="30"
-                                                    WidthRequest="50">
-                                                    <yummy:PancakeView.Shadow>
-                                                        <yummy:DropShadow BlurRadius="3" />
-                                                    </yummy:PancakeView.Shadow>
-                                                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                                                        <Image HeightRequest="18" Source="room" />
-                                                        <Label
-                                                            FontAttributes="Bold"
-                                                            FontSize="13"
-                                                            HorizontalOptions="Center"
-                                                            Text="{Binding RoomCount}"
-                                                            TextColor="Black"
-                                                            VerticalOptions="Center" />
-                                                    </StackLayout>
-                                                </yummy:PancakeView>
-
-                                            </AbsoluteLayout>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Image HeightRequest="18" Source="unlock" />
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="13"
+                                                    HorizontalOptions="Center"
+                                                    Text="{Binding UnlockLevel}"
+                                                    TextColor="Black"
+                                                    VerticalOptions="Center" />
+                                                <StackLayout Orientation="Horizontal"
+                                                             HorizontalOptions="EndAndExpand">
+                                                    <Image HeightRequest="18" Source="room" />
+                                                    <Label
+                                                        FontAttributes="Bold"
+                                                        FontSize="13"
+                                                        Text="{Binding RoomCount}"
+                                                        TextColor="Black"
+                                                        VerticalOptions="Center" />
+                                                </StackLayout>
+                                            </StackLayout>
+                                            <!--  Изображение карты  -->
+                                            <Image HeightRequest="150" Source="{Binding ImageFilePath}" />
                                             <!--  Название карты  -->
                                             <Label
                                                 FontSize="18"
                                                 HorizontalOptions="CenterAndExpand"
                                                 HorizontalTextAlignment="Center"
+                                                FontAttributes="Bold"
                                                 Text="{Binding Title}"
                                                 TextColor="Black"
                                                 VerticalOptions="CenterAndExpand" />
