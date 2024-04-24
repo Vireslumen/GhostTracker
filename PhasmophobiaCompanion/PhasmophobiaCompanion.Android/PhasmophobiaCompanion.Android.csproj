@@ -276,5 +276,67 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\settings.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\crucifix1.png" />
+    <AndroidResource Include="Resources\drawable\crucifix2.png" />
+    <AndroidResource Include="Resources\drawable\crucifix3.png" />
+    <AndroidResource Include="Resources\drawable\dots1.png" />
+    <AndroidResource Include="Resources\drawable\dots2.png" />
+    <AndroidResource Include="Resources\drawable\dots3.png" />
+    <AndroidResource Include="Resources\drawable\emf1.png" />
+    <AndroidResource Include="Resources\drawable\emf2.png" />
+    <AndroidResource Include="Resources\drawable\emf3.png" />
+    <AndroidResource Include="Resources\drawable\firelight1.png" />
+    <AndroidResource Include="Resources\drawable\firelight2.png" />
+    <AndroidResource Include="Resources\drawable\firelight3.png" />
+    <AndroidResource Include="Resources\drawable\flashlight1.png" />
+    <AndroidResource Include="Resources\drawable\flashlight2.png" />
+    <AndroidResource Include="Resources\drawable\flashlight3.png" />
+    <AndroidResource Include="Resources\drawable\ghostw1.png" />
+    <AndroidResource Include="Resources\drawable\ghostw2.png" />
+    <AndroidResource Include="Resources\drawable\ghostw3.png" />
+    <AndroidResource Include="Resources\drawable\head1.png" />
+    <AndroidResource Include="Resources\drawable\head2.png" />
+    <AndroidResource Include="Resources\drawable\head3.png" />
+    <AndroidResource Include="Resources\drawable\igniter1.png" />
+    <AndroidResource Include="Resources\drawable\igniter2.png" />
+    <AndroidResource Include="Resources\drawable\igniter3.png" />
+    <AndroidResource Include="Resources\drawable\motion1.png" />
+    <AndroidResource Include="Resources\drawable\motion2.png" />
+    <AndroidResource Include="Resources\drawable\motion3.png" />
+    <AndroidResource Include="Resources\drawable\para1.png" />
+    <AndroidResource Include="Resources\drawable\para2.png" />
+    <AndroidResource Include="Resources\drawable\para3.png" />
+    <AndroidResource Include="Resources\drawable\photo1.png" />
+    <AndroidResource Include="Resources\drawable\photo2.png" />
+    <AndroidResource Include="Resources\drawable\photo3.png" />
+    <AndroidResource Include="Resources\drawable\radio1.png" />
+    <AndroidResource Include="Resources\drawable\radio2.png" />
+    <AndroidResource Include="Resources\drawable\radio3.png" />
+    <AndroidResource Include="Resources\drawable\repellent1.png" />
+    <AndroidResource Include="Resources\drawable\repellent2.png" />
+    <AndroidResource Include="Resources\drawable\repellent3.png" />
+    <AndroidResource Include="Resources\drawable\salt1.png" />
+    <AndroidResource Include="Resources\drawable\salt2.png" />
+    <AndroidResource Include="Resources\drawable\salt3.png" />
+    <AndroidResource Include="Resources\drawable\sanity1.png" />
+    <AndroidResource Include="Resources\drawable\sanity2.png" />
+    <AndroidResource Include="Resources\drawable\sanity3.png" />
+    <AndroidResource Include="Resources\drawable\sound1.png" />
+    <AndroidResource Include="Resources\drawable\sound2.png" />
+    <AndroidResource Include="Resources\drawable\sound3.png" />
+    <AndroidResource Include="Resources\drawable\thermo1.png" />
+    <AndroidResource Include="Resources\drawable\thermo2.png" />
+    <AndroidResource Include="Resources\drawable\thermo3.png" />
+    <AndroidResource Include="Resources\drawable\tripod1.png" />
+    <AndroidResource Include="Resources\drawable\tripod2.png" />
+    <AndroidResource Include="Resources\drawable\tripod3.png" />
+    <AndroidResource Include="Resources\drawable\uv1.png" />
+    <AndroidResource Include="Resources\drawable\uv2.png" />
+    <AndroidResource Include="Resources\drawable\uv3.png" />
+    <AndroidResource Include="Resources\drawable\video1.png" />
+    <AndroidResource Include="Resources\drawable\video2.png" />
+    <AndroidResource Include="Resources\drawable\video3.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
