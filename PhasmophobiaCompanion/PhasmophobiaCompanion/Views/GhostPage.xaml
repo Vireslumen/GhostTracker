@@ -42,7 +42,7 @@
                     WidthRequest="28">
                     <Image
                         HeightRequest="25"
-                        Source="filter_icon"
+                        Source="icon_filter"
                         WidthRequest="25" />
                     <yummy:PancakeView.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding FilterCommand}" />

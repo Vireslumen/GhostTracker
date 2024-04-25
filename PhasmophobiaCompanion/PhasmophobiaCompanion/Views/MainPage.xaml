@@ -30,7 +30,7 @@
                 <Image
                     HeightRequest="35"
                     HorizontalOptions="EndAndExpand"
-                    Source="settings.png"
+                    Source="icon_settings.png"
                     VerticalOptions="Center"
                     WidthRequest="35">
                     <Image.GestureRecognizers>

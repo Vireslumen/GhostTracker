@@ -73,6 +73,7 @@
                                             <Label
                                                 Padding="0,10,0,10"
                                                 FontSize="18"
+                                                FontAttributes="Bold"
                                                 HorizontalOptions="CenterAndExpand"
                                                 HorizontalTextAlignment="Center"
                                                 Text="{Binding Title}"

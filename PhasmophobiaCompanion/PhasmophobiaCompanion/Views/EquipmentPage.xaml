@@ -43,7 +43,7 @@
                     WidthRequest="28">
                     <Image
                         HeightRequest="25"
-                        Source="filter_icon"
+                        Source="icon_filter"
                         WidthRequest="25" />
                     <yummy:PancakeView.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding FilterCommand}" />
@@ -106,7 +106,7 @@
                                                     AbsoluteLayout.LayoutBounds="0.01,0.01,-1,-1"
                                                     AbsoluteLayout.LayoutFlags="PositionProportional"
                                                     HorizontalOptions="Center" Orientation="Horizontal">
-                                                    <Image HeightRequest="18" Source="unlock" />
+                                                    <Image HeightRequest="18" Source="icon_unlock" />
                                                     <Label
                                                         FontAttributes="Bold"
                                                         FontSize="14"
@@ -138,7 +138,7 @@
                                                     AbsoluteLayout.LayoutBounds="0.99,0.99,-1,-1"
                                                     AbsoluteLayout.LayoutFlags="PositionProportional"
                                                     HorizontalOptions="Center" Orientation="Horizontal" Spacing="2">
-                                                    <Image HeightRequest="18" Source="dollar" />
+                                                    <Image HeightRequest="18" Source="icon_dollar" />
                                                     <Label
                                                         FontAttributes="Bold"
                                                         FontSize="14"
@@ -152,7 +152,7 @@
                                                     AbsoluteLayout.LayoutBounds="0.01,0.99,-1,-1"
                                                     AbsoluteLayout.LayoutFlags="PositionProportional"
                                                     HorizontalOptions="Center" Orientation="Horizontal">
-                                                    <Image HeightRequest="18" Source="unlockdollar" />
+                                                    <Image HeightRequest="18" Source="icon_unlockdollar" />
                                                     <Label
                                                         FontAttributes="Bold"
                                                         FontSize="14"

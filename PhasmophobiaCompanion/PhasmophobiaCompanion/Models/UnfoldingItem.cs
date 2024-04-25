@@ -32,7 +32,7 @@ namespace PhasmophobiaCompanion.Models
             }
         }
         public string Header { get; set; }
-        public string Icon => CanExpand ? IsExpanded ? "collapse_icon.png" : "expand_icon.png" : null;
+        public string Icon => CanExpand ? IsExpanded ? "icon_collapse.png" : "icon_expand.png" : null;
         public string Title { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 

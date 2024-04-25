@@ -29,28 +29,28 @@
         <ShellContent
             Title="Ghosts"
             ContentTemplate="{DataTemplate local:GhostPage}"
-            Icon="ghost_icon.png"
+            Icon="icon_ghost.png"
             Route="ghostsTab" />
         <ShellContent
             Title="Equipments"
             ContentTemplate="{DataTemplate local:EquipmentPage}"
-            Icon="equipment_icon.png"
+            Icon="icon_equipment.png"
             Route="equipmentsTab" />
         <ShellContent
             x:Name="mainTab"
             Title="Main"
             ContentTemplate="{DataTemplate local:MainPage}"
-            Icon="home.png"
+            Icon="icon_main.png"
             Route="mainTab" />
         <ShellContent
             Title="Maps"
             ContentTemplate="{DataTemplate local:MapsPage}"
-            Icon="house.png"
+            Icon="icon_maps.png"
             Route="mapsTab" />
         <ShellContent
             Title="CursedItems"
             ContentTemplate="{DataTemplate local:CursedsPage}"
-            Icon="cardtarot.png"
+            Icon="icon_curseds.png"
             Route="cursedsTab" />
     </TabBar>
 

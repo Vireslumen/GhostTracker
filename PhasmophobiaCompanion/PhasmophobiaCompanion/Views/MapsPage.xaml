@@ -42,7 +42,7 @@
                     WidthRequest="28">
                     <Image
                         HeightRequest="25"
-                        Source="filter_icon"
+                        Source="icon_filter"
                         WidthRequest="25" />
                     <yummy:PancakeView.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding FilterCommand}" />
@@ -84,7 +84,7 @@
                                         </yummy:PancakeView.Border>
                                         <StackLayout>
                                             <StackLayout Orientation="Horizontal">
-                                                <Image HeightRequest="18" Source="unlock" />
+                                                <Image HeightRequest="18" Source="icon_unlock" />
                                                 <Label
                                                     FontAttributes="Bold"
                                                     FontSize="13"
@@ -94,7 +94,7 @@
                                                     VerticalOptions="Center" />
                                                 <StackLayout Orientation="Horizontal"
                                                              HorizontalOptions="EndAndExpand">
-                                                    <Image HeightRequest="18" Source="room" />
+                                                    <Image HeightRequest="18" Source="icon_room" />
                                                     <Label
                                                         FontAttributes="Bold"
                                                         FontSize="13"

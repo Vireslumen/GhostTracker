@@ -112,148 +112,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\filter_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\spirit_box_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ghost_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\freezing_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ghost_writing_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Moroi.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\search.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\dots_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\emf5_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ultraviolet_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ghost_orb_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\collapse_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\expand_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\equipment_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Candle_T2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Med_T1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Parabolic_T1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\unlockdollar.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\unlock.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\dollar.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\house.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\room.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\asylum.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\cardtarot.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\home.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\thaye.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\twins.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\wraith.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\yokai.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\yurei.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\banshee.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\demon.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\deogen.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\goryo.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\hantu.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\jinn.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\mare.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\mimic.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\myling.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\obake.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\oni.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\onryo.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\phantom.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\poltergeist.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\raiju.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\revenant.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\shade.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\spirit.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ghostLoading.gif" />
@@ -268,83 +127,139 @@
     <AndroidResource Include="Resources\drawable\splash_background.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\settings.png" />
+    <AndroidResource Include="Resources\drawable\cursed_circle.png" />
+    <AndroidResource Include="Resources\drawable\cursed_doll.png" />
+    <AndroidResource Include="Resources\drawable\cursed_mirror.png" />
+    <AndroidResource Include="Resources\drawable\cursed_music_box.png" />
+    <AndroidResource Include="Resources\drawable\cursed_ouija.png" />
+    <AndroidResource Include="Resources\drawable\cursed_paw.png" />
+    <AndroidResource Include="Resources\drawable\cursed_tarot.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\crucifix1.png" />
-    <AndroidResource Include="Resources\drawable\crucifix2.png" />
-    <AndroidResource Include="Resources\drawable\crucifix3.png" />
-    <AndroidResource Include="Resources\drawable\dots1.png" />
-    <AndroidResource Include="Resources\drawable\dots2.png" />
-    <AndroidResource Include="Resources\drawable\dots3.png" />
-    <AndroidResource Include="Resources\drawable\emf1.png" />
-    <AndroidResource Include="Resources\drawable\emf2.png" />
-    <AndroidResource Include="Resources\drawable\emf3.png" />
-    <AndroidResource Include="Resources\drawable\firelight1.png" />
-    <AndroidResource Include="Resources\drawable\firelight2.png" />
-    <AndroidResource Include="Resources\drawable\firelight3.png" />
-    <AndroidResource Include="Resources\drawable\flashlight1.png" />
-    <AndroidResource Include="Resources\drawable\flashlight2.png" />
-    <AndroidResource Include="Resources\drawable\flashlight3.png" />
-    <AndroidResource Include="Resources\drawable\ghostw1.png" />
-    <AndroidResource Include="Resources\drawable\ghostw2.png" />
-    <AndroidResource Include="Resources\drawable\ghostw3.png" />
-    <AndroidResource Include="Resources\drawable\head1.png" />
-    <AndroidResource Include="Resources\drawable\head2.png" />
-    <AndroidResource Include="Resources\drawable\head3.png" />
-    <AndroidResource Include="Resources\drawable\igniter1.png" />
-    <AndroidResource Include="Resources\drawable\igniter2.png" />
-    <AndroidResource Include="Resources\drawable\igniter3.png" />
-    <AndroidResource Include="Resources\drawable\motion1.png" />
-    <AndroidResource Include="Resources\drawable\motion2.png" />
-    <AndroidResource Include="Resources\drawable\motion3.png" />
-    <AndroidResource Include="Resources\drawable\para1.png" />
-    <AndroidResource Include="Resources\drawable\para2.png" />
-    <AndroidResource Include="Resources\drawable\para3.png" />
-    <AndroidResource Include="Resources\drawable\photo1.png" />
-    <AndroidResource Include="Resources\drawable\photo2.png" />
-    <AndroidResource Include="Resources\drawable\photo3.png" />
-    <AndroidResource Include="Resources\drawable\radio1.png" />
-    <AndroidResource Include="Resources\drawable\radio2.png" />
-    <AndroidResource Include="Resources\drawable\radio3.png" />
-    <AndroidResource Include="Resources\drawable\repellent1.png" />
-    <AndroidResource Include="Resources\drawable\repellent2.png" />
-    <AndroidResource Include="Resources\drawable\repellent3.png" />
-    <AndroidResource Include="Resources\drawable\salt1.png" />
-    <AndroidResource Include="Resources\drawable\salt2.png" />
-    <AndroidResource Include="Resources\drawable\salt3.png" />
-    <AndroidResource Include="Resources\drawable\sanity1.png" />
-    <AndroidResource Include="Resources\drawable\sanity2.png" />
-    <AndroidResource Include="Resources\drawable\sanity3.png" />
-    <AndroidResource Include="Resources\drawable\sound1.png" />
-    <AndroidResource Include="Resources\drawable\sound2.png" />
-    <AndroidResource Include="Resources\drawable\sound3.png" />
-    <AndroidResource Include="Resources\drawable\thermo1.png" />
-    <AndroidResource Include="Resources\drawable\thermo2.png" />
-    <AndroidResource Include="Resources\drawable\thermo3.png" />
-    <AndroidResource Include="Resources\drawable\tripod1.png" />
-    <AndroidResource Include="Resources\drawable\tripod2.png" />
-    <AndroidResource Include="Resources\drawable\tripod3.png" />
-    <AndroidResource Include="Resources\drawable\uv1.png" />
-    <AndroidResource Include="Resources\drawable\uv2.png" />
-    <AndroidResource Include="Resources\drawable\uv3.png" />
-    <AndroidResource Include="Resources\drawable\video1.png" />
-    <AndroidResource Include="Resources\drawable\video2.png" />
-    <AndroidResource Include="Resources\drawable\video3.png" />
+    <AndroidResource Include="Resources\drawable\ghost_banshee.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_demon.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_deogen.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_goryo.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_hantu.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_jinn.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_mare.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_mimic.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_moroi.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_myling.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_obake.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_oni.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_onryo.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_phantom.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_poltergeist.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_raiju.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_revenant.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_shade.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_spirit.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_thaye.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_twins.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_wraith.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_yokai.jpg" />
+    <AndroidResource Include="Resources\drawable\ghost_yurei.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\bleasdale.png" />
-    <AndroidResource Include="Resources\drawable\campsite.png" />
-    <AndroidResource Include="Resources\drawable\camp_woodwind.png" />
-    <AndroidResource Include="Resources\drawable\edgefield.png" />
-    <AndroidResource Include="Resources\drawable\grafton.png" />
-    <AndroidResource Include="Resources\drawable\prison.png" />
-    <AndroidResource Include="Resources\drawable\ridgeview.png" />
-    <AndroidResource Include="Resources\drawable\school.png" />
-    <AndroidResource Include="Resources\drawable\sunny.png" />
-    <AndroidResource Include="Resources\drawable\sunny_rest.png" />
-    <AndroidResource Include="Resources\drawable\tangle.png" />
-    <AndroidResource Include="Resources\drawable\willow.png" />
+    <AndroidResource Include="Resources\drawable\evidence_icon_dots.png" />
+    <AndroidResource Include="Resources\drawable\evidence_icon_emf5.png" />
+    <AndroidResource Include="Resources\drawable\evidence_icon_freezing.png" />
+    <AndroidResource Include="Resources\drawable\evidence_icon_ghost_orb.png" />
+    <AndroidResource Include="Resources\drawable\evidence_icon_ghost_writing.png" />
+    <AndroidResource Include="Resources\drawable\evidence_icon_spirit_box.png" />
+    <AndroidResource Include="Resources\drawable\evidence_icon_ultraviolet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\equip_crucifix1.png" />
+    <AndroidResource Include="Resources\drawable\equip_crucifix2.png" />
+    <AndroidResource Include="Resources\drawable\equip_crucifix3.png" />
+    <AndroidResource Include="Resources\drawable\equip_dots1.png" />
+    <AndroidResource Include="Resources\drawable\equip_dots2.png" />
+    <AndroidResource Include="Resources\drawable\equip_dots3.png" />
+    <AndroidResource Include="Resources\drawable\equip_emf1.png" />
+    <AndroidResource Include="Resources\drawable\equip_emf2.png" />
+    <AndroidResource Include="Resources\drawable\equip_emf3.png" />
+    <AndroidResource Include="Resources\drawable\equip_firelight1.png" />
+    <AndroidResource Include="Resources\drawable\equip_firelight2.png" />
+    <AndroidResource Include="Resources\drawable\equip_firelight3.png" />
+    <AndroidResource Include="Resources\drawable\equip_flashlight1.png" />
+    <AndroidResource Include="Resources\drawable\equip_flashlight2.png" />
+    <AndroidResource Include="Resources\drawable\equip_flashlight3.png" />
+    <AndroidResource Include="Resources\drawable\equip_ghostw1.png" />
+    <AndroidResource Include="Resources\drawable\equip_ghostw2.png" />
+    <AndroidResource Include="Resources\drawable\equip_ghostw3.png" />
+    <AndroidResource Include="Resources\drawable\equip_head1.png" />
+    <AndroidResource Include="Resources\drawable\equip_head2.png" />
+    <AndroidResource Include="Resources\drawable\equip_head3.png" />
+    <AndroidResource Include="Resources\drawable\equip_igniter1.png" />
+    <AndroidResource Include="Resources\drawable\equip_igniter2.png" />
+    <AndroidResource Include="Resources\drawable\equip_igniter3.png" />
+    <AndroidResource Include="Resources\drawable\equip_motion1.png" />
+    <AndroidResource Include="Resources\drawable\equip_motion2.png" />
+    <AndroidResource Include="Resources\drawable\equip_motion3.png" />
+    <AndroidResource Include="Resources\drawable\equip_para1.png" />
+    <AndroidResource Include="Resources\drawable\equip_para2.png" />
+    <AndroidResource Include="Resources\drawable\equip_para3.png" />
+    <AndroidResource Include="Resources\drawable\equip_photo1.png" />
+    <AndroidResource Include="Resources\drawable\equip_photo2.png" />
+    <AndroidResource Include="Resources\drawable\equip_photo3.png" />
+    <AndroidResource Include="Resources\drawable\equip_radio1.png" />
+    <AndroidResource Include="Resources\drawable\equip_radio2.png" />
+    <AndroidResource Include="Resources\drawable\equip_radio3.png" />
+    <AndroidResource Include="Resources\drawable\equip_repellent1.png" />
+    <AndroidResource Include="Resources\drawable\equip_repellent2.png" />
+    <AndroidResource Include="Resources\drawable\equip_repellent3.png" />
+    <AndroidResource Include="Resources\drawable\equip_salt1.png" />
+    <AndroidResource Include="Resources\drawable\equip_salt2.png" />
+    <AndroidResource Include="Resources\drawable\equip_salt3.png" />
+    <AndroidResource Include="Resources\drawable\equip_sanity1.png" />
+    <AndroidResource Include="Resources\drawable\equip_sanity2.png" />
+    <AndroidResource Include="Resources\drawable\equip_sanity3.png" />
+    <AndroidResource Include="Resources\drawable\equip_sound1.png" />
+    <AndroidResource Include="Resources\drawable\equip_sound2.png" />
+    <AndroidResource Include="Resources\drawable\equip_sound3.png" />
+    <AndroidResource Include="Resources\drawable\equip_thermo1.png" />
+    <AndroidResource Include="Resources\drawable\equip_thermo2.png" />
+    <AndroidResource Include="Resources\drawable\equip_thermo3.png" />
+    <AndroidResource Include="Resources\drawable\equip_tripod1.png" />
+    <AndroidResource Include="Resources\drawable\equip_tripod2.png" />
+    <AndroidResource Include="Resources\drawable\equip_tripod3.png" />
+    <AndroidResource Include="Resources\drawable\equip_uv1.png" />
+    <AndroidResource Include="Resources\drawable\equip_uv2.png" />
+    <AndroidResource Include="Resources\drawable\equip_uv3.png" />
+    <AndroidResource Include="Resources\drawable\equip_video1.png" />
+    <AndroidResource Include="Resources\drawable\equip_video2.png" />
+    <AndroidResource Include="Resources\drawable\equip_video3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\map_bleasdale.png" />
+    <AndroidResource Include="Resources\drawable\map_campsite.png" />
+    <AndroidResource Include="Resources\drawable\map_camp_woodwind.png" />
+    <AndroidResource Include="Resources\drawable\map_edgefield.png" />
+    <AndroidResource Include="Resources\drawable\map_grafton.png" />
+    <AndroidResource Include="Resources\drawable\map_prison.png" />
+    <AndroidResource Include="Resources\drawable\map_ridgeview.png" />
+    <AndroidResource Include="Resources\drawable\map_school.png" />
+    <AndroidResource Include="Resources\drawable\map_sunny.png" />
+    <AndroidResource Include="Resources\drawable\map_sunny_rest.png" />
+    <AndroidResource Include="Resources\drawable\map_tangle.png" />
+    <AndroidResource Include="Resources\drawable\map_willow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\icon_collapse.png" />
+    <AndroidResource Include="Resources\drawable\icon_curseds.png" />
+    <AndroidResource Include="Resources\drawable\icon_dollar.png" />
+    <AndroidResource Include="Resources\drawable\icon_equipment.png" />
+    <AndroidResource Include="Resources\drawable\icon_expand.png" />
+    <AndroidResource Include="Resources\drawable\icon_filter.png" />
+    <AndroidResource Include="Resources\drawable\icon_ghost.png" />
+    <AndroidResource Include="Resources\drawable\icon_main.png" />
+    <AndroidResource Include="Resources\drawable\icon_maps.png" />
+    <AndroidResource Include="Resources\drawable\icon_room.png" />
+    <AndroidResource Include="Resources\drawable\icon_settings.png" />
+    <AndroidResource Include="Resources\drawable\icon_unlock.png" />
+    <AndroidResource Include="Resources\drawable\icon_unlockdollar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
