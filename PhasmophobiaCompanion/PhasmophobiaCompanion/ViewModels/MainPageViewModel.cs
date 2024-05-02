@@ -154,12 +154,28 @@ namespace PhasmophobiaCompanion.ViewModels
                 var random = new Random();
                 if (dataService.SelectedTipLevel == dataService.GetSettingsCommon().AnyLevel)
                 {
-                    DisplayedTip = Tips[random.Next(Tips.Count)];
+                    if (DisplayedTip != null)
+                    {
+                        var tipsWithoutCurrent = Tips.Where(tip => tip.TipValue != DisplayedTip.TipValue).ToList();
+                        DisplayedTip = tipsWithoutCurrent[random.Next(tipsWithoutCurrent.Count)];
+                    }
+                    else
+                    {
+                        DisplayedTip = Tips[random.Next(Tips.Count)];
+                    }
                 }
                 else
                 {
                     var filteredTips = Tips.Where(t => t.Level == dataService.SelectedTipLevel).ToList();
-                    DisplayedTip = filteredTips[random.Next(filteredTips.Count)];
+                    if (DisplayedTip != null)
+                    {
+                        var tipsWithoutCurrent = filteredTips.Where(tip => tip.TipValue != DisplayedTip.TipValue).ToList();
+                        DisplayedTip = tipsWithoutCurrent[random.Next(tipsWithoutCurrent.Count)];
+                    }
+                    else
+                    {
+                        DisplayedTip = filteredTips[random.Next(filteredTips.Count)];
+                    }
                 }
             }
             catch (Exception ex)
