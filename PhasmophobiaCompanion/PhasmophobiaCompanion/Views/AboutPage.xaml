@@ -48,7 +48,7 @@
                         <FormattedString>
                             <FormattedString.Spans>
                                 <Span Text="Learn more at " />
-                                <Span FontAttributes="Bold" Text="https://aka.ms/xamarin-quickstart" />
+                                <Span FontFamily="{StaticResource BoldFont}" Text="https://aka.ms/xamarin-quickstart" />
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>

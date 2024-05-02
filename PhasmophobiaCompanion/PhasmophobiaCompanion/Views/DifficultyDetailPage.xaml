@@ -12,7 +12,7 @@
             <!--  Заголовок страницы  -->
             <Label
                 Margin="0,20,0,0"
-                FontAttributes="Bold"
+                FontFamily="{StaticResource BoldFont}"
                 FontSize="Large"
                 HorizontalOptions="Center">
                 <Label.FormattedText>
@@ -49,7 +49,7 @@
 
                 <StackLayout Padding="5" Spacing="20">
                     <Label
-                        FontAttributes="Bold"
+                        FontFamily="{StaticResource BoldFont}"
                         FontSize="18"
                         Text="{Binding DifficultyCommon.DifficultyParams}" />
                     <StackLayout
@@ -59,7 +59,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.ActivityMonitorWork}" />
                                 </FormattedString>
@@ -69,7 +69,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.DeadCashBack}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.DeadCashBack}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.DeadCashBack}" />
                                 </FormattedString>
@@ -79,7 +79,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.DoorOpenedCount}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.DoorOpenedCount}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.DoorOpenedCount}" />
                                 </FormattedString>
@@ -89,7 +89,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.ElectricityBlockNotShowedOnMap}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.ElectricityBlockNotShowedOnMap}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.ElectricityBlockNotShowedOnMap}" />
                                 </FormattedString>
@@ -99,7 +99,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.ElectricityOn}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.ElectricityOn}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.ElectricityOn}" />
                                 </FormattedString>
@@ -109,7 +109,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.IsCursedAvailable}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.IsCursedAvailable}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.IsCursedAvailable}" />
                                 </FormattedString>
@@ -119,7 +119,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.EvidenceAvailable}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.EvidenceAvailable}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.EvidenceAvailable}" />
                                 </FormattedString>
@@ -129,7 +129,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.FingerPrints}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.FingerPrints}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.FingerPrints}" />
                                 </FormattedString>
@@ -139,7 +139,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.GhostActivity}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.GhostActivity}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.GhostActivity}" />
                                 </FormattedString>
@@ -149,7 +149,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.GhostHuntTime}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.GhostHuntTime}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.GhostHuntTime}" />
                                 </FormattedString>
@@ -159,7 +159,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.HidingSpotBlocked}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.HidingSpotBlocked}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.HidingSpotBlocked}" />
                                 </FormattedString>
@@ -169,7 +169,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.HuntExtendByKilling}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.HuntExtendByKilling}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.HuntExtendByKilling}" />
                                 </FormattedString>
@@ -179,7 +179,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.ActivityMonitorWork}" />
                                 </FormattedString>
@@ -189,7 +189,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.ObjectiveBoardPendingAloneAll}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.ObjectiveBoardPendingAloneAll}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.ObjectiveBoardPendingAloneAll}" />
                                 </FormattedString>
@@ -199,7 +199,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.RewardMultiplier}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.RewardMultiplier}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.RewardMultiplier}" />
                                 </FormattedString>
@@ -209,7 +209,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.SanityConsumption}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.SanityConsumption}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.SanityConsumption}" />
                                 </FormattedString>
@@ -219,7 +219,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.SanityMonitorWork}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.SanityMonitorWork}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.SanityMonitorWork}" />
                                 </FormattedString>
@@ -229,7 +229,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.SanityRestoration}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.SanityRestoration}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.SanityRestoration}" />
                                 </FormattedString>
@@ -239,7 +239,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.SanityStartAt}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.SanityStartAt}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.SanityStartAt}" />
                                 </FormattedString>
@@ -249,7 +249,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.SetupTime}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.SetupTime}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.SetupTime}" />
                                 </FormattedString>
@@ -259,7 +259,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.UnlockLevel}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.UnlockLevel}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.UnlockLevel}" />
                                 </FormattedString>

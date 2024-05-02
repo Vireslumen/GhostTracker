@@ -19,7 +19,7 @@
         WidthRequest="250">
         <StackLayout>
             <Label
-                FontAttributes="Bold"
+                FontFamily="{StaticResource BoldFont}"
                 FontSize="20"
                 HorizontalOptions="CenterAndExpand"
                 HorizontalTextAlignment="Center"
@@ -50,7 +50,7 @@
                     </yummy:PancakeView.Border>
                     <Label
                         Padding="10"
-                        FontAttributes="Bold"
+                        FontFamily="{StaticResource BoldFont}"
                         FontSize="16"
                         HorizontalTextAlignment="Center"
                         Text="{Binding MainPageCommon.Ok}"
@@ -72,7 +72,7 @@
                     </yummy:PancakeView.Border>
                     <Label
                         Padding="10"
-                        FontAttributes="Bold"
+                        FontFamily="{StaticResource BoldFont}"
                         FontSize="16"
                         HorizontalTextAlignment="Center"
                         Text="{Binding MainPageCommon.ReadMore}"

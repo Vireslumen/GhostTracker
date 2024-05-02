@@ -82,10 +82,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\phasmaDATADB.db" />
+    <AndroidAsset Include="Assets\Overpass_Bold.ttf" />
+    <AndroidAsset Include="Assets\RubikWetPaint_Regular.ttf" />
+    <AndroidAsset Include="Assets\Overpass_Regular.ttf" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
-    <AndroidResource Include="Resources\font\Roman_Antique.ttf" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\styles.xml" />
@@ -261,5 +263,6 @@
     <AndroidResource Include="Resources\drawable\icon_unlock.png" />
     <AndroidResource Include="Resources\drawable\icon_unlockdollar.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

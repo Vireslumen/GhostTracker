@@ -16,7 +16,7 @@
         Margin="20"
         BackgroundColor="White"
         CornerRadius="10"
-        HeightRequest="320"
+        HeightRequest="340"
         HorizontalOptions="Center"
         VerticalOptions="Center"
         WidthRequest="300">
@@ -34,14 +34,14 @@
                 <!--  Название фильтрации по размерам карт  -->
                 <Label
                     Margin="0,0,0,10"
-                    FontAttributes="Bold"
+                    FontFamily="{StaticResource BoldFont}"
                     FontSize="18"
                     HorizontalOptions="Center"
                     Text="{Binding MapCommon.FilterSize}" />
                 <!--  Список размеров карт  -->
                 <CollectionView
                     x:Name="sizesCollectionView"
-                    HeightRequest="200"
+                    HeightRequest="220"
                     ItemsSource="{Binding AllSizes}"
                     SelectedItems="{Binding SelectedSizes, Mode=TwoWay}"
                     SelectionMode="Multiple">
@@ -87,7 +87,7 @@
                 <!--  Название фильтра по диапазону количества комнат на карте  -->
                 <Label
                     Margin="0,0,0,10"
-                    FontAttributes="Bold"
+                    FontFamily="{StaticResource BoldFont}"
                     FontSize="18"
                     HorizontalOptions="Center"
                     HorizontalTextAlignment="Center"

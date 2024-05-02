@@ -11,7 +11,7 @@
         <!--  Заголовок страницы  -->
         <Label
             Margin="5"
-            FontAttributes="Bold"
+            FontFamily="{StaticResource SpecialFont}"
             FontSize="24"
             HorizontalOptions="CenterAndExpand"
             HorizontalTextAlignment="Center"
@@ -86,7 +86,7 @@
                                             <StackLayout Orientation="Horizontal">
                                                 <Image HeightRequest="18" Source="icon_unlock" />
                                                 <Label
-                                                    FontAttributes="Bold"
+                                                    FontFamily="{StaticResource BoldFont}"
                                                     FontSize="13"
                                                     HorizontalOptions="Center"
                                                     Text="{Binding UnlockLevel}"
@@ -96,7 +96,7 @@
                                                              HorizontalOptions="EndAndExpand">
                                                     <Image HeightRequest="18" Source="icon_room" />
                                                     <Label
-                                                        FontAttributes="Bold"
+                                                        FontFamily="{StaticResource BoldFont}"
                                                         FontSize="13"
                                                         Text="{Binding RoomCount}"
                                                         TextColor="Black"
@@ -110,7 +110,7 @@
                                                 FontSize="18"
                                                 HorizontalOptions="CenterAndExpand"
                                                 HorizontalTextAlignment="Center"
-                                                FontAttributes="Bold"
+                                                FontFamily="{StaticResource BoldFont}"
                                                 Text="{Binding Title}"
                                                 TextColor="Black"
                                                 VerticalOptions="CenterAndExpand" />
@@ -135,7 +135,7 @@
                         </CollectionView.Margin>
                         <CollectionView.EmptyView>
                             <Label
-                                FontAttributes="Bold"
+                                FontFamily="{StaticResource BoldFont}"
                                 FontSize="24"
                                 HorizontalOptions="CenterAndExpand"
                                 HorizontalTextAlignment="Center"

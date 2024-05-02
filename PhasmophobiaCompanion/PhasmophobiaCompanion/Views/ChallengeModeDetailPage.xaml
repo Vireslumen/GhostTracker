@@ -11,7 +11,7 @@
         <StackLayout Orientation="Vertical">
             <!--  Заголовок страницы  -->
             <Label
-                FontAttributes="Bold"
+                FontFamily="{StaticResource BoldFont}"
                 FontSize="Large"
                 HorizontalOptions="CenterAndExpand"
                 HorizontalTextAlignment="Center">
@@ -58,7 +58,7 @@
                         <Image HeightRequest="150" Source="{Binding ChallengeMode.ChallengeMap.ImageFilePath}" />
                         <!--  Название карты  -->
                         <Label
-                            FontAttributes="Bold"
+                            FontFamily="{StaticResource BoldFont}"
                             FontSize="18"
                             HorizontalOptions="CenterAndExpand"
                             HorizontalTextAlignment="Center"
@@ -106,7 +106,7 @@
                 </yummy:PancakeView.Border>
                 <StackLayout Padding="5" Spacing="20">
                     <Label
-                        FontAttributes="Bold"
+                        FontFamily="{StaticResource BoldFont}"
                         FontSize="16"
                         Text="{Binding ChallengeModeCommon.EquipmentProvided}" />
                     <StackLayout
@@ -121,7 +121,7 @@
                                     <Label>
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span FontAttributes="Bold" Text="{Binding Title}" />
+                                                <Span FontFamily="{StaticResource BoldFont}" Text="{Binding Title}" />
                                                 <Span Text=" " />
                                                 <Span Text="{Binding Path=BindingContext.EquipmentCommon.Tier, Source={x:Reference Name=equipmentsStackLayout}}" />
                                                 <Span Text=" " />
@@ -157,14 +157,14 @@
 
                 <StackLayout Padding="5" Spacing="20">
                     <Label
-                        FontAttributes="Bold"
+                        FontFamily="{StaticResource BoldFont}"
                         FontSize="16"
                         Text="{Binding ChallengeModeCommon.DiffucltyParams}" />
                     <StackLayout Padding="5" Spacing="15">
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ActivityMonitorWork}" />
                                 </FormattedString>
@@ -174,7 +174,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.DeadCashBack}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.DeadCashBack}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.DeadCashBack}" />
                                 </FormattedString>
@@ -184,7 +184,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.DoorOpenedCount}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.DoorOpenedCount}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.DoorOpenedCount}" />
                                 </FormattedString>
@@ -194,7 +194,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.ElectricityBlockNotShowedOnMap}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.ElectricityBlockNotShowedOnMap}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ElectricityBlockNotShowedOnMap}" />
                                 </FormattedString>
@@ -204,7 +204,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.ElectricityOn}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.ElectricityOn}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ElectricityOn}" />
                                 </FormattedString>
@@ -213,7 +213,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.IsCursedAvailable}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.IsCursedAvailable}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.IsCursedAvailable}" />
                                 </FormattedString>
@@ -223,7 +223,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.EvidenceAvailable}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.EvidenceAvailable}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.EvidenceAvailable}" />
                                 </FormattedString>
@@ -233,7 +233,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.FingerPrints}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.FingerPrints}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.FingerPrints}" />
                                 </FormattedString>
@@ -243,7 +243,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.GhostActivity}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.GhostActivity}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.GhostActivity}" />
                                 </FormattedString>
@@ -253,7 +253,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.GhostHuntTime}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.GhostHuntTime}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.GhostHuntTime}" />
                                 </FormattedString>
@@ -263,7 +263,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.HidingSpotBlocked}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.HidingSpotBlocked}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.HidingSpotBlocked}" />
                                 </FormattedString>
@@ -273,7 +273,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.HuntExtendByKilling}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.HuntExtendByKilling}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.HuntExtendByKilling}" />
                                 </FormattedString>
@@ -283,7 +283,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ActivityMonitorWork}" />
                                 </FormattedString>
@@ -293,7 +293,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.ObjectiveBoardPendingAloneAll}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.ObjectiveBoardPendingAloneAll}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.ObjectiveBoardPendingAloneAll}" />
                                 </FormattedString>
@@ -303,7 +303,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.RewardMultiplier}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.RewardMultiplier}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.RewardMultiplier}" />
                                 </FormattedString>
@@ -313,7 +313,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.SanityConsumption}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.SanityConsumption}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityConsumption}" />
                                 </FormattedString>
@@ -323,7 +323,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.SanityMonitorWork}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.SanityMonitorWork}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityMonitorWork}" />
                                 </FormattedString>
@@ -333,7 +333,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.SanityRestoration}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.SanityRestoration}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityRestoration}" />
                                 </FormattedString>
@@ -343,7 +343,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.SanityStartAt}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.SanityStartAt}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SanityStartAt}" />
                                 </FormattedString>
@@ -353,7 +353,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.SetupTime}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.SetupTime}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.SetupTime}" />
                                 </FormattedString>
@@ -363,7 +363,7 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontAttributes="Bold" Text="{Binding DifficultyCommon.UnlockLevel}" />
+                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.UnlockLevel}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding ChallengeMode.ChallengeDifficulty.UnlockLevel}" />
                                 </FormattedString>

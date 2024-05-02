@@ -23,7 +23,7 @@
                         behaviors:ShadowEffect.Radius="12"
                         BackgroundColor="White"
                         HorizontalOptions="Start">
-                        <Label FontAttributes="Bold" Text="Help To Guess The Ghost" />
+                        <Label FontFamily="{StaticResource BoldFont}" Text="Help To Guess The Ghost" />
                     </FlexLayout>
 
                 </yummy:PancakeView>
@@ -108,7 +108,8 @@
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span FontAttributes="Bold" Text="{Binding MainPageCommon.SpecialMode}" />
+                                <Span FontFamily="{StaticResource BoldFont}"
+                                      Text="{Binding MainPageCommon.SpecialMode}" />
                                 <Span Text=": " />
                                 <Span Text="{Binding Path=ChallengeMode.Title}" />
                             </FormattedString>
@@ -138,7 +139,7 @@
                     Grid.Row="0"
                     Grid.Column="0"
                     Padding="10,10,10,0"
-                    FontAttributes="Bold"
+                    FontFamily="{StaticResource BoldFont}"
                     FontSize="16"
                     HorizontalTextAlignment="Center"
                     HorizontalOptions="CenterAndExpand"
@@ -190,7 +191,7 @@
                     Grid.Row="0"
                     Grid.Column="1"
                     Padding="10,10,10,0"
-                    FontAttributes="Bold"
+                    FontFamily="{StaticResource BoldFont}"
                     FontSize="16"
                     HorizontalTextAlignment="Center"
                     HorizontalOptions="CenterAndExpand"
@@ -239,7 +240,7 @@
             <!--  Рандомная подсказка  -->
             <Label
                 Padding="10,10,10,0"
-                FontAttributes="Bold"
+                FontFamily="{StaticResource BoldFont}"
                 FontSize="Medium"
                 HorizontalOptions="StartAndExpand"
                 Text="{Binding MainPageCommon.Tip}">
@@ -269,220 +270,199 @@
                     <TapGestureRecognizer Command="{Binding TipTappedCommand}" />
                 </yummy:PancakeView.GestureRecognizers>
             </yummy:PancakeView>
-            <!--  Таблицы скоростей призраков и рассудка для начала охоты  -->
-            <Grid HeightRequest="300">
+
+            <!--Таблица скоростей призрака и рассудка необходимого для начала охоты-->
+            <!--Названия таблиц-->
+            <Grid Margin="10,0,10,0"
+                  Padding="0,5,0,0" RowSpacing="0" ColumnSpacing="10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*" />
-                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="2.6*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="1.3*" />
+                    <ColumnDefinition Width="1" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <!--  Заголовок таблице скоростей призрака  -->
-                <Label
-                    Margin="10"
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
-                    FontAttributes="Bold"
-                    HorizontalTextAlignment="Center"
-                    Text="{Binding GhostCommon.Speed}" />
-                <!--  Таблицы скоростей призрака  -->
-                <yummy:PancakeView
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Padding="0,10,0,10"
-                    BackgroundColor="White"
-                    CornerRadius="16">
-                    <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow />
-                    </yummy:PancakeView.Shadow>
-                    <yummy:PancakeView.Margin>
-                        <Thickness>
-                            10,0,5,10
-                        </Thickness>
-                    </yummy:PancakeView.Margin>
-                    <yummy:PancakeView.Border>
-                        <yummy:Border Thickness="1" Color="Color.Default" />
-                    </yummy:PancakeView.Border>
-
-                    <StackLayout Orientation="Vertical">
-                        <Label FontSize="14" FontAttributes="Bold">
-                            <Label.Padding>
-                                10,0,10,0
-                            </Label.Padding>
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{Binding GhostCommon.GhostTitle}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding GhostCommon.Min}">
-                                        <Span.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding MinSpeedHeaderTappedCommand}" />
-                                        </Span.GestureRecognizers>
-                                    </Span>
-                                    <Span Text=" - " />
-                                    <Span Text="{Binding GhostCommon.Max}">
-                                        <Span.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding MaxSpeedHeaderTappedCommand}" />
-                                        </Span.GestureRecognizers>
-                                    </Span>
-                                    <Span Text="{Binding GhostCommon.LoS}">
-                                        <Span.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding MaxSpeedLoSHeaderTappedCommand}" />
-                                        </Span.GestureRecognizers>
-                                    </Span>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label>
-                            <Label.Padding>
-                                10,0,10,0
-                            </Label.Padding>
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{Binding MainPageCommon.PlayerTitle}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding MainPageCommon.PlayerMinSpeed}">
-                                        <Span.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding MinPlayerSpeedTappedCommand}" />
-                                        </Span.GestureRecognizers>
-                                    </Span>
-                                    <Span Text=" - " />
-                                    <Span Text="{Binding MainPageCommon.PlayerMaxSpeed}">
-                                        <Span.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding MaxPlayerSpeedTappedCommand}" />
-                                        </Span.GestureRecognizers>
-                                    </Span>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <ListView x:Name="ghostListViewSpeed" ItemsSource="{Binding Ghosts}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <Label FontSize="13" Padding="10" LineBreakMode="NoWrap">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="{Binding Title}">
-                                                        <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer
-                                                                Command="{Binding Path=BindingContext.GhostTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}"
-                                                                CommandParameter="{Binding .}" />
-                                                        </Span.GestureRecognizers>
-                                                    </Span>
-                                                    <Span Text=": " />
-                                                    <Span Text="{Binding MinGhostSpeed}" />
-                                                    <Span Text=" - " />
-                                                    <Span Text="{Binding MaxGhostSpeed}" />
-                                                    <Span Text=" (" />
-                                                    <Span Text="{Binding MaxGhostSpeedLoS}" />
-                                                    <Span Text=")" />
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                            <Label.GestureRecognizers>
-                                                <TapGestureRecognizer
-                                                    Command="{Binding Path=BindingContext.GhostSpeedTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}"
-                                                    CommandParameter="{Binding .}" />
-                                            </Label.GestureRecognizers>
-                                        </Label>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-
-                    </StackLayout>
-                </yummy:PancakeView>
-                <!--  Заголовок рассудка для начала охоты  -->
-                <Label
-                    Padding="0,0,0,5"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    FontAttributes="Bold"
-                    FontSize="Header"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
-                    HorizontalTextAlignment="Center"
-                    Text="{Binding GhostCommon.SanityHunt}" />
-                <!--  Таблица рассудков для начала охоты  -->
-                <yummy:PancakeView
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Padding="0,10,0,10"
-                    BackgroundColor="White"
-                    CornerRadius="16">
-                    <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow />
-                    </yummy:PancakeView.Shadow>
-                    <yummy:PancakeView.Margin>
-                        <Thickness>
-                            5,0,10,10
-                        </Thickness>
-                    </yummy:PancakeView.Margin>
-                    <yummy:PancakeView.Border>
-                        <yummy:Border Thickness="1" Color="Color.Default" />
-                    </yummy:PancakeView.Border>
-                    <StackLayout>
-                        <Label FontSize="12" FontAttributes="Bold">
-                            <Label.Padding>
-                                10,0,10,0
-                            </Label.Padding>
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{Binding GhostCommon.GhostTitle}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding GhostCommon.Min}">
-                                        <Span.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding MinSanityHeaderTappedCommand}" />
-                                        </Span.GestureRecognizers>
-                                    </Span>
-                                    <Span Text=" - " />
-                                    <Span Text="{Binding GhostCommon.Max}">
-                                        <Span.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding MaxSanityHeaderTappedCommand}" />
-                                        </Span.GestureRecognizers>
-                                    </Span>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <ListView x:Name="ghostListViewSanity" ItemsSource="{Binding Ghosts}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <Label FontSize="13" Padding="10" LineBreakMode="NoWrap">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="{Binding Title}">
-                                                        <Span.GestureRecognizers>
-                                                            <TapGestureRecognizer
-                                                                Command="{Binding Path=BindingContext.GhostTappedCommand, Source={x:Reference Name=ghostListViewSanity}}"
-                                                                CommandParameter="{Binding .}" />
-                                                        </Span.GestureRecognizers>
-                                                    </Span>
-                                                    <Span Text=": " />
-                                                    <Span Text="{Binding MinSanityHunt}" />
-                                                    <Span Text=" - " />
-                                                    <Span Text="{Binding MaxSanityHunt}" />
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                            <Label.GestureRecognizers>
-                                                <TapGestureRecognizer
-                                                    Command="{Binding Path=BindingContext.SanityHuntTappedCommand, Source={x:Reference Name=ghostListViewSpeed}}"
-                                                    CommandParameter="{Binding .}" />
-                                            </Label.GestureRecognizers>
-                                        </Label>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackLayout>
-                </yummy:PancakeView>
+                <Label VerticalOptions="CenterAndExpand"
+                       FontSize="16"
+                       HorizontalOptions="End"
+                       HorizontalTextAlignment="Center"
+                       FontFamily="{StaticResource BoldFont}"
+                       Text="{Binding GhostCommon.SanityHunt}" Grid.Column="0" Grid.ColumnSpan="3" />
+                <Label VerticalOptions="CenterAndExpand"
+                       FontSize="16"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       FontFamily="{StaticResource BoldFont}"
+                       Text="{Binding GhostCommon.Speed}" Grid.Column="3" Grid.ColumnSpan="4" />
             </Grid>
+            <!-- Поле таблицы-->
+            <yummy:PancakeView
+                Padding="0,0,0,0"
+                BackgroundColor="White"
+                CornerRadius="16">
+                <yummy:PancakeView.Shadow>
+                    <yummy:DropShadow />
+                </yummy:PancakeView.Shadow>
+                <yummy:PancakeView.Margin>
+                    <Thickness>
+                        10,0,10,10
+                    </Thickness>
+                </yummy:PancakeView.Margin>
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="Color.Default" />
+                </yummy:PancakeView.Border>
+                <StackLayout Spacing="0">
+                    <!--Заголовок таблицы и скорости игроков-->
+                    <Grid RowSpacing="0" ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2.6*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="1.3*" />
+                            <ColumnDefinition Width="1" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="1" />
+                        </Grid.RowDefinitions>
+                        <Label
+                            FontFamily="{StaticResource BoldFont}" Grid.Row="0" Padding="10,10,0,10"
+                            Text="{Binding GhostCommon.GhostTitle}" Grid.Column="0" />
+                        <Label HorizontalOptions="Center"
+                               FontFamily="{StaticResource BoldFont}" Grid.Row="0" Padding="5,10,0,10"
+                               Text="{Binding GhostCommon.Min}" Grid.Column="1">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding MinSanityHeaderTappedCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label HorizontalOptions="Center"
+                               FontFamily="{StaticResource BoldFont}" Grid.Row="0" Padding="0,10,10,10"
+                               Text="{Binding GhostCommon.Max}" Grid.Column="2">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding MaxSanityHeaderTappedCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <BoxView Grid.Row="0" BackgroundColor="Gray" WidthRequest="1" Grid.Column="3"
+                                 VerticalOptions="FillAndExpand" />
+                        <Label HorizontalOptions="Center"
+                               FontFamily="{StaticResource BoldFont}" Grid.Row="0" Padding="0,10,0,10"
+                               Text="{Binding GhostCommon.Min}" Grid.Column="4">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding MinSpeedHeaderTappedCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label HorizontalOptions="Center"
+                               FontFamily="{StaticResource BoldFont}" Grid.Row="0" Padding="0,10,0,10"
+                               Text="{Binding GhostCommon.Max}" Grid.Column="5">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding MaxSpeedHeaderTappedCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label HorizontalOptions="Center"
+                               FontFamily="{StaticResource BoldFont}" Grid.Row="0" Padding="0,10,0,10"
+                               Text="{Binding GhostCommon.LoS}" Grid.Column="6">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding MaxSpeedLoSHeaderTappedCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <BoxView Grid.Row="1" BackgroundColor="Gray" WidthRequest="1" Grid.Column="3"
+                                 VerticalOptions="FillAndExpand" />
+                        <Label Grid.Row="1" Padding="10,10,0,10" Text="{Binding MainPageCommon.PlayerTitle}"
+                               Grid.Column="0" />
+                        <Label HorizontalOptions="Center" Grid.Row="1" Padding="0,10,0,10"
+                               Text="{Binding MainPageCommon.PlayerMinSpeed}"
+                               Grid.Column="4">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding MinPlayerSpeedTappedCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label HorizontalOptions="Center" Grid.Row="1" Padding="0,10,0,10"
+                               Text="{Binding MainPageCommon.PlayerMaxSpeed}"
+                               Grid.Column="5">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding MaxPlayerSpeedTappedCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <BoxView Grid.Row="2" BackgroundColor="WhiteSmoke" HeightRequest="1" Grid.Column="0" Grid.ColumnSpan="7"
+                                 HorizontalOptions="FillAndExpand" />
+                    </Grid>
+                    <!--Скорости и рассудок-->
+                    <ListView x:Name="ghostListView" HeightRequest="300" SelectionMode="None" ItemsSource="{Binding Ghosts}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid ColumnSpacing="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2.6*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="1.3*" />
+                                            <ColumnDefinition Width="1" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Padding="10,10,0,10" Text="{Binding Title}" Grid.Column="0">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer 
+                                                    Command="{Binding Path=BindingContext.GhostTappedCommand, Source={x:Reference Name=ghostListView}}"
+                                                    CommandParameter="{Binding .}" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <Label HorizontalOptions="Center" Padding="0,10,0,10"
+                                               Text="{Binding MinSanityHunt}" Grid.Column="1">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer 
+                                                    Command="{Binding Path=BindingContext.SanityHuntTappedCommand, Source={x:Reference Name=ghostListView}}"
+                                                    CommandParameter="{Binding .}" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <Label HorizontalOptions="Center" Padding="0,10,0,10"
+                                               Text="{Binding MaxSanityHunt}" Grid.Column="2">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer 
+                                                    Command="{Binding Path=BindingContext.SanityHuntTappedCommand, Source={x:Reference Name=ghostListView}}"
+                                                    CommandParameter="{Binding .}" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <BoxView BackgroundColor="Gray" WidthRequest="1" Grid.Column="3"
+                                                 VerticalOptions="FillAndExpand" />
+                                        <Label HorizontalOptions="Center" Padding="0,10,0,10"
+                                               Text="{Binding MinGhostSpeed}" Grid.Column="4">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSpeedTappedCommand, Source={x:Reference Name=ghostListView}}"
+                                                                      CommandParameter="{Binding .}" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <Label HorizontalOptions="Center" Padding="0,10,0,10"
+                                               Text="{Binding MaxGhostSpeed}" Grid.Column="5">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSpeedTappedCommand, Source={x:Reference Name=ghostListView}}"
+                                                                      CommandParameter="{Binding .}" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <Label HorizontalOptions="Center" Padding="0,10,10,10"
+                                               Text="{Binding MaxGhostSpeedLoS}" Grid.Column="6">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSpeedTappedCommand, Source={x:Reference Name=ghostListView}}"
+                                                                      CommandParameter="{Binding .}" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </yummy:PancakeView>
             <!--  Список улик  -->
             <Label
                 Padding="10,10,10,0"
-                FontAttributes="Bold"
+                FontFamily="{StaticResource BoldFont}"
                 FontSize="Medium"
                 HorizontalOptions="StartAndExpand"
                 Text="{Binding MainPageCommon.Clue}">
@@ -507,48 +487,44 @@
                 <yummy:PancakeView.Border>
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
-                <CollectionView
-                    x:Name="clueFlexLayout"
-                    Margin="10"
-                    HeightRequest="185"
-                    ItemsSource="{Binding Clues}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-
-                            <StackLayout Orientation="Horizontal" Spacing="5">
-                                <Image
-                                    HeightRequest="30"
-                                    HorizontalOptions="Center"
-                                    Source="{Binding IconFilePath}"
-                                    WidthRequest="30" />
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="14"
-                                    HorizontalTextAlignment="Start"
-                                    Text="{Binding Title}"
-                                    VerticalOptions="CenterAndExpand" />
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                        Command="{Binding Path=BindingContext.ClueTappedCommand, Source={x:Reference Name=clueFlexLayout}}"
-                                        CommandParameter="{Binding .}" />
-                                </StackLayout.GestureRecognizers>
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout
-                            Orientation="Vertical"
-                            Span="2"
-                            VerticalItemSpacing="15" />
-                    </CollectionView.ItemsLayout>
-                </CollectionView>
+                <StackLayout>
+                    <FlexLayout 
+                        x:Name="clueFlexLayout" Direction="Row" Wrap="Wrap" JustifyContent="Start" AlignItems="Start" AlignContent="Start">
+                        <BindableLayout.ItemsSource>
+                            <Binding Path="Clues"/>
+                        </BindableLayout.ItemsSource>
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BackgroundColor="Transparent" HasShadow="False" Margin="5" WidthRequest="160" HeightRequest="50" Padding="0">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image
+                                            HeightRequest="30"
+                                            HorizontalOptions="Center"
+                                            Source="{Binding IconFilePath}"
+                                            WidthRequest="30" />
+                                        <Label
+                                            FontFamily="{StaticResource BoldFont}"
+                                            FontSize="14"
+                                            HorizontalTextAlignment="Start"
+                                            Text="{Binding Title}"
+                                            VerticalOptions="CenterAndExpand" />
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Path=BindingContext.ClueTappedCommand, Source={x:Reference Name=clueFlexLayout}}"
+                                                CommandParameter="{Binding .}" />
+                                        </StackLayout.GestureRecognizers>
+                                    </StackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </StackLayout>
 
             </yummy:PancakeView>
             <!--  Список сложностей  -->
             <Label
                 Padding="10,10,10,0"
-                FontAttributes="Bold"
+                FontFamily="{StaticResource BoldFont}"
                 FontSize="Medium"
                 HorizontalOptions="StartAndExpand"
                 Text="{Binding MainPageCommon.Difficulties}">
@@ -589,7 +565,7 @@
                                 CornerRadius="16">
                                 <StackLayout Orientation="Vertical">
                                     <Label
-                                        FontAttributes="Bold"
+                                        FontFamily="{StaticResource BoldFont}"
                                         FontSize="16"
                                         Text="{Binding Title}" />
                                     <Label Padding="10,5,5,5" Text="{Binding Description}" />
@@ -609,7 +585,7 @@
             <!--  Список патчей  -->
             <Label
                 Padding="10,10,10,0"
-                FontAttributes="Bold"
+                FontFamily="{StaticResource BoldFont}"
                 FontSize="Medium"
                 HorizontalOptions="StartAndExpand"
                 Text="{Binding MainPageCommon.Patches}">
@@ -645,7 +621,7 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Padding="5,10,5,5">
-                                <Label FontAttributes="Bold" Text="{Binding Title}" TextColor="Blue">
+                                <Label FontFamily="{StaticResource BoldFont}" Text="{Binding Title}" TextColor="Blue">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer
                                             Command="{Binding Path=BindingContext.PatchTappedCommand, Source={x:Reference Name=patchesFlexLayout}}"
@@ -662,7 +638,7 @@
             <!--  Горизонтальная прокрутная некатегоризованных страниц  -->
             <Label
                 Padding="10,10,10,0"
-                FontAttributes="Bold"
+                FontFamily="{StaticResource BoldFont}"
                 FontSize="Medium"
                 HorizontalOptions="StartAndExpand"
                 Text="{Binding MainPageCommon.OtherPages}">

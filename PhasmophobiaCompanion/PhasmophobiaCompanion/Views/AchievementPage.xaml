@@ -12,7 +12,7 @@
             <!--  Заголовок страницы  -->
             <Label
                 Margin="0,20,0,0"
-                FontAttributes="Bold"
+                FontFamily="{StaticResource BoldFont}"
                 FontSize="Large"
                 HorizontalOptions="Center"
                 Text="{Binding AchievementCommon.Title}" />
@@ -52,7 +52,7 @@
                                     <StackLayout>
                                         <!--  Название особого режима  -->
                                         <Label
-                                            FontAttributes="Bold"
+                                            FontFamily="{StaticResource BoldFont}"
                                             FontSize="16"
                                             Text="{Binding Title}" />
                                         <!--  Описание особого режима  -->

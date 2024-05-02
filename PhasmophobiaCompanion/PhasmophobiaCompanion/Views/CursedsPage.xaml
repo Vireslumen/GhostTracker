@@ -11,7 +11,7 @@
         <!--  Заголовок страницы  -->
         <Label
             Margin="5"
-            FontAttributes="Bold"
+            FontFamily="{StaticResource SpecialFont}"
             FontSize="24"
             HorizontalOptions="CenterAndExpand"
             HorizontalTextAlignment="Center"
@@ -71,9 +71,9 @@
                                                 VerticalOptions="Start" />
                                             <!--  Название проклятого предмета  -->
                                             <Label
+                                                FontFamily="{StaticResource BoldFont}"
                                                 Padding="0,10,0,10"
                                                 FontSize="18"
-                                                FontAttributes="Bold"
                                                 HorizontalOptions="CenterAndExpand"
                                                 HorizontalTextAlignment="Center"
                                                 Text="{Binding Title}"
@@ -89,7 +89,7 @@
                         </CollectionView.ItemTemplate>
                         <CollectionView.EmptyView>
                             <Label
-                                FontAttributes="Bold"
+                                FontFamily="{StaticResource BoldFont}"
                                 FontSize="24"
                                 HorizontalOptions="CenterAndExpand"
                                 HorizontalTextAlignment="Center"

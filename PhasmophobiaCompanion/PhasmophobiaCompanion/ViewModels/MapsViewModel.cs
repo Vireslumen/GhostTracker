@@ -105,7 +105,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 var currentTheme = Application.Current.RequestedTheme;
                 return SelectedSizes.Any() || minRoomSaved != 0 || maxRoomSaved != 100
                     ? currentTheme == OSAppTheme.Dark ? "#FD7E14" : "#FD7E14"
-                    : "White";
+                    : "Transparent";
             }
         }
         public string MaxRoom

@@ -39,7 +39,7 @@
                                 VerticalOptions="Center" />
                             <!--  Название улики  -->
                             <Label
-                                FontAttributes="Bold"
+                                FontFamily="{StaticResource BoldFont}"
                                 FontSize="20"
                                 HorizontalOptions="CenterAndExpand"
                                 HorizontalTextAlignment="Center"
@@ -86,7 +86,7 @@
                                 <StackLayout Orientation="Vertical">
                                     <!--  Название раскрывающегося элемента  -->
                                     <Label
-                                        FontAttributes="Bold"
+                                        FontFamily="{StaticResource BoldFont}"
                                         FontSize="18"
                                         Text="{Binding Title}"
                                         VerticalOptions="CenterAndExpand" />
@@ -162,7 +162,7 @@
                                 <StackLayout Orientation="Vertical">
                                     <!--  Название раскрывающегося элемента  -->
                                     <Label
-                                        FontAttributes="Bold"
+                                        FontFamily="{StaticResource BoldFont}"
                                         FontSize="18"
                                         Text="{Binding Title}" />
                                     <StackLayout Orientation="Horizontal">
@@ -214,22 +214,23 @@
                 </yummy:PancakeView.Border>
                 <StackLayout Padding="5" Spacing="20">
                     <Label
-                        FontAttributes="Bold"
+                        FontFamily="{StaticResource BoldFont}"
                         FontSize="16"
                         Text="{Binding ClueCommon.RelatedEquipment}" />
                     <StackLayout
                         x:Name="equipmentsStackLayout"
-                        Padding="10,5,5,5"
+                        Padding="0,5,5,5"
                         BindableLayout.ItemsSource="{Binding Clue.ClueRelatedEquipments}"
                         Spacing="15">
 
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <StackLayout>
-                                    <Label>
+                                <StackLayout Orientation="Horizontal">
+                                    <Image HeightRequest="60" Source="{Binding ImageFilePath}"></Image>
+                                    <Label VerticalOptions="CenterAndExpand">
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span FontAttributes="Bold" Text="{Binding Title}" />
+                                                <Span FontFamily="{StaticResource BoldFont}" Text="{Binding Title}" />
                                                 <Span Text=" " />
                                                 <Span Text="{Binding Tier}" />
                                             </FormattedString>
@@ -263,7 +264,7 @@
                 <StackLayout>
                     <Label
                         Padding="8,10,0,15"
-                        FontAttributes="Bold"
+                        FontFamily="{StaticResource BoldFont}"
                         FontSize="18"
                         Text="{Binding ClueCommon.OtherGhosts}"
                         VerticalOptions="CenterAndExpand" />
@@ -275,15 +276,15 @@
                             <DataTemplate>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*" />
-                                        <ColumnDefinition Width="4*" />
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="7*" />
                                     </Grid.ColumnDefinitions>
                                     <!--  Список призраков  -->
                                     <StackLayout
                                         Grid.Column="0"
                                         Orientation="Vertical"
                                         VerticalOptions="CenterAndExpand">
-                                        <Label FontAttributes="Bold" Text="{Binding Title}" />
+                                        <Label FontSize="16" FontFamily="{StaticResource BoldFont}" Text="{Binding Title}" />
                                         <StackLayout.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSelectedCommand, Source={x:Reference Name=ghostStackLayoutView}}" CommandParameter="{Binding .}" />
                                         </StackLayout.GestureRecognizers>
@@ -298,21 +299,12 @@
                                         Wrap="Wrap">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
-                                                <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
+                                                <StackLayout Padding="5,10,5,10" Orientation="Vertical" VerticalOptions="FillAndExpand">
                                                     <!--  Иконка улики  -->
                                                     <Image
-                                                        HeightRequest="30"
+                                                        HeightRequest="35"
                                                         Source="{Binding IconFilePath}"
-                                                        WidthRequest="30" />
-                                                    <!--  Название улики  -->
-                                                    <Label
-                                                        HorizontalOptions="CenterAndExpand"
-                                                        HorizontalTextAlignment="Center"
-                                                        LineBreakMode="WordWrap"
-                                                        Text="{Binding Title}"
-                                                        VerticalOptions="Center" />
-                                                    <!--  Костыль  -->
-                                                    <Label Text=" " />
+                                                        WidthRequest="35" />
                                                     <StackLayout.GestureRecognizers>
                                                         <TapGestureRecognizer Command="{Binding Path=BindingContext.ClueSelectedCommand, Source={x:Reference Name=ghostStackLayoutView}}" CommandParameter="{Binding .}" />
                                                     </StackLayout.GestureRecognizers>

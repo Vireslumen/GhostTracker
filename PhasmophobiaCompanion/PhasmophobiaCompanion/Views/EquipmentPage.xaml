@@ -12,7 +12,7 @@
         <!--  Заголовок страницы  -->
         <Label
             Margin="5"
-            FontAttributes="Bold"
+            FontFamily="{StaticResource SpecialFont}"
             FontSize="24"
             HorizontalOptions="CenterAndExpand"
             HorizontalTextAlignment="Center"
@@ -108,7 +108,7 @@
                                                     HorizontalOptions="Center" Orientation="Horizontal">
                                                     <Image HeightRequest="18" Source="icon_unlock" />
                                                     <Label
-                                                        FontAttributes="Bold"
+                                                        FontFamily="{StaticResource BoldFont}"
                                                         FontSize="14"
                                                         HorizontalOptions="Center"
                                                         Text="{Binding UnlockLevel}"
@@ -119,7 +119,7 @@
                                                 <Label
                                                     AbsoluteLayout.LayoutBounds="0.99,0.01,-1,-1"
                                                     AbsoluteLayout.LayoutFlags="PositionProportional"
-                                                    FontAttributes="Bold"
+                                                    FontFamily="{StaticResource BoldFont}"
                                                     FontSize="14"
                                                     HorizontalOptions="Center"
                                                     TextColor="Black"
@@ -140,7 +140,7 @@
                                                     HorizontalOptions="Center" Orientation="Horizontal" Spacing="2">
                                                     <Image HeightRequest="18" Source="icon_dollar" />
                                                     <Label
-                                                        FontAttributes="Bold"
+                                                        FontFamily="{StaticResource BoldFont}"
                                                         FontSize="14"
                                                         HorizontalOptions="Center"
                                                         Text="{Binding Cost}"
@@ -154,7 +154,7 @@
                                                     HorizontalOptions="Center" Orientation="Horizontal">
                                                     <Image HeightRequest="18" Source="icon_unlockdollar" />
                                                     <Label
-                                                        FontAttributes="Bold"
+                                                        FontFamily="{StaticResource BoldFont}"
                                                         FontSize="14"
                                                         HorizontalOptions="Center"
                                                         Text="{Binding UnlockCost}"
@@ -165,7 +165,7 @@
                                             <!--  Название снаряжения  -->
                                             <Label
                                                 Grid.Row="1"
-                                                FontAttributes="Bold"
+                                                FontFamily="{StaticResource BoldFont}"
                                                 FontSize="18"
                                                 HorizontalOptions="CenterAndExpand"
                                                 HorizontalTextAlignment="Center"
@@ -177,13 +177,12 @@
                                                 Grid.Row="2"
                                                 BackgroundColor="Gainsboro"
                                                 VerticalOptions="FillAndExpand" />
-                                            <!--  TODO: Сделай чтобы это было нормально  -->
                                             <StackLayout Grid.Row="3"
                                                          BindableLayout.ItemsSource="{Binding OtherEquipmentStats}">
                                                 <BindableLayout.ItemTemplate>
                                                     <DataTemplate>
                                                         <Label
-                                                            Padding="10,0,10,0"
+                                                            Padding="5,0,5,0"
                                                             FontSize="12"
                                                             HorizontalOptions="CenterAndExpand"
                                                             HorizontalTextAlignment="Center"
@@ -204,7 +203,7 @@
                         </CollectionView.ItemTemplate>
                         <CollectionView.EmptyView>
                             <Label
-                                FontAttributes="Bold"
+                                FontFamily="{StaticResource BoldFont}"
                                 FontSize="24"
                                 HorizontalOptions="CenterAndExpand"
                                 HorizontalTextAlignment="Center"

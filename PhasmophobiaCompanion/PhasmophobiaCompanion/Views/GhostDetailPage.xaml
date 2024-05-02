@@ -45,7 +45,7 @@
                         <Image HeightRequest="150" Source="{Binding Ghost.ImageFilePath}" />
                         <!--  Название призркака  -->
                         <Label
-                            FontAttributes="Bold"
+                            FontFamily="{StaticResource SpecialFont}"
                             FontSize="20"
                             HorizontalOptions="CenterAndExpand"
                             HorizontalTextAlignment="Center"
@@ -129,7 +129,7 @@
                                 <StackLayout Orientation="Vertical">
                                     <!--  Название раскрывающегося элемента  -->
                                     <Label
-                                        FontAttributes="Bold"
+                                        FontFamily="{StaticResource BoldFont}"
                                         FontSize="18"
                                         Text="{Binding Title}" />
                                     <StackLayout Orientation="Horizontal">

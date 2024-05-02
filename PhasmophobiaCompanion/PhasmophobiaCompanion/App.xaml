@@ -27,9 +27,27 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
+            <OnPlatform x:Key="RegularFont" x:TypeArguments="x:String">
+                <On Platform="Android" Value="Overpass_Regular.ttf#Overpass_Regular" />
+            </OnPlatform>
+            <OnPlatform x:Key="BoldFont" x:TypeArguments="x:String">
+                <On Platform="Android" Value="Overpass_Bold.ttf#Overpass_Bold" />
+            </OnPlatform>
+            <OnPlatform x:Key="SpecialFont" x:TypeArguments="x:String">
+                <On Platform="Android" Value="RubikWetPaint_Regular.ttf#RubikWetPaint_Regular" />
+            </OnPlatform>
+            <OnPlatform x:Key="SpecialFont2" x:TypeArguments="x:String">
+                <On Platform="Android" Value="RubikDirt_Regular.ttf#RubikDirt_Regular" />
+            </OnPlatform>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource RegularFont}" />
+            </Style>
+            <Style TargetType="SearchBar">
+                <Setter Property="FontFamily" Value="{StaticResource RegularFont}" />
+            </Style>
             <!--<Style TargetType="Label">
                 <Setter Property="FontFamily" Value="RomanANT" />
             </Style>-->
-        </ResourceDictionary>
+        </ResourceDictionary> 
     </Application.Resources>
 </Application>

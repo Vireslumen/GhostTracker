@@ -34,7 +34,7 @@
                 <!--  Название фильтрации по тирам  -->
                 <Label
                     Margin="0,0,0,10"
-                    FontAttributes="Bold"
+                    FontFamily="{StaticResource BoldFont}"
                     FontSize="18"
                     HorizontalOptions="Center"
                     Text="{Binding EquipmentCommon.FilterTier}" />
@@ -92,7 +92,7 @@
                 <!--  Название фильтрации по диапазону уровней разблокировки  -->
                 <Label
                     Margin="0,0,0,10"
-                    FontAttributes="Bold"
+                    FontFamily="{StaticResource BoldFont}"
                     FontSize="18"
                     HorizontalOptions="Center"
                     HorizontalTextAlignment="Center"

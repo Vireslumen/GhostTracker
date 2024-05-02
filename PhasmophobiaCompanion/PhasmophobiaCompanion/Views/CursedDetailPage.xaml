@@ -1,11 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.CursedDetailPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    xmlns:pinch="clr-namespace:Xamarin.Forms.PinchZoomImage;assembly=Xamarin.Forms.PinchZoomImage"
     Shell.TabBarIsVisible="False">
     <ScrollView>
         <StackLayout Orientation="Vertical">
@@ -27,8 +26,9 @@
                 <StackLayout>
                     <!--  Заголовок страницы  -->
                     <Label
-                        FontAttributes="Bold"
-                        FontSize="Large"
+                        VerticalOptions="CenterAndExpand"
+                        FontFamily="{StaticResource SpecialFont}"
+                        FontSize="22"
                         HorizontalOptions="CenterAndExpand"
                         Text="{Binding CursedPossession.Title}" />
                     <!--  Изображение проклятого предмета  -->
@@ -59,7 +59,7 @@
                                 <StackLayout Orientation="Vertical">
                                     <!--  Название раскрывающегося элемента  -->
                                     <Label
-                                        FontAttributes="Bold"
+                                        FontFamily="{StaticResource BoldFont}"
                                         FontSize="18"
                                         Text="{Binding Title}"
                                         VerticalOptions="CenterAndExpand" />
@@ -93,7 +93,8 @@
                                                         <!--  Изображение  -->
                                                         <Image Source="{Binding ImageFilePath}">
                                                             <Image.GestureRecognizers>
-                                                                <TapGestureRecognizer CommandParameter="{Binding .}" Tapped="OnImageTapped" />
+                                                                <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                                    Tapped="OnImageTapped" />
                                                             </Image.GestureRecognizers>
                                                         </Image>
                                                         <!--  Описание изображения  -->
@@ -135,7 +136,7 @@
                                 <StackLayout Orientation="Vertical">
                                     <!--  Название раскрывающегося элемента  -->
                                     <Label
-                                        FontAttributes="Bold"
+                                        FontFamily="{StaticResource BoldFont}"
                                         FontSize="18"
                                         Text="{Binding Title}" />
                                     <StackLayout Orientation="Horizontal">

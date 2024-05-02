@@ -114,7 +114,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 return SelectedTiers.Any() || minUnlockLevelSaved != MinUnlockLevelDefault ||
                        maxUnlockLevelSaved != MaxUnlockLevelDefault
                     ? currentTheme == OSAppTheme.Dark ? "#FD7E14" : "#FD7E14"
-                    : "White";
+                    : "Transparent";
             }
         }
         public string MaxUnlockLevel

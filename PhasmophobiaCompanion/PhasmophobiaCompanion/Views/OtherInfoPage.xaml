@@ -29,7 +29,7 @@
                 <StackLayout>
                     <!--  Заголовок страницы  -->
                     <Label
-                        FontAttributes="Bold"
+                        FontFamily="{StaticResource BoldFont}"
                         FontSize="Large"
                         HorizontalOptions="CenterAndExpand"
                         Text="{Binding OtherInfo.Title}" />
@@ -62,7 +62,7 @@
                                 <StackLayout Orientation="Vertical">
                                     <!--  Название раскрывающегося элемента  -->
                                     <Label
-                                        FontAttributes="Bold"
+                                        FontFamily="{StaticResource BoldFont}"
                                         FontSize="18"
                                         Text="{Binding Title}"
                                         VerticalOptions="CenterAndExpand" />
@@ -138,7 +138,7 @@
                                 <StackLayout Orientation="Vertical">
                                     <!--  Название раскрывающегося элемента  -->
                                     <Label
-                                        FontAttributes="Bold"
+                                        FontFamily="{StaticResource BoldFont}"
                                         FontSize="18"
                                         Text="{Binding Title}" />
                                     <StackLayout Orientation="Horizontal">

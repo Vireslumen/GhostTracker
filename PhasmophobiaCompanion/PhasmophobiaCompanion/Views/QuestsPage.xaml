@@ -12,7 +12,7 @@
             <!--  Заголовок страницы  -->
             <Label
                 Margin="0,20,0,0"
-                FontAttributes="Bold"
+                FontFamily="{StaticResource BoldFont}"
                 FontSize="Large"
                 HorizontalOptions="Center"
                 Text="{Binding QuestCommon.Title}" />
@@ -41,7 +41,7 @@
                 </yummy:PancakeView.Border>
                 <StackLayout Padding="5" Spacing="20">
                     <Label
-                        FontAttributes="Bold"
+                        FontFamily="{StaticResource BoldFont}"
                         FontSize="18"
                         Text="{Binding QuestCommon.Daily}" />
 
@@ -52,7 +52,7 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <StackLayout Spacing="3">
-                                    <Label FontAttributes="Bold">
+                                    <Label FontFamily="{StaticResource BoldFont}">
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text="{Binding Title}" />
@@ -91,7 +91,7 @@
                 </yummy:PancakeView.Border>
                 <StackLayout Padding="5" Spacing="20">
                     <Label
-                        FontAttributes="Bold"
+                        FontFamily="{StaticResource BoldFont}"
                         FontSize="18"
                         Text="{Binding QuestCommon.Weekly}" />
 
@@ -102,7 +102,7 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <StackLayout Spacing="3">
-                                    <Label FontAttributes="Bold">
+                                    <Label FontFamily="{StaticResource BoldFont}">
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text="{Binding Title}" />

@@ -11,7 +11,7 @@
         <!--  Заголовок страницы  -->
         <Label
             Margin="5"
-            FontAttributes="Bold"
+            FontFamily="{StaticResource SpecialFont}"
             FontSize="24"
             HorizontalOptions="CenterAndExpand"
             HorizontalTextAlignment="Center"
@@ -88,6 +88,7 @@
                                             <!--  Название призрака  -->
                                             <Label
                                                 FontSize="18"
+                                                FontFamily="{StaticResource BoldFont}"
                                                 HorizontalOptions="CenterAndExpand"
                                                 HorizontalTextAlignment="Center"
                                                 Text="{Binding Title}"
@@ -126,7 +127,7 @@
                         </CollectionView.Margin>
                         <CollectionView.EmptyView>
                             <Label
-                                FontAttributes="Bold"
+                                FontFamily="{StaticResource BoldFont}"
                                 FontSize="24"
                                 HorizontalOptions="CenterAndExpand"
                                 HorizontalTextAlignment="Center"

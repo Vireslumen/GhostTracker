@@ -94,7 +94,7 @@ namespace PhasmophobiaCompanion.ViewModels
             get
             {
                 var currentTheme = Application.Current.RequestedTheme;
-                return SelectedClues.Any() ? currentTheme == OSAppTheme.Dark ? "#FD7E14" : "#FD7E14" : "White";
+                return SelectedClues.Any() ? currentTheme == OSAppTheme.Dark ? "#FD7E14" : "#FD7E14" : "Transparent";
             }
         }
 
