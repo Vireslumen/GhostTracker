@@ -105,8 +105,6 @@
     <AndroidResource Include="Resources\mipmap-xxhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\drawable\icon_about.png" />
-    <AndroidResource Include="Resources\drawable\icon_feed.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhasmophobiaCompanion\PhasmophobiaCompanion.csproj">
