@@ -13,7 +13,7 @@ namespace PhasmophobiaCompanion.ViewModels
     /// <summary>
     ///     ViewModel для подробной страницы улики.
     /// </summary>
-    public class ClueDetailViewModel : BaseViewModel
+    public class ClueDetailViewModel : UnfoldingItemsViewModel
     {
         public readonly DataService dataService;
         public ICommand ImageTappedCommand;
