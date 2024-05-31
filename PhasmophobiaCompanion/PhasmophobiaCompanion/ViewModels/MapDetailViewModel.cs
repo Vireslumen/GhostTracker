@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Input;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
 using PhasmophobiaCompanion.Views;
@@ -12,12 +11,13 @@ namespace PhasmophobiaCompanion.ViewModels
     /// <summary>
     ///     ViewModel для подробной страницы карты.
     /// </summary>
-    public class MapDetailViewModel : BaseViewModel
+    public class MapDetailViewModel : UnfoldingItemsViewModel
     {
         private readonly DataService dataService;
+        public ICommand ImageTappedCommand;
         private Map map;
         private MapCommon mapCommon;
-        public ICommand ImageTappedCommand;
+
         public MapDetailViewModel(Map map)
         {
             try
@@ -25,6 +25,8 @@ namespace PhasmophobiaCompanion.ViewModels
                 dataService = DependencyService.Get<DataService>();
                 MapCommon = dataService.GetMapCommon();
                 Map = map;
+                foreach (var item in Map.UnfoldingItems) item.IsExpanded = true;
+                foreach (var item in Map.ExpandFieldsWithImages) item.IsExpanded = true;
                 ImageTappedCommand = new Command<ImageWithDescription>(OpenImagePage);
             }
             catch (Exception ex)
@@ -32,10 +34,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 Log.Error(ex, "Ошибка во время инициализации MapDetailViewModel.");
                 throw;
             }
-        }
-        private async void OpenImagePage(ImageWithDescription image)
-        {
-            await Application.Current.MainPage.Navigation.PushModalAsync(new ImagePage(image));
         }
 
         public Map Map
@@ -55,6 +53,11 @@ namespace PhasmophobiaCompanion.ViewModels
                 mapCommon = value;
                 OnPropertyChanged();
             }
+        }
+
+        private async void OpenImagePage(ImageWithDescription image)
+        {
+            await Application.Current.MainPage.Navigation.PushModalAsync(new ImagePage(image));
         }
     }
 }

@@ -75,6 +75,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomWebViewRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -136,32 +137,6 @@
     <AndroidResource Include="Resources\drawable\cursed_ouija.png" />
     <AndroidResource Include="Resources\drawable\cursed_paw.png" />
     <AndroidResource Include="Resources\drawable\cursed_tarot.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ghost_banshee.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_demon.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_deogen.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_goryo.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_hantu.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_jinn.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_mare.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_mimic.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_moroi.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_myling.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_obake.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_oni.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_onryo.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_phantom.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_poltergeist.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_raiju.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_revenant.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_shade.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_spirit.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_thaye.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_twins.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_wraith.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_yokai.jpg" />
-    <AndroidResource Include="Resources\drawable\ghost_yurei.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\evidence_icon_dots.png" />
@@ -263,6 +238,68 @@
     <AndroidResource Include="Resources\drawable\icon_unlock.png" />
     <AndroidResource Include="Resources\drawable\icon_unlockdollar.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\achievement_all_challenges.png" />
+    <AndroidResource Include="Resources\drawable\achievement_bait.png" />
+    <AndroidResource Include="Resources\drawable\achievement_bank.png" />
+    <AndroidResource Include="Resources\drawable\achievement_bare.png" />
+    <AndroidResource Include="Resources\drawable\achievement_boss.png" />
+    <AndroidResource Include="Resources\drawable\achievement_bronze.png" />
+    <AndroidResource Include="Resources\drawable\achievement_challenger.png" />
+    <AndroidResource Include="Resources\drawable\achievement_chump.png" />
+    <AndroidResource Include="Resources\drawable\achievement_cow.png" />
+    <AndroidResource Include="Resources\drawable\achievement_dedicated.png" />
+    <AndroidResource Include="Resources\drawable\achievement_devoted.png" />
+    <AndroidResource Include="Resources\drawable\achievement_director.png" />
+    <AndroidResource Include="Resources\drawable\achievement_doom.png" />
+    <AndroidResource Include="Resources\drawable\achievement_escape.png" />
+    <AndroidResource Include="Resources\drawable\achievement_execution.png" />
+    <AndroidResource Include="Resources\drawable\achievement_fat.png" />
+    <AndroidResource Include="Resources\drawable\achievement_fully.png" />
+    <AndroidResource Include="Resources\drawable\achievement_gold.png" />
+    <AndroidResource Include="Resources\drawable\achievement_here.png" />
+    <AndroidResource Include="Resources\drawable\achievement_I.png" />
+    <AndroidResource Include="Resources\drawable\achievement_II.png" />
+    <AndroidResource Include="Resources\drawable\achievement_III.png" />
+    <AndroidResource Include="Resources\drawable\achievement_mile.png" />
+    <AndroidResource Include="Resources\drawable\achievement_pro.png" />
+    <AndroidResource Include="Resources\drawable\achievement_rise.png" />
+    <AndroidResource Include="Resources\drawable\achievement_rookie.png" />
+    <AndroidResource Include="Resources\drawable\achievement_silver.png" />
+    <AndroidResource Include="Resources\drawable\achievement_trade.png" />
+    <AndroidResource Include="Resources\drawable\achievement_training.png" />
+    <AndroidResource Include="Resources\drawable\achievement_work.png" />
+    <AndroidResource Include="Resources\drawable\evidence_book.png" />
+    <AndroidResource Include="Resources\drawable\evidence_emp5.png" />
+    <AndroidResource Include="Resources\drawable\evidence_laser.png" />
+    <AndroidResource Include="Resources\drawable\evidence_orb.png" />
+    <AndroidResource Include="Resources\drawable\evidence_radio.png" />
+    <AndroidResource Include="Resources\drawable\evidence_temperature.png" />
+    <AndroidResource Include="Resources\drawable\evidence_ultrafiolet.png" />
+    <AndroidResource Include="Resources\drawable\ghost_banshee.png" />
+    <AndroidResource Include="Resources\drawable\ghost_demon.png" />
+    <AndroidResource Include="Resources\drawable\ghost_deogen.png" />
+    <AndroidResource Include="Resources\drawable\ghost_goryo.png" />
+    <AndroidResource Include="Resources\drawable\ghost_hantu.png" />
+    <AndroidResource Include="Resources\drawable\ghost_jinn.png" />
+    <AndroidResource Include="Resources\drawable\ghost_mare.png" />
+    <AndroidResource Include="Resources\drawable\ghost_mimic.png" />
+    <AndroidResource Include="Resources\drawable\ghost_moroi.png" />
+    <AndroidResource Include="Resources\drawable\ghost_myling.png" />
+    <AndroidResource Include="Resources\drawable\ghost_obake.png" />
+    <AndroidResource Include="Resources\drawable\ghost_oni.png" />
+    <AndroidResource Include="Resources\drawable\ghost_onryo.png" />
+    <AndroidResource Include="Resources\drawable\ghost_phantom.png" />
+    <AndroidResource Include="Resources\drawable\ghost_poltergeist.png" />
+    <AndroidResource Include="Resources\drawable\ghost_raiju.png" />
+    <AndroidResource Include="Resources\drawable\ghost_revenant.png" />
+    <AndroidResource Include="Resources\drawable\ghost_shade.png" />
+    <AndroidResource Include="Resources\drawable\ghost_spirit.png" />
+    <AndroidResource Include="Resources\drawable\ghost_thaye.png" />
+    <AndroidResource Include="Resources\drawable\ghost_twins.png" />
+    <AndroidResource Include="Resources\drawable\ghost_wraith.png" />
+    <AndroidResource Include="Resources\drawable\ghost_yokai.png" />
+    <AndroidResource Include="Resources\drawable\ghost_yurei.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

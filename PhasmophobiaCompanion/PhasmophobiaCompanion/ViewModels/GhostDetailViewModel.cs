@@ -10,7 +10,7 @@ namespace PhasmophobiaCompanion.ViewModels
     /// <summary>
     ///     ViewModel для подробной страницы призрака.
     /// </summary>
-    public class GhostDetailViewModel : BaseViewModel
+    public class GhostDetailViewModel : UnfoldingItemsViewModel
     {
         private Ghost ghost;
 
@@ -19,6 +19,7 @@ namespace PhasmophobiaCompanion.ViewModels
             try
             {
                 Ghost = ghost;
+                foreach (var item in Ghost.UnfoldingItems) item.IsExpanded = true;
                 ClueSelectedCommand = new Command<Clue>(OnClueSelected);
             }
             catch (Exception ex)

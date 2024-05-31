@@ -169,7 +169,8 @@ namespace PhasmophobiaCompanion.ViewModels
                     var filteredTips = Tips.Where(t => t.Level == dataService.SelectedTipLevel).ToList();
                     if (DisplayedTip != null)
                     {
-                        var tipsWithoutCurrent = filteredTips.Where(tip => tip.TipValue != DisplayedTip.TipValue).ToList();
+                        var tipsWithoutCurrent =
+                            filteredTips.Where(tip => tip.TipValue != DisplayedTip.TipValue).ToList();
                         DisplayedTip = tipsWithoutCurrent[random.Next(tipsWithoutCurrent.Count)];
                     }
                     else

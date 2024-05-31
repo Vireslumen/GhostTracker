@@ -13,7 +13,7 @@ namespace PhasmophobiaCompanion.ViewModels
     /// <summary>
     ///     ViewModel для подробной страницы снаряжения.
     /// </summary>
-    public class EquipmentDetailViewModel : BaseViewModel
+    public class EquipmentDetailViewModel : UnfoldingItemsViewModel
     {
         private readonly DataService dataService;
         private Equipment equipment;
@@ -28,6 +28,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 EquipmentCommon = dataService.GetEquipmentCommon();
                 EquipmentsSameTypeCollection = dataService.GetEquipmentsSameTypeCollection(equipment);
                 Equipment = equipment;
+                foreach (var item in Equipment.UnfoldingItems) item.IsExpanded = true;
                 Equipment.EquipmentRelatedClues = new List<Clue>
                 (dataService.GetClues().Where(c => Equipment.CluesID.Contains(c.ID))
                     .ToList());

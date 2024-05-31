@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace PhasmophobiaCompanion.Models
 {
@@ -9,6 +8,18 @@ namespace PhasmophobiaCompanion.Models
     /// </summary>
     public class ExpandFieldWithImages : UnfoldingItem
     {
-        public List<ImageWithDescription> ImageWithDescriptions { get; set; }
+        private List<ImageWithDescription> imageWithDescriptions;
+        public override bool CanExpand => base.CanExpand || ImageWithDescriptions?.Count > 0;
+        public List<ImageWithDescription> ImageWithDescriptions
+        {
+            get => imageWithDescriptions;
+            set
+            {
+                imageWithDescriptions = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(CanExpand));
+                OnPropertyChanged(nameof(Icon));
+            }
+        }
     }
 }

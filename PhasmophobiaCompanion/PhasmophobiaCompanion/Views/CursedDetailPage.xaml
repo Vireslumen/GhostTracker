@@ -2,6 +2,7 @@
 
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.CursedDetailPage"
+    x:Name="CursedDetailPageName"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
@@ -29,6 +30,7 @@
                         VerticalOptions="CenterAndExpand"
                         FontFamily="{StaticResource SpecialFont}"
                         FontSize="22"
+                        TextColor="Black"
                         HorizontalOptions="CenterAndExpand"
                         Text="{Binding CursedPossession.Title}" />
                     <!--  Изображение проклятого предмета  -->
@@ -80,11 +82,12 @@
                                     </StackLayout>
                                     <StackLayout IsVisible="{Binding IsExpanded}" Orientation="Vertical">
                                         <!--  Описание раскрывающегося элемента  -->
-                                        <Label
-                                            Margin="0,10,0,0"
-                                            Padding="10,0,0,0"
-                                            FontSize="14"
-                                            Text="{Binding Body}" />
+                                        <WebView HorizontalOptions="FillAndExpand"
+                                                 VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
+                                            <WebView.Source>
+                                                <HtmlWebViewSource Html="{Binding Body}" />
+                                            </WebView.Source>
+                                        </WebView>
                                         <!--  Список изображений и описания к ним  -->
                                         <StackLayout BindableLayout.ItemsSource="{Binding ImageWithDescriptions}">
                                             <BindableLayout.ItemTemplate>
@@ -93,8 +96,7 @@
                                                         <!--  Изображение  -->
                                                         <Image Source="{Binding ImageFilePath}">
                                                             <Image.GestureRecognizers>
-                                                                <TapGestureRecognizer CommandParameter="{Binding .}"
-                                                                    Tapped="OnImageTapped" />
+                                                                <TapGestureRecognizer Command="{Binding BindingContext.ImageTappedCommand, Source={x:Reference CursedDetailPageName}}" CommandParameter="{Binding .}" />
                                                             </Image.GestureRecognizers>
                                                         </Image>
                                                         <!--  Описание изображения  -->
@@ -109,7 +111,7 @@
                                         </StackLayout>
                                     </StackLayout>
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnItemTapped" />
+                                        <TapGestureRecognizer Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference CursedDetailPageName}}" CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </pancakeView:PancakeView>
@@ -137,14 +139,14 @@
                                     <!--  Название раскрывающегося элемента  -->
                                     <Label
                                         FontFamily="{StaticResource BoldFont}"
-                                        FontSize="18"
+                                        FontSize="19"
                                         Text="{Binding Title}" />
                                     <StackLayout Orientation="Horizontal">
                                         <!--  Краткое описание раскрывающегося элемента  -->
                                         <Label
                                             Margin="0,5,0,0"
-                                            Padding="10,0,0,0"
-                                            FontSize="14"
+                                            Padding="5,0,0,0"
+                                            FontSize="15"
                                             Text="{Binding Header}" />
                                         <!--  Иконка раскрытия или скрытия тела элемента  -->
                                         <Image
@@ -154,14 +156,14 @@
                                             VerticalOptions="CenterAndExpand" />
                                     </StackLayout>
                                     <!--  Раскрывающийся текст  -->
-                                    <Label
-                                        Margin="0,10,0,0"
-                                        Padding="10,0,0,0"
-                                        FontSize="14"
-                                        IsVisible="{Binding IsExpanded}"
-                                        Text="{Binding Body}" />
+                                    <WebView HorizontalOptions="FillAndExpand"
+                                             VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
+                                        <WebView.Source>
+                                            <HtmlWebViewSource Html="{Binding Body}" />
+                                        </WebView.Source>
+                                    </WebView>
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnItemTapped" />
+                                        <TapGestureRecognizer Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference CursedDetailPageName}}" CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </pancakeView:PancakeView>

@@ -388,11 +388,13 @@
                                 <TapGestureRecognizer Command="{Binding MaxPlayerSpeedTappedCommand}" />
                             </Label.GestureRecognizers>
                         </Label>
-                        <BoxView Grid.Row="2" BackgroundColor="WhiteSmoke" HeightRequest="1" Grid.Column="0" Grid.ColumnSpan="7"
+                        <BoxView Grid.Row="2" BackgroundColor="WhiteSmoke" HeightRequest="1" Grid.Column="0"
+                                 Grid.ColumnSpan="7"
                                  HorizontalOptions="FillAndExpand" />
                     </Grid>
                     <!--Скорости и рассудок-->
-                    <ListView x:Name="ghostListView" HeightRequest="300" SelectionMode="None" ItemsSource="{Binding Ghosts}">
+                    <ListView x:Name="ghostListView" HeightRequest="300" SelectionMode="None"
+                              ItemsSource="{Binding Ghosts}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
@@ -408,7 +410,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Label Padding="10,10,0,10" Text="{Binding Title}" Grid.Column="0">
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer 
+                                                <TapGestureRecognizer
                                                     Command="{Binding Path=BindingContext.GhostTappedCommand, Source={x:Reference Name=ghostListView}}"
                                                     CommandParameter="{Binding .}" />
                                             </Label.GestureRecognizers>
@@ -416,7 +418,7 @@
                                         <Label HorizontalOptions="Center" Padding="0,10,0,10"
                                                Text="{Binding MinSanityHunt}" Grid.Column="1">
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer 
+                                                <TapGestureRecognizer
                                                     Command="{Binding Path=BindingContext.SanityHuntTappedCommand, Source={x:Reference Name=ghostListView}}"
                                                     CommandParameter="{Binding .}" />
                                             </Label.GestureRecognizers>
@@ -424,7 +426,7 @@
                                         <Label HorizontalOptions="Center" Padding="0,10,0,10"
                                                Text="{Binding MaxSanityHunt}" Grid.Column="2">
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer 
+                                                <TapGestureRecognizer
                                                     Command="{Binding Path=BindingContext.SanityHuntTappedCommand, Source={x:Reference Name=ghostListView}}"
                                                     CommandParameter="{Binding .}" />
                                             </Label.GestureRecognizers>
@@ -434,22 +436,25 @@
                                         <Label HorizontalOptions="Center" Padding="0,10,0,10"
                                                Text="{Binding MinGhostSpeed}" Grid.Column="4">
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSpeedTappedCommand, Source={x:Reference Name=ghostListView}}"
-                                                                      CommandParameter="{Binding .}" />
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Path=BindingContext.GhostSpeedTappedCommand, Source={x:Reference Name=ghostListView}}"
+                                                    CommandParameter="{Binding .}" />
                                             </Label.GestureRecognizers>
                                         </Label>
                                         <Label HorizontalOptions="Center" Padding="0,10,0,10"
                                                Text="{Binding MaxGhostSpeed}" Grid.Column="5">
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSpeedTappedCommand, Source={x:Reference Name=ghostListView}}"
-                                                                      CommandParameter="{Binding .}" />
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Path=BindingContext.GhostSpeedTappedCommand, Source={x:Reference Name=ghostListView}}"
+                                                    CommandParameter="{Binding .}" />
                                             </Label.GestureRecognizers>
                                         </Label>
                                         <Label HorizontalOptions="Center" Padding="0,10,10,10"
                                                Text="{Binding MaxGhostSpeedLoS}" Grid.Column="6">
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSpeedTappedCommand, Source={x:Reference Name=ghostListView}}"
-                                                                      CommandParameter="{Binding .}" />
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Path=BindingContext.GhostSpeedTappedCommand, Source={x:Reference Name=ghostListView}}"
+                                                    CommandParameter="{Binding .}" />
                                             </Label.GestureRecognizers>
                                         </Label>
                                     </Grid>
@@ -488,14 +493,16 @@
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
                 <StackLayout>
-                    <FlexLayout 
-                        x:Name="clueFlexLayout" Direction="Row" Wrap="Wrap" JustifyContent="Start" AlignItems="Start" AlignContent="Start">
+                    <FlexLayout
+                        x:Name="clueFlexLayout" Direction="Row" Wrap="Wrap" JustifyContent="Start" AlignItems="Start"
+                        AlignContent="Start">
                         <BindableLayout.ItemsSource>
-                            <Binding Path="Clues"/>
+                            <Binding Path="Clues" />
                         </BindableLayout.ItemsSource>
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <Frame BackgroundColor="Transparent" HasShadow="False" Margin="5" WidthRequest="160" HeightRequest="50" Padding="0">
+                                <Frame BackgroundColor="Transparent" HasShadow="False" Margin="5" WidthRequest="160"
+                                       HeightRequest="50" Padding="0">
                                     <StackLayout Orientation="Horizontal">
                                         <Image
                                             HeightRequest="30"

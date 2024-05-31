@@ -25,45 +25,25 @@
                     <yummy:PancakeView.Border>
                         <yummy:Border Thickness="1" Color="Color.Default" />
                     </yummy:PancakeView.Border>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="1" />
-                            <ColumnDefinition Width="3*" />
-                        </Grid.ColumnDefinitions>
-                        <StackLayout Grid.Column="0" VerticalOptions="Center">
-                            <!--  Изображение улики  -->
-                            <Image
-                                HeightRequest="150"
-                                Source="{Binding Clue.ImageFilePath}"
-                                VerticalOptions="Center" />
-                            <!--  Название улики  -->
-                            <Label
-                                FontFamily="{StaticResource BoldFont}"
-                                FontSize="20"
-                                HorizontalOptions="CenterAndExpand"
-                                HorizontalTextAlignment="Center"
-                                Text="{Binding Clue.Title}"
-                                TextColor="Black"
-                                VerticalOptions="StartAndExpand" />
-                        </StackLayout>
-                        <BoxView
-                            Grid.Column="1"
-                            BackgroundColor="Gainsboro"
-                            VerticalOptions="FillAndExpand" />
+                    <StackLayout>
+                        <!--  Заголовок страницы  -->
+                        <Label
+                            VerticalOptions="CenterAndExpand"
+                            FontFamily="{StaticResource SpecialFont}"
+                            FontSize="22"
+                            TextColor="Black"
+                            HorizontalOptions="CenterAndExpand"
+                            Text="{Binding Clue.Title}" />
+                        <!--  Изображение улики  -->
+                        <Image Source="{Binding Clue.ImageFilePath}" />
                         <!--  Описание улики  -->
-                        <ScrollView Grid.Row="0" Grid.Column="2">
-                            <Label
-                                Margin="5,5,0,5"
-                                FontAttributes="Italic"
-                                FontSize="16"
-                                HorizontalOptions="CenterAndExpand"
-                                Text="{Binding Clue.Description}"
-                                TextColor="#444"
-                                VerticalOptions="CenterAndExpand" />
-                        </ScrollView>
-
-                    </Grid>
+                        <Label
+                            Padding="0,10,0,0"
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            Text="{Binding Clue.Description}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
                 </yummy:PancakeView>
 
 
@@ -120,7 +100,7 @@
                                                         <!--  Изображение  -->
                                                         <Image Source="{Binding ImageFilePath}">
                                                             <Image.GestureRecognizers>
-                                                                <TapGestureRecognizer CommandParameter="{Binding .}" Tapped="OnImageTapped" />
+                                                                <TapGestureRecognizer Command="{Binding BindingContext.ImageTappedCommand, Source={x:Reference ClueDetailPageName}}" CommandParameter="{Binding .}" />
                                                             </Image.GestureRecognizers>
                                                         </Image>
                                                         <!--  Описание изображения  -->
@@ -135,7 +115,7 @@
                                         </StackLayout>
                                     </StackLayout>
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnItemTapped" />
+                                        <TapGestureRecognizer Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference ClueDetailPageName}}" CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </yummy:PancakeView>
@@ -187,7 +167,7 @@
                                         IsVisible="{Binding IsExpanded}"
                                         Text="{Binding Body}" />
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnItemTapped" />
+                                        <TapGestureRecognizer Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference ClueDetailPageName}}" CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </yummy:PancakeView>

@@ -10,9 +10,8 @@ namespace PhasmophobiaCompanion.ViewModels
     /// <summary>
     ///     ViewModel для подробной некатегоризованной страницы.
     /// </summary>
-    public class OtherViewModel : BaseViewModel
+    public class OtherViewModel : UnfoldingItemsViewModel
     {
-        public ICommand ImageTappedCommand;
         private OtherInfo otherInfo;
 
         public OtherViewModel(OtherInfo otherInfo)
@@ -20,6 +19,8 @@ namespace PhasmophobiaCompanion.ViewModels
             try
             {
                 OtherInfo = otherInfo;
+                foreach (var item in OtherInfo.UnfoldingItems) item.IsExpanded = true;
+                foreach (var item in OtherInfo.ExpandFieldsWithImages) item.IsExpanded = true;
                 ImageTappedCommand = new Command<ImageWithDescription>(OpenImagePage);
             }
             catch (Exception ex)
@@ -29,6 +30,7 @@ namespace PhasmophobiaCompanion.ViewModels
             }
         }
 
+        public ICommand ImageTappedCommand { get; }
         public OtherInfo OtherInfo
         {
             get => otherInfo;
@@ -38,6 +40,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
+
         private async void OpenImagePage(ImageWithDescription image)
         {
             await Application.Current.MainPage.Navigation.PushModalAsync(new ImagePage(image));

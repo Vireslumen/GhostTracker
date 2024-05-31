@@ -9,7 +9,7 @@ namespace PhasmophobiaCompanion.Models
     {
         private bool isExpanded;
         private string body;
-        public bool CanExpand => !string.IsNullOrWhiteSpace(Body);
+        public virtual bool CanExpand => !string.IsNullOrWhiteSpace(Body);
         public bool IsExpanded
         {
             get => isExpanded;

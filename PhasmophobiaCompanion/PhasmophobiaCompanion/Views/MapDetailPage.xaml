@@ -39,6 +39,7 @@
                         <Image HeightRequest="150" Source="{Binding Map.ImageFilePath}" />
                         <!--  Название карты  -->
                         <Label
+                            TextColor="Black"
                             FontFamily="{StaticResource SpecialFont}"
                             FontSize="22"
                             HorizontalOptions="Center"
@@ -161,11 +162,12 @@
                                     </StackLayout>
                                     <StackLayout IsVisible="{Binding IsExpanded}" Orientation="Vertical">
                                         <!--  Описание раскрывающегося элемента  -->
-                                        <Label
-                                            Margin="0,10,0,0"
-                                            Padding="10,0,0,0"
-                                            FontSize="14"
-                                            Text="{Binding Body}" />
+                                        <WebView HorizontalOptions="FillAndExpand"
+                                                 VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
+                                            <WebView.Source>
+                                                <HtmlWebViewSource Html="{Binding Body}" />
+                                            </WebView.Source>
+                                        </WebView>
                                         <!--  Список изображений и описания к ним  -->
                                         <StackLayout BindableLayout.ItemsSource="{Binding ImageWithDescriptions}">
                                             <BindableLayout.ItemTemplate>
@@ -174,7 +176,7 @@
                                                         <!--  Изображение  -->
                                                         <Image Source="{Binding ImageFilePath}">
                                                             <Image.GestureRecognizers>
-                                                                <TapGestureRecognizer CommandParameter="{Binding .}" Tapped="OnImageTapped" />
+                                                                <TapGestureRecognizer Command="{Binding BindingContext.ImageTappedCommand, Source={x:Reference MapDetailPageName}}" CommandParameter="{Binding .}" />
                                                             </Image.GestureRecognizers>
                                                         </Image>
                                                         <!--  Описание изображения  -->
@@ -189,7 +191,7 @@
                                         </StackLayout>
                                     </StackLayout>
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnItemTapped" />
+                                        <TapGestureRecognizer Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference MapDetailPageName}}" CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </yummy:PancakeView>
@@ -217,14 +219,14 @@
                                     <!--  Название раскрывающегося элемента  -->
                                     <Label
                                         FontFamily="{StaticResource BoldFont}"
-                                        FontSize="18"
+                                        FontSize="19"
                                         Text="{Binding Title}" />
                                     <StackLayout Orientation="Horizontal">
                                         <!--  Краткое описание раскрывающегося элемента  -->
                                         <Label
                                             Margin="0,5,0,0"
-                                            Padding="10,0,0,0"
-                                            FontSize="14"
+                                            Padding="5,0,0,0"
+                                            FontSize="15"
                                             Text="{Binding Header}" />
                                         <!--  Иконка раскрытия или скрытия тела элемента  -->
                                         <Image
@@ -234,14 +236,14 @@
                                             VerticalOptions="CenterAndExpand" />
                                     </StackLayout>
                                     <!--  Раскрывающийся текст  -->
-                                    <Label
-                                        Margin="0,10,0,0"
-                                        Padding="10,0,0,0"
-                                        FontSize="14"
-                                        IsVisible="{Binding IsExpanded}"
-                                        Text="{Binding Body}" />
+                                    <WebView HorizontalOptions="FillAndExpand"
+                                             VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
+                                        <WebView.Source>
+                                            <HtmlWebViewSource Html="{Binding Body}" />
+                                        </WebView.Source>
+                                    </WebView>
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnItemTapped" />
+                                        <TapGestureRecognizer Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference MapDetailPageName}}" CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </yummy:PancakeView>

@@ -10,7 +10,7 @@ namespace PhasmophobiaCompanion.ViewModels
     /// <summary>
     ///     ViewModel для подробной страницы проклятого предмета.
     /// </summary>
-    public class CursedDetailViewModel : BaseViewModel
+    public class CursedDetailViewModel : UnfoldingItemsViewModel
     {
         public ICommand ImageTappedCommand;
         private CursedPossession cursedPossession;
@@ -20,6 +20,8 @@ namespace PhasmophobiaCompanion.ViewModels
             try
             {
                 CursedPossession = cursedPossession;
+                foreach (var item in CursedPossession.UnfoldingItems) item.IsExpanded = true;
+                foreach (var item in CursedPossession.ExpandFieldsWithImages) item.IsExpanded = true;
                 ImageTappedCommand = new Command<ImageWithDescription>(OpenImagePage);
             }
             catch (Exception ex)
