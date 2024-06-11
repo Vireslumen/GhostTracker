@@ -101,7 +101,9 @@
                                                         </Image>
                                                         <!--  Описание изображения  -->
                                                         <Label
-                                                            FontAttributes="Italic"
+                                                            Padding="0,0,0,30"
+                                                            FontSize="16"
+                                                            FontFamily="{StaticResource BoldFont}"
                                                             HorizontalTextAlignment="Center"
                                                             Text="{Binding Description}"
                                                             VerticalOptions="EndAndExpand" />

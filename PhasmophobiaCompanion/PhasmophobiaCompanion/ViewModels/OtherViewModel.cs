@@ -30,7 +30,7 @@ namespace PhasmophobiaCompanion.ViewModels
             }
         }
 
-        public ICommand ImageTappedCommand { get; }
+        public ICommand ImageTappedCommand { get; protected set; }
         public OtherInfo OtherInfo
         {
             get => otherInfo;

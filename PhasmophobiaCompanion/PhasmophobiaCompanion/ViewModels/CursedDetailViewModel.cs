@@ -12,7 +12,6 @@ namespace PhasmophobiaCompanion.ViewModels
     /// </summary>
     public class CursedDetailViewModel : UnfoldingItemsViewModel
     {
-        public ICommand ImageTappedCommand;
         private CursedPossession cursedPossession;
 
         public CursedDetailViewModel(CursedPossession cursedPossession)
@@ -40,6 +39,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
+        public ICommand ImageTappedCommand { get; protected set; }
 
         private async void OpenImagePage(ImageWithDescription image)
         {

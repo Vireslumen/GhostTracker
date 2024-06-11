@@ -87,11 +87,12 @@
                                     </StackLayout>
                                     <StackLayout IsVisible="{Binding IsExpanded}" Orientation="Vertical">
                                         <!--  Описание раскрывающегося элемента  -->
-                                        <Label
-                                            Margin="0,10,0,0"
-                                            Padding="10,0,0,0"
-                                            FontSize="14"
-                                            Text="{Binding Body}" />
+                                        <WebView HorizontalOptions="FillAndExpand"
+         VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
+                                            <WebView.Source>
+                                                <HtmlWebViewSource Html="{Binding Body}" />
+                                            </WebView.Source>
+                                        </WebView>
                                         <!--  Список изображений и описания к ним  -->
                                         <StackLayout BindableLayout.ItemsSource="{Binding ImageWithDescriptions}">
                                             <BindableLayout.ItemTemplate>
@@ -160,12 +161,12 @@
                                             VerticalOptions="CenterAndExpand" />
                                     </StackLayout>
                                     <!--  Раскрывающийся текст  -->
-                                    <Label
-                                        Margin="0,10,0,0"
-                                        Padding="10,0,0,0"
-                                        FontSize="14"
-                                        IsVisible="{Binding IsExpanded}"
-                                        Text="{Binding Body}" />
+                                    <WebView HorizontalOptions="FillAndExpand"
+                                             VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
+                                        <WebView.Source>
+                                            <HtmlWebViewSource Html="{Binding Body}" />
+                                        </WebView.Source>
+                                    </WebView>
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference ClueDetailPageName}}" CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>

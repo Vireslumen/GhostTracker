@@ -16,7 +16,6 @@ namespace PhasmophobiaCompanion.ViewModels
     public class ClueDetailViewModel : UnfoldingItemsViewModel
     {
         public readonly DataService dataService;
-        public ICommand ImageTappedCommand;
         private Clue clue;
         private ClueCommon clueCommon;
 
@@ -30,6 +29,8 @@ namespace PhasmophobiaCompanion.ViewModels
                 Clue.ClueRelatedEquipments = new List<Equipment>
                 (dataService.GetEquipments().Where(e => Clue.EquipmentsID.Contains(e.ID))
                     .ToList());
+                foreach (var item in Clue.UnfoldingItems) item.IsExpanded = true;
+                foreach (var item in Clue.ExpandFieldsWithImages) item.IsExpanded = true;
                 ClueSelectedCommand = new Command<Clue>(OnClueSelected);
                 GhostSelectedCommand = new Command<Ghost>(OnGhostSelected);
                 ImageTappedCommand = new Command<ImageWithDescription>(OpenImagePage);
@@ -63,6 +64,7 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand ClueSelectedCommand { get; }
         public ICommand EquipmentSelectedCommand { get; }
         public ICommand GhostSelectedCommand { get; }
+        public ICommand ImageTappedCommand { get; protected set; }
 
         /// <summary>
         ///     Переход на страницу улики при нажатии на неё.

@@ -14,7 +14,6 @@ namespace PhasmophobiaCompanion.ViewModels
     public class MapDetailViewModel : UnfoldingItemsViewModel
     {
         private readonly DataService dataService;
-        public ICommand ImageTappedCommand;
         private Map map;
         private MapCommon mapCommon;
 
@@ -36,6 +35,7 @@ namespace PhasmophobiaCompanion.ViewModels
             }
         }
 
+        public ICommand ImageTappedCommand { get; protected set; }
         public Map Map
         {
             get => map;
