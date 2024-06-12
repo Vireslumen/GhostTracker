@@ -111,11 +111,16 @@ namespace PhasmophobiaCompanion.Services
             }
         }
 
-        public ChallengeMode GetChallengeMode(int challengeID)
+        public ChallengeMode GetCurrentChallengeMode()
         {
             try
             {
-                return challengeModes[challengeID];
+                var startDate = new DateTime(2023, 6, 26, 0, 0, 0, DateTimeKind.Utc);
+                var currentDate = DateTime.UtcNow;
+                var difference = currentDate - startDate;
+                var totalWeeks = (int)(difference.TotalDays / 7);
+                int weeksModulo = totalWeeks % 26;
+                return challengeModes[weeksModulo];
             }
             catch (Exception ex)
             {

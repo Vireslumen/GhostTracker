@@ -32,7 +32,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 var random = new Random();
                 dataService = DependencyService.Get<DataService>();
                 //Загрузка всех данных для страницы
-                ChallengeMode = dataService.GetChallengeMode(1);
+                ChallengeMode = dataService.GetCurrentChallengeMode();
                 Tips = dataService.GetTips();
                 Ghosts = dataService.GetGhosts();
                 GhostCommon = dataService.GetGhostCommon();

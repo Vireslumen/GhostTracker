@@ -119,7 +119,7 @@ namespace PhasmophobiaCompanion.ViewModels
         }
 
         /// <summary>
-        ///     Установка карты, снаряжения и сложности для выбранного особого режима.
+        ///     Установка карты, снаряжения для выбранного особого режима.
         /// </summary>
         private void SetChallengeModeData()
         {
@@ -129,8 +129,6 @@ namespace PhasmophobiaCompanion.ViewModels
             challengeMode.ChallengeEquipments = new List<Equipment>
             (dataService.GetEquipments().Where(e => challengeMode.EquipmentsID.Contains(e.ID))
                 .ToList());
-            challengeMode.ChallengeDifficulty = dataService.GetDifficulties()
-                .Where(d => d.ID == challengeMode.DifficultyID).FirstOrDefault();
         }
     }
 }

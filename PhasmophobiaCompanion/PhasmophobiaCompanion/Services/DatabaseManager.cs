@@ -153,9 +153,9 @@ namespace PhasmophobiaCompanion.Services
                             ID = c.ID,
                             Title = c.Translations.FirstOrDefault()?.Title,
                             Description = c.Translations.FirstOrDefault()?.Description,
+                            Parameters = c.Translations.FirstOrDefault()?.Parameters,
                             EquipmentsID = c.EquipmentBase.Select(e => e.ID).ToList(),
-                            MapID = c.MapID,
-                            DifficultyID = c.DifficultyID
+                            MapID = c.MapID
                         }
                     ).ToList();
             }
