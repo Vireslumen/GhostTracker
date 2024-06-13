@@ -82,11 +82,12 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
+                if (isNavigating) return;
                 if (selectedEquipment != null)
                 {
                     // Логика для открытия страницы деталей снаряжения
                     var detailPage = new EquipmentDetailPage(selectedEquipment);
-                    await Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                    await NavigateWithLoadingAsync(detailPage);
                 }
             }
             catch (Exception ex)
@@ -100,12 +101,13 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Переход на страницу связанного со снаряжением улики при нажатии на нее.
         /// </summary>
-        private void OpenCluePage(Clue clueItem)
+        private async void OpenCluePage(Clue clueItem)
         {
             try
             {
+                if (isNavigating) return;
                 var page = new ClueDetailPage(clueItem);
-                Application.Current.MainPage.Navigation.PushAsync(page);
+                await NavigateWithLoadingAsync(page);
             }
             catch (Exception ex)
             {

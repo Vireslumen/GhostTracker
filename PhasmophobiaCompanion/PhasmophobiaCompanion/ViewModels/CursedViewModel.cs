@@ -64,11 +64,12 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
+                if (isNavigating) return;
                 if (selectedCursed != null)
                 {
                     // Логика для открытия страницы деталей проклятого предмета
                     var detailPage = new CursedDetailPage(selectedCursed);
-                    await Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                    await NavigateWithLoadingAsync(detailPage);
                 }
             }
             catch (Exception ex)

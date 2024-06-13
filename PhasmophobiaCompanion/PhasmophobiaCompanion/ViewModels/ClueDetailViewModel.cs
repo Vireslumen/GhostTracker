@@ -69,12 +69,13 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Переход на страницу улики при нажатии на неё.
         /// </summary>
-        private void OnClueSelected(Clue clueItem)
+        private async void OnClueSelected(Clue clueItem)
         {
             try
             {
+                if (isNavigating) return;
                 var page = new ClueDetailPage(clueItem);
-                Application.Current.MainPage.Navigation.PushAsync(page);
+                await NavigateWithLoadingAsync(page);
             }
             catch (Exception ex)
             {
@@ -86,12 +87,13 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Переход на страницу призрака при нажатии на него.
         /// </summary>
-        private void OnGhostSelected(Ghost ghostItem)
+        private async void OnGhostSelected(Ghost ghostItem)
         {
             try
             {
+                if (isNavigating) return;
                 var page = new GhostDetailPage(ghostItem);
-                Application.Current.MainPage.Navigation.PushAsync(page);
+                await NavigateWithLoadingAsync(page);
             }
             catch (Exception ex)
             {
@@ -103,12 +105,13 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Переход на страницу связанного с уликой снаряжения при нажатии на него.
         /// </summary>
-        private void OpenEquipPage(Equipment eqipItem)
+        private async void OpenEquipPage(Equipment eqipItem)
         {
             try
             {
+                if (isNavigating) return;
                 var page = new EquipmentDetailPage(eqipItem);
-                Application.Current.MainPage.Navigation.PushAsync(page);
+                await NavigateWithLoadingAsync(page);
             }
             catch (Exception ex)
             {

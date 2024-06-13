@@ -81,11 +81,12 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
+                if (isNavigating) return;
                 if (selectedEquipment != null)
                 {
                     // Логика для открытия страницы деталей снаряжения
                     var detailPage = new EquipmentDetailPage(selectedEquipment);
-                    await Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                    await NavigateWithLoadingAsync(detailPage);
                 }
             }
             catch (Exception ex)
@@ -103,11 +104,12 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
+                if (isNavigating) return;
                 if (ChallengeMode.ChallengeMap != null)
                 {
                     // Логика для открытия страницы деталей карты
                     var detailPage = new MapDetailPage(ChallengeMode.ChallengeMap);
-                    await Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                    await NavigateWithLoadingAsync(detailPage);
                 }
             }
             catch (Exception ex)

@@ -236,11 +236,12 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
+                if (isNavigating) return;
                 if (selectedMap != null)
                 {
                     // Логика для открытия страницы деталей карты
                     var detailPage = new MapDetailPage(selectedMap);
-                    await Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                    await NavigateWithLoadingAsync(detailPage);
                 }
             }
             catch (Exception ex)

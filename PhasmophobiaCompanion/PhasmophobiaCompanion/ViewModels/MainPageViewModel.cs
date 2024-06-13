@@ -250,22 +250,22 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                if (selectedSearchItem == null) return;
+                if (isNavigating || selectedSearchItem == null) return;
 
                 Page detailPage = null;
                 switch (selectedSearchItem)
                 {
                     case CursedPossession cursedPossession:
                         detailPage = new CursedDetailPage(cursedPossession);
-                        await Shell.Current.Navigation.PushAsync(detailPage);
+                        await NavigateWithLoadingAsync(detailPage);
                         break;
                     case Clue clue:
                         detailPage = new ClueDetailPage(clue);
-                        await Shell.Current.Navigation.PushAsync(detailPage);
+                        await NavigateWithLoadingAsync(detailPage);
                         break;
                     case Difficulty difficulty:
                         detailPage = new DifficultyDetailPage(difficulty);
-                        await Shell.Current.Navigation.PushAsync(detailPage);
+                        await NavigateWithLoadingAsync(detailPage);
                         break;
                     case Patch patch:
                         if (Uri.TryCreate(patch.Source, UriKind.Absolute, out var uri))
@@ -273,31 +273,31 @@ namespace PhasmophobiaCompanion.ViewModels
                         break;
                     case OtherInfo otherInfo:
                         detailPage = new OtherInfoPage(otherInfo);
-                        await Shell.Current.Navigation.PushAsync(detailPage);
+                        await NavigateWithLoadingAsync(detailPage);
                         break;
                     case Ghost ghost:
                         detailPage = new GhostDetailPage(ghost);
-                        await Shell.Current.Navigation.PushAsync(detailPage);
+                        await NavigateWithLoadingAsync(detailPage);
                         break;
                     case Equipment equipment:
                         detailPage = new EquipmentDetailPage(equipment);
-                        await Shell.Current.Navigation.PushAsync(detailPage);
+                        await NavigateWithLoadingAsync(detailPage);
                         break;
                     case Map map:
                         detailPage = new MapDetailPage(map);
-                        await Shell.Current.Navigation.PushAsync(detailPage);
+                        await NavigateWithLoadingAsync(detailPage);
                         break;
                     case ChallengeMode challengeMode:
                         detailPage = new ChallengeModeDetailPage(challengeMode);
-                        await Shell.Current.Navigation.PushAsync(detailPage);
+                        await NavigateWithLoadingAsync(detailPage);
                         break;
                     case Quest quest:
                         detailPage = new QuestsPage();
-                        await Shell.Current.Navigation.PushAsync(detailPage);
+                        await NavigateWithLoadingAsync(detailPage);
                         break;
                     case Achievement achievement:
                         detailPage = new AchievementPage();
-                        await Shell.Current.Navigation.PushAsync(detailPage);
+                        await NavigateWithLoadingAsync(detailPage);
                         break;
                 }
             }
@@ -311,14 +311,15 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Переход на подробную страницу особого режима по нажатию на него.
         /// </summary>
-        private void OnChallengeModeTapped()
+        private async void OnChallengeModeTapped()
         {
             try
             {
+                if (isNavigating) return;
                 if (dataService.IsMapsDataLoaded && dataService.IsEquipmentsDataLoaded)
                 {
                     var page = new ChallengeModeDetailPage(ChallengeMode);
-                    Application.Current.MainPage.Navigation.PushAsync(page);
+                    await NavigateWithLoadingAsync(page);
                 }
                 // TODO: Сделать, чтобы если Карты не были загружены, какую-нибудь загрузки или что-нибудь в этом духе.
             }
@@ -332,12 +333,13 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Переход на подробную страницу улики по нажатию на неё.
         /// </summary>
-        private void OnClueTapped(Clue clueItem)
+        private async void OnClueTapped(Clue clueItem)
         {
             try
             {
+                if (isNavigating) return;
                 var page = new ClueDetailPage(clueItem);
-                Application.Current.MainPage.Navigation.PushAsync(page);
+                await NavigateWithLoadingAsync(page);
             }
             catch (Exception ex)
             {
@@ -349,12 +351,13 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Переход на подробную страницу сложности по нажатию на неё.
         /// </summary>
-        private void OnDifficultyTapped(Difficulty difficultyItem)
+        private async void OnDifficultyTapped(Difficulty difficultyItem)
         {
             try
             {
+                if (isNavigating) return;
                 var page = new DifficultyDetailPage(difficultyItem);
-                Application.Current.MainPage.Navigation.PushAsync(page);
+                await NavigateWithLoadingAsync(page);
             }
             catch (Exception ex)
             {
@@ -389,12 +392,13 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Переход на подробную страницу призрака по нажатию на него.
         /// </summary>
-        private void OnGhostTapped(Ghost ghostItem)
+        private async void OnGhostTapped(Ghost ghostItem)
         {
             try
             {
+                if (isNavigating) return;
                 var page = new GhostDetailPage(ghostItem);
-                Application.Current.MainPage.Navigation.PushAsync(page);
+                await NavigateWithLoadingAsync(page);
             }
             catch (Exception ex)
             {
@@ -519,29 +523,30 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Переход на подробную некатегоризованную страницу по нажатию на неё.
         /// </summary>
-        private void OnOtherPageTapped(ITitledItem otherInfoItem)
+        private async void OnOtherPageTapped(ITitledItem otherInfoItem)
         {
             try
             {
+                if (isNavigating) return;
                 if (otherInfoItem is OtherInfo)
                 {
                     var page = new OtherInfoPage((OtherInfo) otherInfoItem);
-                    Application.Current.MainPage.Navigation.PushAsync(page);
+                    await NavigateWithLoadingAsync(page);
                 }
                 else if (otherInfoItem is QuestCommon)
                 {
                     var page = new QuestsPage();
-                    Application.Current.MainPage.Navigation.PushAsync(page);
+                    await NavigateWithLoadingAsync(page);
                 }
                 else if (otherInfoItem is ChallengeModeCommon)
                 {
                     var page = new ChallengeModesPage();
-                    Application.Current.MainPage.Navigation.PushAsync(page);
+                    await NavigateWithLoadingAsync(page);
                 }
                 else if (otherInfoItem is AchievementCommon)
                 {
                     var page = new AchievementPage();
-                    Application.Current.MainPage.Navigation.PushAsync(page);
+                    await NavigateWithLoadingAsync(page);
                 }
             }
             catch (Exception ex)
@@ -610,12 +615,13 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Переход на страницу настроек по нажатию на неё.
         /// </summary>
-        private void OpenSettings()
+        private async void OpenSettings()
         {
             try
             {
+                if (isNavigating) return;
                 var page = new SettingsPage();
-                Application.Current.MainPage.Navigation.PushAsync(page);
+                await NavigateWithLoadingAsync(page);
             }
             catch (Exception ex)
             {

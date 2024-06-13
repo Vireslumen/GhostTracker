@@ -45,9 +45,6 @@
             <Style TargetType="SearchBar">
                 <Setter Property="FontFamily" Value="{StaticResource RegularFont}" />
             </Style>
-            <!--<Style TargetType="Label">
-                <Setter Property="FontFamily" Value="RomanANT" />
-            </Style>-->
         </ResourceDictionary> 
     </Application.Resources>
 </Application>

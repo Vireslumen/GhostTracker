@@ -47,14 +47,15 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <summary>
         ///     Переход на подробную страницу особого режима по нажатию на него.
         /// </summary>
-        private void OnChallengeModeTapped(ChallengeMode challengeMode)
+        private async void OnChallengeModeTapped(ChallengeMode challengeMode)
         {
             try
             {
+                if (isNavigating) return;
                 if (dataService.IsMapsDataLoaded && dataService.IsEquipmentsDataLoaded)
                 {
                     var page = new ChallengeModeDetailPage(challengeMode);
-                    Application.Current.MainPage.Navigation.PushAsync(page);
+                    await NavigateWithLoadingAsync(page);
                 }
                 // TODO: Сделать, чтобы если Карты не были загружены, какую-нибудь загрузки или что-нибудь в этом духе.
             }

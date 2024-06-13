@@ -48,10 +48,11 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
+                if (isNavigating) return;
                 if (clue == null) return;
                 // Логика для открытия страницы деталей призрака
                 var detailPage = new ClueDetailPage(clue);
-                await Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                await NavigateWithLoadingAsync(detailPage);
             }
             catch (Exception ex)
             {

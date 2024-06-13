@@ -195,10 +195,10 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
-                if (selectedGhost == null) return;
+                if (isNavigating || selectedGhost == null) return;
                 // Логика для открытия страницы деталей призрака
                 var detailPage = new GhostDetailPage(selectedGhost);
-                await Application.Current.MainPage.Navigation.PushAsync(detailPage);
+                await NavigateWithLoadingAsync(detailPage);
             }
             catch (Exception ex)
             {
