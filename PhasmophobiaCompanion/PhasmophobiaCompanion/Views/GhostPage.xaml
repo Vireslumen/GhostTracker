@@ -33,11 +33,11 @@
                     Text="{Binding SearchText, Mode=TwoWay}" />
                 <!--  Кнопка фильтрации призраков  -->
                 <yummy:PancakeView
-                    Padding="3"
+                    Padding="3,3,10,3"
                     BackgroundColor="{Binding FilterColor}"
                     CornerRadius="28"
                     HeightRequest="28"
-                    HorizontalOptions="StartAndExpand"
+                    HorizontalOptions="EndAndExpand"
                     VerticalOptions="CenterAndExpand"
                     WidthRequest="28">
                     <Image

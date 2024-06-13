@@ -59,7 +59,7 @@
                                     AlignItems="Start"
                                     BindableLayout.ItemsSource="{Binding Ghost.Clues}"
                                     Direction="Row"
-                                    JustifyContent="Start"
+                                    JustifyContent="Center"
                                     Wrap="Wrap">
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate>
