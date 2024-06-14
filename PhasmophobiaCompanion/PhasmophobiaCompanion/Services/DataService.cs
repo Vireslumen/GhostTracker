@@ -17,7 +17,7 @@ namespace PhasmophobiaCompanion.Services
         /// <summary>
         ///     Код языка, на котором будут отображаться данные в приложении.
         /// </summary>
-        public readonly string LanguageCode;
+        public string LanguageCode;
 
         private readonly DatabaseManager databaseManager;
 
@@ -73,6 +73,29 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки конструктора DataService.");
+                throw;
+            }
+        }
+
+        public void ReinitializeLanguage()
+        {
+            try
+            {
+                var userLanguage = LanguageHelper.GetUserLanguage();
+                //Настройка языка приложения
+                if (!string.IsNullOrEmpty(userLanguage))
+                    LanguageCode = userLanguage;
+                else
+                    LanguageCode = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
+                //Если в приложении нет такого языка, то язык английский
+                if (!LanguageDictionary.LanguageMap.ContainsValue(LanguageCode))
+                {
+                    LanguageCode = "EN";
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время смены языка приложения в DataService.");
                 throw;
             }
         }

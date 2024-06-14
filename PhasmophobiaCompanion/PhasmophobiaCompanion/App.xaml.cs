@@ -10,12 +10,14 @@ namespace PhasmophobiaCompanion
 {
     public partial class App : Application
     {
+        public static App CurrentApp { get; private set; }
         public App()
         {
             InitializeComponent();
 
             try
             {
+                CurrentApp = this;
                 var logFilePath = Path.Combine("/storage/emulated/0/Download/", "logs", "log-.txt");
                 var logger = new LoggerConfiguration()
                     .MinimumLevel.Debug()
@@ -34,12 +36,13 @@ namespace PhasmophobiaCompanion
             }
         }
 
-        private async Task InitializeAppShellAsync()
+        public async Task InitializeAppShellAsync()
         {
             try
             {
                 // Получение экземпляра DataService
                 var dataService = DependencyService.Get<DataService>();
+                dataService.ReinitializeLanguage();
                 // Загрузка данных
                 await Task.Run(async () => { await dataService.LoadInitialDataAsync(); });
                 Task.Run(async () => { dataService.LoadOtherDataAsync(); });

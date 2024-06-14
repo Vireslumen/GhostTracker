@@ -60,8 +60,7 @@ namespace PhasmophobiaCompanion.ViewModels
                     OnPropertyChanged();
                     var selectedLanguageCode = LanguageDictionary.LanguageMap[value];
                     LanguageHelper.SaveUserLanguage(selectedLanguageCode);
-                    //TODO: Добавить алерт, который спрашивает перезагрузить ли приложение.
-                    Device.BeginInvokeOnMainThread(() => { Environment.Exit(0); });
+                    App.CurrentApp.InitializeAppShellAsync();
                 }
             }
         }
