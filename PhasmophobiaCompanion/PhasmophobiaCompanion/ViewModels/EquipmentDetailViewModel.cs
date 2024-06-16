@@ -62,6 +62,12 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
+        public void Cleanup()
+        {
+            ToggleExpandCommand = null;
+            ClueSelectedCommand = null;
+            EquipmentSelectedCommand = null;
+        }
         public ICommand ClueSelectedCommand { get; private set; }
         public ICommand EquipmentSelectedCommand { get; private set; }
         public List<Equipment> EquipmentsSameTypeCollection

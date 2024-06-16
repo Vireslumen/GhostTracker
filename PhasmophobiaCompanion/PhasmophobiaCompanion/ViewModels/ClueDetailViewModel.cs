@@ -61,10 +61,19 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
-        public ICommand ClueSelectedCommand { get; }
-        public ICommand EquipmentSelectedCommand { get; }
-        public ICommand GhostSelectedCommand { get; }
+        public ICommand ClueSelectedCommand { get; protected set; }
+        public ICommand EquipmentSelectedCommand { get; protected set; }
+        public ICommand GhostSelectedCommand { get; protected set; }
         public ICommand ImageTappedCommand { get; protected set; }
+
+        public void Cleanup()
+        {
+            ToggleExpandCommand = null;
+            ClueSelectedCommand = null;
+            GhostSelectedCommand = null;
+            ImageTappedCommand = null;
+            EquipmentSelectedCommand = null;
+        }
 
         /// <summary>
         ///     Переход на страницу улики при нажатии на неё.

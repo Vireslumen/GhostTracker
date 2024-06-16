@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
@@ -42,6 +41,11 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             get => challengeModes;
             set => SetProperty(ref challengeModes, value);
+        }
+
+        public void Cleanup()
+        {
+            ChallengeModeTappedCommand = null;
         }
 
         /// <summary>

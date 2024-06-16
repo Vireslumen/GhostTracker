@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows.Input;
 using Newtonsoft.Json;
@@ -29,7 +28,7 @@ namespace PhasmophobiaCompanion.ViewModels
             ReportBugCommand = new Command(() => ReportBug());
         }
 
-        public ICommand ReportBugCommand { get; }
+        public ICommand ReportBugCommand { get; protected set; }
         public List<string> Languages
         {
             get => languages;
@@ -81,6 +80,11 @@ namespace PhasmophobiaCompanion.ViewModels
                     OnPropertyChanged();
                 }
             }
+        }
+
+        public void Cleanup()
+        {
+            ReportBugCommand = null;
         }
 
         private void ReportBug()

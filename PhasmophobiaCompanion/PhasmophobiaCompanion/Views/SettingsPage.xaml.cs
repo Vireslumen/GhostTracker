@@ -23,5 +23,12 @@ namespace PhasmophobiaCompanion.Views
                 throw;
             }
         }
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            var viewModel = BindingContext as SettingsViewModel;
+            viewModel?.Cleanup();
+        }
     }
 }

@@ -40,6 +40,12 @@ namespace PhasmophobiaCompanion.ViewModels
         }
         public ICommand ClueSelectedCommand { get; private set; }
 
+        public void Cleanup()
+        {
+            ToggleExpandCommand = null;
+            ClueSelectedCommand = null;
+        }
+
         /// <summary>
         ///     Переход на подробную страницу улики.
         /// </summary>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Models;
@@ -56,11 +55,6 @@ namespace PhasmophobiaCompanion.ViewModels
             get => challengeModeCommon;
             set => SetProperty(ref challengeModeCommon, value);
         }
-        public EquipmentCommon EquipmentCommon
-        {
-            get => equipmentCommon;
-            set => SetProperty(ref equipmentCommon, value);
-        }
         public DifficultyCommon DifficultyCommon
         {
             get => difficultyCommon;
@@ -70,8 +64,19 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
+        public EquipmentCommon EquipmentCommon
+        {
+            get => equipmentCommon;
+            set => SetProperty(ref equipmentCommon, value);
+        }
         public ICommand EquipmentSelectedCommand { get; private set; }
         public ICommand MapSelectedCommand { get; private set; }
+
+        public void Cleanup()
+        {
+            EquipmentSelectedCommand = null;
+            MapSelectedCommand = null;
+        }
 
         /// <summary>
         ///     Переход на подробную страницу выбранного снаряжения.

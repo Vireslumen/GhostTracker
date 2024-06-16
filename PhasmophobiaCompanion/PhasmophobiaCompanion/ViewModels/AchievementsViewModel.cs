@@ -44,6 +44,11 @@ namespace PhasmophobiaCompanion.ViewModels
             set => SetProperty(ref achievements, value);
         }
 
+        public void Cleanup()
+        {
+            ChallengeModeTappedCommand = null;
+        }
+
         /// <summary>
         ///     Отображение всплывающей подсказки по получению достижения.
         /// </summary>

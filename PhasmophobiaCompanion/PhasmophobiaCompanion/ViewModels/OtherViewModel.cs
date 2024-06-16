@@ -41,6 +41,12 @@ namespace PhasmophobiaCompanion.ViewModels
             }
         }
 
+        public void Cleanup()
+        {
+            ToggleExpandCommand = null;
+            ImageTappedCommand = null;
+        }
+
         private async void OpenImagePage(ImageWithDescription image)
         {
             await Application.Current.MainPage.Navigation.PushModalAsync(new ImagePage(image));
