@@ -36,7 +36,13 @@ namespace PhasmophobiaCompanion.ViewModels
             try
             {
                 var loadingPopup = new LoadingPopup();
-                await PopupNavigation.Instance.PushAsync(loadingPopup);
+                await PopupNavigation.Instance.PushAsync(loadingPopup); 
+                var existingPages = Application.Current.MainPage.Navigation.NavigationStack;
+                while (existingPages.Count > 3)
+                {
+                    var pageToRemove = existingPages[1];
+                    Application.Current.MainPage.Navigation.RemovePage(pageToRemove);
+                }
                 await Application.Current.MainPage.Navigation.PushAsync(page);
             }
             catch (Exception ex)
