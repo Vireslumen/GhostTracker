@@ -534,6 +534,77 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        ///     Асинхронно возвращает общие данные для страницы определения призрака - GhostGuessQuestion, на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Общие данные для страницы определения призрака.</returns>
+        public async Task<GhostGuessQuestionCommon> GetGhostGuessQuestionCommonAsync(string languageCode)
+        {
+            try
+            {
+                // Загрузка данных с учетом перевода и связанных сущностей.
+                var ghostGuessQuestionCommonData = await phasmaDbContext.GhostGuessQuestionCommonTranslations
+                    .Where(e => e.LanguageCode == languageCode).ToListAsync();
+
+                //Преобразование данных в объект GhostGuessQuestionCommon.
+                return ghostGuessQuestionCommonData.Select(g => new GhostGuessQuestionCommon
+                {
+                    AnswerDontKnow = g.AnswerDontKnow,
+                    AnswerNo = g.AnswerNo,
+                    AnswerYes = g.AnswerYes,
+                    AnswerThinkSo = g.AnswerThinkSo,
+                    CheckBoxTitle = g.CheckBoxTitle,
+                    GhostListTitle = g.GhostListTitle,
+                    MeterSecTitle = g.MeterSecTitle,
+                    ChooseAnswer = g.ChooseAnswer,
+                    PageTitle = g.PageTitle,
+                    SpeedTitle = g.SpeedTitle,
+                    TapButtonTitle = g.TapButtonTitle
+                }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки из бд общих названий для страницы определения призрака.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Асинхронно возвращает список вопросов для определения призрака - GhostGuessQuestion на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Список вопросов для определения призрака.</returns>
+        public async Task<List<GhostGuessQuestion>> GetGhostGuessQuestionsAsync(string languageCode)
+        {
+            try
+            {
+                // Загрузка данных с учетом перевода и связанных сущностей.
+                var ghostGuessQuestionData = await phasmaDbContext.GhostGuessQuestionBase
+                    .Include(c => c.Translations.Where(t => t.LanguageCode == languageCode))
+                    .Include(c => c.GhostBase)
+                    .ToListAsync();
+
+                // Преобразование данных в список объектов GhostGuessQuestion.
+                return ghostGuessQuestionData.Select(
+                    ggq => new GhostGuessQuestion
+                    {
+                        ID = ggq.ID,
+                        QuestionText = ggq.Translations.FirstOrDefault()?.QuestionText,
+                        AnswerMeaning = ggq.AnswerMeaning,
+                        AnswerNegativeMeaning = ggq.AnswerNegativeMeaning,
+                        Answer = 0,
+                        GhostsID = ggq.GhostBase.Select(g => g.ID).ToList()
+                    }
+                ).ToList();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки из бд вопросов определения призрака.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Асинхронно возвращает список призраков - Ghost на основе кода языка, а также всех улик.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>
@@ -545,6 +616,7 @@ namespace PhasmophobiaCompanion.Services
                 // Загрузка данных с учетом перевода и связанных сущностей.
                 var ghostData = await phasmaDbContext.GhostBase
                     .Include(g => g.Translations.Where(t => t.LanguageCode == languageCode))
+                    .Include(g => g.SpeedRangesBase)
                     .Include(g => g.ClueBase)
                     .ThenInclude(c => c.Translations.Where(t => t.LanguageCode == languageCode))
                     .Include(g => g.ClueBase)
@@ -581,7 +653,8 @@ namespace PhasmophobiaCompanion.Services
                         MinSanityHuntClause = g.Translations.FirstOrDefault()?.MinSanityHuntClause,
                         MaxGhostSpeedLoSClause = g.Translations.FirstOrDefault()?.MaxGhostSpeedLoSClause,
                         UnfoldingItems = MapUnfoldingItems(g.UnfoldingItemBase, languageCode),
-                        CluesID = g.ClueBase.Select(c => c.ID).ToList()
+                        CluesID = g.ClueBase.Select(c => c.ID).ToList(),
+                        SpeedRanges = MapSpeedRange(g.SpeedRangesBase)
                     }).ToList();
             }
             catch (Exception ex)
@@ -986,6 +1059,29 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время преобразований коллекции ImageWithDescription.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Преобразует коллекцию объектов SpeedRangesBase в List SpeedRange.
+        /// </summary>
+        /// <param name="speedranges">Коллекция базовых объектов SpeedRangesBase для преобразования.</param>
+        /// <returns>List объектов SpeedRange.</returns>
+        private static List<SpeedRange> MapSpeedRange(IEnumerable<SpeedRangesBase> speedranges)
+        {
+            try
+            {
+                return new List<SpeedRange>(speedranges.Select(sp =>
+                    new SpeedRange
+                    {
+                        Max = sp.Max,
+                        Min = sp.Min
+                    }));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время преобразований коллекции SpeedRange.");
                 throw;
             }
         }

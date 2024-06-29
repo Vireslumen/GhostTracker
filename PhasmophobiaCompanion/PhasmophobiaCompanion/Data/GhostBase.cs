@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace PhasmophobiaCompanion.Data
@@ -17,6 +16,8 @@ namespace PhasmophobiaCompanion.Data
         public int MinGhostSpeed { get; set; }
         public int MinSanityHunt { get; set; }
         public List<ClueBase> ClueBase { get; set; }
+        public List<GhostGuessQuestionBase> GhostGuessQuestionBase { get; set; }
+        public List<SpeedRangesBase> SpeedRangesBase { get; set; }
         public List<UnfoldingItemBase> UnfoldingItemBase { get; set; }
         public string ImageFilePath { get; set; }
     }

@@ -13,7 +13,6 @@ namespace PhasmophobiaCompanion.Data
         //Определения DbSet для различных сущностей.
         public DbSet<AchievementBase> AchievementBase { get; set; }
         public DbSet<AchievementCommonTranslations> AchievementCommonTranslations { get; set; }
-        public DbSet<AchievementTranslations> AchievementTranslations { get; set; }
         public DbSet<ChallengeModeBase> ChallengeModeBase { get; set; }
         public DbSet<ChallengeModeCommonTranslations> ChallengeModeCommonTranslations { get; set; }
         public DbSet<ClueBase> ClueBase { get; set; }
@@ -26,6 +25,8 @@ namespace PhasmophobiaCompanion.Data
         public DbSet<EquipmentCommonTranslations> EquipmentCommonTranslations { get; set; }
         public DbSet<GhostBase> GhostBase { get; set; }
         public DbSet<GhostCommonTranslations> GhostCommonTranslations { get; set; }
+        public DbSet<GhostGuessQuestionBase> GhostGuessQuestionBase { get; set; }
+        public DbSet<GhostGuessQuestionCommonTranslations> GhostGuessQuestionCommonTranslations { get; set; }
         public DbSet<MainPageCommonTranslations> MainPageCommonTranslations { get; set; }
         public DbSet<MapBase> MapBase { get; set; }
         public DbSet<MapCommonTranslations> MapCommonTranslations { get; set; }
@@ -93,6 +94,19 @@ namespace PhasmophobiaCompanion.Data
                 .HasMany(g => g.UnfoldingItemBase)
                 .WithMany(u => u.GhostBase)
                 .UsingEntity(j => j.ToTable("GhostToUnfoldingItemLink"));
+
+            modelBuilder.Entity<SpeedRangesBase>()
+                .HasOne(sp => sp.GhostBase)
+                .WithMany(g => g.SpeedRangesBase)
+                .HasForeignKey(sp => sp.GhostBaseID);
+        }
+
+        private void ConfigureGhostGuessQuestionEntity(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<GhostGuessQuestionBase>()
+                .HasMany(c => c.GhostBase)
+                .WithMany(c => c.GhostGuessQuestionBase)
+                .UsingEntity(j => j.ToTable("GhostGuessQuestionToGhostLink"));
         }
 
         private void ConfigureImageWithDescriptionEntity(ModelBuilder modelBuilder)
@@ -160,6 +174,7 @@ namespace PhasmophobiaCompanion.Data
             ConfigureMapEntity(modelBuilder);
             ConfigureOtherInfoEntity(modelBuilder);
             ConfigureChallengeModeEntity(modelBuilder);
+            ConfigureGhostGuessQuestionEntity(modelBuilder);
         }
     }
 }

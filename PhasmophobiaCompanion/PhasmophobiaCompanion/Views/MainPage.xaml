@@ -25,7 +25,9 @@
                         HorizontalOptions="Start">
                         <Label FontFamily="{StaticResource BoldFont}" Text="Help To Guess The Ghost" />
                     </FlexLayout>
-
+                    <yummy:PancakeView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GhostGuessTappedCommand}" />
+                    </yummy:PancakeView.GestureRecognizers>
                 </yummy:PancakeView>
                 <Image
                     HeightRequest="35"

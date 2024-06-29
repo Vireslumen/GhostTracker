@@ -54,7 +54,6 @@
                         Text="{Binding DifficultyCommon.DifficultyParams}" />
                     <StackLayout
                         Padding="5"
-                        BindableLayout.ItemsSource="{Binding DailyQuests}"
                         Spacing="15">
                         <Label>
                             <Label.FormattedText>

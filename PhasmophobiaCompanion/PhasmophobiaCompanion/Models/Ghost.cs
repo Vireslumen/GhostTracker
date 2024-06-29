@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Serilog;
 
@@ -52,6 +51,7 @@ namespace PhasmophobiaCompanion.Models
         public int MinSanityHunt { get; set; }
         public List<int> CluesID { get; set; }
         public List<Clue> Clues { get; set; }
+        public List<SpeedRange> SpeedRanges { get; set; }
         public List<UnfoldingItem> UnfoldingItems { get; set; }
         /// <summary>
         ///     Текст о том, как лучше определить этот тип призрака.

@@ -14,17 +14,17 @@ namespace PhasmophobiaCompanion.Services
 {
     public class DataService
     {
-        /// <summary>
-        ///     Код языка, на котором будут отображаться данные в приложении.
-        /// </summary>
-        public string LanguageCode;
-
         private readonly DatabaseManager databaseManager;
 
         /// <summary>
         ///     Путь к папке с кэшированными данными.
         /// </summary>
         public string FolderPath;
+
+        /// <summary>
+        ///     Код языка, на котором будут отображаться данные в приложении.
+        /// </summary>
+        public string LanguageCode;
 
         public string SelectedTipLevel;
         private AchievementCommon achievementCommon;
@@ -34,6 +34,7 @@ namespace PhasmophobiaCompanion.Services
         private DifficultyCommon difficultyCommon;
         private EquipmentCommon equipmentCommon;
         private GhostCommon ghostCommon;
+        private GhostGuessQuestionCommon ghostGuessQuestionCommon;
         private List<Achievement> achievements;
         private List<ChallengeMode> challengeModes;
         private List<Clue> clues;
@@ -41,6 +42,7 @@ namespace PhasmophobiaCompanion.Services
         private List<Difficulty> difficulties;
         private List<Equipment> equipments;
         private List<Ghost> ghosts;
+        private List<GhostGuessQuestion> ghostGuessQuestions;
         private List<Map> maps;
         private List<OtherInfo> otherInfos;
         private List<Patch> patches;
@@ -77,29 +79,6 @@ namespace PhasmophobiaCompanion.Services
             }
         }
 
-        public void ReinitializeLanguage()
-        {
-            try
-            {
-                var userLanguage = LanguageHelper.GetUserLanguage();
-                //Настройка языка приложения
-                if (!string.IsNullOrEmpty(userLanguage))
-                    LanguageCode = userLanguage;
-                else
-                    LanguageCode = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
-                //Если в приложении нет такого языка, то язык английский
-                if (!LanguageDictionary.LanguageMap.ContainsValue(LanguageCode))
-                {
-                    LanguageCode = "EN";
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время смены языка приложения в DataService.");
-                throw;
-            }
-        }
-
         public bool IsCursedsDataLoaded { get; private set; }
         public bool IsEquipmentsDataLoaded { get; private set; }
         public bool IsGhostsDataLoaded { get; private set; }
@@ -130,24 +109,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время получения достижений.");
-                throw;
-            }
-        }
-
-        public ChallengeMode GetCurrentChallengeMode()
-        {
-            try
-            {
-                var startDate = new DateTime(2023, 6, 26, 0, 0, 0, DateTimeKind.Utc);
-                var currentDate = DateTime.UtcNow;
-                var difference = currentDate - startDate;
-                var totalWeeks = (int)(difference.TotalDays / 7);
-                int weeksModulo = totalWeeks % 26;
-                return challengeModes[weeksModulo];
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения особого режима.");
                 throw;
             }
         }
@@ -200,6 +161,24 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время получения улик.");
+                throw;
+            }
+        }
+
+        public ChallengeMode GetCurrentChallengeMode()
+        {
+            try
+            {
+                var startDate = new DateTime(2023, 6, 26, 0, 0, 0, DateTimeKind.Utc);
+                var currentDate = DateTime.UtcNow;
+                var difference = currentDate - startDate;
+                var totalWeeks = (int) (difference.TotalDays / 7);
+                var weeksModulo = totalWeeks % 26;
+                return challengeModes[weeksModulo];
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения особого режима.");
                 throw;
             }
         }
@@ -305,6 +284,32 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время получения общих названий для призраков.");
+                throw;
+            }
+        }
+
+        public GhostGuessQuestionCommon GetGhostGuessQuestionCommon()
+        {
+            try
+            {
+                return ghostGuessQuestionCommon;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения общих названий для определения призрака.");
+                throw;
+            }
+        }
+
+        public List<GhostGuessQuestion> GetGhostGuessQuestions()
+        {
+            try
+            {
+                return ghostGuessQuestions;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения вопросов для определения призрака.");
                 throw;
             }
         }
@@ -800,6 +805,49 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        ///     Загружает текстовые данные для интерфейса, относящиеся к определению призраков - GhostGuessQuestion из базы данных,
+        ///     а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
+        public async Task LoadGhostGuessQuestionCommonAsync()
+        {
+            try
+            {
+                ghostGuessQuestionCommon = await LoadDataAsync(
+                    LanguageCode + "_" + "ghost_guess_question_common_cache.json",
+                    async () => await databaseManager.GetGhostGuessQuestionCommonAsync(LanguageCode));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки общих названий для определения призраков.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Загружает список вопросов для определения призрака  - GhostGuessQuestion, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
+        public async Task LoadGhostGuessQuestionsAsync()
+        {
+            try
+            {
+                ghostGuessQuestions = await LoadDataAsync(
+                    LanguageCode + "_" + "ghost_guess_question_cache.json",
+                    async () => new List<GhostGuessQuestion>(
+                        await databaseManager.GetGhostGuessQuestionsAsync(LanguageCode))
+                );
+                //Загрузка текстовых данных для интерфейса, относящимся к GhostGuessQuestion
+                await LoadGhostGuessQuestionCommonAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки вопросов для определения призрака.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Загружает данные о призраках - Ghost из базы данных, а затем кэширует их,
         ///     либо загружает данные из кэша, в зависимости от наличия кэша.
         /// </summary>
@@ -843,11 +891,15 @@ namespace PhasmophobiaCompanion.Services
                 await LoadSettingsCommonAsync();
                 await LoadMainPageCommonAsync();
                 await LoadPatchesSteamAsync();
+                await LoadGhostGuessQuestionsAsync();
                 //Добавление связи от призраков Ghost к уликам Clue
                 //Связи добавляются после кэширования, из-за невозможности кэшировать данные с такими связями
                 foreach (var ghost in ghosts) ghost.PopulateAssociatedClues(clues);
                 //Добавление связи от улик Clue - к призракам Ghost
                 foreach (var clue in clues) clue.PopulateAssociatedGhosts(ghosts);
+                //Добавление связи от GhostGuessQuestion - к призракам Ghost
+                foreach (var ghostGuessQuestion in ghostGuessQuestions)
+                    ghostGuessQuestion.PopulateAssociatedGhosts(ghosts);
 
                 SelectedTipLevel = settingsCommon.SelectedLevel;
             }
@@ -1109,6 +1161,26 @@ namespace PhasmophobiaCompanion.Services
         }
 
         public event Action MapsDataLoaded;
+
+        public void ReinitializeLanguage()
+        {
+            try
+            {
+                var userLanguage = LanguageHelper.GetUserLanguage();
+                //Настройка языка приложения
+                if (!string.IsNullOrEmpty(userLanguage))
+                    LanguageCode = userLanguage;
+                else
+                    LanguageCode = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
+                //Если в приложении нет такого языка, то язык английский
+                if (!LanguageDictionary.LanguageMap.ContainsValue(LanguageCode)) LanguageCode = "EN";
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время смены языка приложения в DataService.");
+                throw;
+            }
+        }
 
         /// <summary>
         ///     Поиск среди списков, у которых есть Title и подробные страницы.

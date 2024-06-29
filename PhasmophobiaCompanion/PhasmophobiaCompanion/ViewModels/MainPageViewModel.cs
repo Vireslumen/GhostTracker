@@ -73,6 +73,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 OkCommand = new Command(CloseAlert);
                 SettingsTappedCommand = new Command(OpenSettings);
                 SearchResultTappedCommand = new Command<object>(NavigateToDetailPage);
+                GhostGuessTappedCommand = new Command(OnGhostGuessTapped);
                 CheckPatchUpdate();
             }
             catch (Exception ex)
@@ -96,6 +97,7 @@ namespace PhasmophobiaCompanion.ViewModels
         public ICommand ChallengeModeTappedCommand { get; private set; }
         public ICommand ClueTappedCommand { get; private set; }
         public ICommand DifficultyTappedCommand { get; private set; }
+        public ICommand GhostGuessTappedCommand { get; }
         public ICommand GhostSpeedTappedCommand { get; private set; }
         public ICommand GhostTappedCommand { get; private set; }
         public ICommand MaxPlayerSpeedTappedCommand { get; private set; }
@@ -362,6 +364,23 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время перехода на страницу сложности DifficultyDetailPage.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Переход на страницу определения призрака по нажатию на неё.
+        /// </summary>
+        private async void OnGhostGuessTapped()
+        {
+            try
+            {
+                var detailPage = new GhostGuessPage();
+                await NavigateWithLoadingAsync(detailPage);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время перехода на страницу определения призрака сложности GhostGuessPage.");
                 throw;
             }
         }
