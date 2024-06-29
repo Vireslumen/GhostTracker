@@ -1075,10 +1075,8 @@ namespace PhasmophobiaCompanion.Services
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Log.Error(ex, "Ошибка во время загрузки патчей из Steam.");
-                throw;
             }
         }
 
