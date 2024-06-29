@@ -25,7 +25,7 @@
             HeightRequest="50"
             VerticalOptions="EndAndExpand">
 
-            <StackLayout BackgroundColor="White" Orientation="Horizontal">
+            <StackLayout Padding="0,0,7,0" BackgroundColor="White" Orientation="Horizontal">
                 <!--  Строка поиска призраков  -->
                 <SearchBar
                     HorizontalOptions="StartAndExpand"
@@ -33,7 +33,7 @@
                     Text="{Binding SearchText, Mode=TwoWay}" />
                 <!--  Кнопка фильтрации призраков  -->
                 <yummy:PancakeView
-                    Padding="3,3,10,3"
+                    Padding="3,3,3,3"
                     BackgroundColor="{Binding FilterColor}"
                     CornerRadius="28"
                     HeightRequest="28"
