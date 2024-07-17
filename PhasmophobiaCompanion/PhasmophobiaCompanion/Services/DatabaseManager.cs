@@ -81,24 +81,54 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                // Загрузка данных с учетом перевода и связанных сущностей.
+                // Загрузка данных без учета языкового фильтра.
                 var achievementData = await phasmaDbContext.AchievementBase
-                    .Include(a => a.Translations.Where(t => t.LanguageCode == languageCode))
-                    .ToListAsync().ConfigureAwait(false);
+                    .Include(a => a.Translations)
+                    .ToListAsync();
 
-                // Преобразование данных в список объектов Achievement.
+                // Фильтрация и преобразование данных после загрузки.
                 return achievementData
                     .Select(a => new Achievement
                     {
                         ImageFilePath = a.ImageFilePath,
-                        Title = a.Translations.FirstOrDefault()?.Title,
-                        Description = a.Translations.FirstOrDefault()?.Description,
-                        Tip = a.Translations.FirstOrDefault()?.Tip
+                        Title = a.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
+                        Description = a.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description,
+                        Tip = a.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Tip
                     }).ToList();
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд достижений.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Асинхронно возвращает название для вкладок, на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Названия вкладок.</returns>
+        public async Task<AppShellCommon> GetAppShellCommonAsync(string languageCode)
+        {
+            try
+            {
+                // Загрузка данных с учетом перевода и связанных сущностей.
+                var appShellCommonData = await phasmaDbContext.AppShellCommonTranslations
+                    .Where(e => e.LanguageCode == languageCode).ToListAsync();
+
+                //Преобразование данных в объект AppShellCommon.
+                return appShellCommonData.Select(a => new AppShellCommon
+                {
+                    CursedPossessions = a.CursedPossessions,
+                    Equipments = a.Equipments,
+                    Ghosts = a.Ghosts,
+                    Main = a.Main,
+                    Maps = a.Maps
+                }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки из бд названий вкладок.");
                 throw;
             }
         }
@@ -140,24 +170,23 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                // Загрузка данных с учетом перевода и связанных сущностей.
+                // Загрузка данных без учета языкового фильтра.
                 var challengeModeData = await phasmaDbContext.ChallengeModeBase
-                    .Include(c => c.Translations.Where(t => t.LanguageCode == languageCode))
+                    .Include(c => c.Translations)
                     .Include(c => c.EquipmentBase)
                     .ToListAsync();
 
-                // Преобразование данных в список объектов ChallengeMode.
+                // Фильтрация и преобразование данных после загрузки.
                 return challengeModeData
                     .Select(c => new ChallengeMode
-                        {
-                            ID = c.ID,
-                            Title = c.Translations.FirstOrDefault()?.Title,
-                            Description = c.Translations.FirstOrDefault()?.Description,
-                            Parameters = c.Translations.FirstOrDefault()?.Parameters,
-                            EquipmentsID = c.EquipmentBase.Select(e => e.ID).ToList(),
-                            MapID = c.MapID
-                        }
-                    ).ToList();
+                    {
+                        ID = c.ID,
+                        Title = c.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
+                        Description = c.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description,
+                        Parameters = c.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Parameters,
+                        EquipmentsID = c.EquipmentBase.Select(e => e.ID).ToList(),
+                        MapID = c.MapID
+                    }).ToList();
             }
             catch (Exception ex)
             {
@@ -202,21 +231,21 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                // Загрузка данных с учетом перевода и связанных сущностей.
+                // Загрузка данных без учета языкового фильтра.
                 var cluesData = await phasmaDbContext.ClueBase
-                    .Include(c => c.Translations.Where(t => t.LanguageCode == languageCode))
+                    .Include(c => c.Translations)
                     .Include(c => c.GhostBase)
                     .Include(c => c.UnfoldingItemBase)
-                    .ThenInclude(u => u.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(u => u.Translations)
                     .Include(c => c.ExpandFieldWithImagesBase)
-                    .ThenInclude(e => e.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(e => e.Translations)
                     .Include(c => c.ExpandFieldWithImagesBase)
                     .ThenInclude(e => e.ImageWithDescriptionBase)
-                    .ThenInclude(i => i.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(i => i.Translations)
                     .Include(c => c.EquipmentBase)
                     .ToListAsync();
 
-                // Преобразование данных в список объектов Clue.
+                // Фильтрация и преобразование данных после загрузки.
                 return cluesData.Select(
                     c => new Clue
                     {
@@ -224,8 +253,8 @@ namespace PhasmophobiaCompanion.Services
                         IconFilePath = c.IconFilePath,
                         ImageFilePath = c.ImageFilePath,
                         EquipmentsID = c.EquipmentBase.Select(e => e.ID).ToList(),
-                        Title = c.Translations.FirstOrDefault()?.Title,
-                        Description = c.Translations.FirstOrDefault()?.Description,
+                        Title = c.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
+                        Description = c.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description,
                         UnfoldingItems = MapUnfoldingItems(c.UnfoldingItemBase, languageCode),
                         ExpandFieldsWithImages = MapExpandFieldWithImages(c.ExpandFieldWithImagesBase, languageCode),
                         GhostsID = c.GhostBase.Select(g => g.ID).ToList()
@@ -276,26 +305,26 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                // Загрузка данных с учетом перевода и связанных сущностей.
+                // Загрузка данных без учета языкового фильтра.
                 var cursedPossessionData = await phasmaDbContext.CursedPossessionBase
-                    .Include(c => c.Translations.Where(t => t.LanguageCode == languageCode))
+                    .Include(c => c.Translations)
                     .Include(c => c.ExpandFieldWithImagesBase)
-                    .ThenInclude(e => e.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(e => e.Translations)
                     .Include(c => c.ExpandFieldWithImagesBase)
                     .ThenInclude(e => e.ImageWithDescriptionBase)
-                    .ThenInclude(i => i.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(i => i.Translations)
                     .Include(c => c.UnfoldingItemBase)
-                    .ThenInclude(u => u.Translations.Where(t => t.LanguageCode == languageCode))
-                    .ToListAsync().ConfigureAwait(false);
+                    .ThenInclude(u => u.Translations)
+                    .ToListAsync();
 
-                // Преобразование данных в список объектов CursedPossession.
+                // Фильтрация и преобразование данных после загрузки.
                 return cursedPossessionData
                     .Select(c => new CursedPossession
                     {
                         ID = c.ID,
                         ImageFilePath = c.ImageFilePath,
-                        Title = c.Translations.FirstOrDefault()?.Title,
-                        Description = c.Translations.FirstOrDefault()?.Description,
+                        Title = c.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
+                        Description = c.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description,
                         UnfoldingItems = MapUnfoldingItems(c.UnfoldingItemBase, languageCode),
                         ExpandFieldsWithImages = MapExpandFieldWithImages(c.ExpandFieldWithImagesBase, languageCode)
                     }).ToList();
@@ -316,13 +345,12 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                // Загрузка данных с учетом перевода и связанных сущностей.
+                // Загрузка данных без учета языкового фильтра.
                 var difficultyData = await phasmaDbContext.DifficultyBase
-                    .Include(d => d.Translations.Where(t => t.LanguageCode == languageCode))
+                    .Include(d => d.Translations)
                     .ToListAsync();
 
-
-                // Преобразование данных в список объектов Difficulty.
+                // Фильтрация и преобразование данных после загрузки.
                 return difficultyData
                     .Select(d => new Difficulty
                     {
@@ -331,25 +359,36 @@ namespace PhasmophobiaCompanion.Services
                         RewardMultiplier = d.RewardMultiplier,
                         SetupTime = d.SetupTime,
                         SanityConsumption = d.SanityConsumption,
-                        ElectricityOn = d.Translations.FirstOrDefault()?.ElectricityOn,
-                        SanityMonitorWork = d.Translations.FirstOrDefault()?.SanityMonitorWork,
-                        ActivityMonitorWork = d.Translations.FirstOrDefault()?.ActivityMonitorWork,
+                        ElectricityOn = d.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.ElectricityOn,
+                        SanityMonitorWork = d.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.SanityMonitorWork,
+                        ActivityMonitorWork = d.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.ActivityMonitorWork,
                         EvidenceAvailable = d.EvidenceAvailable,
                         SanityRestoration = d.SanityRestoration,
-                        IsCursedAvailable = d.Translations.FirstOrDefault()?.IsCursedAvailable,
-                        Title = d.Translations.FirstOrDefault()?.Title,
-                        Description = d.Translations.FirstOrDefault()?.Description,
-                        GhostActivity = d.Translations.FirstOrDefault()?.GhostActivity,
-                        GhostHuntTime = d.Translations.FirstOrDefault()?.GhostHuntTime,
-                        DoorOpenedCount = d.Translations.FirstOrDefault()?.DoorOpenedCount,
-                        DeadCashBack = d.Translations.FirstOrDefault()?.DeadCashBack,
-                        ObjectiveBoardPendingAloneAll = d.Translations.FirstOrDefault()?.ObjectiveBoardPendingAloneAll,
-                        HidingSpotBlocked = d.Translations.FirstOrDefault()?.HidingSpotBlocked,
-                        ElectricityBlockNotShowedOnMap =
-                            d.Translations.FirstOrDefault()?.ElectricityBlockNotShowedOnMap,
-                        HuntExtendByKilling = d.Translations.FirstOrDefault()?.HuntExtendByKilling,
-                        FingerPrints = d.Translations.FirstOrDefault()?.FingerPrints,
-                        SanityStartAt = d.Translations.FirstOrDefault()?.SanityStartAt
+                        IsCursedAvailable = d.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.IsCursedAvailable,
+                        Title = d.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
+                        Description = d.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description,
+                        GhostActivity = d.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.GhostActivity,
+                        GhostHuntTime = d.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.GhostHuntTime,
+                        DoorOpenedCount = d.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.DoorOpenedCount,
+                        DeadCashBack = d.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.DeadCashBack,
+                        ObjectiveBoardPendingAloneAll = d.Translations
+                            .FirstOrDefault(t => t.LanguageCode == languageCode)?.ObjectiveBoardPendingAloneAll,
+                        HidingSpotBlocked = d.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.HidingSpotBlocked,
+                        ElectricityBlockNotShowedOnMap = d.Translations
+                            .FirstOrDefault(t => t.LanguageCode == languageCode)?.ElectricityBlockNotShowedOnMap,
+                        HuntExtendByKilling = d.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.HuntExtendByKilling,
+                        FingerPrints = d.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.FingerPrints,
+                        SanityStartAt = d.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.SanityStartAt
                     })
                     .ToList();
             }
@@ -417,16 +456,16 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                // Загрузка данных с учетом перевода и связанных сущностей.
+                // Загрузка данных без учета языкового фильтра.
                 var equipmentData = await phasmaDbContext.EquipmentBase
-                    .Include(e => e.Translations.Where(t => t.LanguageCode == languageCode))
+                    .Include(e => e.Translations)
                     .Include(e => e.OtherEquipmentStatBase)
                     .Include(e => e.UnfoldingItemBase)
-                    .ThenInclude(u => u.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(u => u.Translations)
                     .Include(e => e.ClueBase)
-                    .ToListAsync().ConfigureAwait(false);
+                    .ToListAsync();
 
-                // Преобразование данных в список объектов Equipment.
+                // Фильтрация и преобразование данных после загрузки.
                 return equipmentData
                     .Select(e => new Equipment
                     {
@@ -436,9 +475,9 @@ namespace PhasmophobiaCompanion.Services
                         UnlockCost = e.UnlockCost,
                         MaxLimit = e.MaxLimit,
                         ImageFilePath = e.ImageFilePath,
-                        Title = e.Translations.FirstOrDefault()?.Title,
-                        Description = e.Translations.FirstOrDefault()?.Description,
-                        Tier = e.Translations.FirstOrDefault()?.Tier,
+                        Title = e.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
+                        Description = e.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description,
+                        Tier = e.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Tier,
                         CluesID = e.ClueBase.Select(c => c.ID).ToList(),
                         OtherEquipmentStats = MapOtherEquipmentStat(e.OtherEquipmentStatBase, languageCode),
                         UnfoldingItems = MapUnfoldingItems(e.UnfoldingItemBase, languageCode)
@@ -578,21 +617,22 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                // Загрузка данных с учетом перевода и связанных сущностей.
+                // Загрузка данных без учета языкового фильтра.
                 var ghostGuessQuestionData = await phasmaDbContext.GhostGuessQuestionBase
-                    .Include(c => c.Translations.Where(t => t.LanguageCode == languageCode))
+                    .Include(c => c.Translations)
                     .Include(c => c.GhostBase)
                     .ToListAsync();
 
-                // Преобразование данных в список объектов GhostGuessQuestion.
+                // Фильтрация и преобразование данных после загрузки.
                 return ghostGuessQuestionData.Select(
                     ggq => new GhostGuessQuestion
                     {
                         ID = ggq.ID,
-                        QuestionText = ggq.Translations.FirstOrDefault()?.QuestionText,
+                        QuestionText = ggq.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.QuestionText,
                         AnswerMeaning = ggq.AnswerMeaning,
                         AnswerNegativeMeaning = ggq.AnswerNegativeMeaning,
-                        Answer = 0,
+                        Answer = 0, // Предполагается, что это значение по умолчанию.
                         GhostsID = ggq.GhostBase.Select(g => g.ID).ToList()
                     }
                 ).ToList();
@@ -613,27 +653,27 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                // Загрузка данных с учетом перевода и связанных сущностей.
+                // Загрузка всех данных без фильтрации по языку.
                 var ghostData = await phasmaDbContext.GhostBase
-                    .Include(g => g.Translations.Where(t => t.LanguageCode == languageCode))
+                    .Include(g => g.Translations)
                     .Include(g => g.SpeedRangesBase)
                     .Include(g => g.ClueBase)
-                    .ThenInclude(c => c.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(c => c.Translations)
                     .Include(g => g.ClueBase)
                     .ThenInclude(c => c.UnfoldingItemBase)
-                    .ThenInclude(u => u.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(u => u.Translations)
                     .Include(g => g.ClueBase)
                     .ThenInclude(c => c.ExpandFieldWithImagesBase)
-                    .ThenInclude(e => e.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(e => e.Translations)
                     .Include(g => g.ClueBase)
                     .ThenInclude(c => c.ExpandFieldWithImagesBase)
                     .ThenInclude(e => e.ImageWithDescriptionBase)
-                    .ThenInclude(i => i.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(i => i.Translations)
                     .Include(g => g.UnfoldingItemBase)
-                    .ThenInclude(u => u.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(u => u.Translations)
                     .ToListAsync();
 
-                // Преобразование данных в список объектов Ghost.
+                // Фильтрация и преобразование данных в список объектов Ghost после загрузки.
                 return ghostData
                     .Select(g => new Ghost
                     {
@@ -644,14 +684,20 @@ namespace PhasmophobiaCompanion.Services
                         MinGhostSpeed = g.MinGhostSpeed,
                         MaxGhostSpeed = g.MaxGhostSpeed,
                         MaxGhostSpeedLoS = g.MaxGhostSpeedLoS,
-                        Identification = g.Translations.FirstOrDefault()?.Identification,
-                        Title = g.Translations.FirstOrDefault()?.Title,
-                        Description = g.Translations.FirstOrDefault()?.Description,
-                        MaxGhostSpeedClause = g.Translations.FirstOrDefault()?.MaxGhostSpeedClause,
-                        MaxSanityHuntClause = g.Translations.FirstOrDefault()?.MaxSanityHuntClause,
-                        MinGhostSpeedClause = g.Translations.FirstOrDefault()?.MinGhostSpeedClause,
-                        MinSanityHuntClause = g.Translations.FirstOrDefault()?.MinSanityHuntClause,
-                        MaxGhostSpeedLoSClause = g.Translations.FirstOrDefault()?.MaxGhostSpeedLoSClause,
+                        Identification = g.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.Identification,
+                        Title = g.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
+                        Description = g.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description,
+                        MaxGhostSpeedClause = g.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.MaxGhostSpeedClause,
+                        MaxSanityHuntClause = g.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.MaxSanityHuntClause,
+                        MinGhostSpeedClause = g.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.MinGhostSpeedClause,
+                        MinSanityHuntClause = g.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.MinSanityHuntClause,
+                        MaxGhostSpeedLoSClause = g.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.MaxGhostSpeedLoSClause,
                         UnfoldingItems = MapUnfoldingItems(g.UnfoldingItemBase, languageCode),
                         CluesID = g.ClueBase.Select(c => c.ID).ToList(),
                         SpeedRanges = MapSpeedRange(g.SpeedRangesBase)
@@ -697,6 +743,7 @@ namespace PhasmophobiaCompanion.Services
                     PlayerMinSpeed = m.PlayerMinSpeed,
                     PlayerTitle = m.PlayerTitle,
                     Ok = m.Ok,
+                    GhostGuess = m.GhostGuess,
                     PatchIsOut = m.PatchIsOut,
                     ReadMore = m.ReadMore
                 }).FirstOrDefault();
@@ -755,19 +802,19 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                // Загрузка данных с учетом перевода и связанных сущностей.
+                // Загрузка данных без учета языкового фильтра.
                 var mapData = await phasmaDbContext.MapBase
-                    .Include(m => m.Translations.Where(t => t.LanguageCode == languageCode))
+                    .Include(m => m.Translations)
                     .Include(m => m.ExpandFieldWithImagesBase)
-                    .ThenInclude(e => e.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(e => e.Translations)
                     .Include(c => c.ExpandFieldWithImagesBase)
                     .ThenInclude(e => e.ImageWithDescriptionBase)
-                    .ThenInclude(i => i.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(i => i.Translations)
                     .Include(m => m.UnfoldingItemBase)
-                    .ThenInclude(u => u.Translations.Where(t => t.LanguageCode == languageCode))
-                    .ToListAsync().ConfigureAwait(false);
+                    .ThenInclude(u => u.Translations)
+                    .ToListAsync();
 
-                // Преобразование данных в список объектов Map.
+                // Фильтрация и преобразование данных после загрузки.
                 return mapData
                     .Select(m => new Map
                     {
@@ -777,10 +824,11 @@ namespace PhasmophobiaCompanion.Services
                         Exits = m.Exits,
                         Floors = m.Floors,
                         ImageFilePath = m.ImageFilePath,
-                        Title = m.Translations.FirstOrDefault()?.Title,
-                        Description = m.Translations.FirstOrDefault()?.Description,
-                        Size = m.Translations.FirstOrDefault()?.Size,
-                        HidingSpotCount = m.Translations.FirstOrDefault()?.HidingSpotCount,
+                        Title = m.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
+                        Description = m.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description,
+                        Size = m.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Size,
+                        HidingSpotCount = m.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
+                            ?.HidingSpotCount,
                         ExpandFieldsWithImages = MapExpandFieldWithImages(m.ExpandFieldWithImagesBase, languageCode),
                         UnfoldingItems = MapUnfoldingItems(m.UnfoldingItemBase, languageCode)
                     })
@@ -802,26 +850,26 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                // Загрузка данных с учетом перевода и связанных сущностей.
+                // Загрузка данных без учета языкового фильтра.
                 var otherInfoData = await phasmaDbContext.OtherInfoBase
-                    .Include(o => o.Translations.Where(t => t.LanguageCode == languageCode))
+                    .Include(o => o.Translations)
                     .Include(o => o.ExpandFieldWithImagesBase)
-                    .ThenInclude(e => e.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(e => e.Translations)
                     .Include(c => c.ExpandFieldWithImagesBase)
                     .ThenInclude(e => e.ImageWithDescriptionBase)
-                    .ThenInclude(i => i.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(i => i.Translations)
                     .Include(o => o.UnfoldingItemBase)
-                    .ThenInclude(u => u.Translations.Where(t => t.LanguageCode == languageCode))
+                    .ThenInclude(u => u.Translations)
                     .ToListAsync();
 
-                // Преобразование данных в список объектов OtherInfo.
+                // Фильтрация и преобразование данных после загрузки.
                 return otherInfoData
                     .Select(o => new OtherInfo
                     {
                         ID = o.ID,
                         ImageFilePath = o.ImageFilePath,
-                        Title = o.Translations.FirstOrDefault()?.Title,
-                        Description = o.Translations.FirstOrDefault()?.Description,
+                        Title = o.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
+                        Description = o.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description,
                         ExpandFieldsWithImages = MapExpandFieldWithImages(o.ExpandFieldWithImagesBase, languageCode),
                         UnfoldingItems = MapUnfoldingItems(o.UnfoldingItemBase, languageCode)
                     })
@@ -900,23 +948,23 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                // Загрузка данных с учетом перевода и связанных сущностей.
+                // Загрузка данных без учета языкового фильтра.
                 var questData = await phasmaDbContext.QuestBase
-                    .Include(q =>
-                        q.Translations.Where(t => t.LanguageCode == languageCode))
+                    .Include(q => q.Translations)
                     .ToListAsync();
-                // Преобразование данных в список объектов Quest.
-                return questData.Select(
-                    q => new Quest
+
+                // Фильтрация и преобразование данных после загрузки.
+                return questData
+                    .Select(q => new Quest
                     {
                         ID = q.ID,
-                        Title = q.Translations.FirstOrDefault()?.Title,
-                        Clause = q.Translations.FirstOrDefault()?.Clause,
+                        Title = q.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
+                        Clause = q.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Clause,
                         Reward = q.Reward,
-                        Tip = q.Translations.FirstOrDefault()?.Tip,
-                        Type = q.Translations.FirstOrDefault()?.Type
-                    }
-                ).ToList();
+                        Tip = q.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Tip,
+                        Type = q.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Type
+                    })
+                    .ToList();
             }
             catch (Exception ex)
             {
@@ -993,14 +1041,13 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                return new List<ExpandFieldWithImages>(expandFieldWithImages.Select(e =>
-                    new ExpandFieldWithImages
-                    {
-                        Title = e.Translations.FirstOrDefault()?.Title,
-                        Header = e.Translations.FirstOrDefault()?.Header,
-                        Body = e.Translations.FirstOrDefault()?.Body,
-                        ImageWithDescriptions = MapImageWithDescription(e.ImageWithDescriptionBase, languageCode)
-                    }));
+                return expandFieldWithImages.Select(e => new ExpandFieldWithImages
+                {
+                    Title = e.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
+                    Header = e.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Header,
+                    Body = e.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Body,
+                    ImageWithDescriptions = MapImageWithDescription(e.ImageWithDescriptionBase, languageCode)
+                }).ToList();
             }
             catch (Exception ex)
             {
@@ -1021,12 +1068,11 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                return new List<ImageWithDescription>(imageWithDescriptions.Select(i =>
-                    new ImageWithDescription
-                    {
-                        ImageFilePath = i.ImageFilePath,
-                        Description = i.Translations.FirstOrDefault()?.Description
-                    }));
+                return imageWithDescriptions.Select(i => new ImageWithDescription
+                {
+                    ImageFilePath = i.ImageFilePath,
+                    Description = i.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description
+                }).ToList();
             }
             catch (Exception ex)
             {
@@ -1098,12 +1144,12 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                return new List<UnfoldingItem>(unfoldingItems.Select(u => new UnfoldingItem
+                return unfoldingItems.Select(u => new UnfoldingItem
                 {
-                    Title = u.Translations.FirstOrDefault()?.Title,
-                    Header = u.Translations.FirstOrDefault()?.Header,
-                    Body = u.Translations.FirstOrDefault()?.Body
-                }));
+                    Title = u.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
+                    Header = u.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Header,
+                    Body = u.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Body
+                }).ToList();
             }
             catch (Exception ex)
             {

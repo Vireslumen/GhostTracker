@@ -13,6 +13,7 @@ namespace PhasmophobiaCompanion.Data
         //Определения DbSet для различных сущностей.
         public DbSet<AchievementBase> AchievementBase { get; set; }
         public DbSet<AchievementCommonTranslations> AchievementCommonTranslations { get; set; }
+        public DbSet<AppShellCommonTranslations> AppShellCommonTranslations { get; set; }
         public DbSet<ChallengeModeBase> ChallengeModeBase { get; set; }
         public DbSet<ChallengeModeCommonTranslations> ChallengeModeCommonTranslations { get; set; }
         public DbSet<ClueBase> ClueBase { get; set; }

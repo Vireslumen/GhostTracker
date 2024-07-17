@@ -13,6 +13,7 @@ namespace PhasmophobiaCompanion.Data
         public string Clue { get; set; }
         public string DailyQuest { get; set; }
         public string Difficulties { get; set; }
+        public string GhostGuess { get; set; }
         public string LanguageCode { get; set; }
         public string Ok { get; set; }
         public string OtherPages { get; set; }

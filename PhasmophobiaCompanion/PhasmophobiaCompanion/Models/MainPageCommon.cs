@@ -27,6 +27,11 @@
         /// </summary>
         public string Difficulties { get; set; }
         /// <summary>
+        ///     Название кнопки перехода на страницу определения призрака. Примеры: "Help to guess the ghost", "Помочь определить
+        ///     призрака".
+        /// </summary>
+        public string GhostGuess { get; set; }
+        /// <summary>
         ///     Текст кнопки принятия. Примеры: "OK", "ОК".
         /// </summary>
         public string Ok { get; set; }

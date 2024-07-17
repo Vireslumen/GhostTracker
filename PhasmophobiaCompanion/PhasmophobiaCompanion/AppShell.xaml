@@ -27,28 +27,28 @@
 
     <TabBar>
         <ShellContent
-            Title="Ghosts"
+            Title="{Binding Ghosts}"
             ContentTemplate="{DataTemplate local:GhostPage}"
             Icon="icon_ghost.png"
             Route="ghostsTab" />
         <ShellContent
-            Title="Equipments"
+            Title="{Binding Equipments}"
             ContentTemplate="{DataTemplate local:EquipmentPage}"
             Icon="icon_equipment.png"
             Route="equipmentsTab" />
         <ShellContent
             x:Name="mainTab"
-            Title="Main"
+            Title="{Binding Main}"
             ContentTemplate="{DataTemplate local:MainPage}"
             Icon="icon_main.png"
             Route="mainTab" />
         <ShellContent
-            Title="Maps"
+            Title="{Binding Maps}"
             ContentTemplate="{DataTemplate local:MapsPage}"
             Icon="icon_maps.png"
             Route="mapsTab" />
         <ShellContent
-            Title="CursedItems"
+            Title="{Binding CursedPossessions}"
             ContentTemplate="{DataTemplate local:CursedsPage}"
             Icon="icon_curseds.png"
             Route="cursedsTab" />

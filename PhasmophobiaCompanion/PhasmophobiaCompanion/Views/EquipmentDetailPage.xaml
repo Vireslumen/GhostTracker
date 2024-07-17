@@ -4,28 +4,21 @@
     x:Class="PhasmophobiaCompanion.Views.EquipmentDetailPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     x:Name="EquipmentDetailPageName"
     Shell.TabBarIsVisible="False">
     <StackLayout Orientation="Vertical">
 
         <ScrollView>
             <StackLayout>
-                <yummy:PancakeView
-                    Padding="12,10,12,5"
-                    BackgroundColor="White"
-                    CornerRadius="5">
-                    <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow />
-                    </yummy:PancakeView.Shadow>
-                    <yummy:PancakeView.Margin>
-                        <Thickness>
-                            10,3,10,10
-                        </Thickness>
-                    </yummy:PancakeView.Margin>
-                    <yummy:PancakeView.Border>
-                        <yummy:Border Thickness="1" Color="Color.Default" />
-                    </yummy:PancakeView.Border>
+                <Frame Margin="10,3,10,10"
+                       Padding="12,10,12,5"
+                       HasShadow="True"
+                       effects:ShadowEffect.Radius="30" effects:ShadowEffect.Color="Gray"
+                       effects:ShadowEffect.Opacity="0.7"
+                       BackgroundColor="White"
+                       CornerRadius="5">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="4*" />
@@ -50,13 +43,14 @@
                         <!--  Изображение снаряжения  -->
                         <Image
                             Grid.Row="1"
-                            VerticalOptions="CenterAndExpand" HeightRequest="150" Source="{Binding Equipment.ImageFilePath}" />
+                            VerticalOptions="CenterAndExpand" HeightRequest="150"
+                            Source="{Binding Equipment.ImageFilePath}" />
                         <!--  Описание снаряжения  -->
                         <Label
                             Grid.Row="2"
                             FontSize="14"
                             Text="{Binding Equipment.Description}"
-                            
+
                             VerticalOptions="CenterAndExpand" />
                         <BoxView
                             Grid.Row="0"
@@ -128,7 +122,7 @@
                         </StackLayout>
 
                     </Grid>
-                </yummy:PancakeView>
+                </Frame>
 
                 <!--  Ссылки на снаряжение того же типа, но других тиров  -->
                 <StackLayout
@@ -151,43 +145,44 @@
                         Wrap="NoWrap">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <yummy:PancakeView
+                                <pancakeView:PancakeView
                                     BackgroundColor="White"
                                     CornerRadius="110"
                                     HeightRequest="140"
                                     WidthRequest="140">
-                                    <yummy:PancakeView.Margin>
+                                    <pancakeView:PancakeView.Margin>
                                         <Thickness>
                                             10,10,10,10
                                         </Thickness>
-                                    </yummy:PancakeView.Margin>
-                                    <yummy:PancakeView.Border>
-                                        <yummy:Border Thickness="1" Color="Color.Default" />
-                                    </yummy:PancakeView.Border>
-                                    <yummy:PancakeView.Shadow>
-                                        <yummy:DropShadow />
-                                    </yummy:PancakeView.Shadow>
+                                    </pancakeView:PancakeView.Margin>
+                                    <pancakeView:PancakeView.Border>
+                                        <pancakeView:Border Thickness="1" Color="Color.Default" />
+                                    </pancakeView:PancakeView.Border>
+                                    <pancakeView:PancakeView.Shadow>
+                                        <pancakeView:DropShadow />
+                                    </pancakeView:PancakeView.Shadow>
                                     <StackLayout Spacing="0" VerticalOptions="CenterAndExpand" Orientation="Vertical">
-                                        <Image HeightRequest="100" Source="{Binding ImageFilePath}"></Image>
+                                        <Image HeightRequest="100" Source="{Binding ImageFilePath}" />
                                         <Label
                                             FontFamily="{StaticResource BoldFont}"
                                             HorizontalOptions="Center"
                                             VerticalOptions="Center">
                                             <Label.FormattedText>
                                                 <FormattedString>
-                                                    <Span Text="{Binding Path=BindingContext.EquipmentCommon.Tier, Source={x:Reference Name=otherFlexLayout}}"></Span>
-                                                    <Span Text=" "></Span>
-                                                    <Span Text="{Binding Tier}"></Span>
+                                                    <Span
+                                                        Text="{Binding Path=BindingContext.EquipmentCommon.Tier, Source={x:Reference Name=otherFlexLayout}}" />
+                                                    <Span Text=" " />
+                                                    <Span Text="{Binding Tier}" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
                                     </StackLayout>
-                                    <yummy:PancakeView.GestureRecognizers>
+                                    <pancakeView:PancakeView.GestureRecognizers>
                                         <TapGestureRecognizer
                                             Command="{Binding Path=BindingContext.EquipmentSelectedCommand, Source={x:Reference Name=otherFlexLayout}}"
                                             CommandParameter="{Binding .}" />
-                                    </yummy:PancakeView.GestureRecognizers>
-                                </yummy:PancakeView>
+                                    </pancakeView:PancakeView.GestureRecognizers>
+                                </pancakeView:PancakeView>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </FlexLayout>
@@ -197,70 +192,68 @@
                 <StackLayout BindableLayout.ItemsSource="{Binding Equipment.UnfoldingItems}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Padding="10,5">
-                                <yummy:PancakeView
-                                    Padding="13"
-                                    BackgroundColor="White"
-                                    CornerRadius="8">
-                                    <yummy:PancakeView.Shadow>
-                                        <yummy:DropShadow />
-                                    </yummy:PancakeView.Shadow>
-                                    <yummy:PancakeView.Border>
-                                        <yummy:Border Thickness="1" Color="Color.Default" />
-                                    </yummy:PancakeView.Border>
-                                    <StackLayout Orientation="Vertical">
-                                        <!--  Название раскрывающегося элемента  -->
+                            <Frame
+                                Margin="10,5"
+                                HasShadow="True"
+                                effects:ShadowEffect.Radius="30" effects:ShadowEffect.Color="Gray"
+                                effects:ShadowEffect.Opacity="0.7"
+                                Padding="13"
+                                BackgroundColor="White"
+                                CornerRadius="8">
+                                <StackLayout Orientation="Vertical">
+                                    <!--  Название раскрывающегося элемента  -->
+                                    <Label
+                                        FontFamily="{StaticResource BoldFont}"
+                                        FontSize="19"
+                                        Text="{Binding Title}" />
+                                    <StackLayout Orientation="Horizontal">
+                                        <!--  Краткое описание раскрывающегося элемента  -->
                                         <Label
-                                            FontFamily="{StaticResource BoldFont}"
-                                            FontSize="19"
-                                            Text="{Binding Title}" />
-                                        <StackLayout Orientation="Horizontal">
-                                            <!--  Краткое описание раскрывающегося элемента  -->
-                                            <Label
-                                                Margin="0,5,0,0"
-                                                Padding="5,0,0,0"
-                                                FontSize="15"
-                                                Text="{Binding Header}" />
-                                            <!--  Иконка раскрытия или скрытия тела элемента  -->
-                                            <Image
-                                                HeightRequest="20"
-                                                HorizontalOptions="EndAndExpand"
-                                                Source="{Binding Icon}"
-                                                VerticalOptions="CenterAndExpand" />
-                                        </StackLayout>
-                                        <!--  Раскрывающийся текст  -->
-                                        <WebView HorizontalOptions="FillAndExpand"
-                                                 VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
-                                            <WebView.Source>
-                                                <HtmlWebViewSource Html="{Binding Body}" />
-                                            </WebView.Source>
-                                        </WebView>
-                                        <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference EquipmentDetailPageName}}" CommandParameter="{Binding .}" />
-                                        </StackLayout.GestureRecognizers>
+                                            Margin="0,5,0,0"
+                                            Padding="5,0,0,0"
+                                            FontSize="15"
+                                            Text="{Binding Header}" />
+                                        <!--  Иконка раскрытия или скрытия тела элемента  -->
+                                        <Image
+                                            HeightRequest="20"
+                                            HorizontalOptions="EndAndExpand"
+                                            Source="{Binding Icon}"
+                                            VerticalOptions="CenterAndExpand" />
                                     </StackLayout>
-                                </yummy:PancakeView>
-                            </StackLayout>
+                                    <!--  Раскрывающийся текст  -->
+                                    <WebView HorizontalOptions="FillAndExpand"
+                                             VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
+                                        <WebView.Source>
+                                            <HtmlWebViewSource Html="{Binding Body}" />
+                                        </WebView.Source>
+                                    </WebView>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference EquipmentDetailPageName}}"
+                                            CommandParameter="{Binding .}" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                            </Frame>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </StackLayout>
                 <!--  Список улик связанных с данным снаряжением  -->
-                <yummy:PancakeView
+                <pancakeView:PancakeView
                     Padding="10,10,10,10"
                     BackgroundColor="White"
                     CornerRadius="16"
                     IsVisible="{Binding IsRelatedCluesExist}">
-                    <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow />
-                    </yummy:PancakeView.Shadow>
-                    <yummy:PancakeView.Margin>
+                    <pancakeView:PancakeView.Shadow>
+                        <pancakeView:DropShadow />
+                    </pancakeView:PancakeView.Shadow>
+                    <pancakeView:PancakeView.Margin>
                         <Thickness>
                             10,3,10,10
                         </Thickness>
-                    </yummy:PancakeView.Margin>
-                    <yummy:PancakeView.Border>
-                        <yummy:Border Thickness="1" Color="Color.Default" />
-                    </yummy:PancakeView.Border>
+                    </pancakeView:PancakeView.Margin>
+                    <pancakeView:PancakeView.Border>
+                        <pancakeView:Border Thickness="1" Color="Color.Default" />
+                    </pancakeView:PancakeView.Border>
                     <StackLayout Padding="5" Spacing="20">
                         <Label
                             FontFamily="{StaticResource BoldFont}"
@@ -292,7 +285,7 @@
                             </BindableLayout.ItemTemplate>
                         </StackLayout>
                     </StackLayout>
-                </yummy:PancakeView>
+                </pancakeView:PancakeView>
             </StackLayout>
         </ScrollView>
     </StackLayout>

@@ -18,12 +18,12 @@
                         Margin="6"
                         Padding="10"
                         behaviors:CornerRadiusEffect.CornerRadius="10"
-                        behaviors:ShadowEffect.Color="Red"
+                        behaviors:ShadowEffect.Color="LightCoral"
                         behaviors:ShadowEffect.Opacity="1"
-                        behaviors:ShadowEffect.Radius="12"
+                        behaviors:ShadowEffect.Radius="30"
                         BackgroundColor="White"
                         HorizontalOptions="Start">
-                        <Label FontFamily="{StaticResource BoldFont}" Text="Help To Guess The Ghost" />
+                        <Label FontFamily="{StaticResource BoldFont}" Text="{Binding MainPageCommon.GhostGuess}" />
                     </FlexLayout>
                     <yummy:PancakeView.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding GhostGuessTappedCommand}" />

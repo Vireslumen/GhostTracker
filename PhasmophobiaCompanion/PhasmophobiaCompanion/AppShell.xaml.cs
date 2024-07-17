@@ -20,6 +20,7 @@ namespace PhasmophobiaCompanion
                 SetNavBarIsVisible(this, false);
                 dataService = DependencyService.Get<DataService>();
                 Navigating += OnShellNavigation;
+                BindingContext = dataService.GetAppShellCommon();
             }
             catch (Exception ex)
             {

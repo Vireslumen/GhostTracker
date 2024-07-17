@@ -144,7 +144,9 @@
                         <DataTemplate>
                             <StackLayout IsVisible="{Binding IsVisible}" HeightRequest="{Binding Visibility}">
 
-                                <Frame BorderColor="Black" Padding="10" Margin="10" CornerRadius="10" HasShadow="True">
+                                <Frame Padding="10" Margin="10" CornerRadius="10" 
+                                       effects:ShadowEffect.Radius="30" effects:ShadowEffect.Color="Gray"
+                                       effects:ShadowEffect.Opacity="0.7">
                                     <StackLayout Padding="5">
                                         <Label FontSize="16" Text="{Binding QuestionText}"
                                                FontAttributes="Bold" />

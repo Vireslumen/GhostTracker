@@ -4,26 +4,17 @@
     x:Class="PhasmophobiaCompanion.Views.CursedDetailPage"
     x:Name="CursedDetailPageName"
     xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:behaviors="http://xamarin.com/schemas/2020/toolkit"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     Shell.TabBarIsVisible="False">
-    <ScrollView>
+    <ScrollView BackgroundColor="WhiteSmoke">
         <StackLayout Orientation="Vertical">
-            <pancakeView:PancakeView
-                Padding="12,10,12,10"
-                BackgroundColor="White"
-                CornerRadius="5">
-                <pancakeView:PancakeView.Shadow>
-                    <pancakeView:DropShadow />
-                </pancakeView:PancakeView.Shadow>
-                <pancakeView:PancakeView.Margin>
-                    <Thickness>
-                        10,3,10,10
-                    </Thickness>
-                </pancakeView:PancakeView.Margin>
-                <pancakeView:PancakeView.Border>
-                    <pancakeView:Border Thickness="1" Color="Color.Default" />
-                </pancakeView:PancakeView.Border>
+            <Frame Margin="10,3,10,10" HasShadow="True"
+                   Padding="12,10,12,10"
+                   behaviors:ShadowEffect.Color="Gray"
+                   behaviors:ShadowEffect.Opacity="0.7"
+                   BackgroundColor="White"
+                   CornerRadius="5">
                 <StackLayout>
                     <!--  Заголовок страницы  -->
                     <Label
@@ -42,83 +33,82 @@
                         Text="{Binding CursedPossession.Description}"
                         VerticalOptions="Center" />
                 </StackLayout>
-            </pancakeView:PancakeView>
+            </Frame>
             <!--  Список раскрывающихся элементов содержащих список изображений и описаний к ним  -->
             <StackLayout BindableLayout.ItemsSource="{Binding CursedPossession.ExpandFieldsWithImages}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Padding="10,5">
-                            <pancakeView:PancakeView
-                                Padding="13"
-                                BackgroundColor="White"
-                                CornerRadius="8">
-                                <pancakeView:PancakeView.Shadow>
-                                    <pancakeView:DropShadow />
-                                </pancakeView:PancakeView.Shadow>
-                                <pancakeView:PancakeView.Border>
-                                    <pancakeView:Border Thickness="1" Color="Color.Default" />
-                                </pancakeView:PancakeView.Border>
-                                <StackLayout Orientation="Vertical">
-                                    <!--  Название раскрывающегося элемента  -->
+                        <Frame
+                            Margin="10,5"
+                            HasShadow="True"
+                            behaviors:ShadowEffect.Color="Gray"
+                            behaviors:ShadowEffect.Opacity="0.7"
+                            Padding="13"
+                            BackgroundColor="White"
+                            CornerRadius="8">
+                            <StackLayout Orientation="Vertical">
+                                <!--  Название раскрывающегося элемента  -->
+                                <Label
+                                    FontFamily="{StaticResource BoldFont}"
+                                    FontSize="18"
+                                    Text="{Binding Title}"
+                                    VerticalOptions="CenterAndExpand" />
+                                <StackLayout Orientation="Horizontal">
+                                    <!--  Краткое описание раскрывающегося элемента  -->
                                     <Label
-                                        FontFamily="{StaticResource BoldFont}"
-                                        FontSize="18"
-                                        Text="{Binding Title}"
+                                        Margin="0,5,0,0"
+                                        Padding="10,0,0,0"
+                                        FontSize="14"
+                                        Text="{Binding Header}"
                                         VerticalOptions="CenterAndExpand" />
-                                    <StackLayout Orientation="Horizontal">
-                                        <!--  Краткое описание раскрывающегося элемента  -->
-                                        <Label
-                                            Margin="0,5,0,0"
-                                            Padding="10,0,0,0"
-                                            FontSize="14"
-                                            Text="{Binding Header}"
-                                            VerticalOptions="CenterAndExpand" />
-                                        <!--  Иконка раскрытия или скрытия тела элемента  -->
-                                        <Image
-                                            HeightRequest="20"
-                                            HorizontalOptions="EndAndExpand"
-                                            Source="{Binding Icon}"
-                                            VerticalOptions="CenterAndExpand" />
-                                    </StackLayout>
-                                    <StackLayout IsVisible="{Binding IsExpanded}" Orientation="Vertical">
-                                        <!--  Описание раскрывающегося элемента  -->
-                                        <WebView HorizontalOptions="FillAndExpand"
-                                                 VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
-                                            <WebView.Source>
-                                                <HtmlWebViewSource Html="{Binding Body}" />
-                                            </WebView.Source>
-                                        </WebView>
-                                        <!--  Список изображений и описания к ним  -->
-                                        <StackLayout BindableLayout.ItemsSource="{Binding ImageWithDescriptions}">
-                                            <BindableLayout.ItemTemplate>
-                                                <DataTemplate>
-                                                    <StackLayout Padding="5,25,5,0" Orientation="Vertical">
-                                                        <!--  Изображение  -->
-                                                        <Image Source="{Binding ImageFilePath}">
-                                                            <Image.GestureRecognizers>
-                                                                <TapGestureRecognizer Command="{Binding BindingContext.ImageTappedCommand, Source={x:Reference CursedDetailPageName}}" CommandParameter="{Binding .}" />
-                                                            </Image.GestureRecognizers>
-                                                        </Image>
-                                                        <!--  Описание изображения  -->
-                                                        <Label
-                                                            Padding="0,0,0,30"
-                                                            FontSize="16"
-                                                            FontFamily="{StaticResource BoldFont}"
-                                                            HorizontalTextAlignment="Center"
-                                                            Text="{Binding Description}"
-                                                            VerticalOptions="EndAndExpand" />
-                                                    </StackLayout>
-                                                </DataTemplate>
-                                            </BindableLayout.ItemTemplate>
-                                        </StackLayout>
-                                    </StackLayout>
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference CursedDetailPageName}}" CommandParameter="{Binding .}" />
-                                    </StackLayout.GestureRecognizers>
+                                    <!--  Иконка раскрытия или скрытия тела элемента  -->
+                                    <Image
+                                        HeightRequest="20"
+                                        HorizontalOptions="EndAndExpand"
+                                        Source="{Binding Icon}"
+                                        VerticalOptions="CenterAndExpand" />
                                 </StackLayout>
-                            </pancakeView:PancakeView>
-
-                        </StackLayout>
+                                <StackLayout IsVisible="{Binding IsExpanded}" Orientation="Vertical">
+                                    <!--  Описание раскрывающегося элемента  -->
+                                    <WebView HorizontalOptions="FillAndExpand"
+                                             VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
+                                        <WebView.Source>
+                                            <HtmlWebViewSource Html="{Binding Body}" />
+                                        </WebView.Source>
+                                    </WebView>
+                                    <!--  Список изображений и описания к ним  -->
+                                    <StackLayout BindableLayout.ItemsSource="{Binding ImageWithDescriptions}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout Padding="5,25,5,0" Orientation="Vertical">
+                                                    <!--  Изображение  -->
+                                                    <Image Source="{Binding ImageFilePath}">
+                                                        <Image.GestureRecognizers>
+                                                            <TapGestureRecognizer
+                                                                Command="{Binding BindingContext.ImageTappedCommand, Source={x:Reference CursedDetailPageName}}"
+                                                                CommandParameter="{Binding .}" />
+                                                        </Image.GestureRecognizers>
+                                                    </Image>
+                                                    <!--  Описание изображения  -->
+                                                    <Label
+                                                        Padding="0,0,0,30"
+                                                        FontSize="16"
+                                                        FontFamily="{StaticResource BoldFont}"
+                                                        HorizontalTextAlignment="Center"
+                                                        Text="{Binding Description}"
+                                                        VerticalOptions="EndAndExpand" />
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+                                </StackLayout>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference CursedDetailPageName}}"
+                                        CommandParameter="{Binding .}" />
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </Frame>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>
@@ -126,50 +116,46 @@
             <StackLayout BindableLayout.ItemsSource="{Binding CursedPossession.UnfoldingItems}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Padding="10,5">
-                            <pancakeView:PancakeView
-                                Padding="13"
-                                BackgroundColor="White"
-                                CornerRadius="8">
-                                <pancakeView:PancakeView.Shadow>
-                                    <pancakeView:DropShadow />
-                                </pancakeView:PancakeView.Shadow>
-                                <pancakeView:PancakeView.Border>
-                                    <pancakeView:Border Thickness="1" Color="Color.Default" />
-                                </pancakeView:PancakeView.Border>
-                                <StackLayout Orientation="Vertical">
-                                    <!--  Название раскрывающегося элемента  -->
+                        <Frame Margin="10,5"
+                               Padding="13"
+                               behaviors:ShadowEffect.Color="Gray"
+                               behaviors:ShadowEffect.Opacity="0.7"
+                               BackgroundColor="White"
+                               CornerRadius="8">
+                            <StackLayout Orientation="Vertical">
+                                <!--  Название раскрывающегося элемента  -->
+                                <Label
+                                    FontFamily="{StaticResource BoldFont}"
+                                    FontSize="19"
+                                    Text="{Binding Title}" />
+                                <StackLayout Orientation="Horizontal">
+                                    <!--  Краткое описание раскрывающегося элемента  -->
                                     <Label
-                                        FontFamily="{StaticResource BoldFont}"
-                                        FontSize="19"
-                                        Text="{Binding Title}" />
-                                    <StackLayout Orientation="Horizontal">
-                                        <!--  Краткое описание раскрывающегося элемента  -->
-                                        <Label
-                                            Margin="0,5,0,0"
-                                            Padding="5,0,0,0"
-                                            FontSize="15"
-                                            Text="{Binding Header}" />
-                                        <!--  Иконка раскрытия или скрытия тела элемента  -->
-                                        <Image
-                                            HeightRequest="20"
-                                            HorizontalOptions="EndAndExpand"
-                                            Source="{Binding Icon}"
-                                            VerticalOptions="CenterAndExpand" />
-                                    </StackLayout>
-                                    <!--  Раскрывающийся текст  -->
-                                    <WebView HorizontalOptions="FillAndExpand"
-                                             VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
-                                        <WebView.Source>
-                                            <HtmlWebViewSource Html="{Binding Body}" />
-                                        </WebView.Source>
-                                    </WebView>
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference CursedDetailPageName}}" CommandParameter="{Binding .}" />
-                                    </StackLayout.GestureRecognizers>
+                                        Margin="0,5,0,0"
+                                        Padding="5,0,0,0"
+                                        FontSize="15"
+                                        Text="{Binding Header}" />
+                                    <!--  Иконка раскрытия или скрытия тела элемента  -->
+                                    <Image
+                                        HeightRequest="20"
+                                        HorizontalOptions="EndAndExpand"
+                                        Source="{Binding Icon}"
+                                        VerticalOptions="CenterAndExpand" />
                                 </StackLayout>
-                            </pancakeView:PancakeView>
-                        </StackLayout>
+                                <!--  Раскрывающийся текст  -->
+                                <WebView HorizontalOptions="FillAndExpand"
+                                         VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
+                                    <WebView.Source>
+                                        <HtmlWebViewSource Html="{Binding Body}" />
+                                    </WebView.Source>
+                                </WebView>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference CursedDetailPageName}}"
+                                        CommandParameter="{Binding .}" />
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </Frame>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>

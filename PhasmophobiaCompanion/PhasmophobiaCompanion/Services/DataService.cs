@@ -28,6 +28,7 @@ namespace PhasmophobiaCompanion.Services
 
         public string SelectedTipLevel;
         private AchievementCommon achievementCommon;
+        private AppShellCommon appShellCommon;
         private ChallengeModeCommon challengeModeCommon;
         private ClueCommon clueCommon;
         private CursedPossessionCommon cursedPossessionCommon;
@@ -66,10 +67,7 @@ namespace PhasmophobiaCompanion.Services
                 else
                     LanguageCode = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
                 //Если в приложении нет такого языка, то язык английский
-                if (!LanguageDictionary.LanguageMap.ContainsValue(LanguageCode))
-                {
-                    LanguageCode = "EN";
-                }
+                if (!LanguageDictionary.LanguageMap.ContainsValue(LanguageCode)) LanguageCode = "EN";
                 FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             }
             catch (Exception ex)
@@ -109,6 +107,19 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время получения достижений.");
+                throw;
+            }
+        }
+
+        public AppShellCommon GetAppShellCommon()
+        {
+            try
+            {
+                return appShellCommon;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения названий вкладок.");
                 throw;
             }
         }
@@ -527,6 +538,24 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        ///     Загружает названия вкладок базы данных, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
+        public async Task LoadAppShellCommonAsync()
+        {
+            try
+            {
+                appShellCommon = await LoadDataAsync(LanguageCode + "_" + "app_shell_common_cache.json",
+                    async () => await databaseManager.GetAppShellCommonAsync(LanguageCode));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки названий вкладок.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Загружает список особых режимов  - ChallengeMode, а затем кэширует их,
         ///     либо загружает данные из кэша, в зависимости от наличия кэша.
         /// </summary>
@@ -879,6 +908,7 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
+                await LoadAppShellCommonAsync();
                 await LoadGhostsDataAsync();
                 await LoadCluesAsync();
                 await LoadAchievementsAsync();

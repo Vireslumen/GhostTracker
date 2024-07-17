@@ -546,5 +546,31 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\other_van.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\map_point_hope.png" />
+    <AndroidResource Include="Resources\drawable\map_scheme_point_hope.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\map_curseds_point_hope_1.jpg" />
+    <AndroidResource Include="Resources\drawable\map_curseds_point_hope_2.jpg" />
+    <AndroidResource Include="Resources\drawable\map_curseds_point_hope_3.jpg" />
+    <AndroidResource Include="Resources\drawable\map_curseds_point_hope_4.jpg" />
+    <AndroidResource Include="Resources\drawable\map_curseds_point_hope_5.jpg" />
+    <AndroidResource Include="Resources\drawable\map_curseds_point_hope_6.jpg" />
+    <AndroidResource Include="Resources\drawable\map_curseds_point_hope_7.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\map_hiding_point_hope_1.jpg" />
+    <AndroidResource Include="Resources\drawable\map_hiding_point_hope_10.jpg" />
+    <AndroidResource Include="Resources\drawable\map_hiding_point_hope_11.jpg" />
+    <AndroidResource Include="Resources\drawable\map_hiding_point_hope_2.jpg" />
+    <AndroidResource Include="Resources\drawable\map_hiding_point_hope_3.jpg" />
+    <AndroidResource Include="Resources\drawable\map_hiding_point_hope_4.jpg" />
+    <AndroidResource Include="Resources\drawable\map_hiding_point_hope_5.jpg" />
+    <AndroidResource Include="Resources\drawable\map_hiding_point_hope_6.jpg" />
+    <AndroidResource Include="Resources\drawable\map_hiding_point_hope_7.jpg" />
+    <AndroidResource Include="Resources\drawable\map_hiding_point_hope_8.jpg" />
+    <AndroidResource Include="Resources\drawable\map_hiding_point_hope_9.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

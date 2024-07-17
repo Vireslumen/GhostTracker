@@ -4,6 +4,8 @@ using System.Windows.Input;
 using Newtonsoft.Json;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
+using PhasmophobiaCompanion.Views;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 
 namespace PhasmophobiaCompanion.ViewModels
@@ -59,7 +61,7 @@ namespace PhasmophobiaCompanion.ViewModels
                     OnPropertyChanged();
                     var selectedLanguageCode = LanguageDictionary.LanguageMap[value];
                     LanguageHelper.SaveUserLanguage(selectedLanguageCode);
-                    App.CurrentApp.InitializeAppShellAsync();
+                    ShowLoadingAndInitializeApp();
                 }
             }
         }
@@ -90,6 +92,17 @@ namespace PhasmophobiaCompanion.ViewModels
         private void ReportBug()
         {
             //TODO: Добавить логику отправления баг репорта.
+        }
+
+        /// <summary>
+        ///     Показ загрузочного экрана и перезагрузка приложения для смены языка.
+        /// </summary>
+        private async void ShowLoadingAndInitializeApp()
+        {
+            var loadingPopup = new LoadingPopup();
+            await PopupNavigation.Instance.PushAsync(loadingPopup);
+            await App.CurrentApp.InitializeAppShellAsync();
+            await PopupNavigation.Instance.PopAsync();
         }
     }
 }
