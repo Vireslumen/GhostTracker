@@ -81,8 +81,6 @@ namespace PhasmophobiaCompanion.Droid
                 try
                 {
                     view.EvaluateJavascript("document.body.scrollHeight", new ValueCallback(renderer));
-                    if (renderer.Element.BindingContext is UnfoldingItem item)
-                        item.IsExpanded = false;
                 }
                 catch (Exception ex)
                 {
@@ -106,6 +104,8 @@ namespace PhasmophobiaCompanion.Droid
                 {
                     if (value != null && int.TryParse(value.ToString(), out var height))
                         renderer.Element.HeightRequest = height;
+                    if (renderer.Element.BindingContext is UnfoldingItem item)
+                        item.IsExpanded = false;
                 }
                 catch (Exception ex)
                 {
