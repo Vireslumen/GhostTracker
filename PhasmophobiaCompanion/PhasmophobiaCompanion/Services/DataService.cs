@@ -1070,7 +1070,7 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                var url = "https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=739630&count=5";
+                var url = "https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=739630&count=5&feeds=steam_community_announcements";
 
                 using (var httpClient = new HttpClient())
                 {

@@ -13,10 +13,10 @@
         BackgroundColor="White"
         CornerRadius="10"
         HasShadow="True"
-        HeightRequest="200"
+        MinimumHeightRequest="200"
         HorizontalOptions="Center"
         VerticalOptions="Center"
-        WidthRequest="250">
+        MinimumWidthRequest="250">
         <StackLayout>
             <Label
                 FontFamily="{StaticResource BoldFont}"
