@@ -148,13 +148,6 @@
                                         VerticalOptions="CenterAndExpand" />
                                 </StackLayout>
                                 <StackLayout IsVisible="{Binding IsExpanded}" Orientation="Vertical">
-                                    <!--  Описание раскрывающегося элемента  -->
-                                    <WebView HorizontalOptions="FillAndExpand"
-                                             VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
-                                        <WebView.Source>
-                                            <HtmlWebViewSource Html="{Binding Body}" />
-                                        </WebView.Source>
-                                    </WebView>
                                     <!--  Список изображений и описания к ним  -->
                                     <StackLayout BindableLayout.ItemsSource="{Binding ImageWithDescriptions}">
                                         <BindableLayout.ItemTemplate>
@@ -178,6 +171,13 @@
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
                                     </StackLayout>
+                                    <!--  Описание раскрывающегося элемента  -->
+                                    <WebView HorizontalOptions="FillAndExpand"
+                                             VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
+                                        <WebView.Source>
+                                            <HtmlWebViewSource Html="{Binding Body}" />
+                                        </WebView.Source>
+                                    </WebView>
                                 </StackLayout>
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer
