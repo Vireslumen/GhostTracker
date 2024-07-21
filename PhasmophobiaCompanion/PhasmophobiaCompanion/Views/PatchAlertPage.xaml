@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <popup:PopupPage
     x:Class="PhasmophobiaCompanion.Views.PatchAlertPage"
@@ -20,18 +20,16 @@
         <StackLayout>
             <Label
                 FontFamily="{StaticResource BoldFont}"
-                FontSize="20"
+                FontSize="20" Text="{Binding MainPageCommon.PatchIsOut}"
                 HorizontalOptions="CenterAndExpand"
                 HorizontalTextAlignment="Center"
-                VerticalOptions="CenterAndExpand">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="{Binding MainPageCommon.PatchIsOut}" />
-                        <Span Text=" " />
-                        <Span Text="{Binding LastPatch.Title}" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+                VerticalOptions="CenterAndExpand" />
+            <Label
+                FontFamily="{StaticResource BoldFont}"
+                FontSize="20" Text="{Binding LastPatch.Title}"
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center"
+                VerticalOptions="CenterAndExpand" />
             <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
