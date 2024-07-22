@@ -53,7 +53,7 @@
         </FlexLayout>
         <ScrollView>
             <StackLayout>
-                <CollectionView HeightRequest="340"
+                <CollectionView HeightRequest="320"
                                 SelectionChangedCommand="{Binding UpdateGhost}"
                                 ItemsSource="{Binding AllClues}"
                                 SelectedItems="{Binding SelectedClues, Mode=TwoWay}"
@@ -64,7 +64,7 @@
                             <StackLayout Padding="0,0,0,10" effects:CornerRadiusEffect.CornerRadius="16">
                                 <pancakeView:PancakeView
                                     Margin="9,9,9,0"
-                                    Padding="5,5,5,5"
+                                    Padding="3,3,3,3"
                                     BackgroundColor="White"
                                     CornerRadius="16"
                                     HeightRequest="50">
@@ -82,7 +82,7 @@
                                             WidthRequest="30" />
                                         <Label
                                             Margin="5,0,0,0"
-                                            FontSize="16"
+                                            FontSize="14"
                                             Text="{Binding Title}"
                                             VerticalOptions="CenterAndExpand" />
 
@@ -110,21 +110,29 @@
                 </CollectionView>
                 <StackLayout HeightRequest="100" Orientation="Horizontal">
 
-                    <Button effects:CornerRadiusEffect.CornerRadius="10" BackgroundColor="Black"
-                            HorizontalOptions="StartAndExpand" CornerRadius="10" Command="{Binding PressButtonCommand}"
-                            Text="{Binding GhostGuessQuestionCommon.TapButtonTitle}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" effects:CornerRadiusEffect.CornerRadius="10" BackgroundColor="Black"
+                                HorizontalOptions="StartAndExpand" CornerRadius="10"
+                                Command="{Binding PressButtonCommand}"
+                                Text="{Binding GhostGuessQuestionCommon.TapButtonTitle}" />
 
-                    <Frame CornerRadius="10" BackgroundColor="Black">
-                        <StackLayout Spacing="0">
+                        <Frame Grid.Column="1" CornerRadius="10" BackgroundColor="Black">
+                            <StackLayout Spacing="0">
 
-                            <CheckBox Scale="1.5" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand"
-                                      IsChecked="{Binding IsSpeedMatter}" />
-                            <Label Padding="5" TextColor="White" VerticalOptions="StartAndExpand"
-                                   HorizontalTextAlignment="Center"
-                                   HorizontalOptions="CenterAndExpand"
-                                   Text="{Binding GhostGuessQuestionCommon.CheckBoxTitle}" />
-                        </StackLayout>
-                    </Frame>
+                                <CheckBox Scale="1.5" VerticalOptions="StartAndExpand"
+                                          HorizontalOptions="CenterAndExpand"
+                                          IsChecked="{Binding IsSpeedMatter}" />
+                                <Label Padding="5" TextColor="White" VerticalOptions="StartAndExpand"
+                                       HorizontalTextAlignment="Center"
+                                       HorizontalOptions="CenterAndExpand"
+                                       Text="{Binding GhostGuessQuestionCommon.CheckBoxTitle}" />
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
 
                 </StackLayout>
                 <Label Text="{Binding AverageFrequency, StringFormat='Ghost Speed: {0:F0} meter/sec'}"
@@ -144,7 +152,7 @@
                         <DataTemplate>
                             <StackLayout IsVisible="{Binding IsVisible}" HeightRequest="{Binding Visibility}">
 
-                                <Frame Padding="10" Margin="10" CornerRadius="10" 
+                                <Frame Padding="10" Margin="10" CornerRadius="10"
                                        effects:ShadowEffect.Radius="30" effects:ShadowEffect.Color="Gray"
                                        effects:ShadowEffect.Opacity="0.7">
                                     <StackLayout Padding="5">

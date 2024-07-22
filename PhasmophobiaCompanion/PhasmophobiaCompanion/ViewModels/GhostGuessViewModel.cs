@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Timers;
 using System.Windows.Input;
+using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
 using PhasmophobiaCompanion.Views;
@@ -252,6 +253,7 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             try
             {
+                DependencyService.Get<IHapticFeedback>().ExecuteHapticFeedback();
                 var now = DateTime.Now;
 
                 // Очистить расчёт скорости, если время между последним и текущим кликом больше ResetTime
