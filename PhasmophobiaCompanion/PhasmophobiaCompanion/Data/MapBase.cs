@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace PhasmophobiaCompanion.Data
@@ -14,6 +13,7 @@ namespace PhasmophobiaCompanion.Data
         public int Floors { get; set; }
         [Key] public int ID { get; set; }
         public int RoomCount { get; set; }
+        public int SizeNumeric { get; set; }
         public int UnlockLevel { get; set; }
         public List<ExpandFieldWithImagesBase> ExpandFieldWithImagesBase { get; set; }
         public List<UnfoldingItemBase> UnfoldingItemBase { get; set; }

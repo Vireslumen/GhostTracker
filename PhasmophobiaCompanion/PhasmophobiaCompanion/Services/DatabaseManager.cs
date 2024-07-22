@@ -823,6 +823,7 @@ namespace PhasmophobiaCompanion.Services
                         UnlockLevel = m.UnlockLevel,
                         Exits = m.Exits,
                         Floors = m.Floors,
+                        SizeNumeric = m.SizeNumeric,
                         ImageFilePath = m.ImageFilePath,
                         Title = m.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
                         Description = m.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description,

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace PhasmophobiaCompanion.Models
 {
@@ -21,6 +20,10 @@ namespace PhasmophobiaCompanion.Models
         ///     Количество комнат.
         /// </summary>
         public int RoomCount { get; set; }
+        /// <summary>
+        ///     Размер карты в цифровом значении
+        /// </summary>
+        public int SizeNumeric { get; set; }
         public int UnlockLevel { get; set; }
         public List<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }
         public List<UnfoldingItem> UnfoldingItems { get; set; }
