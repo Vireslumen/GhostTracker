@@ -24,6 +24,7 @@ namespace PhasmophobiaCompanion.Data
         public DbSet<DifficultyCommonTranslations> DifficultyCommonTranslations { get; set; }
         public DbSet<EquipmentBase> EquipmentBase { get; set; }
         public DbSet<EquipmentCommonTranslations> EquipmentCommonTranslations { get; set; }
+        public DbSet<FeedbackCommonTranslations> FeedbackCommonTranslations { get; set; }
         public DbSet<GhostBase> GhostBase { get; set; }
         public DbSet<GhostCommonTranslations> GhostCommonTranslations { get; set; }
         public DbSet<GhostGuessQuestionBase> GhostGuessQuestionBase { get; set; }

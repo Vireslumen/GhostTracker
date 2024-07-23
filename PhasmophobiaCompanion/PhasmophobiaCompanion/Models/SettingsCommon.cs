@@ -35,6 +35,10 @@
         /// </summary>
         public string SettingsTitle { get; set; }
         /// <summary>
+        ///     Текст для чекбокса активности открытия окна обратной связи при тряске девайса.
+        /// </summary>
+        public string ShakeActiveLabel { get; set; }
+        /// <summary>
         ///     Название списка уровней подсказок. Примеры: "Level of Tip", "Уровень подсказки".
         /// </summary>
         public string TipLevel { get; set; }

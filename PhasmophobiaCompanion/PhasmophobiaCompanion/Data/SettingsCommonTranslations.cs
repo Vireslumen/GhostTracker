@@ -16,6 +16,7 @@ namespace PhasmophobiaCompanion.Data
         public string SelectLanguage { get; set; }
         public string SelectLevel { get; set; }
         public string SettingsTitle { get; set; }
+        public string ShakeActiveLabel { get; set; }
         public string TipLevel { get; set; }
     }
 }

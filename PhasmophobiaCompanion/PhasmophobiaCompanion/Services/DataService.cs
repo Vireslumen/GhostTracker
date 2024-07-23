@@ -26,6 +26,11 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public string LanguageCode;
 
+
+        /// <summary>
+        ///     Активно ли открытие окна фидбэка при тряске девайса.
+        /// </summary>
+        private bool shakeActive;
         public string SelectedTipLevel;
         private AchievementCommon achievementCommon;
         private AppShellCommon appShellCommon;
@@ -34,6 +39,7 @@ namespace PhasmophobiaCompanion.Services
         private CursedPossessionCommon cursedPossessionCommon;
         private DifficultyCommon difficultyCommon;
         private EquipmentCommon equipmentCommon;
+        private FeedbackCommon feedbackCommon;
         private GhostCommon ghostCommon;
         private GhostGuessQuestionCommon ghostGuessQuestionCommon;
         private List<Achievement> achievements;
@@ -61,6 +67,7 @@ namespace PhasmophobiaCompanion.Services
                 NewPatch = false;
                 databaseManager = new DatabaseManager(new PhasmaDB());
                 var userLanguage = LanguageHelper.GetUserLanguage();
+                shakeActive = ShakeHelper.GetShakeActive();
                 //Настройка языка приложения
                 if (!string.IsNullOrEmpty(userLanguage))
                     LanguageCode = userLanguage;
@@ -286,6 +293,19 @@ namespace PhasmophobiaCompanion.Services
             }
         }
 
+        public FeedbackCommon GetFeedbackCommon()
+        {
+            try
+            {
+                return feedbackCommon;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время получения текстовых данных для страницы фидбэка.");
+                throw;
+            }
+        }
+
         public GhostCommon GetGhostCommon()
         {
             try
@@ -440,6 +460,11 @@ namespace PhasmophobiaCompanion.Services
                 Log.Error(ex, "Ошибка во время получения общих данных для страницы настроек.");
                 throw;
             }
+        }
+
+        public bool GetShakeActive()
+        {
+            return shakeActive;
         }
 
         /// <summary>
@@ -816,6 +841,24 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        ///     Загружает текстовых данных для страницы фидбэка, а затем кэширует их,
+        ///     либо загружает данные из кэша, в зависимости от наличия кэша.
+        /// </summary>
+        public async Task LoadFeedbackCommonAsync()
+        {
+            try
+            {
+                feedbackCommon = await LoadDataAsync(LanguageCode + "_" + "feedback_common_cache.json",
+                    async () => await databaseManager.GetFeedbackCommonAsync(LanguageCode));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки текстовых данных для страницы фидбэка.");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Загружает текстовые данные для интерфейса, относящиеся к призракам - Ghost из базы данных, а затем кэширует их,
         ///     либо загружает данные из кэша, в зависимости от наличия кэша.
         /// </summary>
@@ -922,6 +965,7 @@ namespace PhasmophobiaCompanion.Services
                 await LoadMainPageCommonAsync();
                 await LoadPatchesSteamAsync();
                 await LoadGhostGuessQuestionsAsync();
+                await LoadFeedbackCommonAsync();
                 //Добавление связи от призраков Ghost к уликам Clue
                 //Связи добавляются после кэширования, из-за невозможности кэшировать данные с такими связями
                 foreach (var ghost in ghosts) ghost.PopulateAssociatedClues(clues);
@@ -1244,6 +1288,12 @@ namespace PhasmophobiaCompanion.Services
                 Log.Error(ex, "Ошибка во время поиска по Title среди списков имеющих подробную страницу.");
                 throw;
             }
+        }
+
+        public void SetShakeActive(bool shake)
+        {
+            shakeActive = shake;
+            ShakeHelper.SaveShakeActive(shakeActive);
         }
     }
 }

@@ -20,9 +20,16 @@
             <Picker Title="{Binding SettingsCommon.SelectLevel}" TextColor="Black" ItemsSource="{Binding TipLevels}"
                     SelectedItem="{Binding SelectedTipLevel}" />
 
-            <!-- Баг репорт -->
+            <!-- Отправка фдбэка -->
             <Button Text="{Binding SettingsCommon.ErrorReport}" TextColor="White" BackgroundColor="#333333"
                     Command="{Binding ReportBugCommand}" />
+            <StackLayout Padding="0,10,0,0" Orientation="Horizontal">
+                <Frame Padding="7" VerticalOptions="Center" Background="Black" CornerRadius="30">
+
+                <CheckBox HorizontalOptions="Center" Scale="1.5" IsChecked="{Binding ShakeActive}"></CheckBox>
+                </Frame>
+                <Label VerticalOptions="Center" Text="{Binding SettingsCommon.ShakeActiveLabel}"></Label>
+            </StackLayout>
         </StackLayout>
     </ScrollView>
 </ContentPage>

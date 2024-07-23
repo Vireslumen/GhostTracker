@@ -1,6 +1,7 @@
 ﻿using System;
 using PhasmophobiaCompanion.Services;
 using PhasmophobiaCompanion.Views;
+using Rg.Plugins.Popup.Services;
 using Serilog;
 using Xamarin.Forms;
 
@@ -9,6 +10,7 @@ namespace PhasmophobiaCompanion
     public partial class AppShell : Shell
     {
         private readonly DataService dataService;
+        private readonly ShakeDetectorService shakeDetector;
         private bool isShowingLoadingScreen;
 
         public AppShell()
@@ -21,6 +23,10 @@ namespace PhasmophobiaCompanion
                 dataService = DependencyService.Get<DataService>();
                 Navigating += OnShellNavigation;
                 BindingContext = dataService.GetAppShellCommon();
+
+                // Инициализация обработки тряски
+                shakeDetector = new ShakeDetectorService();
+                shakeDetector.ShakeDetected += OnShakeDetected;
             }
             catch (Exception ex)
             {
@@ -28,6 +34,8 @@ namespace PhasmophobiaCompanion
                 throw;
             }
         }
+
+        public bool IsFeedbackPopupOpen { get; set; }
 
         private async void HideLoadingScreen()
         {
@@ -115,6 +123,26 @@ namespace PhasmophobiaCompanion
             {
                 Log.Error(ex, "Ошибка во время загрузки вкладки карт.");
                 throw;
+            }
+        }
+
+        /// <summary>
+        ///     Переход на страницу отправки фидбека.
+        /// </summary>
+        private async void OnShakeDetected(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!IsFeedbackPopupOpen && dataService.GetShakeActive())
+                {
+                    var currentRoute = Current.CurrentPage.ToString();
+                    IsFeedbackPopupOpen = true;
+                    await PopupNavigation.Instance.PushAsync(new FeedbackPopupPage(currentRoute));
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время открытия страницы обратной связи.");
             }
         }
 

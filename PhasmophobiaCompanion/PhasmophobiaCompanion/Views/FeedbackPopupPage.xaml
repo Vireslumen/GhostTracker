@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<popup:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:popup="http://rotorgames.com"
+                 x:Class="PhasmophobiaCompanion.Views.FeedbackPopupPage"
+                 BackgroundColor="Transparent">
+    <Frame
+        Margin="20"
+        BackgroundColor="White"
+        CornerRadius="10"
+        WidthRequest="250"
+        HeightRequest="400"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+            <Label VerticalOptions="Start" Text="{Binding FeedbackCommon.Title}" FontAttributes="Bold" FontSize="Large" HorizontalOptions="Center" />
+            <Editor HeightRequest="300" VerticalOptions="CenterAndExpand" Text="{Binding FeedbackText}" Placeholder="{Binding FeedbackCommon.EditorTip}" />
+            <StackLayout VerticalOptions="EndAndExpand" Orientation="Horizontal">
+                <Button HorizontalOptions="StartAndExpand" VerticalOptions="Center" Text="{Binding FeedbackCommon.Submit}" Command="{Binding SubmitCommand}" />
+                <Button HorizontalOptions="EndAndExpand" VerticalOptions="Center" Text="{Binding FeedbackCommon.Cancel}" Command="{Binding SubmitCommand}" />
+            </StackLayout>
+        </StackLayout>
+    </Frame>
+</popup:PopupPage>

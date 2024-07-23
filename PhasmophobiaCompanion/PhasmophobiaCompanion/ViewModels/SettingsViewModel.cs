@@ -13,6 +13,7 @@ namespace PhasmophobiaCompanion.ViewModels
     public class SettingsViewModel : BaseViewModel
     {
         private readonly DataService dataService;
+        private bool shakeActive;
         private List<string> languages;
         private List<string> tipLevels;
         private SettingsCommon settingsCommon;
@@ -25,11 +26,22 @@ namespace PhasmophobiaCompanion.ViewModels
             tipLevels = dataService.GetTipLevels();
             languages = new List<string>(LanguageDictionary.LanguageMap.Keys);
             selectedLanguage = LanguageDictionary.GetLanguageNameByCode(dataService.LanguageCode);
+            shakeActive = ShakeHelper.GetShakeActive();
             settingsCommon = dataService.GetSettingsCommon();
             selectedTipLevel = settingsCommon.SelectedLevel;
             ReportBugCommand = new Command(() => ReportBug());
         }
 
+        public bool ShakeActive
+        {
+            get => shakeActive;
+            set
+            {
+                shakeActive = value;
+                dataService.SetShakeActive(shakeActive);
+                OnPropertyChanged();
+            }
+        }
         public ICommand ReportBugCommand { get; protected set; }
         public List<string> Languages
         {
@@ -89,9 +101,12 @@ namespace PhasmophobiaCompanion.ViewModels
             ReportBugCommand = null;
         }
 
-        private void ReportBug()
+        /// <summary>
+        ///     Открытие страницы отправки фидбэка.
+        /// </summary>
+        private async void ReportBug()
         {
-            //TODO: Добавить логику отправления баг репорта.
+            await PopupNavigation.Instance.PushAsync(new FeedbackPopupPage("Settings"));
         }
 
         /// <summary>

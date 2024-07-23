@@ -531,6 +531,35 @@ namespace PhasmophobiaCompanion.Services
         }
 
         /// <summary>
+        ///     Асинхронно возвращает общие данные для страницы фидбэка - Feedback, на основе языка.
+        /// </summary>
+        /// <param name="languageCode">Код языка для получения переводов.</param>
+        /// <returns>Общие данные для страницы фидбэка.</returns>
+        public async Task<FeedbackCommon> GetFeedbackCommonAsync(string languageCode)
+        {
+            try
+            {
+                // Загрузка данных с учетом перевода и связанных сущностей.
+                var feedbackCommonData = await phasmaDbContext.FeedbackCommonTranslations
+                    .Where(e => e.LanguageCode == languageCode).ToListAsync();
+
+                //Преобразование данных в объект FeedbackCommon.
+                return feedbackCommonData.Select(f => new FeedbackCommon
+                {
+                    Title = f.Title,
+                    Cancel = f.Cancel,
+                    EditorTip = f.EditorTip,
+                    Submit = f.Submit
+                }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время загрузки из бд общих названия для cраницы фидбэка");
+                throw;
+            }
+        }
+
+        /// <summary>
         ///     Асинхронно возвращает общие данные для призраков - GhostCommon, на основе языка.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>
@@ -994,6 +1023,7 @@ namespace PhasmophobiaCompanion.Services
                     AppLanguage = s.AppLanguage,
                     ErrorReport = s.ErrorReport,
                     TipLevel = s.TipLevel,
+                    ShakeActiveLabel = s.ShakeActiveLabel,
                     SelectLanguage = s.SelectLanguage,
                     SelectLevel = s.SelectLevel,
                     SelectedLevel = s.SelectedLevel,
