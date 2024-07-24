@@ -1019,6 +1019,7 @@ namespace PhasmophobiaCompanion.Services
                 //Преобразование данных в объект SettingsCommon.
                 return settingsCommonData.Select(s => new SettingsCommon
                 {
+                    About = s.About,
                     AnyLevel = s.AnyLevel,
                     AppLanguage = s.AppLanguage,
                     ErrorReport = s.ErrorReport,

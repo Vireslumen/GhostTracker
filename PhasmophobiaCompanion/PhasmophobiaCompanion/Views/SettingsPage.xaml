@@ -7,29 +7,35 @@
     BackgroundColor="Black"
     NavigationPage.HasNavigationBar="False">
     <ScrollView BackgroundColor="White">
-        <StackLayout Padding="10">
+        <StackLayout Spacing="0" Padding="25,10,25,0">
             <!-- Заголовок страницы -->
-            <Label Text="{Binding SettingsCommon.SettingsTitle}" TextColor="Black" />
+            <Label Padding="10" FontSize="24" HorizontalTextAlignment="Center"
+                   FontFamily="{StaticResource SpecialFont}" Text="{Binding SettingsCommon.SettingsTitle}"
+                   TextColor="Black" />
             <!-- Выбор языка приложения -->
-            <Label Text="{Binding SettingsCommon.AppLanguage}" TextColor="Black" />
+            <Label FontFamily="{StaticResource BoldFont}" FontSize="16" Padding="0,10,0,0"
+                   Text="{Binding SettingsCommon.AppLanguage}" TextColor="Black" />
             <Picker Title="{Binding SettingsCommon.SelectLanguage}" TextColor="Black" ItemsSource="{Binding Languages}"
                     SelectedItem="{Binding SelectedLanguage}" />
 
             <!-- Выбор уровня подсказок -->
-            <Label Text="{Binding SettingsCommon.TipLevel}" TextColor="Black" />
+            <Label FontFamily="{StaticResource BoldFont}" FontSize="16" Padding="0,30,0,0"
+                   Text="{Binding SettingsCommon.TipLevel}" TextColor="Black" />
             <Picker Title="{Binding SettingsCommon.SelectLevel}" TextColor="Black" ItemsSource="{Binding TipLevels}"
                     SelectedItem="{Binding SelectedTipLevel}" />
 
             <!-- Отправка фдбэка -->
-            <Button Text="{Binding SettingsCommon.ErrorReport}" TextColor="White" BackgroundColor="#333333"
+            <Button Margin="0,30,0,0" Text="{Binding SettingsCommon.ErrorReport}" TextColor="White"
+                    BackgroundColor="#333333"
                     Command="{Binding ReportBugCommand}" />
             <StackLayout Padding="0,10,0,0" Orientation="Horizontal">
                 <Frame Padding="7" VerticalOptions="Center" Background="Black" CornerRadius="30">
 
-                <CheckBox HorizontalOptions="Center" Scale="1.5" IsChecked="{Binding ShakeActive}"></CheckBox>
+                    <CheckBox HorizontalOptions="Center" Scale="1.5" IsChecked="{Binding ShakeActive}" />
                 </Frame>
-                <Label VerticalOptions="Center" Text="{Binding SettingsCommon.ShakeActiveLabel}"></Label>
+                <Label VerticalOptions="Center" Text="{Binding SettingsCommon.ShakeActiveLabel}" />
             </StackLayout>
+            <Label Text="{Binding SettingsCommon.About}" Margin="0,30,0,0" />
         </StackLayout>
     </ScrollView>
 </ContentPage>

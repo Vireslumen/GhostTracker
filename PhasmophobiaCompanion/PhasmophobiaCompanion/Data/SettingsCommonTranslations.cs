@@ -8,6 +8,7 @@ namespace PhasmophobiaCompanion.Data
     public class SettingsCommonTranslations
     {
         [Key] public int ID { get; set; }
+        public string About { get; set; }
         public string AnyLevel { get; set; }
         public string AppLanguage { get; set; }
         public string ErrorReport { get; set; }

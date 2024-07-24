@@ -116,6 +116,7 @@ namespace PhasmophobiaCompanion.ViewModels
         {
             var loadingPopup = new LoadingPopup();
             await PopupNavigation.Instance.PushAsync(loadingPopup);
+            ((AppShell) Shell.Current).StopShakeDetector();
             await App.CurrentApp.InitializeAppShellAsync();
             await PopupNavigation.Instance.PopAsync();
         }

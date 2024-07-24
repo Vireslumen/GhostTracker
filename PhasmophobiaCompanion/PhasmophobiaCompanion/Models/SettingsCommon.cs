@@ -7,6 +7,10 @@
     public class SettingsCommon
     {
         /// <summary>
+        ///     Текст информации о приложении.
+        /// </summary>
+        public string About { get; set; }
+        /// <summary>
         ///     Название пункта для любого уровня подсказок. Примеры: "Any", "Любой".
         /// </summary>
         public string AnyLevel { get; set; }

@@ -35,6 +35,12 @@ namespace PhasmophobiaCompanion
             }
         }
 
+
+        public void StopShakeDetector()
+        {
+            shakeDetector.Stop();
+        }
+
         public bool IsFeedbackPopupOpen { get; set; }
 
         private async void HideLoadingScreen()
