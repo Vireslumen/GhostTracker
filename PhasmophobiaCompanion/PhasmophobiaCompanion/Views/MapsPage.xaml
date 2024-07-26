@@ -24,15 +24,21 @@
             CornerRadius="25"
             HeightRequest="50"
             VerticalOptions="EndAndExpand">
-            <StackLayout Padding="0,0,7,0" BackgroundColor="White" Orientation="Horizontal">
+            <Grid BackgroundColor="White" Padding="0,0,7,0" VerticalOptions="CenterAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
                 <!--  Строка поиска карт  -->
-                <SearchBar
+                <SearchBar 
+                    Grid.Column="0"
                     BackgroundColor="White"
                     HorizontalOptions="StartAndExpand"
                     Placeholder="{Binding MapCommon.Search}"
                     Text="{Binding SearchText, Mode=TwoWay}" />
                 <!--  Кнопка фильтрации карт  -->
                 <yummy:PancakeView
+                    Grid.Column="1"
                     Padding="3,3,3,3"
                     BackgroundColor="{Binding FilterColor}"
                     CornerRadius="28"
@@ -48,7 +54,7 @@
                         <TapGestureRecognizer Command="{Binding FilterCommand}" />
                     </yummy:PancakeView.GestureRecognizers>
                 </yummy:PancakeView>
-            </StackLayout>
+            </Grid>
         </yummy:PancakeView>
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
@@ -104,7 +110,7 @@
                                                 </StackLayout>
                                             </StackLayout>
                                             <!--  Изображение карты  -->
-                                            <Image HeightRequest="150" Source="{Binding ImageFilePath}" />
+                                            <Image Source="{Binding ImageFilePath}" />
                                             <!--  Название карты  -->
                                             <Label
                                                 FontSize="18"

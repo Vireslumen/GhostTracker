@@ -43,7 +43,6 @@
             <!--  Строка поиска  -->
             <yummy:PancakeView
                 Padding="10,0,10,10"
-                BackgroundColor="White"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
                     <yummy:DropShadow />
@@ -503,7 +502,7 @@
                         </BindableLayout.ItemsSource>
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <Frame BackgroundColor="Transparent" HasShadow="False" Margin="5" WidthRequest="160"
+                                <Frame BackgroundColor="Transparent" HasShadow="False" Margin="5" FlexLayout.Basis="50%"
                                        HeightRequest="50" Padding="0">
                                     <StackLayout Orientation="Horizontal">
                                         <Image

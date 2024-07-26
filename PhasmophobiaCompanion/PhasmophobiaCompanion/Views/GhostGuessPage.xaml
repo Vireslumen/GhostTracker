@@ -28,7 +28,7 @@
             AlignContent="Start" BindableLayout.ItemsSource="{Binding SortedGhosts}">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <Frame BackgroundColor="Transparent" HasShadow="False" Margin="5" WidthRequest="180"
+                    <Frame HasShadow="False" Margin="5" FlexLayout.Basis="50%"
                            HeightRequest="30" Padding="0">
                         <Label HorizontalOptions="CenterAndExpand"
                                FontSize="16" FontFamily="{StaticResource BoldFont}"

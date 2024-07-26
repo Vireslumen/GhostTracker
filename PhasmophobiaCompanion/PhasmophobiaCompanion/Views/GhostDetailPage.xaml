@@ -46,7 +46,7 @@
                                 TextColor="Black"
                                 VerticalOptions="StartAndExpand" />
                             <!--  Список улик призрака  -->
-                            <StackLayout>
+                            <StackLayout Margin="0,0,0,20">
                                 <FlexLayout
                                     x:Name="ghostFlexLayout"
                                     AlignItems="Start"
@@ -100,7 +100,7 @@
                             Grid.Row="1"
                             Grid.Column="0"
                             Grid.ColumnSpan="3"
-                            Padding="5,15,5,5"
+                            Padding="5,5,5,5"
                             FontSize="16"
                             Text="{Binding Ghost.Identification}" />
 
