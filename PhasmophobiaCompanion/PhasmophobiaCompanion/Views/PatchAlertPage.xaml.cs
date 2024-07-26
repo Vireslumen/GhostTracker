@@ -21,7 +21,6 @@ namespace PhasmophobiaCompanion.Views
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при инициализации страницы PopupPage");
-                throw;
             }
         }
     }

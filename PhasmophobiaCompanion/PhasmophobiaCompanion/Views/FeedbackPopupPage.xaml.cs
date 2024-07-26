@@ -1,5 +1,7 @@
-﻿using PhasmophobiaCompanion.ViewModels;
+﻿using System;
+using PhasmophobiaCompanion.ViewModels;
 using Rg.Plugins.Popup.Pages;
+using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -8,11 +10,17 @@ namespace PhasmophobiaCompanion.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FeedbackPopupPage : PopupPage
     {
-        public FeedbackPopupPage(string sourcePageName)
+        public FeedbackPopupPage()
         {
-            InitializeComponent();
-            BindingContext = new FeedbackViewModel();
-            ((FeedbackViewModel) BindingContext).SourcePage = sourcePageName;
+            try
+            {
+                InitializeComponent();
+                BindingContext = new FeedbackViewModel();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при инициализации страницы фидбэка.");
+            }
         }
 
         protected override void OnDisappearing()

@@ -26,6 +26,7 @@ namespace PhasmophobiaCompanion.Data
         public string Search { get; set; }
         public string Settings { get; set; }
         public string SpecialMode { get; set; }
+        public string TasksError { get; set; }
         public string Theme { get; set; }
         public string Tip { get; set; }
         public string WeeklyQuest { get; set; }

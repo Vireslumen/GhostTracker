@@ -18,15 +18,7 @@ namespace PhasmophobiaCompanion.Services
 
         public DatabaseManager(PhasmaDB context)
         {
-            try
-            {
-                phasmaDbContext = context;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время определения контекста.");
-                throw;
-            }
+            phasmaDbContext = context;
         }
 
         /// <summary>
@@ -68,7 +60,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд общих названия для достижений.");
-                throw;
+                return new AchievementCommon();
             }
         }
 
@@ -99,7 +91,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд достижений.");
-                throw;
+                return new List<Achievement>();
             }
         }
 
@@ -129,7 +121,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд названий вкладок.");
-                throw;
+                return new AppShellCommon();
             }
         }
 
@@ -157,7 +149,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд общих названия для особых режимов.");
-                throw;
+                return new ChallengeModeCommon();
             }
         }
 
@@ -191,7 +183,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд особых режимов.");
-                throw;
+                return new List<ChallengeMode>();
             }
         }
 
@@ -218,7 +210,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд общих названия для улик.");
-                throw;
+                return new ClueCommon();
             }
         }
 
@@ -264,7 +256,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд улик.");
-                throw;
+                return new List<Clue>();
             }
         }
 
@@ -292,7 +284,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд общих названия для проклятых предметов.");
-                throw;
+                return new CursedPossessionCommon();
             }
         }
 
@@ -332,7 +324,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд проклятых предметов.");
-                throw;
+                return new List<CursedPossession>();
             }
         }
 
@@ -395,7 +387,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд сложностей.");
-                throw;
+                return new List<Difficulty>();
             }
         }
 
@@ -443,7 +435,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд общих названия для сложностей.");
-                throw;
+                return new DifficultyCommon();
             }
         }
 
@@ -487,7 +479,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд снаряжения.");
-                throw;
+                return new List<Equipment>();
             }
         }
 
@@ -526,7 +518,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд общих названия для снаряжения.");
-                throw;
+                return new EquipmentCommon();
             }
         }
 
@@ -555,7 +547,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд общих названия для cраницы фидбэка");
-                throw;
+                return new FeedbackCommon();
             }
         }
 
@@ -597,7 +589,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд общих названий для призраков.");
-                throw;
+                return new GhostCommon();
             }
         }
 
@@ -633,7 +625,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд общих названий для страницы определения призрака.");
-                throw;
+                return new GhostGuessQuestionCommon();
             }
         }
 
@@ -669,7 +661,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд вопросов определения призрака.");
-                throw;
+                return new List<GhostGuessQuestion>();
             }
         }
 
@@ -735,7 +727,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд призраков.");
-                throw;
+                return new List<Ghost>();
             }
         }
 
@@ -756,6 +748,7 @@ namespace PhasmophobiaCompanion.Services
                 return mainPageCommonData.Select(m => new MainPageCommon
                 {
                     Clue = m.Clue,
+                    TasksError = m.TasksError,
                     DailyQuest = m.DailyQuest,
                     OtherPages = m.OtherPages,
                     Patches = m.Patches,
@@ -780,7 +773,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд общих названия для главной страницы.");
-                throw;
+                return new MainPageCommon();
             }
         }
 
@@ -818,7 +811,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд общих названия для карт.");
-                throw;
+                return new MapCommon();
             }
         }
 
@@ -867,7 +860,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд карт.");
-                throw;
+                return new List<Map>();
             }
         }
 
@@ -908,7 +901,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд некатегоризируемых страниц.");
-                throw;
+                return new List<OtherInfo>();
             }
         }
 
@@ -936,7 +929,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд патчей.");
-                throw;
+                return new List<Patch>();
             }
         }
 
@@ -965,7 +958,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд общих названия для квестов.");
-                throw;
+                return new QuestCommon();
             }
         }
 
@@ -999,7 +992,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд квестов.");
-                throw;
+                return new List<Quest>();
             }
         }
 
@@ -1028,13 +1021,14 @@ namespace PhasmophobiaCompanion.Services
                     SelectLanguage = s.SelectLanguage,
                     SelectLevel = s.SelectLevel,
                     SelectedLevel = s.SelectedLevel,
+                    LoggerServerActive = s.LoggerServerActive,
                     SettingsTitle = s.SettingsTitle
                 }).FirstOrDefault();
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд общих названия для страницы настроек.");
-                throw;
+                return new SettingsCommon();
             }
         }
 
@@ -1057,7 +1051,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки из бд подсказок.");
-                throw;
+                return new List<Tip>();
             }
         }
 
@@ -1084,7 +1078,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время преобразований коллекции ExpandFieldWithImagesBase.");
-                throw;
+                return new List<ExpandFieldWithImages>();
             }
         }
 
@@ -1109,7 +1103,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время преобразований коллекции ImageWithDescription.");
-                throw;
+                return new List<ImageWithDescription>();
             }
         }
 
@@ -1137,7 +1131,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время преобразований коллекции ImageWithDescription.");
-                throw;
+                return new List<OtherEquipmentStat>();
             }
         }
 
@@ -1160,7 +1154,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время преобразований коллекции SpeedRange.");
-                throw;
+                return new List<SpeedRange>();
             }
         }
 
@@ -1186,7 +1180,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время преобразований коллекции UnfoldingItemBase.");
-                throw;
+                return new List<UnfoldingItem>();
             }
         }
     }

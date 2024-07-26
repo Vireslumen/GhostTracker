@@ -16,17 +16,9 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public GhostDetailViewModel(Ghost ghost)
         {
-            try
-            {
-                Ghost = ghost;
-                foreach (var item in Ghost.UnfoldingItems) item.IsExpanded = true;
-                ClueSelectedCommand = new Command<Clue>(OnClueSelected);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации GhostDetailViewModel.");
-                throw;
-            }
+            Ghost = ghost;
+            foreach (var item in Ghost.UnfoldingItems) item.IsExpanded = true;
+            ClueSelectedCommand = new Command<Clue>(OnClueSelected);
         }
 
         public Ghost Ghost
@@ -64,7 +56,6 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 Log.Error(ex,
                     "Ошибка во время перехода на подробную страницу улики из подробной страницы призраков GhostDetailPage.");
-                throw;
             }
         }
     }

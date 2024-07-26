@@ -20,7 +20,6 @@ namespace PhasmophobiaCompanion.Views
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время инициализации AchievementPage.");
-                throw;
             }
         }
         protected override void OnDisappearing()

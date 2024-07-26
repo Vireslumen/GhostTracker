@@ -21,7 +21,6 @@ namespace PhasmophobiaCompanion.Views
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время инициализации MapDetailPage.");
-                throw;
             }
         }
         protected override void OnDisappearing()

@@ -23,8 +23,6 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public ChallengeModeDetailViewModel(ChallengeMode challengeMode)
         {
-            try
-            {
                 dataService = DependencyService.Get<DataService>();
                 DifficultyCommon = dataService.GetDifficultyCommon();
                 EquipmentCommon = dataService.GetEquipmentCommon();
@@ -33,12 +31,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 SetChallengeModeData();
                 EquipmentSelectedCommand = new Command<Equipment>(OnEquipmentSelected);
                 MapSelectedCommand = new Command(OnMapSelected);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации ChallengeModeDetailViewModel.");
-                throw;
-            }
         }
 
         public ChallengeMode ChallengeMode
@@ -98,7 +90,6 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 Log.Error(ex,
                     "Ошибка во время перехода на подробную страницу снаряжения из страницы особого режима ChallengeModeDetailPage.");
-                throw;
             }
         }
 
@@ -121,7 +112,6 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 Log.Error(ex,
                     "Ошибка во время перехода на подробную страницу карты из страницы особого режима ChallengeModeDetailPage.");
-                throw;
             }
         }
 
@@ -130,12 +120,21 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private void SetChallengeModeData()
         {
-            challengeMode.ChallengeMap = dataService.GetMaps()
-                .Where(m => m.ID == challengeMode.MapID)
-                .FirstOrDefault();
-            challengeMode.ChallengeEquipments = new List<Equipment>
-            (dataService.GetEquipments().Where(e => challengeMode.EquipmentsID.Contains(e.ID))
-                .ToList());
+            try
+            {
+                challengeMode.ChallengeMap = dataService.GetMaps()
+                        .Where(m => m.ID == challengeMode.MapID)
+                        .FirstOrDefault();
+                challengeMode.ChallengeEquipments = new List<Equipment>
+                (dataService.GetEquipments().Where(e => challengeMode.EquipmentsID.Contains(e.ID))
+                    .ToList());
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при установке данных в ChallengeModeDetailViewModel.");
+                challengeMode.ChallengeMap = null;
+                challengeMode.ChallengeEquipments = new List<Equipment>();
+            }
         }
     }
 }

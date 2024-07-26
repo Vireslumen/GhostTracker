@@ -19,20 +19,12 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public MapDetailViewModel(Map map)
         {
-            try
-            {
-                dataService = DependencyService.Get<DataService>();
-                MapCommon = dataService.GetMapCommon();
-                Map = map;
-                foreach (var item in Map.UnfoldingItems) item.IsExpanded = true;
-                foreach (var item in Map.ExpandFieldsWithImages) item.IsExpanded = true;
-                ImageTappedCommand = new Command<ImageWithDescription>(OpenImagePage);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации MapDetailViewModel.");
-                throw;
-            }
+            dataService = DependencyService.Get<DataService>();
+            MapCommon = dataService.GetMapCommon();
+            Map = map;
+            foreach (var item in Map.UnfoldingItems) item.IsExpanded = true;
+            foreach (var item in Map.ExpandFieldsWithImages) item.IsExpanded = true;
+            ImageTappedCommand = new Command<ImageWithDescription>(OpenImagePage);
         }
 
         public ICommand ImageTappedCommand { get; protected set; }
@@ -63,7 +55,14 @@ namespace PhasmophobiaCompanion.ViewModels
 
         private async void OpenImagePage(ImageWithDescription image)
         {
-            await Application.Current.MainPage.Navigation.PushModalAsync(new ImagePage(image));
+            try
+            {
+                await Application.Current.MainPage.Navigation.PushModalAsync(new ImagePage(image));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при открытии страницы изображения.");
+            }
         }
     }
 }

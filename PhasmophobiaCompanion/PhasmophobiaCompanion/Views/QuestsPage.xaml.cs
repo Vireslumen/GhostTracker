@@ -26,7 +26,6 @@ namespace PhasmophobiaCompanion.Views
 			catch (Exception ex)
 			{
                 Log.Error(ex, "Ошибка во время инициализации QuestsPage.");
-                throw;
 			}
         }
 	}

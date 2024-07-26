@@ -28,12 +28,20 @@
             <Button Margin="0,30,0,0" Text="{Binding SettingsCommon.ErrorReport}" TextColor="White"
                     BackgroundColor="#333333"
                     Command="{Binding ReportBugCommand}" />
+            <!-- Включен ли фдбэк при тряске -->
             <StackLayout Padding="0,10,0,0" Orientation="Horizontal">
                 <Frame Padding="7" VerticalOptions="Center" Background="Black" CornerRadius="30">
 
                     <CheckBox HorizontalOptions="Center" Scale="1.5" IsChecked="{Binding ShakeActive}" />
                 </Frame>
                 <Label VerticalOptions="Center" Text="{Binding SettingsCommon.ShakeActiveLabel}" />
+            </StackLayout>
+            <!-- Включено ли логирование на сервер -->
+            <StackLayout Padding="0,30,0,0" Orientation="Horizontal">
+                <Frame Padding="7" VerticalOptions="Center" Background="Black" CornerRadius="30">
+                    <CheckBox HorizontalOptions="Center" Scale="1.5" IsChecked="{Binding IsLoggingEnabled}" />
+                </Frame>
+                <Label FontFamily="{StaticResource BoldFont}" VerticalOptions="Center" Text="{Binding SettingsCommon.LoggerServerActive}" />
             </StackLayout>
             <Label Text="{Binding SettingsCommon.About}" Margin="0,30,0,0" />
         </StackLayout>

@@ -1,7 +1,5 @@
-﻿using System;
-using PhasmophobiaCompanion.Models;
+﻿using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
-using Serilog;
 using Xamarin.Forms;
 
 namespace PhasmophobiaCompanion.ViewModels
@@ -17,17 +15,9 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public DifficultyDetailViewModel(Difficulty difficulty)
         {
-            try
-            {
-                dataService = DependencyService.Get<DataService>();
-                DifficultyCommon = dataService.GetDifficultyCommon();
-                Difficulty = difficulty;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации CursedDetailViewModel.");
-                throw;
-            }
+            dataService = DependencyService.Get<DataService>();
+            DifficultyCommon = dataService.GetDifficultyCommon();
+            Difficulty = difficulty;
         }
 
         public Difficulty Difficulty

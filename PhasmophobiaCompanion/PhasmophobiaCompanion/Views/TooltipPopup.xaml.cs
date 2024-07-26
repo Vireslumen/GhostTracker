@@ -19,7 +19,6 @@ namespace PhasmophobiaCompanion.Views
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время инициализации TooltipPopup.");
-                throw;
             }
         }
 
@@ -28,16 +27,8 @@ namespace PhasmophobiaCompanion.Views
         /// </summary>
         protected override bool OnBackgroundClicked()
         {
-            try
-            {
-                PopupNavigation.Instance.PopAsync();
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время закрытия всплывающей подсказки TooltipPopup.");
-                throw;
-            }
+            PopupNavigation.Instance.PopAsync();
+            return false;
         }
     }
 }

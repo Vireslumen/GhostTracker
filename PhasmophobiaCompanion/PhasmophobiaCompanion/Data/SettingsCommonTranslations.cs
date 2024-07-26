@@ -13,6 +13,7 @@ namespace PhasmophobiaCompanion.Data
         public string AppLanguage { get; set; }
         public string ErrorReport { get; set; }
         public string LanguageCode { get; set; }
+        public string LoggerServerActive { get; set; }
         public string SelectedLevel { get; set; }
         public string SelectLanguage { get; set; }
         public string SelectLevel { get; set; }

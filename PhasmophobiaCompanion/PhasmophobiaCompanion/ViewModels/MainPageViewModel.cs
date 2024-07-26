@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
 using System.Windows.Input;
 using PhasmophobiaCompanion.Interfaces;
 using PhasmophobiaCompanion.Models;
@@ -24,6 +26,8 @@ namespace PhasmophobiaCompanion.ViewModels
         private bool isSearchResultVisible;
         private ObservableCollection<object> searchResults;
         private Tip displayedTip;
+        private ObservableCollection<Quest> dailyQuest;
+        private ObservableCollection<Quest> weekyQuest;
 
         public MainPageViewModel()
         {
@@ -49,8 +53,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 MainPageCommon = dataService.GetMainPageCommon();
                 ChangeTip();
                 SearchResults = new ObservableCollection<object>();
-                DailyQuest = GetSomeQuests(new[] {1, 2, 3, 4});
-                WeeklyQuest = GetSomeQuests(new[] {1, 2, 3, 4});
+                SetTasks();
                 // Инициализация команд
                 ChallengeModeTappedCommand = new Command(OnChallengeModeTapped);
                 ClueTappedCommand = new Command<Clue>(OnClueTapped);
@@ -79,7 +82,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время инициализации MainPageViewModel.");
-                throw;
             }
         }
 
@@ -133,8 +135,26 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
-        public ObservableCollection<Quest> DailyQuest { get; set; }
-        public ObservableCollection<Quest> WeeklyQuest { get; set; }
+        public ObservableCollection<Quest> DailyQuest
+        {
+            get => dailyQuest;
+            set
+            {
+                dailyQuest = value;
+                OnPropertyChanged();
+            }
+            
+        }
+        public ObservableCollection<Quest> WeeklyQuest
+        {
+            get => weekyQuest;
+            set
+            {
+                weekyQuest = value;
+                OnPropertyChanged();
+            }
+
+        }
         public Patch LastPatch { get; set; }
         public Tip DisplayedTip
         {
@@ -184,7 +204,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время смены отображаемой подсказки.");
-                throw;
             }
         }
 
@@ -206,7 +225,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время открытия алерта о выходе нового патча PatchAlertPage.");
-                throw;
             }
         }
 
@@ -215,15 +233,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private void CloseAlert()
         {
-            try
-            {
-                PopupNavigation.Instance.PopAsync();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка при закрытии алерта");
-                throw;
-            }
+            PopupNavigation.Instance.PopAsync();
         }
 
         /// <summary>
@@ -233,15 +243,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <returns>Коллекция квестов.</returns>
         public ObservableCollection<Quest> GetSomeQuests(int[] indices)
         {
-            try
-            {
-                return new ObservableCollection<Quest>(Quests.Where((c, index) => indices.Contains(index)));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения квестов по выбранным номерам.");
-                throw;
-            }
+            return new ObservableCollection<Quest>(Quests.Where((c, index) => indices.Contains(index)));
         }
 
         /// <summary>
@@ -306,7 +308,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время перехода на страницу из поиска главной страницы.");
-                throw;
             }
         }
 
@@ -315,20 +316,11 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnChallengeModeTapped()
         {
-            try
+            if (isNavigating) return;
+            if (dataService.IsMapsDataLoaded && dataService.IsEquipmentsDataLoaded)
             {
-                if (isNavigating) return;
-                if (dataService.IsMapsDataLoaded && dataService.IsEquipmentsDataLoaded)
-                {
-                    var page = new ChallengeModeDetailPage(ChallengeMode);
-                    await NavigateWithLoadingAsync(page);
-                }
-                // TODO: Сделать, чтобы если Карты не были загружены, какую-нибудь загрузки или что-нибудь в этом духе.
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время перехода на страницу особого режима ChallengeModeDetailPage.");
-                throw;
+                var page = new ChallengeModeDetailPage(ChallengeMode);
+                await NavigateWithLoadingAsync(page);
             }
         }
 
@@ -337,17 +329,9 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnClueTapped(Clue clueItem)
         {
-            try
-            {
-                if (isNavigating) return;
-                var page = new ClueDetailPage(clueItem);
-                await NavigateWithLoadingAsync(page);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время перехода на страницу улики ClueDetailPage с главной страницы MainPage.");
-                throw;
-            }
+            if (isNavigating) return;
+            var page = new ClueDetailPage(clueItem);
+            await NavigateWithLoadingAsync(page);
         }
 
         /// <summary>
@@ -355,17 +339,9 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnDifficultyTapped(Difficulty difficultyItem)
         {
-            try
-            {
-                if (isNavigating) return;
-                var page = new DifficultyDetailPage(difficultyItem);
-                await NavigateWithLoadingAsync(page);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время перехода на страницу сложности DifficultyDetailPage.");
-                throw;
-            }
+            if (isNavigating) return;
+            var page = new DifficultyDetailPage(difficultyItem);
+            await NavigateWithLoadingAsync(page);
         }
 
         /// <summary>
@@ -373,16 +349,8 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnGhostGuessTapped()
         {
-            try
-            {
-                var detailPage = new GhostGuessPage();
-                await NavigateWithLoadingAsync(detailPage);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время перехода на страницу определения призрака сложности GhostGuessPage.");
-                throw;
-            }
+            var detailPage = new GhostGuessPage();
+            await NavigateWithLoadingAsync(detailPage);
         }
 
         /// <summary>
@@ -390,22 +358,14 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnGhostSpeedTapped(Ghost ghostItem)
         {
-            try
-            {
-                var ghostSpeedClause = GhostCommon.Min;
-                if (ghostItem.MinGhostSpeedClause == ghostItem.MaxGhostSpeedClause)
-                    ghostSpeedClause += "-" + GhostCommon.Max + ": " + ghostItem.MinGhostSpeedClause;
-                else
-                    ghostSpeedClause += ": " + ghostItem.MinGhostSpeedClause + "\n" + GhostCommon.Max + ": " +
-                                        ghostItem.MaxGhostSpeedClause;
-                ghostSpeedClause += "\n" + GhostCommon.Max + GhostCommon.LoS + ": " + ghostItem.MaxGhostSpeedLoSClause;
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(ghostSpeedClause));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки ghostSpeedClause.");
-                throw;
-            }
+            var ghostSpeedClause = GhostCommon.Min;
+            if (ghostItem.MinGhostSpeedClause == ghostItem.MaxGhostSpeedClause)
+                ghostSpeedClause += "-" + GhostCommon.Max + ": " + ghostItem.MinGhostSpeedClause;
+            else
+                ghostSpeedClause += ": " + ghostItem.MinGhostSpeedClause + "\n" + GhostCommon.Max + ": " +
+                                    ghostItem.MaxGhostSpeedClause;
+            ghostSpeedClause += "\n" + GhostCommon.Max + GhostCommon.LoS + ": " + ghostItem.MaxGhostSpeedLoSClause;
+            await PopupNavigation.Instance.PushAsync(new TooltipPopup(ghostSpeedClause));
         }
 
         /// <summary>
@@ -413,18 +373,9 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnGhostTapped(Ghost ghostItem)
         {
-            try
-            {
-                if (isNavigating) return;
-                var page = new GhostDetailPage(ghostItem);
-                await NavigateWithLoadingAsync(page);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex,
-                    "Ошибка во время перехода на подробную страницу призрака GhostDetailPage с главной страницы MainPage.");
-                throw;
-            }
+            if (isNavigating) return;
+            var page = new GhostDetailPage(ghostItem);
+            await NavigateWithLoadingAsync(page);
         }
 
         /// <summary>
@@ -432,15 +383,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnMaxPlayerSpeedTapped()
         {
-            try
-            {
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(MainPageCommon.PlayerMaxSpeedTip));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки PlayerMaxSpeedTip.");
-                throw;
-            }
+            await PopupNavigation.Instance.PushAsync(new TooltipPopup(MainPageCommon.PlayerMaxSpeedTip));
         }
 
         /// <summary>
@@ -448,15 +391,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnMaxSanityHeaderTapped()
         {
-            try
-            {
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(GhostCommon.MaxSanityHunt));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки MaxSanityHunt.");
-                throw;
-            }
+            await PopupNavigation.Instance.PushAsync(new TooltipPopup(GhostCommon.MaxSanityHunt));
         }
 
         /// <summary>
@@ -464,15 +399,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnMaxSpeedHeaderTapped()
         {
-            try
-            {
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(GhostCommon.MaxSpeed));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки MaxSpeed.");
-                throw;
-            }
+            await PopupNavigation.Instance.PushAsync(new TooltipPopup(GhostCommon.MaxSpeed));
         }
 
         /// <summary>
@@ -480,15 +407,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnMaxSpeedLoSHeaderTapped()
         {
-            try
-            {
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(GhostCommon.MaxSpeedLoS));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки MaxSpeedLoS.");
-                throw;
-            }
+            await PopupNavigation.Instance.PushAsync(new TooltipPopup(GhostCommon.MaxSpeedLoS));
         }
 
         /// <summary>
@@ -496,15 +415,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnMinPlayerSpeedTapped()
         {
-            try
-            {
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(MainPageCommon.PlayerMinSpeedTip));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки PlayerMinSpeedTip.");
-                throw;
-            }
+            await PopupNavigation.Instance.PushAsync(new TooltipPopup(MainPageCommon.PlayerMinSpeedTip));
         }
 
         /// <summary>
@@ -512,15 +423,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnMinSanityHeaderTapped()
         {
-            try
-            {
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(GhostCommon.MinSanityHunt));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки MinSanityHunt.");
-                throw;
-            }
+            await PopupNavigation.Instance.PushAsync(new TooltipPopup(GhostCommon.MinSanityHunt));
         }
 
         /// <summary>
@@ -528,15 +431,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnMinSpeedHeaderTapped()
         {
-            try
-            {
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(GhostCommon.MinSpeed));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки MinSpeed.");
-                throw;
-            }
+            await PopupNavigation.Instance.PushAsync(new TooltipPopup(GhostCommon.MinSpeed));
         }
 
         /// <summary>
@@ -544,34 +439,26 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnOtherPageTapped(ITitledItem otherInfoItem)
         {
-            try
+            if (isNavigating) return;
+            if (otherInfoItem is OtherInfo)
             {
-                if (isNavigating) return;
-                if (otherInfoItem is OtherInfo)
-                {
-                    var page = new OtherInfoPage((OtherInfo) otherInfoItem);
-                    await NavigateWithLoadingAsync(page);
-                }
-                else if (otherInfoItem is QuestCommon)
-                {
-                    var page = new QuestsPage();
-                    await NavigateWithLoadingAsync(page);
-                }
-                else if (otherInfoItem is ChallengeModeCommon)
-                {
-                    var page = new ChallengeModesPage();
-                    await NavigateWithLoadingAsync(page);
-                }
-                else if (otherInfoItem is AchievementCommon)
-                {
-                    var page = new AchievementPage();
-                    await NavigateWithLoadingAsync(page);
-                }
+                var page = new OtherInfoPage((OtherInfo) otherInfoItem);
+                await NavigateWithLoadingAsync(page);
             }
-            catch (Exception ex)
+            else if (otherInfoItem is QuestCommon)
             {
-                Log.Error(ex, "Ошибка во время перехода на некатегоризированную страницу OtherInfo.");
-                throw;
+                var page = new QuestsPage();
+                await NavigateWithLoadingAsync(page);
+            }
+            else if (otherInfoItem is ChallengeModeCommon)
+            {
+                var page = new ChallengeModesPage();
+                await NavigateWithLoadingAsync(page);
+            }
+            else if (otherInfoItem is AchievementCommon)
+            {
+                var page = new AchievementPage();
+                await NavigateWithLoadingAsync(page);
             }
         }
 
@@ -588,7 +475,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время перехода на страницу(в браузере) патча Patch.");
-                throw;
             }
         }
 
@@ -597,16 +483,8 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnQuestTapped(Quest questItem)
         {
-            try
-            {
-                var questTip = questItem.Tip;
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(questTip));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxGhostSpeedClause.");
-                throw;
-            }
+            var questTip = questItem.Tip;
+            await PopupNavigation.Instance.PushAsync(new TooltipPopup(questTip));
         }
 
         /// <summary>
@@ -614,21 +492,13 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OnSanityHuntTapped(Ghost ghostItem)
         {
-            try
-            {
-                var ghostSanityHuntClause = GhostCommon.Min;
-                if (ghostItem.MinSanityHuntClause == ghostItem.MaxSanityHuntClause)
-                    ghostSanityHuntClause += "-" + GhostCommon.Max + ": " + ghostItem.MinSanityHuntClause;
-                else
-                    ghostSanityHuntClause += ": " + ghostItem.MinSanityHuntClause + "\n" + GhostCommon.Max + ": " +
-                                             ghostItem.MaxSanityHuntClause;
-                await PopupNavigation.Instance.PushAsync(new TooltipPopup(ghostSanityHuntClause));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время отображение всплывающей подсказки maxSanityHuntClause.");
-                throw;
-            }
+            var ghostSanityHuntClause = GhostCommon.Min;
+            if (ghostItem.MinSanityHuntClause == ghostItem.MaxSanityHuntClause)
+                ghostSanityHuntClause += "-" + GhostCommon.Max + ": " + ghostItem.MinSanityHuntClause;
+            else
+                ghostSanityHuntClause += ": " + ghostItem.MinSanityHuntClause + "\n" + GhostCommon.Max + ": " +
+                                         ghostItem.MaxSanityHuntClause;
+            await PopupNavigation.Instance.PushAsync(new TooltipPopup(ghostSanityHuntClause));
         }
 
         /// <summary>
@@ -636,17 +506,9 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void OpenSettings()
         {
-            try
-            {
-                if (isNavigating) return;
-                var page = new SettingsPage();
-                await NavigateWithLoadingAsync(page);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время перехода на страницу настроек с главной страницы MainPage.");
-                throw;
-            }
+            if (isNavigating) return;
+            var page = new SettingsPage();
+            await NavigateWithLoadingAsync(page);
         }
 
         /// <summary>
@@ -654,24 +516,44 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         protected override void PerformSearch()
         {
+            if (!string.IsNullOrWhiteSpace(SearchText))
+            {
+                var results = dataService.Search(SearchText);
+                SearchResults.Clear();
+                foreach (var item in results) SearchResults.Add(item);
+                IsSearchResultVisible = SearchResults.Any();
+            }
+            else
+            {
+                IsSearchResultVisible = false;
+            }
+        }
+
+        /// <summary>
+        ///     Получение текущих задач с сервера.
+        /// </summary>
+        private async void SetTasks()
+        {
             try
             {
-                if (!string.IsNullOrWhiteSpace(SearchText))
+                var httpClient = new HttpClient();
+                var response = await httpClient.GetAsync("https://a28577-767d.u.d-f.pw/Tasks");
+                response.EnsureSuccessStatusCode();
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var numbers = JsonSerializer.Deserialize<int[]>(jsonString);
+                if (numbers.Length >= 8)
                 {
-                    var results = dataService.Search(SearchText);
-                    SearchResults.Clear();
-                    foreach (var item in results) SearchResults.Add(item);
-                    IsSearchResultVisible = SearchResults.Any();
-                }
-                else
-                {
-                    IsSearchResultVisible = false;
+                    DailyQuest = GetSomeQuests(new ArraySegment<int>(numbers, 0, 4).ToArray());
+                    WeeklyQuest = GetSomeQuests(new ArraySegment<int>(numbers, 4, 4).ToArray());
                 }
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время выполнения глобального поиска на главной странице.");
-                throw;
+                Log.Error(ex, "Ошибка при получении текущих задач с сервера.");
+                DailyQuest = new ObservableCollection<Quest>();
+                WeeklyQuest = new ObservableCollection<Quest>();
+                DailyQuest.Add(new Quest() {Title = MainPageCommon.TasksError});
+                WeeklyQuest.Add(new Quest() {Title = MainPageCommon.TasksError });
             }
         }
 
@@ -680,16 +562,8 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private void ToPatchPage()
         {
-            try
-            {
-                PopupNavigation.Instance.PopAsync();
-                OnPatchTapped(LastPatch);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка при переходе на страницы патча из алерта.");
-                throw;
-            }
+            PopupNavigation.Instance.PopAsync();
+            OnPatchTapped(LastPatch);
         }
     }
 }

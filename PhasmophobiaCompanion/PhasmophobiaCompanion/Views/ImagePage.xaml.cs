@@ -42,33 +42,17 @@ namespace PhasmophobiaCompanion.Views
 
         protected override void OnDisappearing()
         {
-            try
+            base.OnDisappearing();
+            if (Content is InteractiveImageView interactiveImageView)
             {
-                base.OnDisappearing();
-                if (Content is InteractiveImageView interactiveImageView)
-                {
-                    interactiveImageView.TransparencyChanged -= OnTransparencyChanged;
-                    interactiveImageView.CloseRequested -= OnCloseRequested;
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка в OnDisappearing ImagePage.");
-                throw;
+                interactiveImageView.TransparencyChanged -= OnTransparencyChanged;
+                interactiveImageView.CloseRequested -= OnCloseRequested;
             }
         }
 
         private void OnTransparencyChanged(float opacity)
         {
-            try
-            {
-                BackgroundColor = Color.FromRgba(0, 0, 0, opacity);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка при изменении прозрачности фона страницы ImagePage.");
-                throw;
-            }
+            BackgroundColor = Color.FromRgba(0, 0, 0, opacity);
         }
     }
 }

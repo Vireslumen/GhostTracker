@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Input;
 using Newtonsoft.Json;
@@ -6,6 +7,7 @@ using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
 using PhasmophobiaCompanion.Views;
 using Rg.Plugins.Popup.Services;
+using Serilog;
 using Xamarin.Forms;
 
 namespace PhasmophobiaCompanion.ViewModels
@@ -13,6 +15,7 @@ namespace PhasmophobiaCompanion.ViewModels
     public class SettingsViewModel : BaseViewModel
     {
         private readonly DataService dataService;
+        private bool isLoggingEnabled;
         private bool shakeActive;
         private List<string> languages;
         private List<string> tipLevels;
@@ -28,10 +31,25 @@ namespace PhasmophobiaCompanion.ViewModels
             selectedLanguage = LanguageDictionary.GetLanguageNameByCode(dataService.LanguageCode);
             shakeActive = ShakeHelper.GetShakeActive();
             settingsCommon = dataService.GetSettingsCommon();
+            isLoggingEnabled = LoggerHelper.GetServerLogActive();
             selectedTipLevel = settingsCommon.SelectedLevel;
             ReportBugCommand = new Command(() => ReportBug());
         }
 
+        public bool IsLoggingEnabled
+        {
+            get => isLoggingEnabled;
+            set
+            {
+                if (isLoggingEnabled != value)
+                {
+                    isLoggingEnabled = value;
+                    LoggerHelper.SaveServerLogActive(value);
+                    LoggerConfigurationManager.EnableServerLogging(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
         public bool ShakeActive
         {
             get => shakeActive;
@@ -106,7 +124,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void ReportBug()
         {
-            await PopupNavigation.Instance.PushAsync(new FeedbackPopupPage("Settings"));
+            await PopupNavigation.Instance.PushAsync(new FeedbackPopupPage());
         }
 
         /// <summary>
@@ -114,11 +132,18 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private async void ShowLoadingAndInitializeApp()
         {
-            var loadingPopup = new LoadingPopup();
-            await PopupNavigation.Instance.PushAsync(loadingPopup);
-            ((AppShell) Shell.Current).StopShakeDetector();
-            await App.CurrentApp.InitializeAppShellAsync();
-            await PopupNavigation.Instance.PopAsync();
+            try
+            {
+                var loadingPopup = new LoadingPopup();
+                await PopupNavigation.Instance.PushAsync(loadingPopup);
+                ((AppShell) Shell.Current).StopShakeDetector();
+                await App.CurrentApp.InitializeAppShellAsync();
+                await PopupNavigation.Instance.PopAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при перезагрузке приложения после смены языка");
+            }
         }
     }
 }

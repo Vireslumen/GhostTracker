@@ -20,7 +20,6 @@ namespace PhasmophobiaCompanion.Views
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время инициализации страницы настроек.");
-                throw;
             }
         }
         protected override void OnDisappearing()

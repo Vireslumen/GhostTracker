@@ -1,4 +1,5 @@
 ﻿using System;
+using Serilog;
 using Xamarin.Essentials;
 
 namespace PhasmophobiaCompanion.Services
@@ -10,8 +11,15 @@ namespace PhasmophobiaCompanion.Services
     {
         public ShakeDetectorService()
         {
-            Accelerometer.ShakeDetected += Accelerometer_ShakeDetected;
-            Accelerometer.Start(SensorSpeed.UI);
+            try
+            {
+                Accelerometer.ShakeDetected += Accelerometer_ShakeDetected;
+                Accelerometer.Start(SensorSpeed.UI);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при инициализации ShakeDetectorService.");
+            }
         }
 
         private void Accelerometer_ShakeDetected(object sender, EventArgs e)
@@ -29,8 +37,15 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public void Stop()
         {
-            Accelerometer.Stop();
-            Accelerometer.ShakeDetected -= Accelerometer_ShakeDetected;
+            try
+            {
+                Accelerometer.Stop();
+                Accelerometer.ShakeDetected -= Accelerometer_ShakeDetected;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при остановке ShakeDetectorService.");
+            }
         }
     }
 }

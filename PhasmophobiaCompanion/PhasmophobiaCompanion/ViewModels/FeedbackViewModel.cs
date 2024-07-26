@@ -1,8 +1,13 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Net.Http;
+using System.Text;
 using System.Windows.Input;
+using Newtonsoft.Json;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
 using Rg.Plugins.Popup.Services;
+using Serilog;
 using Xamarin.Forms;
 
 namespace PhasmophobiaCompanion.ViewModels
@@ -15,7 +20,6 @@ namespace PhasmophobiaCompanion.ViewModels
         private readonly DataService dataService;
         private FeedbackCommon feedbackCommon;
         private string feedbackText;
-        private string sourcePage;
 
         public FeedbackViewModel()
         {
@@ -45,15 +49,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
-        public string SourcePage
-        {
-            get => sourcePage;
-            set
-            {
-                sourcePage = value;
-                OnPropertyChanged();
-            }
-        }
 
         public void Cleanup()
         {
@@ -61,11 +56,28 @@ namespace PhasmophobiaCompanion.ViewModels
             CancelCommand = null;
         }
 
-        private void ExecuteSubmit()
+        private async void ExecuteSubmit()
         {
-            //TODO: Сделать отправку на сервер.
-            Debug.WriteLine($"Feedback from {SourcePage}: {FeedbackText}");
-            PopupNavigation.Instance.PopAsync();
+            try
+            {
+                var json = JsonConvert.SerializeObject(FeedbackText);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                using (var client = new HttpClient())
+                {
+                    // Укажите URL вашего API
+                    var response = await client.PostAsync("https://a28577-767d.u.d-f.pw/Feedback", content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        PopupNavigation.Instance.PopAsync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при отправке фидбэка.");
+            }
         }
 
         private void Exit()

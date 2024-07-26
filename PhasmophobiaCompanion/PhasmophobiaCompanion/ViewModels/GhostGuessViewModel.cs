@@ -157,7 +157,6 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 Log.Error(ex,
                     "Ошибка при добавлении или вычетании поинтов за ответы на вопросы на странице определения прирака.");
-                throw;
             }
         }
 
@@ -180,7 +179,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при добавлении поинтов за совпадающую скорость на странице определения прирака.");
-                throw;
             }
         }
 
@@ -194,25 +192,16 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <returns>Число начисляемых поинтов.</returns>
         private double CalculateAnswerResult(int index, int answerValue, int answerNegativeValue, bool mimic)
         {
-            try
+            double[] values = {0, 1, 0.01, 1};
+            switch (index)
             {
-                double[] values = {0, 1, 0.01, 1};
-                switch (index)
-                {
-                    case 0: return 0;
-                    case 1: return values[index] * answerValue;
-                    case 2: return values[index] * answerValue;
-                    case 3:
-                        if (mimic) return 0;
-                        return values[index] * answerNegativeValue;
-                    default: return 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex,
-                    "Ошибка во время вычисления Points на основе ответа на вопрос в методе CalculateAnswerResult.");
-                throw;
+                case 0: return 0;
+                case 1: return values[index] * answerValue;
+                case 2: return values[index] * answerValue;
+                case 3:
+                    if (mimic) return 0;
+                    return values[index] * answerNegativeValue;
+                default: return 0;
             }
         }
 
@@ -241,8 +230,7 @@ namespace PhasmophobiaCompanion.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время очищение видимости вопросов на странице определения призрака.");
-                throw;
+                Log.Error(ex, "Ошибка очищения видимости вопросов на странице.");
             }
         }
 
@@ -272,8 +260,7 @@ namespace PhasmophobiaCompanion.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время выполнения ");
-                throw;
+                Log.Error(ex, "Ошибка во время вычисления скорости призрака по нажатию на кнопку.");
             }
         }
 
@@ -292,7 +279,6 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 Log.Error(ex,
                     "Ошибка во время перехода на подробную страницу призрака GhostDetailPage с страницы определения призрака GhostGuessQuestionPage.");
-                throw;
             }
         }
 
@@ -302,13 +288,20 @@ namespace PhasmophobiaCompanion.ViewModels
         /// <param name="selectedItem">Выбранный элемент в Picker</param>
         private void OnUpdateGhost(object selectedItem = null)
         {
-            ClearQuestionVisibility();
-            UpdateQuestionVisibilityBasedOnClues();
-            UpdateSupposedGhostsBasedOnClues();
-            AddPointsForSpeed();
-            AddPointsForQuestionAnswers();
-            UpdateQuestionVisibilityBasedOnGhostPoints();
-            UpdateGhostsPercentAndSort();
+            try
+            {
+                ClearQuestionVisibility();
+                UpdateQuestionVisibilityBasedOnClues();
+                UpdateSupposedGhostsBasedOnClues();
+                AddPointsForSpeed();
+                AddPointsForQuestionAnswers();
+                UpdateQuestionVisibilityBasedOnGhostPoints();
+                UpdateGhostsPercentAndSort();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время обновления страницы на основе данных на ней.");
+            }
         }
 
         /// <summary>
@@ -352,7 +345,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время вычисления скорости призрака в методе UpdateAverageFrequency.");
-                throw;
             }
         }
 
@@ -376,7 +368,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при обновлении шансов и сортировки призраков на странице определения призрака.");
-                throw;
             }
         }
 
@@ -404,7 +395,6 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 Log.Error(ex,
                     "Ошибка во время обновления видимости вопросов на основе улик Clue на странице определения призрака.");
-                throw;
             }
         }
 
@@ -443,7 +433,6 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 Log.Error(ex,
                     "Ошибка при обновлении видимости вопросов на основе данных ответов на странице определения призрака.");
-                throw;
             }
         }
 
@@ -469,7 +458,6 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 Log.Error(ex,
                     "Ошибка во время обновления списка предполагаемых призраков на основе улик Clue на странице определения призрака.");
-                throw;
             }
         }
     }

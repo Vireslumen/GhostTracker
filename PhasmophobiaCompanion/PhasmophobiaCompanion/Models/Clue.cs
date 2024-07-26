@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Serilog;
 
 namespace PhasmophobiaCompanion.Models
 {
@@ -13,23 +10,15 @@ namespace PhasmophobiaCompanion.Models
     {
         public Clue()
         {
-            try
-            {
-                Ghosts = new List<Ghost>();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации оболочки вкладок.");
-                throw;
-            }
+            Ghosts = new List<Ghost>();
         }
 
         public int ID { get; set; }
-        public List<int> EquipmentsID { get; set; }
-        public List<int> GhostsID { get; set; }
         public List<Equipment> ClueRelatedEquipments { get; set; }
         public List<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }
         public List<Ghost> Ghosts { get; set; }
+        public List<int> EquipmentsID { get; set; }
+        public List<int> GhostsID { get; set; }
         public List<UnfoldingItem> UnfoldingItems { get; set; }
         public string IconFilePath { get; set; }
 
@@ -39,18 +28,10 @@ namespace PhasmophobiaCompanion.Models
         /// <param name="allghosts">Список всех призраков Ghost.</param>
         public void PopulateAssociatedGhosts(List<Ghost> allghosts)
         {
-            try
+            foreach (var ghostId in GhostsID)
             {
-                foreach (var ghostId in GhostsID)
-                {
-                    var ghost = allghosts.FirstOrDefault(c => c.ID == ghostId);
-                    if (ghost != null) Ghosts.Add(ghost);
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время связывания улик с призраками.");
-                throw;
+                var ghost = allghosts.FirstOrDefault(c => c.ID == ghostId);
+                if (ghost != null) Ghosts.Add(ghost);
             }
         }
     }

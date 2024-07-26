@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Xamarin.Forms;
 
 namespace PhasmophobiaCompanion.Data
@@ -150,17 +151,24 @@ namespace PhasmophobiaCompanion.Data
         /// </summary>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var dbPath = "phasmaDATADB.db"; // Путь к файлу базы данных по умолчанию
-
-            // Проверка, выполняется ли код на Android
-            if (Device.RuntimePlatform == Device.Android)
+            try
             {
-                // Получение пути к папке для хранения базы данных на устройстве
-                var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                dbPath = Path.Combine(folderPath, dbPath);
-            }
+                var dbPath = "phasmaDATADB.db"; // Путь к файлу базы данных по умолчанию
 
-            optionsBuilder.UseSqlite($"Data Source={dbPath}");
+                // Проверка, выполняется ли код на Android
+                if (Device.RuntimePlatform == Device.Android)
+                {
+                    // Получение пути к папке для хранения базы данных на устройстве
+                    var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                    dbPath = Path.Combine(folderPath, dbPath);
+                }
+
+                optionsBuilder.UseSqlite($"Data Source={dbPath}");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при конфигурации базы данных.");
+            }
         }
 
         /// <summary>

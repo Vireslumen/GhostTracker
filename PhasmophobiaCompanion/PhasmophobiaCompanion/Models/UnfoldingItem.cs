@@ -1,7 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Serilog;
 
 namespace PhasmophobiaCompanion.Models
 {
@@ -38,15 +36,7 @@ namespace PhasmophobiaCompanion.Models
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            try
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во смены значения UnfoldingItem.");
-                throw;
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

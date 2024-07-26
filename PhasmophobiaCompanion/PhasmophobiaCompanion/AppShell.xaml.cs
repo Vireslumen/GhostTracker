@@ -31,32 +31,17 @@ namespace PhasmophobiaCompanion
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время инициализации оболочки вкладок.");
-                throw;
             }
-        }
-
-
-        public void StopShakeDetector()
-        {
-            shakeDetector.Stop();
         }
 
         public bool IsFeedbackPopupOpen { get; set; }
 
         private async void HideLoadingScreen()
         {
-            try
+            if (isShowingLoadingScreen)
             {
-                if (isShowingLoadingScreen)
-                {
-                    await Current.Navigation.PopModalAsync(true);
-                    isShowingLoadingScreen = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время скрытия загрузочного экрана.");
-                throw;
+                await Current.Navigation.PopModalAsync(true);
+                isShowingLoadingScreen = false;
             }
         }
 
@@ -65,17 +50,9 @@ namespace PhasmophobiaCompanion
         /// </summary>
         private void OnCursedsDataLoaded()
         {
-            try
-            {
-                HideLoadingScreen();
-                dataService.CursedsDataLoaded -= OnCursedsDataLoaded;
-                Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("cursedsTab"); });
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время загрузки вкладки проклятых предметов.");
-                throw;
-            }
+            HideLoadingScreen();
+            dataService.CursedsDataLoaded -= OnCursedsDataLoaded;
+            Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("cursedsTab"); });
         }
 
         /// <summary>
@@ -83,17 +60,9 @@ namespace PhasmophobiaCompanion
         /// </summary>
         private void OnEquipmentsDataLoaded()
         {
-            try
-            {
-                HideLoadingScreen();
-                dataService.EquipmentsDataLoaded -= OnEquipmentsDataLoaded;
-                Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("equipmentsTab"); });
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время загрузки вкладки снаряжения.");
-                throw;
-            }
+            HideLoadingScreen();
+            dataService.EquipmentsDataLoaded -= OnEquipmentsDataLoaded;
+            Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("equipmentsTab"); });
         }
 
         /// <summary>
@@ -101,17 +70,9 @@ namespace PhasmophobiaCompanion
         /// </summary>
         private void OnGhostsDataLoaded()
         {
-            try
-            {
-                HideLoadingScreen();
-                dataService.GhostsDataLoaded -= OnGhostsDataLoaded;
-                Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("ghostsTab"); });
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время загрузки вкладки призраков.");
-                throw;
-            }
+            HideLoadingScreen();
+            dataService.GhostsDataLoaded -= OnGhostsDataLoaded;
+            Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("ghostsTab"); });
         }
 
         /// <summary>
@@ -119,17 +80,9 @@ namespace PhasmophobiaCompanion
         /// </summary>
         private void OnMapsDataLoaded()
         {
-            try
-            {
-                HideLoadingScreen();
-                dataService.MapsDataLoaded -= OnMapsDataLoaded;
-                Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("mapsTab"); });
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время загрузки вкладки карт.");
-                throw;
-            }
+            HideLoadingScreen();
+            dataService.MapsDataLoaded -= OnMapsDataLoaded;
+            Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("mapsTab"); });
         }
 
         /// <summary>
@@ -141,9 +94,8 @@ namespace PhasmophobiaCompanion
             {
                 if (!IsFeedbackPopupOpen && dataService.GetShakeActive())
                 {
-                    var currentRoute = Current.CurrentPage.ToString();
                     IsFeedbackPopupOpen = true;
-                    await PopupNavigation.Instance.PushAsync(new FeedbackPopupPage(currentRoute));
+                    await PopupNavigation.Instance.PushAsync(new FeedbackPopupPage());
                 }
             }
             catch (Exception ex)
@@ -152,7 +104,7 @@ namespace PhasmophobiaCompanion
             }
         }
 
-        private async void OnShellNavigation(object sender, ShellNavigatingEventArgs e)
+        private void OnShellNavigation(object sender, ShellNavigatingEventArgs e)
         {
             try
             {
@@ -185,25 +137,21 @@ namespace PhasmophobiaCompanion
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время перехода на другую вкладку.");
-                throw;
             }
         }
 
         private async void ShowLoadingScreen()
         {
-            try
+            if (!isShowingLoadingScreen)
             {
-                if (!isShowingLoadingScreen)
-                {
-                    isShowingLoadingScreen = true;
-                    await Current.Navigation.PushModalAsync(new LoadingScreenPage(), true);
-                }
+                isShowingLoadingScreen = true;
+                await Current.Navigation.PushModalAsync(new LoadingScreenPage(), true);
             }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время показа загрузочного экрана.");
-                throw;
-            }
+        }
+
+        public void StopShakeDetector()
+        {
+            shakeDetector.Stop();
         }
     }
 }

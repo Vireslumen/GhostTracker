@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using PhasmophobiaCompanion.Models;
 using PhasmophobiaCompanion.Services;
@@ -19,19 +18,11 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public QuestsViewModel()
         {
-            try
-            {
-                dataService = DependencyService.Get<DataService>();
-                Quests = dataService.GetQuests();
-                QuestCommon = dataService.GetQuestCommon();
-                SetDailyQuests();
-                SetWeeklyQuests();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации QuestsViewModel.");
-                throw;
-            }
+            dataService = DependencyService.Get<DataService>();
+            Quests = dataService.GetQuests();
+            QuestCommon = dataService.GetQuestCommon();
+            SetDailyQuests();
+            SetWeeklyQuests();
         }
 
         public List<Quest> DailyQuests
@@ -65,7 +56,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время установки DailyQuests.");
-                throw;
             }
         }
 
@@ -79,7 +69,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время установки WeeklyQuests.");
-                throw;
             }
         }
     }

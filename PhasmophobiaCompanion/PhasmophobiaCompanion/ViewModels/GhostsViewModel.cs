@@ -28,30 +28,22 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public GhostsViewModel()
         {
-            try
-            {
-                dataService = DependencyService.Get<DataService>();
-                //Загрузка всех призраков и улик.
-                ghosts = dataService.GetGhosts().OrderBy(g => g.Title).ToList();
-                allClues = dataService.GetClues();
-                SelectedClues = new ObservableCollection<object>();
-                selectedCluesSaved = new List<object>();
-                Ghosts = new ObservableCollection<Ghost>(ghosts);
-                AllClues = new List<Clue>(allClues);
-                //Загрузка данных для интерфейса.
-                GhostCommon = dataService.GetGhostCommon();
-                // Инициализация команд
-                GhostSelectedCommand = new Command<Ghost>(OnGhostSelected);
-                FilterCommand = new Command(OnFilterTapped);
-                FilterApplyCommand = new Command(OnFilterApplyTapped);
-                FilterClearCommand = new Command(OnFilterClearTapped);
-                BackgroundClickCommand = new Command(ExecuteBackgroundClick);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации GhostsViewModel.");
-                throw;
-            }
+            dataService = DependencyService.Get<DataService>();
+            //Загрузка всех призраков и улик.
+            ghosts = dataService.GetGhosts().OrderBy(g => g.Title).ToList();
+            allClues = dataService.GetClues();
+            SelectedClues = new ObservableCollection<object>();
+            selectedCluesSaved = new List<object>();
+            Ghosts = new ObservableCollection<Ghost>(ghosts);
+            AllClues = new List<Clue>(allClues);
+            //Загрузка данных для интерфейса.
+            GhostCommon = dataService.GetGhostCommon();
+            // Инициализация команд
+            GhostSelectedCommand = new Command<Ghost>(OnGhostSelected);
+            FilterCommand = new Command(OnFilterTapped);
+            FilterApplyCommand = new Command(OnFilterApplyTapped);
+            FilterClearCommand = new Command(OnFilterClearTapped);
+            BackgroundClickCommand = new Command(ExecuteBackgroundClick);
         }
 
         /// <summary>
@@ -110,7 +102,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время фильтрации призраков.");
-                throw;
             }
         }
 
@@ -126,7 +117,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при сбрасывании параметров фильтра до состояния на момент открытия.");
-                throw;
             }
         }
 
@@ -145,7 +135,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при принятии фильтрации.");
-                throw;
             }
         }
 
@@ -165,7 +154,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при сбросе фильтрации.");
-                throw;
             }
         }
 
@@ -183,7 +171,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время открытия фильтра на странице призраков GhostPage.");
-                throw;
             }
         }
 
@@ -204,7 +191,6 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 Log.Error(ex,
                     "Ошибка во время перехода на подробную страницу призрак из страницы призраков GhostPage.");
-                throw;
             }
         }
 
@@ -220,7 +206,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время поиска призраков.");
-                throw;
             }
         }
 
@@ -246,7 +231,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время обновления отфильтрованных призраков.");
-                throw;
             }
         }
     }

@@ -10,20 +10,26 @@ namespace PhasmophobiaCompanion
 {
     public partial class App : Application
     {
-        public static App CurrentApp { get; private set; }
         public App()
         {
             InitializeComponent();
+            LoggerConfigurationManager.InitializeLogger();
+            CurrentApp = this;
+
+            // Глобальная обработка исключений для .NET
+            AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+            {
+                Log.Error((Exception) args.ExceptionObject, "Необработанное исключение");
+            };
+
+            TaskScheduler.UnobservedTaskException += (sender, args) =>
+            {
+                Log.Error(args.Exception, "Необработанное исключение в задаче");
+                args.SetObserved(); // Предотвращение завершения приложения
+            };
 
             try
             {
-                CurrentApp = this;
-                var logFilePath = Path.Combine("/storage/emulated/0/Download/", "logs", "log-.txt");
-                var logger = new LoggerConfiguration()
-                    .MinimumLevel.Debug()
-                    .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day)
-                    .CreateLogger();
-                Log.Logger = logger;
                 // Регистрация DataService
                 DependencyService.Register<DataService>();
                 // Установка загрузочной страницы, как начальной
@@ -32,9 +38,10 @@ namespace PhasmophobiaCompanion
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время инициализации приложения.");
-                throw;
             }
         }
+
+        public static App CurrentApp { get; private set; }
 
         public async Task InitializeAppShellAsync()
         {
@@ -52,21 +59,13 @@ namespace PhasmophobiaCompanion
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время инициализации приложения.");
-                throw;
             }
         }
 
         protected override async void OnStart()
         {
-            try
-            {
-                // Инициализация и загрузка начальных данных 
-                await InitializeAppShellAsync();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации приложения.");
-            }
+            // Инициализация и загрузка начальных данных 
+            await InitializeAppShellAsync();
         }
     }
 }

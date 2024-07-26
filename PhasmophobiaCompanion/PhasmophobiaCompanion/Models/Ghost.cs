@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Serilog;
 
 namespace PhasmophobiaCompanion.Models
 {
@@ -12,15 +10,7 @@ namespace PhasmophobiaCompanion.Models
     {
         public Ghost()
         {
-            try
-            {
-                Clues = new List<Clue>();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации списка улик.");
-                throw;
-            }
+            Clues = new List<Clue>();
         }
 
         public int ID { get; set; }
@@ -49,8 +39,8 @@ namespace PhasmophobiaCompanion.Models
         ///     MaxSanityHunt.
         /// </summary>
         public int MinSanityHunt { get; set; }
-        public List<int> CluesID { get; set; }
         public List<Clue> Clues { get; set; }
+        public List<int> CluesID { get; set; }
         public List<SpeedRange> SpeedRanges { get; set; }
         public List<UnfoldingItem> UnfoldingItems { get; set; }
         /// <summary>
@@ -84,18 +74,10 @@ namespace PhasmophobiaCompanion.Models
         /// <param name="allClues">Список всех улик.</param>
         public void PopulateAssociatedClues(List<Clue> allClues)
         {
-            try
+            foreach (var clueId in CluesID)
             {
-                foreach (var clueId in CluesID)
-                {
-                    var clue = allClues.FirstOrDefault(c => c.ID == clueId);
-                    if (clue != null) Clues.Add(clue);
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время связывания призраков с уликами.");
-                throw;
+                var clue = allClues.FirstOrDefault(c => c.ID == clueId);
+                if (clue != null) Clues.Add(clue);
             }
         }
     }

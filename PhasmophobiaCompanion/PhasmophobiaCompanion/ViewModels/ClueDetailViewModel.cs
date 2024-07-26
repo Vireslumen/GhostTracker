@@ -21,26 +21,18 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public ClueDetailViewModel(Clue clue)
         {
-            try
-            {
-                dataService = DependencyService.Get<DataService>();
-                Clue = clue;
-                ClueCommon = dataService.GetClueCommon();
-                Clue.ClueRelatedEquipments = new List<Equipment>
-                (dataService.GetEquipments().Where(e => Clue.EquipmentsID.Contains(e.ID))
-                    .ToList());
-                foreach (var item in Clue.UnfoldingItems) item.IsExpanded = true;
-                foreach (var item in Clue.ExpandFieldsWithImages) item.IsExpanded = true;
-                ClueSelectedCommand = new Command<Clue>(OnClueSelected);
-                GhostSelectedCommand = new Command<Ghost>(OnGhostSelected);
-                ImageTappedCommand = new Command<ImageWithDescription>(OpenImagePage);
-                EquipmentSelectedCommand = new Command<Equipment>(OpenEquipPage);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации ClueDetailViewModel.");
-                throw;
-            }
+            dataService = DependencyService.Get<DataService>();
+            Clue = clue;
+            ClueCommon = dataService.GetClueCommon();
+            Clue.ClueRelatedEquipments = new List<Equipment>
+            (dataService.GetEquipments().Where(e => Clue.EquipmentsID.Contains(e.ID))
+                .ToList());
+            foreach (var item in Clue.UnfoldingItems) item.IsExpanded = true;
+            foreach (var item in Clue.ExpandFieldsWithImages) item.IsExpanded = true;
+            ClueSelectedCommand = new Command<Clue>(OnClueSelected);
+            GhostSelectedCommand = new Command<Ghost>(OnGhostSelected);
+            ImageTappedCommand = new Command<ImageWithDescription>(OpenImagePage);
+            EquipmentSelectedCommand = new Command<Equipment>(OpenEquipPage);
         }
 
         public Clue Clue
@@ -89,7 +81,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время перехода на страницу улики с подробной страницы улики.");
-                throw;
             }
         }
 
@@ -107,7 +98,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время перехода на страницу призрака с подробной страницы улики.");
-                throw;
             }
         }
 
@@ -125,13 +115,19 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время перехода на страницу снаряжения с подробной страницы улики.");
-                throw;
             }
         }
 
         private async void OpenImagePage(ImageWithDescription image)
         {
-            await Application.Current.MainPage.Navigation.PushModalAsync(new ImagePage(image));
+            try
+            {
+                await Application.Current.MainPage.Navigation.PushModalAsync(new ImagePage(image));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при открытии страницы изображения.");
+            }
         }
     }
 }

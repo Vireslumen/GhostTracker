@@ -16,18 +16,10 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public CursedDetailViewModel(CursedPossession cursedPossession)
         {
-            try
-            {
-                CursedPossession = cursedPossession;
-                foreach (var item in CursedPossession.UnfoldingItems) item.IsExpanded = true;
-                foreach (var item in CursedPossession.ExpandFieldsWithImages) item.IsExpanded = true;
-                ImageTappedCommand = new Command<ImageWithDescription>(OpenImagePage);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации CursedDetailViewModel.");
-                throw;
-            }
+            CursedPossession = cursedPossession;
+            foreach (var item in CursedPossession.UnfoldingItems) item.IsExpanded = true;
+            foreach (var item in CursedPossession.ExpandFieldsWithImages) item.IsExpanded = true;
+            ImageTappedCommand = new Command<ImageWithDescription>(OpenImagePage);
         }
 
         public CursedPossession CursedPossession
@@ -49,7 +41,14 @@ namespace PhasmophobiaCompanion.ViewModels
 
         private async void OpenImagePage(ImageWithDescription image)
         {
-            await Application.Current.MainPage.Navigation.PushModalAsync(new ImagePage(image));
+            try
+            {
+                await Application.Current.MainPage.Navigation.PushModalAsync(new ImagePage(image));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при открытии страницы изображения.");
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using PhasmophobiaCompanion.ViewModels;
+﻿using System;
+using PhasmophobiaCompanion.ViewModels;
+using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,9 +11,16 @@ namespace PhasmophobiaCompanion.Views
     {
         public GhostGuessPage()
         {
-            InitializeComponent();
-            var viewModel = new GhostGuessViewModel();
-            BindingContext = viewModel;
+            try
+            {
+                InitializeComponent();
+                var viewModel = new GhostGuessViewModel();
+                BindingContext = viewModel;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при инициализации страницы определения призрака.");
+            }
         }
 
         protected override void OnDisappearing()

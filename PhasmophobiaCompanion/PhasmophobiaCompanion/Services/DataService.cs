@@ -26,11 +26,11 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public string LanguageCode;
 
-
         /// <summary>
         ///     Активно ли открытие окна фидбэка при тряске девайса.
         /// </summary>
         private bool shakeActive;
+
         public string SelectedTipLevel;
         private AchievementCommon achievementCommon;
         private AppShellCommon appShellCommon;
@@ -80,7 +80,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки конструктора DataService.");
-                throw;
             }
         }
 
@@ -94,93 +93,37 @@ namespace PhasmophobiaCompanion.Services
 
         public AchievementCommon GetAchievementCommon()
         {
-            try
-            {
-                return achievementCommon;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения общих данных для достижений.");
-                throw;
-            }
+            return achievementCommon;
         }
 
         public List<Achievement> GetAchievements()
         {
-            try
-            {
-                return achievements;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения достижений.");
-                throw;
-            }
+            return achievements;
         }
 
         public AppShellCommon GetAppShellCommon()
         {
-            try
-            {
-                return appShellCommon;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения названий вкладок.");
-                throw;
-            }
+            return appShellCommon;
         }
 
         public ChallengeModeCommon GetChallengeModeCommon()
         {
-            try
-            {
-                return challengeModeCommon;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения общих данных для особого режима.");
-                throw;
-            }
+            return challengeModeCommon;
         }
 
         public List<ChallengeMode> GetChallengeModes()
         {
-            try
-            {
-                return challengeModes;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения особых режимов.");
-                throw;
-            }
+            return challengeModes;
         }
 
         public ClueCommon GetClueCommon()
         {
-            try
-            {
-                return clueCommon;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения общих названий для улик.");
-                throw;
-            }
+            return clueCommon;
         }
 
         public List<Clue> GetClues()
         {
-            try
-            {
-                return clues;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения улик.");
-                throw;
-            }
+            return clues;
         }
 
         public ChallengeMode GetCurrentChallengeMode()
@@ -197,269 +140,109 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время получения особого режима.");
-                throw;
+                return challengeModes[0];
             }
         }
 
         public CursedPossessionCommon GetCursedCommon()
         {
-            try
-            {
-                return cursedPossessionCommon;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения общих названий для проклятых предметов.");
-                throw;
-            }
+            return cursedPossessionCommon;
         }
 
         public List<CursedPossession> GetCurseds()
         {
-            try
-            {
-                return curseds;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения проклятых предметов.");
-                throw;
-            }
+            return curseds;
         }
 
         public List<Difficulty> GetDifficulties()
         {
-            try
-            {
-                return difficulties;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения сложностей.");
-                throw;
-            }
+            return difficulties;
         }
 
         public DifficultyCommon GetDifficultyCommon()
         {
-            try
-            {
-                return difficultyCommon;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения общих данных для сложностей.");
-                throw;
-            }
+            return difficultyCommon;
         }
 
         public EquipmentCommon GetEquipmentCommon()
         {
-            try
-            {
-                return equipmentCommon;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения общих названий для снаряжения.");
-                throw;
-            }
+            return equipmentCommon;
         }
 
         public List<Equipment> GetEquipments()
         {
-            try
-            {
-                return equipments;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения снаряжения.");
-                throw;
-            }
+            return equipments;
         }
 
         public List<Equipment> GetEquipmentsSameTypeCollection(Equipment equipment)
         {
-            try
-            {
-                return new List<Equipment>(
-                    equipments.Where(e => e.Title == equipment.Title && e != equipment));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения списка снаряжения того же типа.");
-                throw;
-            }
+            return new List<Equipment>(
+                equipments.Where(e => e.Title == equipment.Title && e != equipment));
         }
 
         public FeedbackCommon GetFeedbackCommon()
         {
-            try
-            {
-                return feedbackCommon;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения текстовых данных для страницы фидбэка.");
-                throw;
-            }
+            return feedbackCommon;
         }
 
         public GhostCommon GetGhostCommon()
         {
-            try
-            {
-                return ghostCommon;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения общих названий для призраков.");
-                throw;
-            }
+            return ghostCommon;
         }
 
         public GhostGuessQuestionCommon GetGhostGuessQuestionCommon()
         {
-            try
-            {
-                return ghostGuessQuestionCommon;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения общих названий для определения призрака.");
-                throw;
-            }
+            return ghostGuessQuestionCommon;
         }
 
         public List<GhostGuessQuestion> GetGhostGuessQuestions()
         {
-            try
-            {
-                return ghostGuessQuestions;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения вопросов для определения призрака.");
-                throw;
-            }
+            return ghostGuessQuestions;
         }
 
         public List<Ghost> GetGhosts()
         {
-            try
-            {
-                return ghosts;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения призраков.");
-                throw;
-            }
+            return ghosts;
         }
 
         public MainPageCommon GetMainPageCommon()
         {
-            try
-            {
-                return mainPageCommon;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения общих данных для главной страницы.");
-                throw;
-            }
+            return mainPageCommon;
         }
 
         public MapCommon GetMapCommon()
         {
-            try
-            {
-                return mapCommon;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения общих названий для карт.");
-                throw;
-            }
+            return mapCommon;
         }
 
         public List<Map> GetMaps()
         {
-            try
-            {
-                return maps;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения карт.");
-                throw;
-            }
+            return maps;
         }
 
         public List<OtherInfo> GetOtherInfos()
         {
-            try
-            {
-                return otherInfos;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения некатегоризируемых страниц.");
-                throw;
-            }
+            return otherInfos;
         }
 
         public List<Patch> GetPatches()
         {
-            try
-            {
-                return patches;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения патчей.");
-                throw;
-            }
+            return patches;
         }
 
         public QuestCommon GetQuestCommon()
         {
-            try
-            {
-                return questCommon;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения общих данных для квестов.");
-                throw;
-            }
+            return questCommon;
         }
 
         public List<Quest> GetQuests()
         {
-            try
-            {
-                return quests;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения квестов.");
-                throw;
-            }
+            return quests;
         }
 
         public SettingsCommon GetSettingsCommon()
         {
-            try
-            {
-                return settingsCommon;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения общих данных для страницы настроек.");
-                throw;
-            }
+            return settingsCommon;
         }
 
         public bool GetShakeActive()
@@ -475,7 +258,6 @@ namespace PhasmophobiaCompanion.Services
         {
             var uniqueSize = new HashSet<string>();
             foreach (var map in maps) uniqueSize.Add(map.Size);
-
             return new List<string>(uniqueSize);
         }
 
@@ -487,36 +269,19 @@ namespace PhasmophobiaCompanion.Services
         {
             var uniqueTiers = new HashSet<string>();
             foreach (var equip in equipments) uniqueTiers.Add(equip.Tier);
-
             return new List<string>(uniqueTiers);
         }
 
         public List<string> GetTipLevels()
         {
-            try
-            {
-                var allTipsLevel = tips.Select(t => t.Level).Distinct().ToList();
-                allTipsLevel.Add(settingsCommon.AnyLevel);
-                return allTipsLevel;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения подсказок.");
-                throw;
-            }
+            var allTipsLevel = tips.Select(t => t.Level).Distinct().ToList();
+            allTipsLevel.Add(settingsCommon.AnyLevel);
+            return allTipsLevel;
         }
 
         public List<Tip> GetTips()
         {
-            try
-            {
-                return tips;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время получения подсказок.");
-                throw;
-            }
+            return tips;
         }
 
         public event Action GhostsDataLoaded;
@@ -536,7 +301,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки общих названий для достижений.");
-                throw;
             }
         }
 
@@ -558,7 +322,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки достижений.");
-                throw;
             }
         }
 
@@ -576,7 +339,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки названий вкладок.");
-                throw;
             }
         }
 
@@ -599,7 +361,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки особых режимов.");
-                throw;
             }
         }
 
@@ -618,7 +379,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки общих названий для особых режимов.");
-                throw;
             }
         }
 
@@ -637,7 +397,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки общих названий для улик.");
-                throw;
             }
         }
 
@@ -659,7 +418,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки улик.");
-                throw;
             }
         }
 
@@ -678,7 +436,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки общих названий для проклятых предметов.");
-                throw;
             }
         }
 
@@ -704,7 +461,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки проклятых предметов.");
-                throw;
             }
         }
 
@@ -749,7 +505,7 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки данных или из базы данных или из кэша.");
-                throw;
+                return default;
             }
         }
 
@@ -772,7 +528,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки сложностей.");
-                throw;
             }
         }
 
@@ -790,7 +545,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки общих названий для сложностей.");
-                throw;
             }
         }
 
@@ -809,7 +563,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки общих названий для снаряжения.");
-                throw;
             }
         }
 
@@ -836,7 +589,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки снаряжения.");
-                throw;
             }
         }
 
@@ -854,7 +606,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки текстовых данных для страницы фидбэка.");
-                throw;
             }
         }
 
@@ -872,7 +623,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки общих названий для призраков.");
-                throw;
             }
         }
 
@@ -892,7 +642,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки общих названий для определения призраков.");
-                throw;
             }
         }
 
@@ -915,7 +664,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки вопросов для определения призрака.");
-                throw;
             }
         }
 
@@ -940,7 +688,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки призраков.");
-                throw;
             }
         }
 
@@ -949,39 +696,30 @@ namespace PhasmophobiaCompanion.Services
         /// </summary>
         public async Task LoadInitialDataAsync()
         {
-            try
-            {
-                await LoadAppShellCommonAsync();
-                await LoadGhostsDataAsync();
-                await LoadCluesAsync();
-                await LoadAchievementsAsync();
-                await LoadTipsDataAsync();
-                await LoadDifficultiesAsync();
-                await LoadPatchesAsync();
-                await LoadQuestsAsync();
-                await LoadOtherInfoAsync();
-                await LoadChallengeModeAsync();
-                await LoadSettingsCommonAsync();
-                await LoadMainPageCommonAsync();
-                await LoadPatchesSteamAsync();
-                await LoadGhostGuessQuestionsAsync();
-                await LoadFeedbackCommonAsync();
-                //Добавление связи от призраков Ghost к уликам Clue
-                //Связи добавляются после кэширования, из-за невозможности кэшировать данные с такими связями
-                foreach (var ghost in ghosts) ghost.PopulateAssociatedClues(clues);
-                //Добавление связи от улик Clue - к призракам Ghost
-                foreach (var clue in clues) clue.PopulateAssociatedGhosts(ghosts);
-                //Добавление связи от GhostGuessQuestion - к призракам Ghost
-                foreach (var ghostGuessQuestion in ghostGuessQuestions)
-                    ghostGuessQuestion.PopulateAssociatedGhosts(ghosts);
-
-                SelectedTipLevel = settingsCommon.SelectedLevel;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время загрузки первоначальных данных.");
-                throw;
-            }
+            await LoadAppShellCommonAsync();
+            await LoadGhostsDataAsync();
+            await LoadCluesAsync();
+            await LoadAchievementsAsync();
+            await LoadTipsDataAsync();
+            await LoadDifficultiesAsync();
+            await LoadPatchesAsync();
+            await LoadQuestsAsync();
+            await LoadOtherInfoAsync();
+            await LoadChallengeModeAsync();
+            await LoadSettingsCommonAsync();
+            await LoadMainPageCommonAsync();
+            await LoadPatchesSteamAsync();
+            await LoadGhostGuessQuestionsAsync();
+            await LoadFeedbackCommonAsync();
+            //Добавление связи от призраков Ghost к уликам Clue
+            //Связи добавляются после кэширования, из-за невозможности кэшировать данные с такими связями
+            foreach (var ghost in ghosts) ghost.PopulateAssociatedClues(clues);
+            //Добавление связи от улик Clue - к призракам Ghost
+            foreach (var clue in clues) clue.PopulateAssociatedGhosts(ghosts);
+            //Добавление связи от GhostGuessQuestion - к призракам Ghost
+            foreach (var ghostGuessQuestion in ghostGuessQuestions)
+                ghostGuessQuestion.PopulateAssociatedGhosts(ghosts);
+            SelectedTipLevel = settingsCommon.SelectedLevel;
         }
 
         /// <summary>
@@ -999,7 +737,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки общих названий для главной страницы.");
-                throw;
             }
         }
 
@@ -1017,7 +754,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки общих названий для карт.");
-                throw;
             }
         }
 
@@ -1043,7 +779,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки карт.");
-                throw;
             }
         }
 
@@ -1062,7 +797,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки вторичных данных.");
-                throw;
             }
         }
 
@@ -1083,7 +817,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки некатегоризируемых страниц.");
-                throw;
             }
         }
 
@@ -1103,7 +836,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки патчей.");
-                throw;
             }
         }
 
@@ -1114,7 +846,8 @@ namespace PhasmophobiaCompanion.Services
         {
             try
             {
-                var url = "https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=739630&count=5&feeds=steam_community_announcements";
+                var url =
+                    "https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=739630&count=5&feeds=steam_community_announcements";
 
                 using (var httpClient = new HttpClient())
                 {
@@ -1149,8 +882,9 @@ namespace PhasmophobiaCompanion.Services
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error(ex, "Ошибка во время загрузки новостей из стима.");
             }
         }
 
@@ -1168,7 +902,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки общих названий для квестов.");
-                throw;
             }
         }
 
@@ -1190,7 +923,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки квестов.");
-                throw;
             }
         }
 
@@ -1208,7 +940,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки общих названий для особых режимов.");
-                throw;
             }
         }
 
@@ -1228,7 +959,6 @@ namespace PhasmophobiaCompanion.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время загрузки подсказок.");
-                throw;
             }
         }
 
@@ -1236,22 +966,14 @@ namespace PhasmophobiaCompanion.Services
 
         public void ReinitializeLanguage()
         {
-            try
-            {
-                var userLanguage = LanguageHelper.GetUserLanguage();
-                //Настройка языка приложения
-                if (!string.IsNullOrEmpty(userLanguage))
-                    LanguageCode = userLanguage;
-                else
-                    LanguageCode = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
-                //Если в приложении нет такого языка, то язык английский
-                if (!LanguageDictionary.LanguageMap.ContainsValue(LanguageCode)) LanguageCode = "EN";
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время смены языка приложения в DataService.");
-                throw;
-            }
+            var userLanguage = LanguageHelper.GetUserLanguage();
+            //Настройка языка приложения
+            if (!string.IsNullOrEmpty(userLanguage))
+                LanguageCode = userLanguage;
+            else
+                LanguageCode = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
+            //Если в приложении нет такого языка, то язык английский
+            if (!LanguageDictionary.LanguageMap.ContainsValue(LanguageCode)) LanguageCode = "EN";
         }
 
         /// <summary>
@@ -1261,33 +983,25 @@ namespace PhasmophobiaCompanion.Services
         /// <returns>Список найденных объектов.</returns>
         public IEnumerable<object> Search(string query)
         {
-            try
-            {
-                var results = new List<object>();
-                results.AddRange(clues.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
-                results.AddRange(difficulties.Where(item =>
-                    item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
-                results.AddRange(patches.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
-                results.AddRange(
-                    otherInfos.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
-                results.AddRange(ghosts.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
-                results.AddRange(
-                    equipments.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
-                results.AddRange(maps.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
-                results.AddRange(curseds.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
-                results.AddRange(challengeModes.Where(item =>
-                    item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
-                results.AddRange(quests.Where(item =>
-                    item.Clause.Contains(query, StringComparison.OrdinalIgnoreCase)));
-                results.AddRange(achievements.Where(item =>
-                    item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
-                return results;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время поиска по Title среди списков имеющих подробную страницу.");
-                throw;
-            }
+            var results = new List<object>();
+            results.AddRange(clues.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
+            results.AddRange(difficulties.Where(item =>
+                item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
+            results.AddRange(patches.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
+            results.AddRange(
+                otherInfos.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
+            results.AddRange(ghosts.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
+            results.AddRange(
+                equipments.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
+            results.AddRange(maps.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
+            results.AddRange(curseds.Where(item => item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
+            results.AddRange(challengeModes.Where(item =>
+                item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
+            results.AddRange(quests.Where(item =>
+                item.Clause.Contains(query, StringComparison.OrdinalIgnoreCase)));
+            results.AddRange(achievements.Where(item =>
+                item.Title.Contains(query, StringComparison.OrdinalIgnoreCase)));
+            return results;
         }
 
         public void SetShakeActive(bool shake)

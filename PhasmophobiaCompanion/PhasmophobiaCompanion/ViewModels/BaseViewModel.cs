@@ -12,13 +12,15 @@ namespace PhasmophobiaCompanion.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
+        protected bool isNavigating;
+        private bool isBusy;
+        private string title = string.Empty;
+
         public BaseViewModel()
         {
             isNavigating = false;
         }
-        protected bool isNavigating;
-        private bool isBusy;
-        private string title = string.Empty;
+
         public bool IsBusy
         {
             get => isBusy;
@@ -33,27 +35,38 @@ namespace PhasmophobiaCompanion.ViewModels
         public async Task NavigateWithLoadingAsync(Page page)
         {
             isNavigating = true;
+            var isPopupShown = false;
             try
             {
                 var loadingPopup = new LoadingPopup();
-                await PopupNavigation.Instance.PushAsync(loadingPopup); 
+                await PopupNavigation.Instance.PushAsync(loadingPopup);
+                isPopupShown = true;
                 var existingPages = Application.Current.MainPage.Navigation.NavigationStack;
                 while (existingPages.Count > 3)
                 {
                     var pageToRemove = existingPages[1];
                     Application.Current.MainPage.Navigation.RemovePage(pageToRemove);
                 }
+
                 await Application.Current.MainPage.Navigation.PushAsync(page);
             }
             catch (Exception ex)
             {
                 Log.Error(ex,
                     "Ошибка во время перехода на страницу с использованием индикатора загрузки.");
-                throw;
             }
             finally
             {
-                await PopupNavigation.Instance.PopAsync();
+                if (isPopupShown)
+                    try
+                    {
+                        await PopupNavigation.Instance.PopAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Ошибка при попытке закрыть попап загрузки.");
+                    }
+
                 isNavigating = false;
             }
         }

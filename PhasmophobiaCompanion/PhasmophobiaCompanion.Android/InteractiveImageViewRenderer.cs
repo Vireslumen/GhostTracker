@@ -71,7 +71,6 @@ namespace PhasmophobiaCompanion.Droid
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при обработке события касания экрана в методе HandleTouch");
-                throw;
             }
         }
 
@@ -99,7 +98,6 @@ namespace PhasmophobiaCompanion.Droid
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при отрисовке изображения в методе OnDraw");
-                throw;
             }
         }
 
@@ -122,7 +120,6 @@ namespace PhasmophobiaCompanion.Droid
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка в методе OnElementChanged");
-                throw;
             }
         }
 
@@ -150,7 +147,6 @@ namespace PhasmophobiaCompanion.Droid
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при обновлении прозрачности страницы в методе UpdateTransparency");
-                throw;
             }
         }
 
@@ -194,7 +190,7 @@ namespace PhasmophobiaCompanion.Droid
                 catch (Exception ex)
                 {
                     Log.Error(ex, "Ошибка при обработке жеста масштабирования в методе OnScale");
-                    throw;
+                    return false;
                 }
             }
         }
@@ -239,7 +235,7 @@ namespace PhasmophobiaCompanion.Droid
                 catch (Exception ex)
                 {
                     Log.Error(ex, "Ошибка при обработке скроллинга изображения в методе OnScale");
-                    throw;
+                    return false;
                 }
             }
         }

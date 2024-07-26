@@ -34,35 +34,27 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public EquipmentsViewModel()
         {
-            try
-            {
-                dataService = DependencyService.Get<DataService>();
-                //Загрузка данных для интерфейса.
-                EquipmentCommon = dataService.GetEquipmentCommon();
-                //Загрузка всего снаряжения.
-                equipments = dataService.GetEquipments().OrderBy(e => e.Title).ToList();
-                allTiers = dataService.GetTiers();
-                AllTiers = new List<string>(allTiers);
-                Equipments = new ObservableCollection<Equipment>(equipments);
-                //Инициализация элементов фильтра
-                SelectedTiers = new ObservableCollection<object>();
-                selectedTiersSaved = new List<object>();
-                maxUnlockLevelSaved = MaxUnlockLevelDefault;
-                minUnlockLevelSaved = MinUnlockLevelDefault;
-                maxUnlockLevel = MaxUnlockLevelDefault.ToString();
-                minUnlockLevel = MinUnlockLevelDefault.ToString();
-                // Инициализация команд
-                EquipmentSelectedCommand = new Command<Equipment>(OnEquipmentSelected);
-                FilterCommand = new Command(OnFilterTapped);
-                FilterApplyCommand = new Command(OnFilterApplyTapped);
-                FilterClearCommand = new Command(OnFilterClearTapped);
-                BackgroundClickCommand = new Command(ExecuteBackgroundClick);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации EquipmentsViewModel.");
-                throw;
-            }
+            dataService = DependencyService.Get<DataService>();
+            //Загрузка данных для интерфейса.
+            EquipmentCommon = dataService.GetEquipmentCommon();
+            //Загрузка всего снаряжения.
+            equipments = dataService.GetEquipments().OrderBy(e => e.Title).ToList();
+            allTiers = dataService.GetTiers();
+            AllTiers = new List<string>(allTiers);
+            Equipments = new ObservableCollection<Equipment>(equipments);
+            //Инициализация элементов фильтра
+            SelectedTiers = new ObservableCollection<object>();
+            selectedTiersSaved = new List<object>();
+            maxUnlockLevelSaved = MaxUnlockLevelDefault;
+            minUnlockLevelSaved = MinUnlockLevelDefault;
+            maxUnlockLevel = MaxUnlockLevelDefault.ToString();
+            minUnlockLevel = MinUnlockLevelDefault.ToString();
+            // Инициализация команд
+            EquipmentSelectedCommand = new Command<Equipment>(OnEquipmentSelected);
+            FilterCommand = new Command(OnFilterTapped);
+            FilterApplyCommand = new Command(OnFilterApplyTapped);
+            FilterClearCommand = new Command(OnFilterClearTapped);
+            BackgroundClickCommand = new Command(ExecuteBackgroundClick);
         }
 
         /// <summary>
@@ -147,15 +139,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         public void Filter()
         {
-            try
-            {
-                UpdateFilteredEquipments();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время фильтрации снаряжения.");
-                throw;
-            }
+            UpdateFilteredEquipments();
         }
 
         /// <summary>
@@ -170,7 +154,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при сбрасывании параметров фильтра до состояния на момент открытия.");
-                throw;
             }
         }
 
@@ -194,7 +177,6 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 Log.Error(ex,
                     "Ошибка во время перехода на подробную страницу снаряжения из страницы снаряжения EquipmentPage.");
-                throw;
             }
         }
 
@@ -215,7 +197,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при принятии фильтрации.");
-                throw;
             }
         }
 
@@ -239,7 +220,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при сбросе фильтрации.");
-                throw;
             }
         }
 
@@ -257,7 +237,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время открытия фильтра на странице снаряжения EquipmentPage.");
-                throw;
             }
         }
 
@@ -266,15 +245,7 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         protected override void PerformSearch()
         {
-            try
-            {
-                UpdateFilteredEquipments();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время поиска снаряжения.");
-                throw;
-            }
+            UpdateFilteredEquipments();
         }
 
         /// <summary>
@@ -282,26 +253,18 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         private void UpdateFilteredEquipments()
         {
-            try
-            {
-                var filteredByTierAndLevel = equipments.Where(equipment =>
-                        (!selectedTiersSaved.Any() ||
-                         selectedTiersSaved.Any(selectedTier => equipment.Tier == selectedTier.ToString())) &&
-                        minUnlockLevelSaved <= equipment.UnlockLevel && maxUnlockLevelSaved >= equipment.UnlockLevel)
-                    .ToList();
+            var filteredByTierAndLevel = equipments.Where(equipment =>
+                    (!selectedTiersSaved.Any() ||
+                     selectedTiersSaved.Any(selectedTier => equipment.Tier == selectedTier.ToString())) &&
+                    minUnlockLevelSaved <= equipment.UnlockLevel && maxUnlockLevelSaved >= equipment.UnlockLevel)
+                .ToList();
 
-                var finalFiltered = string.IsNullOrWhiteSpace(SearchText)
-                    ? filteredByTierAndLevel
-                    : filteredByTierAndLevel.Where(equipment =>
-                        equipment.Title.ToLowerInvariant().Contains(SearchText.ToLowerInvariant())).ToList();
+            var finalFiltered = string.IsNullOrWhiteSpace(SearchText)
+                ? filteredByTierAndLevel
+                : filteredByTierAndLevel.Where(equipment =>
+                    equipment.Title.ToLowerInvariant().Contains(SearchText.ToLowerInvariant())).ToList();
 
-                Equipments = new ObservableCollection<Equipment>(finalFiltered);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время обновления отфильтрованного списка снаряжения.");
-                throw;
-            }
+            Equipments = new ObservableCollection<Equipment>(finalFiltered);
         }
     }
 }

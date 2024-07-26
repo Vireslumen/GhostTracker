@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
@@ -43,52 +44,46 @@ namespace PhasmophobiaCompanion.Droid
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при копировании базы данных.");
-                throw;
             }
         }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            try
+            base.OnCreate(savedInstanceState);
+            Platform.Init(this, savedInstanceState);
+            Forms.Init(this, savedInstanceState);
+            Popup.Init(this);
+
+            // Глобальная обработка исключений для Android
+            AndroidEnvironment.UnhandledExceptionRaiser += (sender, args) =>
             {
-                var logFilePath = Path.Combine("/storage/emulated/0/Download/", "logs", "log-.txt");
-                var logger = new LoggerConfiguration()
-                    .MinimumLevel.Debug()
-                    .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day)
-                    .CreateLogger();
-                Log.Logger = logger;
-                base.OnCreate(savedInstanceState);
+                Log.Error(args.Exception, "Необработанное исключение");
+                args.Handled = true; // Предотвращение завершения приложения
+            };
 
-                Platform.Init(this, savedInstanceState);
-                Forms.Init(this, savedInstanceState);
-                Popup.Init(this);
-
-                // Копирование базы данных, если она еще не существует
-                CopyDatabase();
-
-                LoadApplication(new App());
-            }
-            catch (Exception ex)
+            // Глобальная обработка исключений для .NET
+            AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
             {
-                Log.Error(ex, "Ошибка при создании приложения.");
-                throw;
-            }
+                Log.Error((Exception)args.ExceptionObject, "Необработанное исключение");
+            };
+
+            TaskScheduler.UnobservedTaskException += (sender, args) =>
+            {
+                Log.Error(args.Exception, "Необработанное исключение в задаче");
+                args.SetObserved(); // Предотвращение завершения приложения
+            };
+
+            // Копирование базы данных, если она еще не существует
+            CopyDatabase();
+
+            LoadApplication(new App());
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions,
             [GeneratedEnum] Permission[] grantResults)
         {
-            try
-            {
-                Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
-                base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка при запросе разрешений.");
-                throw;
-            }
+            Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }

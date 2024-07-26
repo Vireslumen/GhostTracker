@@ -1,21 +1,23 @@
-﻿using Rg.Plugins.Popup.Pages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
+﻿using System;
+using Rg.Plugins.Popup.Pages;
+using Serilog;
 using Xamarin.Forms.Xaml;
 
 namespace PhasmophobiaCompanion.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class LoadingPopup : PopupPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class LoadingPopup : PopupPage
     {
-		public LoadingPopup ()
-		{
-			InitializeComponent ();
-		}
-	}
+        public LoadingPopup()
+        {
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время инициализации страницы загрузки.");
+            }
+        }
+    }
 }

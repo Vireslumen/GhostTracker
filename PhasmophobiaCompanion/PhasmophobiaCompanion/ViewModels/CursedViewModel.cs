@@ -23,21 +23,14 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public CursedViewModel()
         {
-            try
-            {
-                dataService = DependencyService.Get<DataService>();
-                //Загрузка всех проклятых предметов.
-                curseds = dataService.GetCurseds().OrderBy(c => c.Title).ToList(); ;
-                Curseds = new ObservableCollection<CursedPossession>(curseds);
-                cursedPossessionCommon = dataService.GetCursedCommon();
-                // Инициализация команд
-                CursedSelectedCommand = new Command<CursedPossession>(OnCursedSelected);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации CursedViewModel.");
-                throw;
-            }
+            dataService = DependencyService.Get<DataService>();
+            //Загрузка всех проклятых предметов.
+            curseds = dataService.GetCurseds().OrderBy(c => c.Title).ToList();
+            ;
+            Curseds = new ObservableCollection<CursedPossession>(curseds);
+            cursedPossessionCommon = dataService.GetCursedCommon();
+            // Инициализация команд
+            CursedSelectedCommand = new Command<CursedPossession>(OnCursedSelected);
         }
 
         public CursedPossessionCommon CursedPossessionCommon
@@ -76,7 +69,6 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 Log.Error(ex,
                     "Ошибка во время перехода на подробную страницу проклятого предмета из страницы проклятых предметов CursedsPage.");
-                throw;
             }
         }
 
@@ -85,25 +77,17 @@ namespace PhasmophobiaCompanion.ViewModels
         /// </summary>
         protected override void PerformSearch()
         {
-            try
+            if (string.IsNullOrWhiteSpace(SearchText))
             {
-                if (string.IsNullOrWhiteSpace(SearchText))
-                {
-                    Curseds = new ObservableCollection<CursedPossession>(curseds);
-                }
-                else
-                {
-                    //Поиск по названию проклятого предмета.
-                    var filtered = curseds
-                        .Where(cursed => cursed.Title.ToLowerInvariant().Contains(SearchText.ToLowerInvariant()))
-                        .ToList();
-                    Curseds = new ObservableCollection<CursedPossession>(filtered);
-                }
+                Curseds = new ObservableCollection<CursedPossession>(curseds);
             }
-            catch (Exception ex)
+            else
             {
-                Log.Error(ex, "Ошибка во время поиска проклятых предметов.");
-                throw;
+                //Поиск по названию проклятого предмета.
+                var filtered = curseds
+                    .Where(cursed => cursed.Title.ToLowerInvariant().Contains(SearchText.ToLowerInvariant()))
+                    .ToList();
+                Curseds = new ObservableCollection<CursedPossession>(filtered);
             }
         }
     }

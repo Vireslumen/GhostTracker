@@ -8,11 +8,6 @@
 
   <ItemGroup>
     <None Remove="C:\Users\sanyo\.nuget\packages\nlog.config\4.7.15\contentFiles\any\any\NLog.config" />
-    <None Remove="Fonts\Roman_Antique.ttf" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Fonts\Roman_Antique.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +19,7 @@
     <PackageReference Include="Serilog" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Serilog.Sinks.Http" Version="9.0.0" />
     <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="24.2.7" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.6" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2612" />  

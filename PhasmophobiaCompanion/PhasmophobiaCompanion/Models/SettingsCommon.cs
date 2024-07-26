@@ -23,6 +23,10 @@
         /// </summary>
         public string ErrorReport { get; set; }
         /// <summary>
+        ///     Текст чекбокса согласия пользователя на включение отправки логов на сервер.
+        /// </summary>
+        public string LoggerServerActive { get; set; }
+        /// <summary>
         ///     Текущий выбранный уровень подсказок. По умолчанию: "Any", "Любой".
         /// </summary>
         public string SelectedLevel { get; set; }

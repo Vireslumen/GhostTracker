@@ -17,18 +17,10 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public ChallengeModeViewModel()
         {
-            try
-            {
-                dataService = DependencyService.Get<DataService>();
-                ChallengeModes = dataService.GetChallengeModes();
-                ChallengeModeCommon = dataService.GetChallengeModeCommon();
-                ChallengeModeTappedCommand = new Command<ChallengeMode>(OnChallengeModeTapped);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации QuestsViewModel.");
-                throw;
-            }
+            dataService = DependencyService.Get<DataService>();
+            ChallengeModes = dataService.GetChallengeModes();
+            ChallengeModeCommon = dataService.GetChallengeModeCommon();
+            ChallengeModeTappedCommand = new Command<ChallengeMode>(OnChallengeModeTapped);
         }
 
         public ChallengeModeCommon ChallengeModeCommon
@@ -61,12 +53,10 @@ namespace PhasmophobiaCompanion.ViewModels
                     var page = new ChallengeModeDetailPage(challengeMode);
                     await NavigateWithLoadingAsync(page);
                 }
-                // TODO: Сделать, чтобы если Карты не были загружены, какую-нибудь загрузки или что-нибудь в этом духе.
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время перехода на страницу особого режима ChallengeModeDetailPage.");
-                throw;
             }
         }
     }

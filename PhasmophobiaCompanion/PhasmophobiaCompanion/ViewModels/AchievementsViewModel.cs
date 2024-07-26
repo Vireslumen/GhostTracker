@@ -18,18 +18,10 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public AchievementsViewModel()
         {
-            try
-            {
                 dataService = DependencyService.Get<DataService>();
                 Achievements = dataService.GetAchievements();
                 AchievementCommon = dataService.GetAchievementCommon();
                 ChallengeModeTappedCommand = new Command<Achievement>(OnAchievementTapped);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации QuestsViewModel.");
-                throw;
-            }
         }
 
         public AchievementCommon AchievementCommon
@@ -61,7 +53,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время отображение всплывающей подсказки о получении достижения.");
-                throw;
             }
         }
     }

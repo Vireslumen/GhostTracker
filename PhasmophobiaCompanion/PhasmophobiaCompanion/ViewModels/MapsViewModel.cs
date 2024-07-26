@@ -34,33 +34,25 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public MapsViewModel()
         {
-            try
-            {
-                dataService = DependencyService.Get<DataService>();
-                // Загрузка всех карт.
-                maps = dataService.GetMaps().OrderBy(m => m.SizeNumeric).ThenBy(m => m.UnlockLevel).ToList();
-                Maps = new ObservableCollection<Map>(maps);
-                MapCommon = dataService.GetMapCommon();
-                allSizes = dataService.GetSizes();
-                AllSizes = new List<string>(allSizes);
-                SelectedSizes = new ObservableCollection<object>();
-                selectedSizesSaved = new List<object>();
-                maxRoomSaved = MaxRoomDefault;
-                minRoomSaved = MinRoomDefault;
-                maxRoom = MaxRoomDefault.ToString();
-                minRoom = MinRoomDefault.ToString();
-                // Инициализация команд
-                MapSelectedCommand = new Command<Map>(OnMapSelected);
-                FilterCommand = new Command(OnFilterTapped);
-                FilterApplyCommand = new Command(OnFilterApplyTapped);
-                FilterClearCommand = new Command(OnFilterClearTapped);
-                BackgroundClickCommand = new Command(ExecuteBackgroundClick);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации MapsViewModel.");
-                throw;
-            }
+            dataService = DependencyService.Get<DataService>();
+            // Загрузка всех карт.
+            maps = dataService.GetMaps().OrderBy(m => m.SizeNumeric).ThenBy(m => m.UnlockLevel).ToList();
+            Maps = new ObservableCollection<Map>(maps);
+            MapCommon = dataService.GetMapCommon();
+            allSizes = dataService.GetSizes();
+            AllSizes = new List<string>(allSizes);
+            SelectedSizes = new ObservableCollection<object>();
+            selectedSizesSaved = new List<object>();
+            maxRoomSaved = MaxRoomDefault;
+            minRoomSaved = MinRoomDefault;
+            maxRoom = MaxRoomDefault.ToString();
+            minRoom = MinRoomDefault.ToString();
+            // Инициализация команд
+            MapSelectedCommand = new Command<Map>(OnMapSelected);
+            FilterCommand = new Command(OnFilterTapped);
+            FilterApplyCommand = new Command(OnFilterApplyTapped);
+            FilterClearCommand = new Command(OnFilterClearTapped);
+            BackgroundClickCommand = new Command(ExecuteBackgroundClick);
         }
 
         public ICommand BackgroundClickCommand { get; private set; }
@@ -145,7 +137,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время фильтрации карт.");
-                throw;
             }
         }
 
@@ -161,7 +152,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при сбрасывании параметров фильтра до состояния на момент открытия.");
-                throw;
             }
         }
 
@@ -182,7 +172,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при принятии фильтрации.");
-                throw;
             }
         }
 
@@ -206,7 +195,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при сбросе фильтрации.");
-                throw;
             }
         }
 
@@ -224,7 +212,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время открытия фильтра на странице карт MapsPage.");
-                throw;
             }
         }
 
@@ -248,7 +235,6 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 Log.Error(ex,
                     "Ошибка во время перехода на подробную страницу карты из страницы карт MapsPage.");
-                throw;
             }
         }
 
@@ -264,7 +250,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время поиска карт.");
-                throw;
             }
         }
 
@@ -290,7 +275,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время обновления отфильтрованного списка карт.");
-                throw;
             }
         }
     }

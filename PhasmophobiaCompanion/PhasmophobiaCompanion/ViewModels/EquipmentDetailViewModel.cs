@@ -22,25 +22,17 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public EquipmentDetailViewModel(Equipment equipment)
         {
-            try
-            {
-                dataService = DependencyService.Get<DataService>();
-                EquipmentCommon = dataService.GetEquipmentCommon();
-                EquipmentsSameTypeCollection = dataService.GetEquipmentsSameTypeCollection(equipment);
-                Equipment = equipment;
-                foreach (var item in Equipment.UnfoldingItems) item.IsExpanded = true;
-                Equipment.EquipmentRelatedClues = new List<Clue>
-                (dataService.GetClues().Where(c => Equipment.CluesID.Contains(c.ID))
-                    .ToList());
-                if (Equipment.EquipmentRelatedClues.Count > 0) IsRelatedCluesExist = true;
-                EquipmentSelectedCommand = new Command<Equipment>(OnEquipmentSelected);
-                ClueSelectedCommand = new Command<Clue>(OpenCluePage);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации EquipmentDetailViewModel.");
-                throw;
-            }
+            dataService = DependencyService.Get<DataService>();
+            EquipmentCommon = dataService.GetEquipmentCommon();
+            EquipmentsSameTypeCollection = dataService.GetEquipmentsSameTypeCollection(equipment);
+            Equipment = equipment;
+            foreach (var item in Equipment.UnfoldingItems) item.IsExpanded = true;
+            Equipment.EquipmentRelatedClues = new List<Clue>
+            (dataService.GetClues().Where(c => Equipment.CluesID.Contains(c.ID))
+                .ToList());
+            if (Equipment.EquipmentRelatedClues.Count > 0) IsRelatedCluesExist = true;
+            EquipmentSelectedCommand = new Command<Equipment>(OnEquipmentSelected);
+            ClueSelectedCommand = new Command<Clue>(OpenCluePage);
         }
 
         public bool IsRelatedCluesExist { get; set; }
@@ -62,12 +54,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 OnPropertyChanged();
             }
         }
-        public void Cleanup()
-        {
-            ToggleExpandCommand = null;
-            ClueSelectedCommand = null;
-            EquipmentSelectedCommand = null;
-        }
         public ICommand ClueSelectedCommand { get; private set; }
         public ICommand EquipmentSelectedCommand { get; private set; }
         public List<Equipment> EquipmentsSameTypeCollection
@@ -78,6 +64,13 @@ namespace PhasmophobiaCompanion.ViewModels
                 equipmentsSameTypeCollection = value;
                 OnPropertyChanged();
             }
+        }
+
+        public void Cleanup()
+        {
+            ToggleExpandCommand = null;
+            ClueSelectedCommand = null;
+            EquipmentSelectedCommand = null;
         }
 
         /// <summary>
@@ -100,7 +93,6 @@ namespace PhasmophobiaCompanion.ViewModels
             {
                 Log.Error(ex,
                     "Ошибка во время перехода на подробную страницу снаряжения из другой подробной страницы снаряжения.");
-                throw;
             }
         }
 
@@ -118,7 +110,6 @@ namespace PhasmophobiaCompanion.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время перехода на страницу улики с подробной страницы снаряжения.");
-                throw;
             }
         }
     }

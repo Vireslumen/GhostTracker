@@ -76,6 +76,10 @@
         /// </summary>
         public string SpecialMode { get; set; }
         /// <summary>
+        ///     Текст информаирующий о неудачной загрузки квестов.
+        /// </summary>
+        public string TasksError { get; set; }
+        /// <summary>
         ///     Название кнопки смены темы на главной странице. Примеры "Theme", "Тема".
         /// </summary>
         public string Theme { get; set; }

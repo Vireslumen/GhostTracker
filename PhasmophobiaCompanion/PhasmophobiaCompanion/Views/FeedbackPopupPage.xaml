@@ -17,7 +17,7 @@
             <Editor HeightRequest="300" VerticalOptions="CenterAndExpand" Text="{Binding FeedbackText}" Placeholder="{Binding FeedbackCommon.EditorTip}" />
             <StackLayout VerticalOptions="EndAndExpand" Orientation="Horizontal">
                 <Button HorizontalOptions="StartAndExpand" VerticalOptions="Center" Text="{Binding FeedbackCommon.Submit}" Command="{Binding SubmitCommand}" />
-                <Button HorizontalOptions="EndAndExpand" VerticalOptions="Center" Text="{Binding FeedbackCommon.Cancel}" Command="{Binding SubmitCommand}" />
+                <Button HorizontalOptions="EndAndExpand" VerticalOptions="Center" Text="{Binding FeedbackCommon.Cancel}" Command="{Binding CancelCommand}" />
             </StackLayout>
         </StackLayout>
     </Frame>

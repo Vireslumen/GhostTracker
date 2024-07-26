@@ -16,18 +16,10 @@ namespace PhasmophobiaCompanion.ViewModels
 
         public OtherViewModel(OtherInfo otherInfo)
         {
-            try
-            {
-                OtherInfo = otherInfo;
-                foreach (var item in OtherInfo.UnfoldingItems) item.IsExpanded = true;
-                foreach (var item in OtherInfo.ExpandFieldsWithImages) item.IsExpanded = true;
-                ImageTappedCommand = new Command<ImageWithDescription>(OpenImagePage);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время инициализации OtherViewModel.");
-                throw;
-            }
+            OtherInfo = otherInfo;
+            foreach (var item in OtherInfo.UnfoldingItems) item.IsExpanded = true;
+            foreach (var item in OtherInfo.ExpandFieldsWithImages) item.IsExpanded = true;
+            ImageTappedCommand = new Command<ImageWithDescription>(OpenImagePage);
         }
 
         public ICommand ImageTappedCommand { get; protected set; }
@@ -49,7 +41,14 @@ namespace PhasmophobiaCompanion.ViewModels
 
         private async void OpenImagePage(ImageWithDescription image)
         {
-            await Application.Current.MainPage.Navigation.PushModalAsync(new ImagePage(image));
+            try
+            {
+                await Application.Current.MainPage.Navigation.PushModalAsync(new ImagePage(image));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при открытии страницы изображения.");
+            }
         }
     }
 }

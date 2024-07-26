@@ -2,8 +2,8 @@
 using System.Linq;
 using Android.App;
 using Android.Content;
-using Serilog;
 using PhasmophobiaCompanion.Droid;
+using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -43,8 +43,7 @@ namespace PhasmophobiaCompanion.Droid
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время нажатия на Picker");
-                throw;
+                Log.Error(ex, "Ошибка в появлении диалогового окна у Picker.");
             }
         }
 

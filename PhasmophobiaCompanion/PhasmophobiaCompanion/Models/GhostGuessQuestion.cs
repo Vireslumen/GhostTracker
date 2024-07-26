@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Serilog;
 
 namespace PhasmophobiaCompanion.Models
 {
@@ -49,15 +47,7 @@ namespace PhasmophobiaCompanion.Models
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            try
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время смены значения GhostGuessQuestion.");
-                throw;
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
@@ -66,18 +56,10 @@ namespace PhasmophobiaCompanion.Models
         /// <param name="allghosts">Список всех призраков Ghost.</param>
         public void PopulateAssociatedGhosts(List<Ghost> allghosts)
         {
-            try
+            foreach (var ghostId in GhostsID)
             {
-                foreach (var ghostId in GhostsID)
-                {
-                    var ghost = allghosts.FirstOrDefault(c => c.ID == ghostId);
-                    if (ghost != null) Ghosts.Add(ghost);
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время связывания улик с призраками.");
-                throw;
+                var ghost = allghosts.FirstOrDefault(c => c.ID == ghostId);
+                if (ghost != null) Ghosts.Add(ghost);
             }
         }
     }
