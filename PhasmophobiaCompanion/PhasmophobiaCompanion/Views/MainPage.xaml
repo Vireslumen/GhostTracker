@@ -6,7 +6,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:behaviors="http://xamarin.com/schemas/2020/toolkit"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    NavigationPage.HasNavigationBar="False">
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
 
 
     <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -18,12 +19,13 @@
                         Margin="6"
                         Padding="10"
                         behaviors:CornerRadiusEffect.CornerRadius="10"
-                        behaviors:ShadowEffect.Color="LightCoral"
+                        behaviors:ShadowEffect.Color="Red"
                         behaviors:ShadowEffect.Opacity="1"
                         behaviors:ShadowEffect.Radius="30"
-                        BackgroundColor="White"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource ForegroundColorDark}, Dark={StaticResource FirstBackGroundColorDark}}"
                         HorizontalOptions="Start">
-                        <Label FontFamily="{StaticResource BoldFont}" Text="{Binding MainPageCommon.GhostGuess}" />
+                        <Label 
+                            TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" FontFamily="{StaticResource BoldFont}" Text="{Binding MainPageCommon.GhostGuess}" />
                     </FlexLayout>
                     <yummy:PancakeView.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding GhostGuessTappedCommand}" />
@@ -32,7 +34,7 @@
                 <Image
                     HeightRequest="35"
                     HorizontalOptions="EndAndExpand"
-                    Source="icon_settings.png"
+                    Source="{AppThemeBinding Light={StaticResource icon_settings}, Dark={StaticResource dark_icon_settings}}" 
                     VerticalOptions="Center"
                     WidthRequest="35">
                     <Image.GestureRecognizers>
@@ -42,6 +44,7 @@
             </StackLayout>
             <!--  Строка поиска  -->
             <yummy:PancakeView
+                BackgroundColor="{AppThemeBinding Light={StaticResource ForegroundColorDark}, Dark={StaticResource FirstBackGroundColorDark}}"
                 Padding="10,0,10,10"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
@@ -58,7 +61,7 @@
                 <StackLayout>
                     <SearchBar Placeholder="{Binding MainPageCommon.Search}" Text="{Binding SearchText, Mode=TwoWay}" />
                     <yummy:PancakeView
-                        BackgroundColor="White"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                         CornerRadius="5"
                         HorizontalOptions="FillAndExpand"
                         IsVisible="{Binding IsSearchResultVisible}"
@@ -75,7 +78,7 @@
                                             Padding="10"
                                             FontSize="16"
                                             Text="{Binding Title}"
-                                            TextColor="Black" />
+                                            TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" />
                                         <StackLayout.GestureRecognizers>
                                             <TapGestureRecognizer
                                                 Command="{Binding Path=BindingContext.SearchResultTappedCommand, Source={x:Reference Name=searchStackLayout}}"
@@ -91,7 +94,7 @@
             <!--  Поле особого режима  -->
             <yummy:PancakeView
                 Padding="10,10,10,10"
-                BackgroundColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
                     <yummy:DropShadow />
@@ -155,7 +158,7 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Padding="10,10,10,10"
-                    BackgroundColor="White"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                     CornerRadius="16">
                     <yummy:PancakeView.Shadow>
                         <yummy:DropShadow />
@@ -207,7 +210,7 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     Padding="10,10,10,10"
-                    BackgroundColor="White"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                     CornerRadius="16">
                     <yummy:PancakeView.Shadow>
                         <yummy:DropShadow />
@@ -253,7 +256,7 @@
             </Label>
             <yummy:PancakeView
                 Padding="10,10,10,10"
-                BackgroundColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
                     <yummy:DropShadow />
@@ -301,7 +304,7 @@
             <!-- Поле таблицы-->
             <yummy:PancakeView
                 Padding="0,0,0,0"
-                BackgroundColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
                     <yummy:DropShadow />
@@ -480,7 +483,7 @@
             </Label>
             <yummy:PancakeView
                 Padding="10,10,10,10"
-                BackgroundColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
                     <yummy:DropShadow />
@@ -508,7 +511,7 @@
                                         <Image
                                             HeightRequest="30"
                                             HorizontalOptions="Center"
-                                            Source="{Binding IconFilePath}"
+                                            Source="{Binding ThemedIconFilePath}"
                                             WidthRequest="30" />
                                         <Label
                                             FontFamily="{StaticResource BoldFont}"
@@ -544,7 +547,7 @@
             </Label>
             <yummy:PancakeView
                 Padding="10,10,10,10"
-                BackgroundColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
                     <yummy:DropShadow />
@@ -569,7 +572,7 @@
                         <DataTemplate>
                             <yummy:PancakeView
                                 Padding="5,10,10,10"
-                                BackgroundColor="White"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                                 CornerRadius="16">
                                 <StackLayout Orientation="Vertical">
                                     <Label
@@ -605,7 +608,7 @@
             </Label>
             <yummy:PancakeView
                 Padding="10,10,10,10"
-                BackgroundColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
                     <yummy:DropShadow />
@@ -629,7 +632,7 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Padding="5,10,5,5">
-                                <Label FontFamily="{StaticResource BoldFont}" Text="{Binding Title}" TextColor="Blue">
+                                <Label FontFamily="{StaticResource BoldFont}" Text="{Binding Title}" TextColor="{AppThemeBinding Light={StaticResource Link}, Dark={StaticResource DarkLink}}">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer
                                             Command="{Binding Path=BindingContext.PatchTappedCommand, Source={x:Reference Name=patchesFlexLayout}}"
@@ -658,7 +661,7 @@
             </Label>
             <yummy:PancakeView
                 Padding="10,10,10,0"
-                BackgroundColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
                     <yummy:DropShadow BlurRadius="1" />
@@ -682,7 +685,7 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <yummy:PancakeView
-                                    BackgroundColor="White"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                                     CornerRadius="40"
                                     HeightRequest="80"
                                     WidthRequest="80">
@@ -693,14 +696,14 @@
                                         <Thickness>10,3,10,10</Thickness>
                                     </yummy:PancakeView.Margin>
                                     <yummy:PancakeView.Border>
-                                        <yummy:Border Thickness="3" Color="White" />
+                                        <yummy:Border Thickness="3" Color="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorLight}}" />
                                     </yummy:PancakeView.Border>
                                     <Label
                                         Padding="2"
                                         HorizontalOptions="Center"
                                         HorizontalTextAlignment="Center"
                                         Text="{Binding Title}"
-                                        TextColor="Black"
+                                        TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                                         VerticalOptions="Center" />
                                     <yummy:PancakeView.GestureRecognizers>
                                         <TapGestureRecognizer

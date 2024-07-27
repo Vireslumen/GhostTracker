@@ -7,13 +7,14 @@
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
     x:Name="ClueDetailPageName"
-    Shell.TabBarIsVisible="False">
+    Shell.TabBarIsVisible="False"
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
     <ScrollView>
         <StackLayout>
             <StackLayout>
                 <yummy:PancakeView
                     Padding="12,10,12,10"
-                    BackgroundColor="White"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                     CornerRadius="5">
                     <yummy:PancakeView.Shadow>
                         <yummy:DropShadow />
@@ -32,7 +33,7 @@
                             VerticalOptions="CenterAndExpand"
                             FontFamily="{StaticResource SpecialFont}"
                             FontSize="22"
-                            TextColor="Black"
+                            TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                             HorizontalOptions="CenterAndExpand"
                             Text="{Binding Clue.Title}" />
                         <!--  Изображение улики  -->
@@ -55,9 +56,10 @@
                     <DataTemplate>
                         <Frame Margin="10,5" HasShadow="True"
                                    Padding="13"
-                                   effects:ShadowEffect.Radius="30" effects:ShadowEffect.Color="Gray"
-                                   effects:ShadowEffect.Opacity="0.7"
-                                   BackgroundColor="White"
+                                   effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                                   effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                                   effects:ShadowEffect.Radius="5"
+                                   BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}"
                                    CornerRadius="8">
                             <StackLayout Orientation="Vertical">
                                     <!--  Название раскрывающегося элемента  -->
@@ -125,9 +127,10 @@
                     <DataTemplate>
                         <Frame Margin="10,5" HasShadow="True"
                                    Padding="13"
-                                   effects:ShadowEffect.Radius="30" effects:ShadowEffect.Color="Gray"
-                                   effects:ShadowEffect.Opacity="0.7"
-                                   BackgroundColor="White"
+                                   effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                                   effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                                   effects:ShadowEffect.Radius="5"
+                                   BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}"
                                    CornerRadius="8">
                                 <StackLayout Orientation="Vertical">
                                     <!--  Название раскрывающегося элемента  -->
@@ -167,7 +170,7 @@
             <!--  Список снаряжения связанного с данной уликой  -->
             <yummy:PancakeView
                 Padding="10,10,10,10"
-                BackgroundColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
                     <yummy:DropShadow />
@@ -216,10 +219,10 @@
             <!--  Поле содержащее список призраков у которых есть данная улика, а также список улик этих призраков  -->
             <yummy:PancakeView
                 Padding="5,5,5,5"
-                BackgroundColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}"
                 CornerRadius="8">
                 <yummy:PancakeView.Shadow>
-                    <yummy:DropShadow />
+                    <yummy:DropShadow BlurRadius="{AppThemeBinding Light=10, Dark=0}" />
                 </yummy:PancakeView.Shadow>
                 <yummy:PancakeView.Margin>
                     <Thickness>
@@ -271,7 +274,7 @@
                                                     <!--  Иконка улики  -->
                                                     <Image
                                                         HeightRequest="35"
-                                                        Source="{Binding IconFilePath}"
+                                                        Source="{Binding ThemedIconFilePath}"
                                                         WidthRequest="35" />
                                                     <StackLayout.GestureRecognizers>
                                                         <TapGestureRecognizer Command="{Binding Path=BindingContext.ClueSelectedCommand, Source={x:Reference Name=ghostStackLayoutView}}" CommandParameter="{Binding .}" />

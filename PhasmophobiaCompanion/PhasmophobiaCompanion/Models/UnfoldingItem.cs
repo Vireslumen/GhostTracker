@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Xamarin.Forms;
 
 namespace PhasmophobiaCompanion.Models
 {
@@ -30,9 +31,19 @@ namespace PhasmophobiaCompanion.Models
             }
         }
         public string Header { get; set; }
-        public string Icon => CanExpand ? IsExpanded ? "icon_collapse.png" : "icon_expand.png" : null;
+        public string Icon => GetThemedIcon();
         public string Title { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private string GetThemedIcon()
+        {
+            var themePrefix = Application.Current.UserAppTheme == OSAppTheme.Dark ||
+                              (Application.Current.UserAppTheme == OSAppTheme.Unspecified &&
+                               Application.Current.RequestedTheme == OSAppTheme.Dark)
+                ? "dark_"
+                : "";
+            return CanExpand ? IsExpanded ? $"{themePrefix}icon_collapse.png" : $"{themePrefix}icon_expand.png" : null;
+        }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

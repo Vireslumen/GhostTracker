@@ -6,14 +6,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
     x:Name="MapDetailPageName"
-    Shell.TabBarIsVisible="False">
+    Shell.TabBarIsVisible="False"
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
     <ScrollView>
         <StackLayout Orientation="Vertical">
             <Frame Margin="10,3,10,10" HasShadow="True"
                    Padding="12,10,12,10"
-                   effects:ShadowEffect.Radius="30" effects:ShadowEffect.Color="Gray"
-                   effects:ShadowEffect.Opacity="0.7"
-                   BackgroundColor="White"
+                   effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                   effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                   effects:ShadowEffect.Radius="10"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                    CornerRadius="5">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -30,7 +32,7 @@
                         <Image HeightRequest="150" Source="{Binding Map.ImageFilePath}" />
                         <!--  Название карты  -->
                         <Label
-                            TextColor="Black"
+                            TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                             FontFamily="{StaticResource SpecialFont}"
                             FontSize="22"
                             HorizontalOptions="Center"
@@ -121,9 +123,10 @@
                         <Frame HasShadow="True"
                                Margin="10,5"
                                Padding="13"
-                               effects:ShadowEffect.Radius="30" effects:ShadowEffect.Color="Gray"
-                               effects:ShadowEffect.Opacity="0.7"
-                               BackgroundColor="White"
+                               effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                               effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                               effects:ShadowEffect.Radius="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}"
                                CornerRadius="8">
                             <StackLayout Orientation="Vertical">
                                 <!--  Название раскрывающегося элемента  -->
@@ -197,9 +200,10 @@
                         <Frame Margin="10,5"
                                HasShadow="True"
                                Padding="13"
-                               effects:ShadowEffect.Radius="30" effects:ShadowEffect.Color="Gray"
-                               effects:ShadowEffect.Opacity="0.7"
-                               BackgroundColor="White"
+                               effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                               effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                               effects:ShadowEffect.Radius="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}"
                                CornerRadius="8">
                             <StackLayout Orientation="Vertical">
                                 <!--  Название раскрывающегося элемента  -->

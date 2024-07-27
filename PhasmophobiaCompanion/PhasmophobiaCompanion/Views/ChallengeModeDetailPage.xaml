@@ -6,7 +6,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     x:Name="ChallengeModeDetailPageName"
-    Shell.TabBarIsVisible="False">
+    Shell.TabBarIsVisible="False"
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
     <ScrollView>
         <StackLayout Orientation="Vertical">
             <!--  Заголовок страницы  -->
@@ -26,7 +27,7 @@
             <!--  Поле информации о карте особого режима  -->
             <yummy:PancakeView
                 Padding="12,10,12,5"
-                BackgroundColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
                     <yummy:DropShadow />
@@ -63,7 +64,7 @@
                             HorizontalOptions="CenterAndExpand"
                             HorizontalTextAlignment="Center"
                             Text="{Binding ChallengeMode.ChallengeMap.Title}"
-                            TextColor="Black"
+                            TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                             VerticalOptions="CenterAndExpand" />
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding MapSelectedCommand}" />
@@ -83,7 +84,6 @@
                         FontSize="16"
                         HorizontalOptions="CenterAndExpand"
                         Text="{Binding ChallengeMode.Description}"
-                        TextColor="#444"
                         VerticalOptions="Center" />
 
                 </Grid>
@@ -91,7 +91,7 @@
             <!--  Настройки сложности особого режима  -->
             <yummy:PancakeView
                 Padding="10,10,10,10"
-                BackgroundColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
                     <yummy:DropShadow />
@@ -121,7 +121,7 @@
             <!--  Список снаряжения выдаваемого в особом режиме  -->
             <yummy:PancakeView
                 Padding="10,10,10,10"
-                BackgroundColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
                     <yummy:DropShadow />

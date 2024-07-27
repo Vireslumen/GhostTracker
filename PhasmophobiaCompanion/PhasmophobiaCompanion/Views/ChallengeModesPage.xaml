@@ -5,7 +5,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    Shell.TabBarIsVisible="False">
+    Shell.TabBarIsVisible="False"
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
     <ScrollView>
         <StackLayout Padding="0,10,0,0">
 
@@ -37,7 +38,7 @@
                             <pancakeView:PancakeView
                                 Margin="5"
                                 Padding="15"
-                                BackgroundColor="White"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                                 CornerRadius="20"
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand">

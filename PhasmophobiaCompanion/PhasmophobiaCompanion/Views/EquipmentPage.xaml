@@ -25,7 +25,8 @@
             CornerRadius="25"
             HeightRequest="50"
             VerticalOptions="EndAndExpand">
-            <Grid BackgroundColor="White" Padding="0,0,7,0" VerticalOptions="CenterAndExpand">
+            <Grid
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}" Padding="0,0,7,0" VerticalOptions="CenterAndExpand">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -33,7 +34,9 @@
                 <!--  Строка поиска снаряжения  -->
                 <SearchBar
                     Grid.Column="0"
-                    HorizontalOptions="StartAndExpand"
+                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
+                    HorizontalOptions="FillAndExpand"
                     Placeholder="{Binding EquipmentCommon.Search}"
                     Text="{Binding SearchText, Mode=TwoWay}" />
 
@@ -49,7 +52,7 @@
                     WidthRequest="28">
                     <Image
                         HeightRequest="25"
-                        Source="icon_filter"
+                        Source="{AppThemeBinding Light={StaticResource icon_filter}, Dark={StaticResource dark_icon_filter}}"
                         WidthRequest="25" />
                     <yummy:PancakeView.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding FilterCommand}" />
@@ -60,7 +63,7 @@
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
                 <yummy:PancakeView
-                    BackgroundColor="White"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
                     CornerRadius="40,40,0,0"
                     VerticalOptions="FillAndExpand">
                     <!--  Список снаряжения  -->
@@ -71,24 +74,22 @@
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <StackLayout>
+
                                     <StackLayout.Padding>
                                         0,0,0,10
                                     </StackLayout.Padding>
                                     <yummy:PancakeView
                                         Padding="10,10,10,10"
-                                        BackgroundColor="White"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                                         CornerRadius="16">
                                         <yummy:PancakeView.Shadow>
-                                            <yummy:DropShadow />
+                                            <yummy:DropShadow BlurRadius="{AppThemeBinding Light=10, Dark=0}" />
                                         </yummy:PancakeView.Shadow>
                                         <yummy:PancakeView.Margin>
                                             <Thickness>
                                                 10,3,10,10
                                             </Thickness>
                                         </yummy:PancakeView.Margin>
-                                        <yummy:PancakeView.Border>
-                                            <yummy:Border Thickness="5" Color="White" />
-                                        </yummy:PancakeView.Border>
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
@@ -112,13 +113,14 @@
                                                     AbsoluteLayout.LayoutBounds="0.01,0.01,-1,-1"
                                                     AbsoluteLayout.LayoutFlags="PositionProportional"
                                                     HorizontalOptions="Center" Orientation="Horizontal">
-                                                    <Image HeightRequest="18" Source="icon_unlock" />
+                                                    <Image HeightRequest="18" Source="{AppThemeBinding Light={StaticResource icon_unlock}, Dark={StaticResource dark_icon_unlock}}" />
                                                     <Label
                                                         FontFamily="{StaticResource BoldFont}"
                                                         FontSize="14"
                                                         HorizontalOptions="Center"
                                                         Text="{Binding UnlockLevel}"
-                                                        TextColor="Black"
+                                                        TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+
                                                         VerticalOptions="Center" />
                                                 </StackLayout>
                                                 <!--  Тир снаряжения  -->
@@ -128,7 +130,8 @@
                                                     FontFamily="{StaticResource BoldFont}"
                                                     FontSize="14"
                                                     HorizontalOptions="Center"
-                                                    TextColor="Black"
+                                                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+
                                                     VerticalOptions="Center">
                                                     <Label.FormattedText>
                                                         <FormattedString>
@@ -144,13 +147,14 @@
                                                     AbsoluteLayout.LayoutBounds="0.99,0.99,-1,-1"
                                                     AbsoluteLayout.LayoutFlags="PositionProportional"
                                                     HorizontalOptions="Center" Orientation="Horizontal" Spacing="2">
-                                                    <Image HeightRequest="18" Source="icon_dollar" />
+                                                    <Image HeightRequest="18"  Source="{AppThemeBinding Light={StaticResource icon_dollar}, Dark={StaticResource dark_icon_dollar}}"  />
                                                     <Label
                                                         FontFamily="{StaticResource BoldFont}"
                                                         FontSize="14"
                                                         HorizontalOptions="Center"
                                                         Text="{Binding Cost}"
-                                                        TextColor="Black"
+                                                        TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+
                                                         VerticalOptions="Center" />
                                                 </StackLayout>
                                                 <!--  Цена разблокировки снаряжения  -->
@@ -158,13 +162,13 @@
                                                     AbsoluteLayout.LayoutBounds="0.01,0.99,-1,-1"
                                                     AbsoluteLayout.LayoutFlags="PositionProportional"
                                                     HorizontalOptions="Center" Orientation="Horizontal">
-                                                    <Image HeightRequest="18" Source="icon_unlockdollar" />
+                                                    <Image HeightRequest="18" Source="{AppThemeBinding Light={StaticResource icon_unlockdollar}, Dark={StaticResource dark_icon_unlockdollar}}" />
                                                     <Label
                                                         FontFamily="{StaticResource BoldFont}"
                                                         FontSize="14"
                                                         HorizontalOptions="Center"
                                                         Text="{Binding UnlockCost}"
-                                                        TextColor="Black"
+                                                        TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                                                         VerticalOptions="Center" />
                                                 </StackLayout>
                                             </AbsoluteLayout>
@@ -176,7 +180,8 @@
                                                 HorizontalOptions="CenterAndExpand"
                                                 HorizontalTextAlignment="Center"
                                                 Text="{Binding Title}"
-                                                TextColor="Black"
+                                                TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+
                                                 VerticalOptions="EndAndExpand" />
 
                                             <BoxView
@@ -193,7 +198,9 @@
                                                             HorizontalOptions="CenterAndExpand"
                                                             HorizontalTextAlignment="Center"
                                                             Text="{Binding ShortStat}"
-                                                            TextColor="Black" />
+                                                            
+                                                            TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                                                        />
                                                     </DataTemplate>
                                                 </BindableLayout.ItemTemplate>
                                             </StackLayout>

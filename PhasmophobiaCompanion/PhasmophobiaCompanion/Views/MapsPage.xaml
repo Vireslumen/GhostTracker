@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="PhasmophobiaCompanion.Views.MapsPage"
@@ -24,16 +24,19 @@
             CornerRadius="25"
             HeightRequest="50"
             VerticalOptions="EndAndExpand">
-            <Grid BackgroundColor="White" Padding="0,0,7,0" VerticalOptions="CenterAndExpand">
+            <Grid
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
+                Padding="0,0,7,0" VerticalOptions="CenterAndExpand">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <!--  Строка поиска карт  -->
-                <SearchBar 
+                <SearchBar
                     Grid.Column="0"
-                    BackgroundColor="White"
-                    HorizontalOptions="StartAndExpand"
+                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
+                    HorizontalOptions="FillAndExpand"
                     Placeholder="{Binding MapCommon.Search}"
                     Text="{Binding SearchText, Mode=TwoWay}" />
                 <!--  Кнопка фильтрации карт  -->
@@ -48,7 +51,7 @@
                     WidthRequest="28">
                     <Image
                         HeightRequest="25"
-                        Source="icon_filter"
+                        Source="{AppThemeBinding Light={StaticResource icon_filter}, Dark={StaticResource dark_icon_filter}}"
                         WidthRequest="25" />
                     <yummy:PancakeView.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding FilterCommand}" />
@@ -59,7 +62,7 @@
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
                 <yummy:PancakeView
-                    BackgroundColor="White"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
                     CornerRadius="40,40,0,0"
                     VerticalOptions="FillAndExpand">
                     <!--  Список карт  -->
@@ -75,37 +78,35 @@
                                     </StackLayout.Padding>
                                     <yummy:PancakeView
                                         Padding="10,10,10,10"
-                                        BackgroundColor="White"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                                         CornerRadius="16">
                                         <yummy:PancakeView.Shadow>
-                                            <yummy:DropShadow />
+                                            <yummy:DropShadow BlurRadius="{AppThemeBinding Light=10, Dark=0}" />
                                         </yummy:PancakeView.Shadow>
                                         <yummy:PancakeView.Margin>
                                             <Thickness>
                                                 10,3,10,10
                                             </Thickness>
                                         </yummy:PancakeView.Margin>
-                                        <yummy:PancakeView.Border>
-                                            <yummy:Border Thickness="5" Color="White" />
-                                        </yummy:PancakeView.Border>
                                         <StackLayout>
                                             <StackLayout Orientation="Horizontal">
-                                                <Image HeightRequest="18" Source="icon_unlock" />
+                                                <Image HeightRequest="18"  Source="{AppThemeBinding Light={StaticResource icon_unlock}, Dark={StaticResource dark_icon_unlock}}" />
                                                 <Label
                                                     FontFamily="{StaticResource BoldFont}"
                                                     FontSize="13"
                                                     HorizontalOptions="Center"
                                                     Text="{Binding UnlockLevel}"
-                                                    TextColor="Black"
+                                                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                                                     VerticalOptions="Center" />
                                                 <StackLayout Orientation="Horizontal"
                                                              HorizontalOptions="EndAndExpand">
-                                                    <Image HeightRequest="18" Source="icon_room" />
+                                                    <Image HeightRequest="18"  Source="{AppThemeBinding Light={StaticResource icon_room}, Dark={StaticResource dark_icon_room}}"  />
                                                     <Label
                                                         FontFamily="{StaticResource BoldFont}"
                                                         FontSize="13"
                                                         Text="{Binding RoomCount}"
-                                                        TextColor="Black"
+                                                        TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+
                                                         VerticalOptions="Center" />
                                                 </StackLayout>
                                             </StackLayout>
@@ -118,7 +119,8 @@
                                                 HorizontalTextAlignment="Center"
                                                 FontFamily="{StaticResource BoldFont}"
                                                 Text="{Binding Title}"
-                                                TextColor="Black"
+                                                TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+
                                                 VerticalOptions="CenterAndExpand" />
                                             <!--  Размер карты  -->
                                             <Label
@@ -126,12 +128,15 @@
                                                 HorizontalOptions="CenterAndExpand"
                                                 HorizontalTextAlignment="Center"
                                                 Text="{Binding Size}"
-                                                TextColor="Black"
+                                                TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+
                                                 VerticalOptions="StartAndExpand" />
                                         </StackLayout>
                                     </yummy:PancakeView>
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.MapSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer
+                                            Command="{Binding Path=BindingContext.MapSelectedCommand, Source={x:Reference Name=collectionView}}"
+                                            CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </DataTemplate>

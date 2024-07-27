@@ -26,7 +26,8 @@
             HeightRequest="50"
             VerticalOptions="EndAndExpand">
             <SearchBar
-                BackgroundColor="White"
+                TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
                 HorizontalOptions="FillAndExpand"
                 Placeholder="{Binding CursedPossessionCommon.Search}"
                 Text="{Binding SearchText, Mode=TwoWay}" />
@@ -34,7 +35,7 @@
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
                 <yummy:PancakeView
-                    BackgroundColor="White"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
                     CornerRadius="40,40,0,0"
                     VerticalOptions="FillAndExpand">
                     <!--  Список проклятых предметов  -->
@@ -50,19 +51,16 @@
                                     </StackLayout.Padding>
                                     <yummy:PancakeView
                                         Padding="10,10,10,10"
-                                        BackgroundColor="White"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                                         CornerRadius="16">
                                         <yummy:PancakeView.Shadow>
-                                            <yummy:DropShadow />
+                                            <yummy:DropShadow BlurRadius="{AppThemeBinding Light=10, Dark=0}"/>
                                         </yummy:PancakeView.Shadow>
                                         <yummy:PancakeView.Margin>
                                             <Thickness>
                                                 10,3,10,10
                                             </Thickness>
                                         </yummy:PancakeView.Margin>
-                                        <yummy:PancakeView.Border>
-                                            <yummy:Border Thickness="5" Color="White" />
-                                        </yummy:PancakeView.Border>
                                         <StackLayout>
                                             <!--  Изображение проклятого предмета  -->
                                             <Image
@@ -77,7 +75,7 @@
                                                 HorizontalOptions="CenterAndExpand"
                                                 HorizontalTextAlignment="Center"
                                                 Text="{Binding Title}"
-                                                TextColor="Black"
+                                                TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                                                 VerticalOptions="CenterAndExpand" />
                                         </StackLayout>
                                     </yummy:PancakeView>

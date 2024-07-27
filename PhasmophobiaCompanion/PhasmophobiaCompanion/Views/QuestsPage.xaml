@@ -5,16 +5,18 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    Shell.TabBarIsVisible="False">
+    Shell.TabBarIsVisible="False" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
     <ScrollView>
 
         <StackLayout>
             <!--  Заголовок страницы  -->
             <Label
                 Margin="0,20,0,0"
-                FontFamily="{StaticResource BoldFont}"
-                FontSize="Large"
+                TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                FontFamily="{StaticResource SpecialFont}"
+                FontSize="22"
                 HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
                 Text="{Binding QuestCommon.Title}" />
             <!--  Описание квестов в целом  -->
             <Label
@@ -25,11 +27,11 @@
                 Text="{Binding QuestCommon.Description}" />
             <!--  Список ежедневных квестов  -->
             <yummy:PancakeView
-                Padding="10,10,10,10"
-                BackgroundColor="White"
+                Padding="10,10,10,10" 
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
-                    <yummy:DropShadow/>
+                    <yummy:DropShadow BlurRadius="{AppThemeBinding Light=10, Dark=0}" />
                 </yummy:PancakeView.Shadow>
                 <yummy:PancakeView.Margin>
                     <Thickness>
@@ -40,7 +42,8 @@
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
                 <StackLayout Padding="5" Spacing="20">
-                    <Label
+                    <Label 
+                        TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                         FontFamily="{StaticResource BoldFont}"
                         FontSize="18"
                         Text="{Binding QuestCommon.Daily}" />
@@ -48,11 +51,12 @@
                     <StackLayout
                         Padding="5"
                         BindableLayout.ItemsSource="{Binding DailyQuests}"
-                        Spacing="15">
+                        Spacing="25">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <StackLayout Spacing="3">
-                                    <Label FontFamily="{StaticResource BoldFont}">
+                                    <Label 
+                                        TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" FontFamily="{StaticResource BoldFont}">
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text="{Binding Title}" />
@@ -76,10 +80,10 @@
 
             <yummy:PancakeView
                 Padding="10,10,10,10"
-                BackgroundColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
-                    <yummy:DropShadow  />
+                    <yummy:DropShadow BlurRadius="{AppThemeBinding Light=10, Dark=0}" />
                 </yummy:PancakeView.Shadow>
                 <yummy:PancakeView.Margin>
                     <Thickness>
@@ -91,6 +95,7 @@
                 </yummy:PancakeView.Border>
                 <StackLayout Padding="5" Spacing="20">
                     <Label
+                        TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                         FontFamily="{StaticResource BoldFont}"
                         FontSize="18"
                         Text="{Binding QuestCommon.Weekly}" />
@@ -98,11 +103,12 @@
                     <StackLayout
                         Padding="5"
                         BindableLayout.ItemsSource="{Binding WeeklyQuests}"
-                        Spacing="15">
+                        Spacing="25">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <StackLayout Spacing="3">
-                                    <Label FontFamily="{StaticResource BoldFont}">
+                                    <Label 
+                                        TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" FontFamily="{StaticResource BoldFont}">
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text="{Binding Title}" />

@@ -6,11 +6,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
     BackgroundColor="#BB000000"
     HasSystemPadding="True">
     <Frame
         Margin="20"
-        BackgroundColor="White"
+        BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
         CornerRadius="10"
         HasShadow="True"
         MinimumHeightRequest="200"
@@ -30,56 +31,32 @@
                 HorizontalOptions="CenterAndExpand"
                 HorizontalTextAlignment="Center"
                 VerticalOptions="CenterAndExpand" />
-            <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-                <yummy:PancakeView
-                    Grid.Column="0"
-                    Margin="5"
-                    BackgroundColor="White"
-                    CornerRadius="10">
-                    <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow BlurRadius="3" />
-                    </yummy:PancakeView.Shadow>
-                    <yummy:PancakeView.Border>
-                        <yummy:Border Thickness="5" Color="GhostWhite" />
-                    </yummy:PancakeView.Border>
-                    <Label
-                        Padding="10"
-                        FontFamily="{StaticResource BoldFont}"
-                        FontSize="16"
-                        HorizontalTextAlignment="Center"
-                        Text="{Binding MainPageCommon.Ok}"
-                        VerticalOptions="CenterAndExpand" />
-                    <yummy:PancakeView.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OkCommand}" />
-                    </yummy:PancakeView.GestureRecognizers>
-                </yummy:PancakeView>
-                <yummy:PancakeView
-                    Grid.Column="1"
-                    Margin="5"
-                    BackgroundColor="White"
-                    CornerRadius="10">
-                    <yummy:PancakeView.Shadow>
-                        <yummy:DropShadow BlurRadius="3" />
-                    </yummy:PancakeView.Shadow>
-                    <yummy:PancakeView.Border>
-                        <yummy:Border Thickness="5" Color="GhostWhite" />
-                    </yummy:PancakeView.Border>
-                    <Label
-                        Padding="10"
-                        FontFamily="{StaticResource BoldFont}"
-                        FontSize="16"
-                        HorizontalTextAlignment="Center"
-                        Text="{Binding MainPageCommon.ReadMore}"
-                        VerticalOptions="CenterAndExpand" />
-                    <yummy:PancakeView.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ReadMoreCommand}" />
-                    </yummy:PancakeView.GestureRecognizers>
-                </yummy:PancakeView>
-            </Grid>
+
+            <StackLayout
+                HorizontalOptions="CenterAndExpand"
+                Orientation="Horizontal">
+                <Button
+                    Margin="10"
+                    effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                    effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                    effects:ShadowEffect.Radius="10"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
+                    Command="{Binding OkCommand}"
+                    CornerRadius="5"
+                    Text="{Binding MainPageCommon.Ok}"
+                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" />
+                <Button
+                    Margin="10"
+                    effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                    effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                    effects:ShadowEffect.Radius="10"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
+                    Command="{Binding ReadMoreCommand}"
+                    CornerRadius="5"
+                    Text="{Binding MainPageCommon.ReadMore}"
+                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" />
+
+            </StackLayout>
         </StackLayout>
     </Frame>
 </popup:PopupPage>

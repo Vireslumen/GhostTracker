@@ -1,4 +1,5 @@
 ﻿using Android.Content;
+using Android.Content.Res;
 using Android.Webkit;
 using Java.Lang;
 using PhasmophobiaCompanion.Droid;
@@ -28,30 +29,33 @@ namespace PhasmophobiaCompanion.Droid
                 {
                     Control.SetBackgroundColor(Color.Transparent);
                     Control.Settings.JavaScriptEnabled = true;
-                    Control.Settings.AllowUniversalAccessFromFileURLs = true;
-                    var css = @"<style>
-                                @font-face {
+                    Control.Settings.AllowUniversalAccessFromFileURLs = true; 
+                    var uiModeFlags = Context.Resources.Configuration.UiMode & UiMode.NightMask;
+                    string textColor = (uiModeFlags == UiMode.NightYes) ? "#FFF" : "#444"; // Темная тема, если NightYes
+
+                    var css = $@"<style>
+                                @font-face {{
                                     font-family: 'CustomFont';
                                     src: url('file:///android_asset/Overpass_Regular.ttf') format('truetype');
-                                }
-                                * {
+                                }}
+                                * {{
                                     font-family: 'CustomFont', sans-serif;
                                     font-size: 16px;
-                                    color: #444;
-                                }
-                                table {
+                                    color: {textColor};
+                                }}
+                                table {{
                                   border-radius: 3px;
                                   border: 1px solid black;
                                   font-size: 14px;
                                   text-align: center;
-                                }
+                                }}
 
-                                th, td {
+                                th, td {{
                                   border-radius: 3px;
                                   border: 1px solid black;
                                   font-size: 14px;
                                   text-align: center;
-                                }
+                                }}
                             </style>";
 
                     Control.SetBackgroundColor(Color.Transparent);

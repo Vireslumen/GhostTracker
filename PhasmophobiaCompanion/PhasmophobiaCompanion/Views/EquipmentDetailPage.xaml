@@ -7,7 +7,8 @@
     xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
     xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     x:Name="EquipmentDetailPageName"
-    Shell.TabBarIsVisible="False">
+    Shell.TabBarIsVisible="False"
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
     <StackLayout Orientation="Vertical">
 
         <ScrollView>
@@ -15,9 +16,10 @@
                 <Frame Margin="10,3,10,10"
                        Padding="12,10,12,5"
                        HasShadow="True"
-                       effects:ShadowEffect.Radius="30" effects:ShadowEffect.Color="Gray"
-                       effects:ShadowEffect.Opacity="0.7"
-                       BackgroundColor="White"
+                       effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                       effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                       effects:ShadowEffect.Radius="10"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                        CornerRadius="5">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -38,7 +40,7 @@
                             HorizontalOptions="CenterAndExpand"
                             HorizontalTextAlignment="Center"
                             Text="{Binding Equipment.Title}"
-                            TextColor="Black"
+                            TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                             VerticalOptions="CenterAndExpand" />
                         <!--  Изображение снаряжения  -->
                         <Image
@@ -47,6 +49,7 @@
                             Source="{Binding Equipment.ImageFilePath}" />
                         <!--  Описание снаряжения  -->
                         <Label
+                            Padding="0,0,0,5"
                             Grid.Row="2"
                             FontSize="14"
                             Text="{Binding Equipment.Description}"
@@ -146,7 +149,7 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <pancakeView:PancakeView
-                                    BackgroundColor="White"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                                     CornerRadius="110"
                                     HeightRequest="140"
                                     WidthRequest="140">
@@ -192,14 +195,14 @@
                 <StackLayout BindableLayout.ItemsSource="{Binding Equipment.UnfoldingItems}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <Frame
-                                Margin="10,5"
-                                HasShadow="True"
-                                effects:ShadowEffect.Radius="30" effects:ShadowEffect.Color="Gray"
-                                effects:ShadowEffect.Opacity="0.7"
-                                Padding="13"
-                                BackgroundColor="White"
-                                CornerRadius="8">
+                            <Frame HasShadow="True"
+                                   Margin="10,5"
+                                   Padding="13"
+                                   effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                                   effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                                   effects:ShadowEffect.Radius="5"
+                                   BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}"
+                                   CornerRadius="8">
                                 <StackLayout Orientation="Vertical">
                                     <!--  Название раскрывающегося элемента  -->
                                     <Label
@@ -240,11 +243,11 @@
                 <!--  Список улик связанных с данным снаряжением  -->
                 <pancakeView:PancakeView
                     Padding="10,10,10,10"
-                    BackgroundColor="White"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                     CornerRadius="16"
                     IsVisible="{Binding IsRelatedCluesExist}">
                     <pancakeView:PancakeView.Shadow>
-                        <pancakeView:DropShadow />
+                        <pancakeView:DropShadow BlurRadius="{AppThemeBinding Light=10, Dark=0}"/>
                     </pancakeView:PancakeView.Shadow>
                     <pancakeView:PancakeView.Margin>
                         <Thickness>
@@ -271,7 +274,7 @@
 
                                         <Image
                                             HeightRequest="30"
-                                            Source="{Binding IconFilePath}"
+                                            Source="{Binding ThemedIconFilePath}"
                                             WidthRequest="30" />
                                         <Label VerticalOptions="Center" FontFamily="{StaticResource BoldFont}"
                                                Text="{Binding Title}" />

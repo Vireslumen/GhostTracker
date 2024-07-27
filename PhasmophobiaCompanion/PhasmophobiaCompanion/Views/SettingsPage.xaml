@@ -4,44 +4,58 @@
     x:Class="PhasmophobiaCompanion.Views.SettingsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    BackgroundColor="Black"
+    xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
     NavigationPage.HasNavigationBar="False">
-    <ScrollView BackgroundColor="White">
+    <ScrollView>
         <StackLayout Spacing="0" Padding="25,10,25,0">
             <!-- Заголовок страницы -->
             <Label Padding="10" FontSize="24" HorizontalTextAlignment="Center"
                    FontFamily="{StaticResource SpecialFont}" Text="{Binding SettingsCommon.SettingsTitle}"
-                   TextColor="Black" />
+                   TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" />
             <!-- Выбор языка приложения -->
             <Label FontFamily="{StaticResource BoldFont}" FontSize="16" Padding="0,10,0,0"
-                   Text="{Binding SettingsCommon.AppLanguage}" TextColor="Black" />
-            <Picker Title="{Binding SettingsCommon.SelectLanguage}" TextColor="Black" ItemsSource="{Binding Languages}"
+                   Text="{Binding SettingsCommon.AppLanguage}"
+                   TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" />
+            <Picker Title="{Binding SettingsCommon.SelectLanguage}"
+                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                    ItemsSource="{Binding Languages}"
                     SelectedItem="{Binding SelectedLanguage}" />
 
             <!-- Выбор уровня подсказок -->
             <Label FontFamily="{StaticResource BoldFont}" FontSize="16" Padding="0,30,0,0"
-                   Text="{Binding SettingsCommon.TipLevel}" TextColor="Black" />
-            <Picker Title="{Binding SettingsCommon.SelectLevel}" TextColor="Black" ItemsSource="{Binding TipLevels}"
+                   Text="{Binding SettingsCommon.TipLevel}"
+                   TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" />
+            <Picker Title="{Binding SettingsCommon.SelectLevel}"
+                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                    ItemsSource="{Binding TipLevels}"
                     SelectedItem="{Binding SelectedTipLevel}" />
 
             <!-- Отправка фдбэка -->
-            <Button Margin="0,30,0,0" Text="{Binding SettingsCommon.ErrorReport}" TextColor="White"
-                    BackgroundColor="#333333"
-                    Command="{Binding ReportBugCommand}" />
+            <Button 
+                effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                effects:ShadowEffect.Radius="10" CornerRadius="8" Margin="0,30,0,0"
+                Text="{Binding SettingsCommon.ErrorReport}" 
+                TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
+                Command="{Binding ReportBugCommand}" />
             <!-- Включен ли фдбэк при тряске -->
             <StackLayout Padding="0,10,0,0" Orientation="Horizontal">
-                <Frame Padding="7" VerticalOptions="Center" Background="Black" CornerRadius="30">
+                <Frame  BackgroundColor="{AppThemeBinding Light={StaticResource ThirdBackgroundColorDark}, Dark={StaticResource ThirdBackgroundColorDark}}" Padding="7" VerticalOptions="Center" CornerRadius="30">
 
-                    <CheckBox HorizontalOptions="Center" Scale="1.5" IsChecked="{Binding ShakeActive}" />
+                    <CheckBox  BackgroundColor="Transparent"
+                               HorizontalOptions="Center" Scale="1.5" IsChecked="{Binding ShakeActive}" />
                 </Frame>
                 <Label VerticalOptions="Center" Text="{Binding SettingsCommon.ShakeActiveLabel}" />
             </StackLayout>
             <!-- Включено ли логирование на сервер -->
             <StackLayout Padding="0,30,0,0" Orientation="Horizontal">
-                <Frame Padding="7" VerticalOptions="Center" Background="Black" CornerRadius="30">
-                    <CheckBox HorizontalOptions="Center" Scale="1.5" IsChecked="{Binding IsLoggingEnabled}" />
+                <Frame  BackgroundColor="{AppThemeBinding Light={StaticResource ThirdBackgroundColorDark}, Dark={StaticResource ThirdBackgroundColorDark}}" Padding="7" VerticalOptions="Center" CornerRadius="30">
+                    <CheckBox BackgroundColor="Transparent" HorizontalOptions="Center" Scale="1.5" IsChecked="{Binding IsLoggingEnabled}" />
                 </Frame>
-                <Label FontFamily="{StaticResource BoldFont}" VerticalOptions="Center" Text="{Binding SettingsCommon.LoggerServerActive}" />
+                <Label FontFamily="{StaticResource BoldFont}" VerticalOptions="Center"
+                       Text="{Binding SettingsCommon.LoggerServerActive}" />
             </StackLayout>
             <Label Text="{Binding SettingsCommon.About}" Margin="0,30,0,0" />
         </StackLayout>

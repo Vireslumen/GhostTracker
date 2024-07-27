@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <Application
     x:Class="PhasmophobiaCompanion.App"
@@ -6,8 +6,29 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <FileImageSource x:Key="icon_filter" File="icon_filter" />
+            <FileImageSource x:Key="dark_icon_filter" File="dark_icon_filter" />
+            <FileImageSource x:Key="icon_room" File="icon_room" />
+            <FileImageSource x:Key="dark_icon_room" File="dark_icon_room" />
+            <FileImageSource x:Key="icon_settings" File="icon_settings" />
+            <FileImageSource x:Key="dark_icon_settings" File="dark_icon_settings" />
+            <FileImageSource x:Key="icon_unlockdollar" File="icon_unlockdollar" />
+            <FileImageSource x:Key="dark_icon_unlockdollar" File="dark_icon_unlockdollar" />
+            <FileImageSource x:Key="icon_unlock" File="icon_unlock" />
+            <FileImageSource x:Key="dark_icon_unlock" File="dark_icon_unlock" />
+            <FileImageSource x:Key="icon_dollar" File="icon_dollar" />
+            <FileImageSource x:Key="dark_icon_dollar" File="dark_icon_dollar" />
             <Color x:Key="Primary">Black</Color>
+            <Color x:Key="Link">Blue</Color>
+            <Color x:Key="DarkLink">#dda0dd</Color>
             <Color x:Key="StatusBarColorDark">Black</Color>
+            <Color x:Key="FirstBackGroundColorDark">Black</Color>
+            <Color x:Key="BackgroundColorLight">WhiteSmoke</Color>
+            <Color x:Key="BackgroundColorDark">#0e0e0e</Color>
+            <Color x:Key="SecondBackgroundColorDark">#101010</Color>
+            <Color x:Key="ThirdBackgroundColorDark">#1e1e1e</Color>
+            <Color x:Key="ForegroundColorLight">Black</Color>
+            <Color x:Key="ForegroundColorDark">White</Color>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="VisualStateManager.VisualStateGroups">
@@ -45,6 +66,6 @@
             <Style TargetType="SearchBar">
                 <Setter Property="FontFamily" Value="{StaticResource RegularFont}" />
             </Style>
-        </ResourceDictionary> 
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

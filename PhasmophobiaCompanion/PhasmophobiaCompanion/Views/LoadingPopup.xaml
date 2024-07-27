@@ -5,6 +5,6 @@
             x:Class="PhasmophobiaCompanion.Views.LoadingPopup"
             InputTransparent="True">
     <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-    <ActivityIndicator IsRunning="True" Color="Black"></ActivityIndicator>
+        <ActivityIndicator IsRunning="True" Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"></ActivityIndicator>
     </StackLayout>
 </pages:PopupPage>

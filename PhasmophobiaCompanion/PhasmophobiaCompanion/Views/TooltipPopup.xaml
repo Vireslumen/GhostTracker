@@ -8,10 +8,11 @@
     <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
         <Frame
             Padding="10"
-            BackgroundColor="White"
+            BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
             CornerRadius="10">
             <!--  Текст подсказки  -->
-            <Label HorizontalTextAlignment="Center" Text="{Binding .}" />
+            <Label
+                TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" HorizontalTextAlignment="Center" Text="{Binding .}" />
         </Frame>
     </StackLayout>
 </popup:PopupPage>

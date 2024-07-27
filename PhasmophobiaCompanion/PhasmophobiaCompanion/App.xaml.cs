@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using PhasmophobiaCompanion.Services;
 using PhasmophobiaCompanion.Views;
@@ -34,6 +33,11 @@ namespace PhasmophobiaCompanion
                 DependencyService.Register<DataService>();
                 // Установка загрузочной страницы, как начальной
                 MainPage = new LoadingScreenPage();
+                RequestedThemeChanged += (sender, args) =>
+                {
+                    // Уведомляем всех подписчиков о смене темы
+                    ThemeChanged?.Invoke();
+                };
             }
             catch (Exception ex)
             {
@@ -67,5 +71,7 @@ namespace PhasmophobiaCompanion
             // Инициализация и загрузка начальных данных 
             await InitializeAppShellAsync();
         }
+
+        public static event Action ThemeChanged;
     }
 }

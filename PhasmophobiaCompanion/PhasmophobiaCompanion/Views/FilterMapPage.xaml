@@ -14,9 +14,9 @@
     </popup:PopupPage.Behaviors>
     <Frame
         Margin="20"
-        BackgroundColor="White"
+        BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
         CornerRadius="10"
-        HeightRequest="340"
+        HeightRequest="360"
         HorizontalOptions="Center"
         VerticalOptions="Center"
         WidthRequest="300">
@@ -29,35 +29,38 @@
             <StackLayout
                 Grid.Row="0"
                 Grid.Column="0"
-                BackgroundColor="White"
                 WidthRequest="200">
                 <!--  Название фильтрации по размерам карт  -->
                 <Label
                     Margin="0,0,0,10"
                     FontFamily="{StaticResource BoldFont}"
                     FontSize="18"
+                    HorizontalTextAlignment="Center"
                     HorizontalOptions="Center"
                     Text="{Binding MapCommon.FilterSize}" />
                 <!--  Список размеров карт  -->
                 <CollectionView
                     x:Name="sizesCollectionView"
-                    HeightRequest="220"
+                    HeightRequest="240"
                     ItemsSource="{Binding AllSizes}"
                     SelectedItems="{Binding SelectedSizes, Mode=TwoWay}"
                     SelectionMode="Multiple">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Padding="0,0,0,5" behaviors:CornerRadiusEffect.CornerRadius="16">
                                 <yummy:PancakeView
                                     Padding="10,5,10,5"
-                                    BackgroundColor="White"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                                     CornerRadius="16"
                                     HeightRequest="30">
                                     <yummy:PancakeView.Margin>
                                         10
                                     </yummy:PancakeView.Margin>
                                     <yummy:PancakeView.Shadow>
-                                        <yummy:DropShadow />
+                                        <yummy:DropShadow BlurRadius="{AppThemeBinding Light=10, Dark=0}"/>
                                     </yummy:PancakeView.Shadow>
                                     <yummy:PancakeView.Border>
                                         <yummy:Border Thickness="1" Color="Color.Default" />
@@ -69,7 +72,11 @@
                                 </yummy:PancakeView>
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup Name="CommonStates">
-                                        <VisualState Name="Normal" />
+                                        <VisualState Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
                                         <VisualState Name="Selected">
                                             <VisualState.Setters>
                                                 <Setter Property="BackgroundColor" Value="Gray" />
@@ -115,20 +122,24 @@
 
                 <Button
                     Margin="10"
-                    behaviors:ShadowEffect.Color="Black"
-                    BackgroundColor="White"
+                    behaviors:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                    behaviors:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                    behaviors:ShadowEffect.Radius="10"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                     Command="{Binding FilterApplyCommand}"
                     CornerRadius="5"
                     Text="{Binding MapCommon.Apply}"
-                    TextColor="Black" />
+                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" />
                 <Button
                     Margin="10"
-                    behaviors:ShadowEffect.Color="Black"
-                    BackgroundColor="White"
+                    behaviors:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                    behaviors:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                    behaviors:ShadowEffect.Radius="10"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                     Command="{Binding FilterClearCommand}"
                     CornerRadius="5"
                     Text="{Binding MapCommon.Clear}"
-                    TextColor="Black" />
+                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" />
 
             </StackLayout>
 

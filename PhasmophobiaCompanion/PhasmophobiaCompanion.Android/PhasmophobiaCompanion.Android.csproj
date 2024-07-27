@@ -576,5 +576,22 @@
     <AndroidResource Include="Resources\drawable\map_hiding_point_hope_8.jpg" />
     <AndroidResource Include="Resources\drawable\map_hiding_point_hope_9.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\dark_evidence_icon_dots.png" />
+    <AndroidResource Include="Resources\drawable\dark_evidence_icon_emf5.png" />
+    <AndroidResource Include="Resources\drawable\dark_evidence_icon_freezing.png" />
+    <AndroidResource Include="Resources\drawable\dark_evidence_icon_ghost_orb.png" />
+    <AndroidResource Include="Resources\drawable\dark_evidence_icon_ghost_writing.png" />
+    <AndroidResource Include="Resources\drawable\dark_evidence_icon_spirit_box.png" />
+    <AndroidResource Include="Resources\drawable\dark_evidence_icon_ultraviolet.png" />
+    <AndroidResource Include="Resources\drawable\dark_icon_collapse.png" />
+    <AndroidResource Include="Resources\drawable\dark_icon_dollar.png" />
+    <AndroidResource Include="Resources\drawable\dark_icon_expand.png" />
+    <AndroidResource Include="Resources\drawable\dark_icon_filter.png" />
+    <AndroidResource Include="Resources\drawable\dark_icon_room.png" />
+    <AndroidResource Include="Resources\drawable\dark_icon_settings.png" />
+    <AndroidResource Include="Resources\drawable\dark_icon_unlock.png" />
+    <AndroidResource Include="Resources\drawable\dark_icon_unlockdollar.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

@@ -7,17 +7,19 @@
     xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
     x:Name="GhostDetailPageName"
     NavigationPage.HasNavigationBar="False"
-    Shell.TabBarIsVisible="False">
+    Shell.TabBarIsVisible="False"
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
     <ContentView>
         <ScrollView>
             <StackLayout>
                 <Frame
                     HasShadow="True"
                     Margin="10,3,10,10"
-                    effects:ShadowEffect.Radius="30" effects:ShadowEffect.Color="Gray"
-                    effects:ShadowEffect.Opacity="0.7"
+                    effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                    effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                    effects:ShadowEffect.Radius="10"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                     Padding="12,10,12,5"
-                    BackgroundColor="White"
                     CornerRadius="5">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -43,7 +45,7 @@
                                 HorizontalOptions="CenterAndExpand"
                                 HorizontalTextAlignment="Center"
                                 Text="{Binding Ghost.Title}"
-                                TextColor="Black"
+                                TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                                 VerticalOptions="StartAndExpand" />
                             <!--  Список улик призрака  -->
                             <StackLayout Margin="0,0,0,20">
@@ -64,7 +66,7 @@
                                                     Aspect="AspectFit"
                                                     HeightRequest="30"
                                                     HorizontalOptions="Center"
-                                                    Source="{Binding IconFilePath}"
+                                                    Source="{Binding ThemedIconFilePath}"
                                                     WidthRequest="30" />
                                                 <StackLayout.GestureRecognizers>
                                                     <TapGestureRecognizer
@@ -91,7 +93,6 @@
                                 FontSize="16"
                                 HorizontalOptions="CenterAndExpand"
                                 Text="{Binding Ghost.Description}"
-                                TextColor="#444"
                                 VerticalOptions="CenterAndExpand" />
 
                         </StackLayout>
@@ -113,10 +114,11 @@
                             <Frame
                                 Margin="10,5"
                                 HasShadow="True"
-                                effects:ShadowEffect.Radius="30" effects:ShadowEffect.Color="Gray"
-                                effects:ShadowEffect.Opacity="0.7"
+                                effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                                effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                                effects:ShadowEffect.Radius="5"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}"
                                 Padding="13"
-                                BackgroundColor="White"
                                 CornerRadius="8">
                                 <StackLayout Orientation="Vertical">
                                     <!--  Название раскрывающегося элемента  -->

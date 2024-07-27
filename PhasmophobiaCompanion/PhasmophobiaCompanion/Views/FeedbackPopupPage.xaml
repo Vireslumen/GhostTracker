@@ -2,11 +2,12 @@
 <popup:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  xmlns:popup="http://rotorgames.com"
+                 xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
                  x:Class="PhasmophobiaCompanion.Views.FeedbackPopupPage"
                  BackgroundColor="Transparent">
     <Frame
         Margin="20"
-        BackgroundColor="White"
+        BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
         CornerRadius="10"
         WidthRequest="250"
         HeightRequest="400"
@@ -14,10 +15,22 @@
         VerticalOptions="Center">
         <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill">
             <Label VerticalOptions="Start" Text="{Binding FeedbackCommon.Title}" FontAttributes="Bold" FontSize="Large" HorizontalOptions="Center" />
-            <Editor HeightRequest="300" VerticalOptions="CenterAndExpand" Text="{Binding FeedbackText}" Placeholder="{Binding FeedbackCommon.EditorTip}" />
+            <Editor  HeightRequest="300" VerticalOptions="CenterAndExpand" Text="{Binding FeedbackText}" Placeholder="{Binding FeedbackCommon.EditorTip}" />
             <StackLayout VerticalOptions="EndAndExpand" Orientation="Horizontal">
-                <Button HorizontalOptions="StartAndExpand" VerticalOptions="Center" Text="{Binding FeedbackCommon.Submit}" Command="{Binding SubmitCommand}" />
-                <Button HorizontalOptions="EndAndExpand" VerticalOptions="Center" Text="{Binding FeedbackCommon.Cancel}" Command="{Binding CancelCommand}" />
+                <Button
+                    effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                    effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                    effects:ShadowEffect.Radius="10"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
+                    CornerRadius="5"
+                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Text="{Binding FeedbackCommon.Submit}" Command="{Binding SubmitCommand}" />
+                <Button
+                    effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                    effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                    effects:ShadowEffect.Radius="10"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
+                    CornerRadius="5"
+                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Text="{Binding FeedbackCommon.Cancel}" Command="{Binding CancelCommand}" />
             </StackLayout>
         </StackLayout>
     </Frame>
