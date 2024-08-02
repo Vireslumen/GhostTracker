@@ -57,7 +57,12 @@
                 <Label FontFamily="{StaticResource BoldFont}" VerticalOptions="Center"
                        Text="{Binding SettingsCommon.LoggerServerActive}" />
             </StackLayout>
-            <Label Text="{Binding SettingsCommon.About}" Margin="0,30,0,0" />
+            <WebView Margin="0,30,0,0" HorizontalOptions="FillAndExpand"
+                     VerticalOptions="Fill">
+                <WebView.Source>
+                    <HtmlWebViewSource Html="{Binding SettingsCommon.About}" />
+                </WebView.Source>
+            </WebView>
         </StackLayout>
     </ScrollView>
 </ContentPage>
