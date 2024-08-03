@@ -48,6 +48,7 @@ PhasmAid is committed to continuous improvement and expansion. Here are some enh
 
 - **Additional Language Support**: Building on the existing multilingual support, the app will be translated into additional languages to further expand accessibility.
 - **Theme Customization**: Introducing multiple themes to enable users to personalize their app experience.
+- **iOS Support**: Plans to develop and release an iOS version of PhasmAid, expanding the user base to include Apple device users.
 - **Ongoing Improvements**: Enhancements will be made based on user feedback to continually refine and optimize the functionality and user experience of PhasmAid.
 
 ## Acknowledgements
