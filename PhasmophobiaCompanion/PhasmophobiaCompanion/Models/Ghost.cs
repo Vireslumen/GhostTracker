@@ -17,11 +17,11 @@ namespace PhasmophobiaCompanion.Models
         /// <summary>
         ///     Максимальная скорость призрака без учёта LoS при определенных условиях MaxGhostSpeedClause.
         /// </summary>
-        public int MaxGhostSpeed { get; set; }
+        public double MaxGhostSpeed { get; set; }
         /// <summary>
         ///     Максимальная скорость призрака, если призрак видит игрока (LoS) при определенных условиях MaxGhostSpeedLoSClause.
         /// </summary>
-        public int MaxGhostSpeedLoS { get; set; }
+        public double MaxGhostSpeedLoS { get; set; }
         /// <summary>
         ///     Пороговое значение рассудка для начала охоты. Охота может начаться, когда уровень рассудка игрока упадет ниже этого
         ///     значения.
@@ -31,7 +31,7 @@ namespace PhasmophobiaCompanion.Models
         /// <summary>
         ///     Минимальная скорость призрака, при определенных условиях - MinGhostSpeedClause.
         /// </summary>
-        public int MinGhostSpeed { get; set; }
+        public double MinGhostSpeed { get; set; }
         /// <summary>
         ///     Альтернативное пороговое значение рассудка, которое всегда меньше или равно MaxSanityHunt.
         ///     Охота также может начаться, когда уровень рассудка игрока упадет ниже этого более низкого значения.

@@ -148,13 +148,15 @@
                             </StackLayout>
                         </Frame>
                     </Grid>
-                    <Label Text="{Binding AverageFrequency, StringFormat='Ghost Speed: {0:F0} meter/sec'}"
+                    <Label
                            FontSize="Medium"
                            HorizontalOptions="Center">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="{Binding GhostGuessQuestionCommon.SpeedTitle}" />
-                                <Span Text="{Binding AverageFrequency, StringFormat=' {0:F0} '}" />
+                                <Span Text=" " />
+                                <Span Text="{Binding AverageFrequency, StringFormat='{0:F2}'}" />
+                                <Span Text=" " />
                                 <Span Text="{Binding GhostGuessQuestionCommon.MeterSecTitle}" />
                             </FormattedString>
                         </Label.FormattedText>

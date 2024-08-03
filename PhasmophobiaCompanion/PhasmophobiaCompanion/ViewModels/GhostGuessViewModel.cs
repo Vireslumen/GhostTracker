@@ -23,8 +23,8 @@ namespace PhasmophobiaCompanion.ViewModels
         private const int SpeedPoints = 10;
         private const int GhostListCount = 6;
         private const int ValueForVisibility = 90;
-        private const int SpeedCoef = 88;
-        private const int ResetTime = 3;
+        private const double SpeedCoef = 0.88;
+        private const int ResetTime = 2;
         public readonly DataService dataService;
         private readonly List<DateTime> lastClickTimes;
         private readonly Timer resetTimer;
@@ -170,7 +170,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 if (IsSpeedMatter)
                     foreach (var supposedGhost in SupposedGhosts)
                     foreach (var speedRange in supposedGhost.Ghost.SpeedRanges)
-                        if (AverageFrequency > speedRange.Min && AverageFrequency < speedRange.Max)
+                        if (AverageFrequency > speedRange.Min / 100.0 && AverageFrequency < speedRange.Max / 100.0)
                         {
                             supposedGhost.Points += SpeedPoints;
                             break;

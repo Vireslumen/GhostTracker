@@ -9,11 +9,11 @@
         /// <summary>
         ///     Максимальная скорость игрока.
         /// </summary>
-        public int PlayerMaxSpeed { get; set; }
+        public double PlayerMaxSpeed { get; set; }
         /// <summary>
         ///     Минимальная скорость игрока.
         /// </summary>
-        public int PlayerMinSpeed { get; set; }
+        public double PlayerMinSpeed { get; set; }
         /// <summary>
         ///     Название списка улик на главной странице. Примеры: "Clues", "Улики".
         /// </summary>

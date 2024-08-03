@@ -12,7 +12,8 @@
         <StackLayout Orientation="Vertical">
             <!--  Заголовок страницы  -->
             <Label
-                FontFamily="{StaticResource BoldFont}"
+                TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                FontFamily="{StaticResource SpecialFont}"
                 FontSize="Large"
                 HorizontalOptions="CenterAndExpand"
                 HorizontalTextAlignment="Center">

@@ -25,9 +25,9 @@ namespace PhasmophobiaCompanion.ViewModels
         public readonly DataService dataService;
         private bool isSearchResultVisible;
         private ObservableCollection<object> searchResults;
-        private Tip displayedTip;
         private ObservableCollection<Quest> dailyQuest;
         private ObservableCollection<Quest> weekyQuest;
+        private Tip displayedTip;
 
         public MainPageViewModel()
         {
@@ -53,6 +53,7 @@ namespace PhasmophobiaCompanion.ViewModels
                 MainPageCommon = dataService.GetMainPageCommon();
                 ChangeTip();
                 SearchResults = new ObservableCollection<object>();
+                ConvertSpeedToMeter();
                 SetTasks();
                 // Инициализация команд
                 ChallengeModeTappedCommand = new Command(OnChallengeModeTapped);
@@ -143,7 +144,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 dailyQuest = value;
                 OnPropertyChanged();
             }
-            
         }
         public ObservableCollection<Quest> WeeklyQuest
         {
@@ -153,7 +153,6 @@ namespace PhasmophobiaCompanion.ViewModels
                 weekyQuest = value;
                 OnPropertyChanged();
             }
-
         }
         public Patch LastPatch { get; set; }
         public Tip DisplayedTip
@@ -234,6 +233,22 @@ namespace PhasmophobiaCompanion.ViewModels
         private void CloseAlert()
         {
             PopupNavigation.Instance.PopAsync();
+        }
+
+        /// <summary>
+        ///     Конвертация скорости призраков и игрока в метры в секунду.
+        /// </summary>
+        private void ConvertSpeedToMeter()
+        {
+            foreach (var ghost in Ghosts)
+            {
+                ghost.MaxGhostSpeed /= 100;
+                ghost.MinGhostSpeed /= 100;
+                ghost.MaxGhostSpeedLoS /= 100;
+            }
+
+            MainPageCommon.PlayerMaxSpeed /= 100;
+            MainPageCommon.PlayerMinSpeed /= 100;
         }
 
         /// <summary>
@@ -552,8 +567,8 @@ namespace PhasmophobiaCompanion.ViewModels
                 Log.Error(ex, "Ошибка при получении текущих задач с сервера.");
                 DailyQuest = new ObservableCollection<Quest>();
                 WeeklyQuest = new ObservableCollection<Quest>();
-                DailyQuest.Add(new Quest() {Title = MainPageCommon.TasksError});
-                WeeklyQuest.Add(new Quest() {Title = MainPageCommon.TasksError });
+                DailyQuest.Add(new Quest {Title = MainPageCommon.TasksError});
+                WeeklyQuest.Add(new Quest {Title = MainPageCommon.TasksError});
             }
         }
 
