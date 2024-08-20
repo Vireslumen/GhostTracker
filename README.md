@@ -1,5 +1,5 @@
+![title2](https://github.com/user-attachments/assets/2d9dbcc3-63c4-43f9-bc35-5cabcd193269)
 # PhasmAid
-
 ## Description
 PhasmAid is an assistant application for the game Phasmophobia. It provides detailed information about game mechanics, ghosts, and much more. The app delivers up-to-date information on game events and news, and includes maps of game locations with markings for hiding places, cursed possessions, and fuse box locations. Additionally, the app features a system to assist in identifying ghosts.
 
