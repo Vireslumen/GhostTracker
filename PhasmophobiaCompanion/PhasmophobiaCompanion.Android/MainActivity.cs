@@ -27,23 +27,72 @@ namespace PhasmophobiaCompanion.Droid
         {
             try
             {
-                // Путь к локальной базе данных
                 var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
                 var dbPath = Path.Combine(folderPath, "phasmaDATADB.db");
-                if (!File.Exists(dbPath))
-                    using (var br = new BinaryReader(Application.Context.Assets.Open("phasmaDATADB.db")))
+                var dbVersionFilePath = Path.Combine(folderPath, "dbVersion.txt");
+                var currentDbVersion = "1.2"; // Версия базы данных
+
+                if (File.Exists(dbPath))
+                {
+                    if (File.Exists(dbVersionFilePath))
                     {
-                        using (var bw = new BinaryWriter(new FileStream(dbPath, FileMode.Create)))
+                        var installedDbVersion = File.ReadAllText(dbVersionFilePath);
+
+                        if (installedDbVersion != currentDbVersion)
                         {
-                            var buffer = new byte[2048];
-                            var length = 0;
-                            while ((length = br.Read(buffer, 0, buffer.Length)) > 0) bw.Write(buffer, 0, length);
+                            // Удаление кэша, так как версия базы данных изменилась
+                            DeleteCacheFiles(folderPath);
+
+                            // Копирование новой базы данных
+                            CopyNewDatabase(dbPath);
+
+                            // Обновление версии базы данных
+                            File.WriteAllText(dbVersionFilePath, currentDbVersion);
                         }
                     }
+                    else
+                    {
+                        CopyNewDatabase(dbPath);
+                        DeleteCacheFiles(folderPath);
+                        File.WriteAllText(dbVersionFilePath, currentDbVersion);
+                    }
+                }
+                else
+                {
+                    // Копирование базы данных в первый раз
+                    CopyNewDatabase(dbPath);
+                    File.WriteAllText(dbVersionFilePath, currentDbVersion);
+                }
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при копировании базы данных.");
+            }
+        }
+
+        private void CopyNewDatabase(string dbPath)
+        {
+            using (var br = new BinaryReader(Application.Context.Assets.Open("phasmaDATADB.db")))
+            {
+                using (var bw = new BinaryWriter(new FileStream(dbPath, FileMode.Create)))
+                {
+                    var buffer = new byte[2048];
+                    var length = 0;
+                    while ((length = br.Read(buffer, 0, buffer.Length)) > 0) bw.Write(buffer, 0, length);
+                }
+            }
+        }
+
+        private void DeleteCacheFiles(string folderPath)
+        {
+            try
+            {
+                var cacheFiles = Directory.GetFiles(folderPath, "*.json");
+                foreach (var cacheFile in cacheFiles) File.Delete(cacheFile);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при удалении файлов кэша.");
             }
         }
 
@@ -64,7 +113,7 @@ namespace PhasmophobiaCompanion.Droid
             // Глобальная обработка исключений для .NET
             AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
             {
-                Log.Error((Exception)args.ExceptionObject, "Необработанное исключение");
+                Log.Error((Exception) args.ExceptionObject, "Необработанное исключение");
             };
 
             TaskScheduler.UnobservedTaskException += (sender, args) =>
