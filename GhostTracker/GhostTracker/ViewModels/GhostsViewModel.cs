@@ -80,14 +80,7 @@ namespace GhostTracker.ViewModels
             get => selectedClues;
             set => SetProperty(ref selectedClues, value);
         }
-        public string FilterColor
-        {
-            get
-            {
-                var currentTheme = Application.Current.RequestedTheme;
-                return SelectedClues.Any() ? currentTheme == OSAppTheme.Dark ? "#FD7E14" : "#FD7E14" : "Transparent";
-            }
-        }
+        public string FilterColor => SelectedClues.Any() ? "#FD7E14" : "Transparent";
 
         /// <summary>
         ///     Фильтрация списка призраков на основе выбранных улик.
@@ -101,6 +94,21 @@ namespace GhostTracker.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время фильтрации призраков.");
+            }
+        }
+
+        /// <summary>
+        ///     Фильтрация коллекции в соответствии с поисковым запросом.
+        /// </summary>
+        protected override void PerformSearch()
+        {
+            try
+            {
+                UpdateFilteredGhosts();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время поиска призраков.");
             }
         }
 
@@ -194,36 +202,19 @@ namespace GhostTracker.ViewModels
         }
 
         /// <summary>
-        ///     Фильтрация коллекции в соответствии с поисковым запросом.
-        /// </summary>
-        protected override void PerformSearch()
-        {
-            try
-            {
-                UpdateFilteredGhosts();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время поиска призраков.");
-            }
-        }
-
-        /// <summary>
         ///     Фильтрация призраков по поисковому запросу и выбранным параметрам фильтра.
         /// </summary>
         private void UpdateFilteredGhosts()
         {
             try
             {
-                var filtered = ghosts.Where(ghost => (string.IsNullOrWhiteSpace(SearchText) ||
-                                                      ghost.Title.ToLowerInvariant()
-                                                          .Contains(SearchText.ToLowerInvariant()))
-                                                     &&
-                                                     (!selectedCluesSaved.Any() ||
-                                                      selectedCluesSaved.All(selectedClue =>
-                                                          ghost.Clues.Any(clue =>
-                                                              clue.Title == ((Clue) selectedClue).Title))))
-                    .ToList();
+                var filtered =
+                    ghosts.Where(ghost =>
+                            (string.IsNullOrWhiteSpace(SearchText) || ghost.Title.ToLowerInvariant().Contains(SearchText.ToLowerInvariant()))
+                            &&
+                            (!selectedCluesSaved.Any() ||
+                             selectedCluesSaved.All(selectedClue => ghost.Clues.Any(clue => clue.Title == ((Clue) selectedClue).Title))))
+                        .ToList();
 
                 Ghosts = new ObservableCollection<Ghost>(filtered);
             }
