@@ -7,7 +7,10 @@ using Xamarin.Forms;
 
 namespace GhostTracker
 {
-    public partial class AppShell : Shell
+    /// <summary>
+    ///     Основной класс оболочки приложения, отвечающий за навигацию и обработку событий приложения.
+    /// </summary>
+    public partial class AppShell
     {
         private readonly DataService dataService;
         private readonly ShakeDetectorService shakeDetector;
@@ -36,12 +39,31 @@ namespace GhostTracker
 
         public bool IsFeedbackPopupOpen { get; set; }
 
+        public void StopShakeDetector()
+        {
+            shakeDetector.Stop();
+        }
+
         private async void HideLoadingScreen()
         {
-            if (isShowingLoadingScreen)
+            if (!isShowingLoadingScreen) return;
+            await Current.Navigation.PopModalAsync(true);
+            isShowingLoadingScreen = false;
+        }
+
+        /// <summary>
+        ///     Выполнение навигации на указанную страницу.
+        /// </summary>
+        /// <param name="page">Имя страницы для перехода.</param>
+        private static async void NavigateToPageAsync(string page)
+        {
+            try
             {
-                await Current.Navigation.PopModalAsync(true);
-                isShowingLoadingScreen = false;
+                await Current.GoToAsync(page);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Ошибка во время навигации на страницу {page}.");
             }
         }
 
@@ -52,7 +74,7 @@ namespace GhostTracker
         {
             HideLoadingScreen();
             dataService.CursedsDataLoaded -= OnCursedsDataLoaded;
-            Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("cursedsTab"); });
+            Device.BeginInvokeOnMainThread(() => NavigateToPageAsync("cursedsTab"));
         }
 
         /// <summary>
@@ -62,7 +84,7 @@ namespace GhostTracker
         {
             HideLoadingScreen();
             dataService.EquipmentsDataLoaded -= OnEquipmentsDataLoaded;
-            Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("equipmentsTab"); });
+            Device.BeginInvokeOnMainThread(() => NavigateToPageAsync("equipmentsTab"));
         }
 
         /// <summary>
@@ -72,7 +94,7 @@ namespace GhostTracker
         {
             HideLoadingScreen();
             dataService.GhostsDataLoaded -= OnGhostsDataLoaded;
-            Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("ghostsTab"); });
+            Device.BeginInvokeOnMainThread(() => NavigateToPageAsync("ghostsTab"));
         }
 
         /// <summary>
@@ -82,7 +104,7 @@ namespace GhostTracker
         {
             HideLoadingScreen();
             dataService.MapsDataLoaded -= OnMapsDataLoaded;
-            Device.BeginInvokeOnMainThread(async () => { await Current.GoToAsync("mapsTab"); });
+            Device.BeginInvokeOnMainThread(() => NavigateToPageAsync("mapsTab"));
         }
 
         /// <summary>
@@ -92,11 +114,9 @@ namespace GhostTracker
         {
             try
             {
-                if (!IsFeedbackPopupOpen && dataService.GetShakeActive())
-                {
-                    IsFeedbackPopupOpen = true;
-                    await PopupNavigation.Instance.PushAsync(new FeedbackPopupPage());
-                }
+                if (IsFeedbackPopupOpen || !dataService.GetShakeActive()) return;
+                IsFeedbackPopupOpen = true;
+                await PopupNavigation.Instance.PushAsync(new FeedbackPopupPage());
             }
             catch (Exception ex)
             {
@@ -104,6 +124,11 @@ namespace GhostTracker
             }
         }
 
+        /// <summary>
+        ///     Обработчик события навигации внутри оболочки.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события навигации.</param>
         private void OnShellNavigation(object sender, ShellNavigatingEventArgs e)
         {
             try
@@ -140,18 +165,14 @@ namespace GhostTracker
             }
         }
 
+        /// <summary>
+        ///     Показ экрана загрузки.
+        /// </summary>
         private async void ShowLoadingScreen()
         {
-            if (!isShowingLoadingScreen)
-            {
-                isShowingLoadingScreen = true;
-                await Current.Navigation.PushModalAsync(new LoadingScreenPage(), true);
-            }
-        }
-
-        public void StopShakeDetector()
-        {
-            shakeDetector.Stop();
+            if (isShowingLoadingScreen) return;
+            isShowingLoadingScreen = true;
+            await Current.Navigation.PushModalAsync(new LoadingScreenPage(), true);
         }
     }
 }
