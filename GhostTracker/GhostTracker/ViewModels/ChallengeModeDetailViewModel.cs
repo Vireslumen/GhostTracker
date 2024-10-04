@@ -15,7 +15,7 @@ namespace GhostTracker.ViewModels
     /// </summary>
     public class ChallengeModeDetailViewModel : BaseViewModel
     {
-        public readonly DataService dataService;
+        public readonly DataService DataService;
         private ChallengeMode challengeMode;
         private ChallengeModeCommon challengeModeCommon;
         private DifficultyCommon difficultyCommon;
@@ -23,14 +23,14 @@ namespace GhostTracker.ViewModels
 
         public ChallengeModeDetailViewModel(ChallengeMode challengeMode)
         {
-                dataService = DependencyService.Get<DataService>();
-                DifficultyCommon = dataService.GetDifficultyCommon();
-                EquipmentCommon = dataService.GetEquipmentCommon();
-                ChallengeMode = challengeMode;
-                ChallengeModeCommon = dataService.GetChallengeModeCommon();
-                SetChallengeModeData();
-                EquipmentSelectedCommand = new Command<Equipment>(OnEquipmentSelected);
-                MapSelectedCommand = new Command(OnMapSelected);
+            DataService = DependencyService.Get<DataService>();
+            DifficultyCommon = DataService.GetDifficultyCommon();
+            EquipmentCommon = DataService.GetEquipmentCommon();
+            ChallengeMode = challengeMode;
+            ChallengeModeCommon = DataService.GetChallengeModeCommon();
+            SetChallengeModeData();
+            EquipmentSelectedCommand = new Command<Equipment>(OnEquipmentSelected);
+            MapSelectedCommand = new Command(OnMapSelected);
         }
 
         public ChallengeMode ChallengeMode
@@ -79,12 +79,10 @@ namespace GhostTracker.ViewModels
             try
             {
                 if (IsNavigating) return;
-                if (selectedEquipment != null)
-                {
-                    // Логика для открытия страницы деталей снаряжения
-                    var detailPage = new EquipmentDetailPage(selectedEquipment);
-                    await NavigateWithLoadingAsync(detailPage);
-                }
+                if (selectedEquipment == null) return;
+                // Логика для открытия страницы деталей снаряжения
+                var detailPage = new EquipmentDetailPage(selectedEquipment);
+                await NavigateWithLoadingAsync(detailPage);
             }
             catch (Exception ex)
             {
@@ -101,12 +99,10 @@ namespace GhostTracker.ViewModels
             try
             {
                 if (IsNavigating) return;
-                if (ChallengeMode.ChallengeMap != null)
-                {
-                    // Логика для открытия страницы деталей карты
-                    var detailPage = new MapDetailPage(ChallengeMode.ChallengeMap);
-                    await NavigateWithLoadingAsync(detailPage);
-                }
+                if (ChallengeMode.ChallengeMap == null) return;
+                // Логика для открытия страницы деталей карты
+                var detailPage = new MapDetailPage(ChallengeMode.ChallengeMap);
+                await NavigateWithLoadingAsync(detailPage);
             }
             catch (Exception ex)
             {
@@ -122,11 +118,11 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                challengeMode.ChallengeMap = dataService.GetMaps()
-                        .Where(m => m.Id == challengeMode.MapId)
-                        .FirstOrDefault();
+                challengeMode.ChallengeMap = DataService
+                    .GetMaps()
+                    .FirstOrDefault(m => m.Id == challengeMode.MapId);
                 challengeMode.ChallengeEquipments = new List<Equipment>
-                (dataService.GetEquipments().Where(e => challengeMode.EquipmentsId.Contains(e.Id))
+                (DataService.GetEquipments().Where(e => challengeMode.EquipmentsId.Contains(e.Id))
                     .ToList());
             }
             catch (Exception ex)
