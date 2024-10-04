@@ -7,9 +7,7 @@ namespace GhostTracker.Data
     /// </summary>
     public class ImageWithDescriptionTranslations
     {
-        public ImageWithDescriptionBase ImageWithDescription { get; set; }
         [Key] public int Id { get; set; }
-        public int ImageWithDescriptionBaseId { get; set; }
         public string Description { get; set; }
         public string LanguageCode { get; set; }
     }

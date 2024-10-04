@@ -7,8 +7,6 @@ namespace GhostTracker.Data
     /// </summary>
     public class ExpandFieldWithImagesTranslations
     {
-        public ExpandFieldWithImagesBase ExpandFieldWithImages { get; set; }
-        public int ExpandFieldWithImagesBaseId { get; set; }
         [Key] public int Id { get; set; }
         public string Body { get; set; }
         public string Header { get; set; }

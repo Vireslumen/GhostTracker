@@ -8,7 +8,6 @@ namespace GhostTracker.Data
     public class QuestTranslations
     {
         [Key] public int Id { get; set; }
-        public int QuestBaseId { get; set; }
         public string Clause { get; set; }
         public string Title { get; set; }
         public string LanguageCode { get; set; }

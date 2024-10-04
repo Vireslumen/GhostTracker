@@ -7,7 +7,6 @@ namespace GhostTracker.Data
     /// </summary>
     public class DifficultyTranslations
     {
-        public int DifficultyBaseId { get; set; }
         [Key] public int Id { get; set; }
         public string ActivityMonitorWork { get; set; }
         public string DeadCashBack { get; set; }

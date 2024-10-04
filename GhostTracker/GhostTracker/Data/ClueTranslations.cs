@@ -7,8 +7,6 @@ namespace GhostTracker.Data
     /// </summary>
     public class ClueTranslations
     {
-        public ClueBase Clue { get; set; }
-        public int ClueBaseId { get; set; }
         [Key] public int Id { get; set; }
         public string Description { get; set; }
         public string LanguageCode { get; set; }

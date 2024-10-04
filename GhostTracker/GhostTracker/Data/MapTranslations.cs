@@ -8,7 +8,6 @@ namespace GhostTracker.Data
     public class MapTranslations
     {
         [Key] public int Id { get; set; }
-        public int MapBaseId { get; set; }
         public string Description { get; set; }
         public string HidingSpotCount { get; set; }
         public string LanguageCode { get; set; }
