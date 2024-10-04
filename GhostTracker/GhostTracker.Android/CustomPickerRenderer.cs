@@ -11,12 +11,23 @@ using Xamarin.Forms.Platform.Android;
 
 namespace GhostTracker.Droid
 {
+
+    /// <summary>
+    ///     Класс CustomPickerRenderer - рендерер для элемента Picker на платформе Android.
+    ///     Позволяет кастомизировать поведение и внешний вид стандартного элемента Picker.
+    /// </summary>
     public class CustomPickerRenderer : PickerRenderer
     {
         public CustomPickerRenderer(Context context) : base(context)
         {
         }
 
+        /// <summary>
+        ///     Метод-обработчик события клика на элемент управления Picker.
+        ///     Отображает диалоговое окно для выбора значений из списка.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void Control_Click(object sender, EventArgs e)
         {
             try
@@ -31,15 +42,13 @@ namespace GhostTracker.Droid
                 var items = model.Items.ToArray();
                 builder.SetItems(items, (s, args) =>
                 {
-                    if (model.SelectedIndex != args.Which)
-                    {
-                        model.SelectedIndex = args.Which;
-                        model.SelectedItem = items[args.Which];
-                    }
+                    if (model.SelectedIndex == args.Which) return;
+                    model.SelectedIndex = args.Which;
+                    model.SelectedItem = items[args.Which];
                 });
 
                 var dialog = builder.Create();
-                dialog.Show();
+                dialog?.Show();
             }
             catch (Exception ex)
             {
@@ -47,15 +56,18 @@ namespace GhostTracker.Droid
             }
         }
 
+        /// <summary>
+        ///     Метод, вызываемый при изменении элемента управления Picker.
+        ///     Устанавливает фокусируемость и кликабельность для элемента, а также добавляет обработчик события клика.
+        /// </summary>
+        /// <param name="e">Аргументы изменения элемента.</param>
         protected override void OnElementChanged(ElementChangedEventArgs<Picker> e)
         {
             base.OnElementChanged(e);
-            if (Control != null)
-            {
-                Control.Focusable = true;
-                Control.Clickable = true;
-                Control.Click += Control_Click;
-            }
+            if (Control == null) return;
+            Control.Focusable = true;
+            Control.Clickable = true;
+            Control.Click += Control_Click;
         }
     }
 }
