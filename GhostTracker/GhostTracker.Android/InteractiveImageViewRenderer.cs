@@ -17,8 +17,8 @@ namespace GhostTracker.Droid
     /// </summary>
     public class InteractiveImageViewRenderer : ImageRenderer
     {
-        private readonly float maxScale = 4f;
-        private readonly float minScale = 1f;
+        private const float MaxScale = 4f;
+        private const float MinScale = 1f;
         private readonly GestureDetector gestureDetector;
         private readonly Matrix matrix = new Matrix();
         private readonly ScaleGestureDetector scaleDetector;
@@ -33,94 +33,6 @@ namespace GhostTracker.Droid
         {
             scaleDetector = new ScaleGestureDetector(context, new ScaleListener(this));
             gestureDetector = new GestureDetector(context, new GestureListener(this));
-        }
-
-        /// <summary>
-        ///     Обрабатывает события касания экрана, включая масштабирование и скроллинг.
-        /// </summary>
-        /// <param name="sender">Отправитель события.</param>
-        /// <param name="e">Аргументы события касания.</param>
-        private void HandleTouch(object sender, TouchEventArgs e)
-        {
-            try
-            {
-                gestureDetector.OnTouchEvent(e.Event);
-                scaleDetector.OnTouchEvent(e.Event);
-
-                if ((e.Event.Action & MotionEventActions.Mask) == MotionEventActions.Up)
-                {
-                    // Вызов события при изменении прозрачности или закрытии
-                    if (currentScale == minScale && opacity <= 0)
-                    {
-                        (Element as InteractiveImageView)?.OnCloseRequested();
-                    }
-                    else if (currentScale == minScale)
-                    {
-                        // Сброс параметров к начальным состояниям
-                        opacity = 1f;
-                        (Element as InteractiveImageView)?.OnTransparencyChanged(opacity);
-                        accumulatedTranslationX = 0f;
-                        accumulatedTranslationY = 0f;
-                        panTranslationY = 0f;
-                        panTranslationX = 0f;
-                    }
-                }
-
-                Invalidate();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка при обработке события касания экрана в методе HandleTouch");
-            }
-        }
-
-        /// <summary>
-        ///     Отрисовывает изображение с учетом текущего масштаба и позиционирования.
-        /// </summary>
-        /// <param name="canvas">Холст для рисования.</param>
-        protected override void OnDraw(Canvas canvas)
-        {
-            try
-            {
-                // Применение трансформаций для масштабирования и панорамирования
-                var centerX = Width / 2f;
-                var centerY = Height / 2f;
-
-                matrix.Reset();
-                matrix.PostTranslate(panTranslationX + accumulatedTranslationX,
-                    panTranslationY + accumulatedTranslationY);
-                matrix.PostScale(currentScale, currentScale, centerX, centerY);
-
-                canvas.Matrix = matrix;
-
-                base.OnDraw(canvas);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка при отрисовке изображения в методе OnDraw");
-            }
-        }
-
-        /// <summary>
-        ///     Обрабатывает изменение связанного элемента, устанавливая обработчики событий касания.
-        /// </summary>
-        /// <param name="e">Аргументы изменения элемента.</param>
-        protected override void OnElementChanged(ElementChangedEventArgs<Image> e)
-        {
-            try
-            {
-                base.OnElementChanged(e);
-                if (e.OldElement == null)
-                {
-                    // Отслеживание касаний на изображении
-                    SetWillNotDraw(false);
-                    Touch += HandleTouch;
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка в методе OnElementChanged");
-            }
         }
 
         /// <summary>
@@ -151,6 +63,95 @@ namespace GhostTracker.Droid
         }
 
         /// <summary>
+        ///     Отрисовывает изображение с учетом текущего масштаба и позиционирования.
+        /// </summary>
+        /// <param name="canvas">Холст для рисования.</param>
+        protected override void OnDraw(Canvas canvas)
+        {
+            try
+            {
+                // Применение трансформаций для масштабирования и панорамирования
+                var centerX = Width / 2f;
+                var centerY = Height / 2f;
+
+                matrix.Reset();
+                matrix.PostTranslate(panTranslationX + accumulatedTranslationX,
+                    panTranslationY + accumulatedTranslationY);
+                matrix.PostScale(currentScale, currentScale, centerX, centerY);
+
+                if (canvas == null) return;
+                canvas.Matrix = matrix;
+
+                base.OnDraw(canvas);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при отрисовке изображения в методе OnDraw");
+            }
+        }
+
+        /// <summary>
+        ///     Обрабатывает изменение связанного элемента, устанавливая обработчики событий касания.
+        /// </summary>
+        /// <param name="e">Аргументы изменения элемента.</param>
+        protected override void OnElementChanged(ElementChangedEventArgs<Image> e)
+        {
+            try
+            {
+                base.OnElementChanged(e);
+                if (e.OldElement != null) return;
+                // Отслеживание касаний на изображении
+                SetWillNotDraw(false);
+                Touch += HandleTouch;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка в методе OnElementChanged");
+            }
+        }
+
+        /// <summary>
+        ///     Обрабатывает события касания экрана, включая масштабирование и скроллинг.
+        /// </summary>
+        /// <param name="sender">Отправитель события.</param>
+        /// <param name="e">Аргументы события касания.</param>
+        private void HandleTouch(object sender, TouchEventArgs e)
+        {
+            try
+            {
+                if (e.Event != null)
+                {
+                    gestureDetector.OnTouchEvent(e.Event);
+                    scaleDetector.OnTouchEvent(e.Event);
+
+                    if ((e.Event.Action & MotionEventActions.Mask) == MotionEventActions.Up)
+                        switch (currentScale)
+                        {
+                            // Вызов события при изменении прозрачности или закрытии
+                            case MinScale when opacity <= 0:
+                                (Element as InteractiveImageView)?.OnCloseRequested();
+                                break;
+                            case MinScale:
+                                // Сброс параметров к начальным состояниям
+                                opacity = 1f;
+                                (Element as InteractiveImageView)?.OnTransparencyChanged(opacity);
+                                accumulatedTranslationX = 0f;
+                                accumulatedTranslationY = 0f;
+                                panTranslationY = 0f;
+                                panTranslationX = 0f;
+                                break;
+                        }
+                }
+
+                Invalidate();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при обработке события касания экрана в методе HandleTouch");
+            }
+        }
+
+        /// <summary>
         ///     Слушатель для обработки жестов масштабирования.
         /// </summary>
         private class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener
@@ -171,13 +172,14 @@ namespace GhostTracker.Droid
             {
                 try
                 {
-                    if (renderer.currentScale == 1 && renderer.opacity < 1f) return true;
+                    const double epsilon = 0.00001;
+                    if (Math.Abs(renderer.currentScale - 1) < epsilon && renderer.opacity < 1f) return true;
                     var scaleFactor = detector.ScaleFactor;
                     var newScale = renderer.currentScale * scaleFactor;
 
-                    if (newScale > renderer.maxScale)
-                        scaleFactor = renderer.maxScale / renderer.currentScale;
-                    else if (newScale < renderer.minScale) scaleFactor = renderer.minScale / renderer.currentScale;
+                    if (newScale > MaxScale)
+                        scaleFactor = MaxScale / renderer.currentScale;
+                    else if (newScale < MinScale) scaleFactor = MinScale / renderer.currentScale;
 
                     renderer.matrix.PostScale(scaleFactor, scaleFactor, detector.FocusX, detector.FocusY);
                     renderer.currentScale *= scaleFactor;
