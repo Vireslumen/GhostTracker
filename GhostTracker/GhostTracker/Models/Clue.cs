@@ -19,12 +19,12 @@ namespace GhostTracker.Models
             Ghosts = new List<Ghost>();
         }
 
-        public int ID { get; set; }
+        public int Id { get; set; }
         public List<Equipment> ClueRelatedEquipments { get; set; }
         public List<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }
         public List<Ghost> Ghosts { get; set; }
-        public List<int> EquipmentsID { get; set; }
-        public List<int> GhostsID { get; set; }
+        public List<int> EquipmentsId { get; set; }
+        public List<int> GhostsId { get; set; }
         public List<UnfoldingItem> UnfoldingItems { get; set; }
         public string IconFilePath { get; set; }
         public string ThemedIconFilePath => GetThemedIcon();
@@ -51,14 +51,14 @@ namespace GhostTracker.Models
         }
 
         /// <summary>
-        ///     Связывает улики - Clue с призраками Ghost через имеющийся список Id призраков - GhostsID.
+        ///     Связывает улики - Clue с призраками Ghost через имеющийся список Id призраков - GhostsId.
         /// </summary>
         /// <param name="allghosts">Список всех призраков Ghost.</param>
         public void PopulateAssociatedGhosts(List<Ghost> allghosts)
         {
-            foreach (var ghostId in GhostsID)
+            foreach (var ghostId in GhostsId)
             {
-                var ghost = allghosts.FirstOrDefault(c => c.ID == ghostId);
+                var ghost = allghosts.FirstOrDefault(c => c.Id == ghostId);
                 if (ghost != null) Ghosts.Add(ghost);
             }
         }

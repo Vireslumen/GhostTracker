@@ -7,7 +7,7 @@ namespace GhostTracker.Data
     /// </summary>
     public class PatchBase
     {
-        [Key] public int ID { get; set; }
+        [Key] public int Id { get; set; }
         public string Source { get; set; }
         public string Title { get; set; }
     }

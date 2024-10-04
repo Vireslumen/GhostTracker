@@ -7,7 +7,7 @@ namespace GhostTracker.Data
     /// </summary>
     public class TipsTranslations
     {
-        [Key] public int ID { get; set; }
+        [Key] public int Id { get; set; }
         public string LanguageCode { get; set; }
         public string Level { get; set; }
         public string Tip { get; set; }

@@ -8,8 +8,8 @@ namespace GhostTracker.Data
     public class GhostGuessQuestionTranslations
     {
         public GhostGuessQuestionBase GhostGuessQuestion { get; set; }
-        public int GhostGuessQuestionBaseID { get; set; }
-        [Key] public int ID { get; set; }
+        public int GhostGuessQuestionBaseId { get; set; }
+        [Key] public int Id { get; set; }
         public string LanguageCode { get; set; }
         public string QuestionText { get; set; }
     }

@@ -7,8 +7,8 @@ namespace GhostTracker.Data
     /// </summary>
     public class OtherEquipmentStatBase
     {
-        public int EquipmentBaseID { get; set; }
-        [Key] public int ID { get; set; }
+        public int EquipmentBaseId { get; set; }
+        [Key] public int Id { get; set; }
         public string LanguageCode { get; set; }
         public string Stat { get; set; }
         public string ShortStat { get; set; }

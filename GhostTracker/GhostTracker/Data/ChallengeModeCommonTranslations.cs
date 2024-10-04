@@ -5,7 +5,7 @@
     /// </summary>
     public class ChallengeModeCommonTranslations
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Description { get; set; }
         public string DiffucltyParams { get; set; }
         public string EquipmentProvided { get; set; }

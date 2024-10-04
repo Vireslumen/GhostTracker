@@ -28,7 +28,7 @@ namespace GhostTracker.ViewModels
             Equipment = equipment;
             foreach (var item in Equipment.UnfoldingItems) item.IsExpanded = true;
             Equipment.EquipmentRelatedClues = new List<Clue>
-            (dataService.GetClues().Where(c => Equipment.CluesID.Contains(c.ID))
+            (dataService.GetClues().Where(c => Equipment.CluesId.Contains(c.Id))
                 .ToList());
             if (Equipment.EquipmentRelatedClues.Count > 0) IsRelatedCluesExist = true;
             EquipmentSelectedCommand = new Command<Equipment>(OnEquipmentSelected);

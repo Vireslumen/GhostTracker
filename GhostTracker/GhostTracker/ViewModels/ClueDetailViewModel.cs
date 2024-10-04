@@ -25,7 +25,7 @@ namespace GhostTracker.ViewModels
             Clue = clue;
             ClueCommon = dataService.GetClueCommon();
             Clue.ClueRelatedEquipments = new List<Equipment>
-            (dataService.GetEquipments().Where(e => Clue.EquipmentsID.Contains(e.ID))
+            (dataService.GetEquipments().Where(e => Clue.EquipmentsId.Contains(e.Id))
                 .ToList());
             foreach (var item in Clue.UnfoldingItems) item.IsExpanded = true;
             foreach (var item in Clue.ExpandFieldsWithImages) item.IsExpanded = true;

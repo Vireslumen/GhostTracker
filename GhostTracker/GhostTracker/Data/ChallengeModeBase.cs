@@ -9,8 +9,8 @@ namespace GhostTracker.Data
     public class ChallengeModeBase
     {
         public ICollection<ChallengeModeTranslations> Translations { get; set; }
-        [Key] public int ID { get; set; }
-        public int MapID { get; set; }
+        [Key] public int Id { get; set; }
+        public int MapId { get; set; }
         public List<EquipmentBase> EquipmentBase { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace GhostTracker.Data
     /// </summary>
     public class EquipmentCommonTranslations
     {
-        [Key] public int ID { get; set; }
+        [Key] public int Id { get; set; }
         public string Apply { get; set; }
         public string Clear { get; set; }
         public string EmptyView { get; set; }

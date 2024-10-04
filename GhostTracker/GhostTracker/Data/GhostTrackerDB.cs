@@ -101,7 +101,7 @@ namespace GhostTracker.Data
             modelBuilder.Entity<SpeedRangesBase>()
                 .HasOne(sp => sp.GhostBase)
                 .WithMany(g => g.SpeedRangesBase)
-                .HasForeignKey(sp => sp.GhostBaseID);
+                .HasForeignKey(sp => sp.GhostBaseId);
         }
 
         private void ConfigureGhostGuessQuestionEntity(ModelBuilder modelBuilder)
@@ -117,7 +117,7 @@ namespace GhostTracker.Data
             modelBuilder.Entity<ImageWithDescriptionBase>()
                 .HasOne(iwd => iwd.ExpandFieldWithImagesBase)
                 .WithMany(efwi => efwi.ImageWithDescriptionBase)
-                .HasForeignKey(iwd => iwd.ExpandFieldWithImagesBaseID);
+                .HasForeignKey(iwd => iwd.ExpandFieldWithImagesBaseId);
         }
 
         private void ConfigureMapEntity(ModelBuilder modelBuilder)

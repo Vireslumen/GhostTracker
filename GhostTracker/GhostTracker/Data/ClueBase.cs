@@ -10,7 +10,7 @@ namespace GhostTracker.Data
     public class ClueBase
     {
         public ICollection<ClueTranslations> Translations { get; set; }
-        [Key] public int ID { get; set; }
+        [Key] public int Id { get; set; }
         public List<EquipmentBase> EquipmentBase { get; set; }
         public List<ExpandFieldWithImagesBase> ExpandFieldWithImagesBase { get; set; }
         public List<GhostBase> GhostBase { get; set; }

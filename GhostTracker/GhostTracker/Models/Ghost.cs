@@ -13,7 +13,7 @@ namespace GhostTracker.Models
             Clues = new List<Clue>();
         }
 
-        public int ID { get; set; }
+        public int Id { get; set; }
         /// <summary>
         ///     Максимальная скорость призрака без учёта LoS при определенных условиях MaxGhostSpeedClause.
         /// </summary>
@@ -40,7 +40,7 @@ namespace GhostTracker.Models
         /// </summary>
         public int MinSanityHunt { get; set; }
         public List<Clue> Clues { get; set; }
-        public List<int> CluesID { get; set; }
+        public List<int> CluesId { get; set; }
         public List<SpeedRange> SpeedRanges { get; set; }
         public List<UnfoldingItem> UnfoldingItems { get; set; }
         /// <summary>
@@ -69,14 +69,14 @@ namespace GhostTracker.Models
         public string MinSanityHuntClause { get; set; }
 
         /// <summary>
-        ///     Связывает призраков - Ghost с уликами Clue через имеющийся список Id улик - CluesID.
+        ///     Связывает призраков - Ghost с уликами Clue через имеющийся список Id улик - CluesId.
         /// </summary>
         /// <param name="allClues">Список всех улик.</param>
         public void PopulateAssociatedClues(List<Clue> allClues)
         {
-            foreach (var clueId in CluesID)
+            foreach (var clueId in CluesId)
             {
-                var clue = allClues.FirstOrDefault(c => c.ID == clueId);
+                var clue = allClues.FirstOrDefault(c => c.Id == clueId);
                 if (clue != null) Clues.Add(clue);
             }
         }

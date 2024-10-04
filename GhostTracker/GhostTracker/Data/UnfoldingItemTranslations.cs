@@ -7,8 +7,8 @@ namespace GhostTracker.Data
     /// </summary>
     public class UnfoldingItemTranslations
     {
-        [Key] public int ID { get; set; }
-        public int UnfoldingItemBaseID { get; set; }
+        [Key] public int Id { get; set; }
+        public int UnfoldingItemBaseId { get; set; }
         public string Body { get; set; }
         public string Header { get; set; }
         public string LanguageCode { get; set; }

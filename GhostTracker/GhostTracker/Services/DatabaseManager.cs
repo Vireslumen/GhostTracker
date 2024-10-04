@@ -172,12 +172,12 @@ namespace GhostTracker.Services
                 return challengeModeData
                     .Select(c => new ChallengeMode
                     {
-                        ID = c.ID,
+                        Id = c.Id,
                         Title = c.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
                         Description = c.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description,
                         Parameters = c.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Parameters,
-                        EquipmentsID = c.EquipmentBase.Select(e => e.ID).ToList(),
-                        MapID = c.MapID
+                        EquipmentsId = c.EquipmentBase.Select(e => e.Id).ToList(),
+                        MapId = c.MapId
                     }).ToList();
             }
             catch (Exception ex)
@@ -241,15 +241,15 @@ namespace GhostTracker.Services
                 return cluesData.Select(
                     c => new Clue
                     {
-                        ID = c.ID,
+                        Id = c.Id,
                         IconFilePath = c.IconFilePath,
                         ImageFilePath = c.ImageFilePath,
-                        EquipmentsID = c.EquipmentBase.Select(e => e.ID).ToList(),
+                        EquipmentsId = c.EquipmentBase.Select(e => e.Id).ToList(),
                         Title = c.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
                         Description = c.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description,
                         UnfoldingItems = MapUnfoldingItems(c.UnfoldingItemBase, languageCode),
                         ExpandFieldsWithImages = MapExpandFieldWithImages(c.ExpandFieldWithImagesBase, languageCode),
-                        GhostsID = c.GhostBase.Select(g => g.ID).ToList()
+                        GhostsId = c.GhostBase.Select(g => g.Id).ToList()
                     }
                 ).ToList();
             }
@@ -313,7 +313,7 @@ namespace GhostTracker.Services
                 return cursedPossessionData
                     .Select(c => new CursedPossession
                     {
-                        ID = c.ID,
+                        Id = c.Id,
                         ImageFilePath = c.ImageFilePath,
                         Title = c.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
                         Description = c.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description,
@@ -346,7 +346,7 @@ namespace GhostTracker.Services
                 return difficultyData
                     .Select(d => new Difficulty
                     {
-                        ID = d.ID,
+                        Id = d.Id,
                         UnlockLevel = d.UnlockLevel,
                         RewardMultiplier = d.RewardMultiplier,
                         SetupTime = d.SetupTime,
@@ -461,7 +461,7 @@ namespace GhostTracker.Services
                 return equipmentData
                     .Select(e => new Equipment
                     {
-                        ID = e.ID,
+                        Id = e.Id,
                         UnlockLevel = e.UnlockLevel,
                         Cost = e.Cost,
                         UnlockCost = e.UnlockCost,
@@ -470,7 +470,7 @@ namespace GhostTracker.Services
                         Title = e.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
                         Description = e.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description,
                         Tier = e.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Tier,
-                        CluesID = e.ClueBase.Select(c => c.ID).ToList(),
+                        CluesId = e.ClueBase.Select(c => c.Id).ToList(),
                         OtherEquipmentStats = MapOtherEquipmentStat(e.OtherEquipmentStatBase, languageCode),
                         UnfoldingItems = MapUnfoldingItems(e.UnfoldingItemBase, languageCode)
                     })
@@ -648,13 +648,13 @@ namespace GhostTracker.Services
                 return ghostGuessQuestionData.Select(
                     ggq => new GhostGuessQuestion
                     {
-                        ID = ggq.ID,
+                        Id = ggq.Id,
                         QuestionText = ggq.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
                             ?.QuestionText,
                         AnswerMeaning = ggq.AnswerMeaning,
                         AnswerNegativeMeaning = ggq.AnswerNegativeMeaning,
                         Answer = 0, // Предполагается, что это значение по умолчанию.
-                        GhostsID = ggq.GhostBase.Select(g => g.ID).ToList()
+                        GhostsId = ggq.GhostBase.Select(g => g.Id).ToList()
                     }
                 ).ToList();
             }
@@ -698,7 +698,7 @@ namespace GhostTracker.Services
                 return ghostData
                     .Select(g => new Ghost
                     {
-                        ID = g.ID,
+                        Id = g.Id,
                         ImageFilePath = g.ImageFilePath,
                         MinSanityHunt = g.MinSanityHunt,
                         MaxSanityHunt = g.MaxSanityHunt,
@@ -720,7 +720,7 @@ namespace GhostTracker.Services
                         MaxGhostSpeedLoSClause = g.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)
                             ?.MaxGhostSpeedLoSClause,
                         UnfoldingItems = MapUnfoldingItems(g.UnfoldingItemBase, languageCode),
-                        CluesID = g.ClueBase.Select(c => c.ID).ToList(),
+                        CluesId = g.ClueBase.Select(c => c.Id).ToList(),
                         SpeedRanges = MapSpeedRange(g.SpeedRangesBase)
                     }).ToList();
             }
@@ -840,7 +840,7 @@ namespace GhostTracker.Services
                 return mapData
                     .Select(m => new Map
                     {
-                        ID = m.ID,
+                        Id = m.Id,
                         RoomCount = m.RoomCount,
                         UnlockLevel = m.UnlockLevel,
                         Exits = m.Exits,
@@ -889,7 +889,7 @@ namespace GhostTracker.Services
                 return otherInfoData
                     .Select(o => new OtherInfo
                     {
-                        ID = o.ID,
+                        Id = o.Id,
                         ImageFilePath = o.ImageFilePath,
                         Title = o.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
                         Description = o.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Description,
@@ -920,7 +920,7 @@ namespace GhostTracker.Services
                 return patchData
                     .Select(p => new Patch
                         {
-                            ID = p.ID,
+                            Id = p.Id,
                             Source = p.Source,
                             Title = p.Title
                         }
@@ -980,7 +980,7 @@ namespace GhostTracker.Services
                 return questData
                     .Select(q => new Quest
                     {
-                        ID = q.ID,
+                        Id = q.Id,
                         Title = q.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Title,
                         Clause = q.Translations.FirstOrDefault(t => t.LanguageCode == languageCode)?.Clause,
                         Reward = q.Reward,

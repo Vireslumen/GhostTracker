@@ -7,7 +7,7 @@ namespace GhostTracker.Data
     /// </summary>
     public class SettingsCommonTranslations
     {
-        [Key] public int ID { get; set; }
+        [Key] public int Id { get; set; }
         public string About { get; set; }
         public string AnyLevel { get; set; }
         public string AppLanguage { get; set; }

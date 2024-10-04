@@ -8,7 +8,7 @@ namespace GhostTracker.Data
     /// </summary>
     public class AchievementBase
     {
-        [Key] public int ID { get; set; }
+        [Key] public int Id { get; set; }
         public string ImageFilePath { get; set; }
         public ICollection<AchievementTranslations> Translations { get; set; }
     }

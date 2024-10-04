@@ -5,7 +5,7 @@
     /// </summary>
     public class GhostGuessQuestionCommonTranslations
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string AnswerDontKnow { get; set; }
         public string AnswerNo { get; set; }
         public string AnswerThinkSo { get; set; }

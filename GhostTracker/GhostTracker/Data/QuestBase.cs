@@ -9,7 +9,7 @@ namespace GhostTracker.Data
     public class QuestBase
     {
         public ICollection<QuestTranslations> Translations { get; set; }
-        [Key] public int ID { get; set; }
+        [Key] public int Id { get; set; }
         public int Reward { get; set; }
     }
 }

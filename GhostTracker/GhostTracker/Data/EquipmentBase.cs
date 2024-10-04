@@ -13,7 +13,7 @@ namespace GhostTracker.Data
         public ICollection<ClueBase> ClueBase { get; set; }
         public ICollection<EquipmentTranslations> Translations { get; set; }
         public int Cost { get; set; }
-        [Key] public int ID { get; set; }
+        [Key] public int Id { get; set; }
         public int MaxLimit { get; set; }
         public int UnlockCost { get; set; }
         public int UnlockLevel { get; set; }

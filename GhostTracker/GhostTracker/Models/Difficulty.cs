@@ -17,7 +17,7 @@
         ///     Количество доступных улик у призрака.
         /// </summary>
         public int EvidenceAvailable { get; set; }
-        public int ID { get; set; }
+        public int Id { get; set; }
         /// <summary>
         ///     Насколько сильно восстанавливают рассудок лекарства.
         /// </summary>

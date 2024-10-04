@@ -11,7 +11,7 @@ namespace GhostTracker.Data
         public ICollection<GhostGuessQuestionTranslations> Translations { get; set; }
         public int AnswerMeaning { get; set; }
         public int AnswerNegativeMeaning { get; set; }
-        [Key] public int ID { get; set; }
+        [Key] public int Id { get; set; }
         public List<GhostBase> GhostBase { get; set; }
     }
 }

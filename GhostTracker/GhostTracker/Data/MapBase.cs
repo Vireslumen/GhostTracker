@@ -11,7 +11,7 @@ namespace GhostTracker.Data
         public ICollection<MapTranslations> Translations { get; set; }
         public int Exits { get; set; }
         public int Floors { get; set; }
-        [Key] public int ID { get; set; }
+        [Key] public int Id { get; set; }
         public int RoomCount { get; set; }
         public int SizeNumeric { get; set; }
         public int UnlockLevel { get; set; }

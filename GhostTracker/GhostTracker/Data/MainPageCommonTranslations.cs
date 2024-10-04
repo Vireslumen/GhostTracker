@@ -7,7 +7,7 @@ namespace GhostTracker.Data
     /// </summary>
     public class MainPageCommonTranslations
     {
-        [Key] public int ID { get; set; }
+        [Key] public int Id { get; set; }
         public int PlayerMaxSpeed { get; set; }
         public int PlayerMinSpeed { get; set; }
         public string Clue { get; set; }

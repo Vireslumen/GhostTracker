@@ -7,7 +7,7 @@ namespace GhostTracker.Models
     /// </summary>
     public class Patch
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         /// <summary>
         ///     Ссылка на страницу описания патча.
         /// </summary>

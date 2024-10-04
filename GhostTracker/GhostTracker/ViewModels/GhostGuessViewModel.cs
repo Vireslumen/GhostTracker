@@ -150,7 +150,7 @@ namespace GhostTracker.ViewModels
                     if (supposedGhost != null)
                         supposedGhost.Points += RoundAwayFromZero(CalculateAnswerResult(question.Answer,
                             question.AnswerMeaning,
-                            question.AnswerNegativeMeaning, question.Ghosts.Count > 1 && ghost.ID == MimicId));
+                            question.AnswerNegativeMeaning, question.Ghosts.Count > 1 && ghost.Id == MimicId));
                 }
             }
             catch (Exception ex)
@@ -380,7 +380,7 @@ namespace GhostTracker.ViewModels
             {
                 foreach (var question in DisplayedQuestions)
                 {
-                    var isVisible = question.Ghosts.Where(ghost => !(ghost.ID == MimicId && question.Ghosts.Count > 1))
+                    var isVisible = question.Ghosts.Where(ghost => !(ghost.Id == MimicId && question.Ghosts.Count > 1))
                         .Any(
                             ghost =>
                                 !SelectedClues.Any() ||
@@ -412,10 +412,10 @@ namespace GhostTracker.ViewModels
                     foreach (var question in DisplayedQuestions)
                     {
                         var shouldBeVisible = question.Ghosts
-                            .Where(ghost => !(ghost.ID == MimicId && question.Ghosts.Count > 1))
+                            .Where(ghost => !(ghost.Id == MimicId && question.Ghosts.Count > 1))
                             .Any(ghost => SupposedGhosts.Any(sg => sg.Ghost == ghost) &&
                                           (validSupposedGhosts.Contains(ghost.Title) || (question.Ghosts.Count == 1 &&
-                                              question.Ghosts.FirstOrDefault().ID == MimicId))) || question.Answer != 0;
+                                              question.Ghosts.FirstOrDefault().Id == MimicId))) || question.Answer != 0;
 
                         if (shouldBeVisible)
                         {

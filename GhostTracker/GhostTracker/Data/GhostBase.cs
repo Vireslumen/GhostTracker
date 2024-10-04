@@ -9,7 +9,7 @@ namespace GhostTracker.Data
     public class GhostBase
     {
         public ICollection<GhostTranslations> Translations { get; set; }
-        [Key] public int ID { get; set; }
+        [Key] public int Id { get; set; }
         public int MaxGhostSpeed { get; set; }
         public int MaxGhostSpeedLoS { get; set; }
         public int MaxSanityHunt { get; set; }

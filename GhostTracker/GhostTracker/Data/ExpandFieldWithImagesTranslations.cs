@@ -8,8 +8,8 @@ namespace GhostTracker.Data
     public class ExpandFieldWithImagesTranslations
     {
         public ExpandFieldWithImagesBase ExpandFieldWithImages { get; set; }
-        public int ExpandFieldWithImagesBaseID { get; set; }
-        [Key] public int ID { get; set; }
+        public int ExpandFieldWithImagesBaseId { get; set; }
+        [Key] public int Id { get; set; }
         public string Body { get; set; }
         public string Header { get; set; }
         public string LanguageCode { get; set; }

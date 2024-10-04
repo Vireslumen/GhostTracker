@@ -8,8 +8,8 @@ namespace GhostTracker.Data
     public class SpeedRangesBase
     {
         public GhostBase GhostBase { get; set; }
-        public int GhostBaseID { get; set; }
-        [Key] public int ID { get; set; }
+        public int GhostBaseId { get; set; }
+        [Key] public int Id { get; set; }
         public int Max { get; set; }
         public int Min { get; set; }
     }

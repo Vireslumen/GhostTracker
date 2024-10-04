@@ -10,8 +10,8 @@ namespace GhostTracker.Data
     {
         public ExpandFieldWithImagesBase ExpandFieldWithImagesBase { get; set; }
         public ICollection<ImageWithDescriptionTranslations> Translations { get; set; }
-        public int ExpandFieldWithImagesBaseID { get; set; }
-        [Key] public int ID { get; set; }
+        public int ExpandFieldWithImagesBaseId { get; set; }
+        [Key] public int Id { get; set; }
         public string ImageFilePath { get; set; }
     }
 }

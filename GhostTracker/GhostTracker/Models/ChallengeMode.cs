@@ -8,10 +8,10 @@ namespace GhostTracker.Models
     /// </summary>
     public class ChallengeMode
     {
-        public int DifficultyID { get; set; }
-        public int ID { get; set; }
-        public int MapID { get; set; }
-        public List<int> EquipmentsID { get; set; }
+        public int DifficultyId { get; set; }
+        public int Id { get; set; }
+        public int MapId { get; set; }
+        public List<int> EquipmentsId { get; set; }
         public Map ChallengeMap { get; set; }
         public List<Equipment> ChallengeEquipments { get; set; }
         public string Description { get; set; }

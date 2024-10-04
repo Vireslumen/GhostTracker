@@ -30,7 +30,7 @@ namespace GhostTracker.Models
         public int Answer { get; set; }
         public int AnswerMeaning { get; set; }
         public int AnswerNegativeMeaning { get; set; }
-        public int ID { get; set; }
+        public int Id { get; set; }
         public int Visibility
         {
             get => visibility;
@@ -41,7 +41,7 @@ namespace GhostTracker.Models
             }
         }
         public List<Ghost> Ghosts { get; set; }
-        public List<int> GhostsID { get; set; }
+        public List<int> GhostsId { get; set; }
         public string QuestionText { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -51,14 +51,14 @@ namespace GhostTracker.Models
         }
 
         /// <summary>
-        ///     Связывает вопрос  - GhostGuessQuestion с призраками Ghost через имеющийся список Id призраков - GhostsID.
+        ///     Связывает вопрос  - GhostGuessQuestion с призраками Ghost через имеющийся список Id призраков - GhostsId.
         /// </summary>
         /// <param name="allghosts">Список всех призраков Ghost.</param>
         public void PopulateAssociatedGhosts(List<Ghost> allghosts)
         {
-            foreach (var ghostId in GhostsID)
+            foreach (var ghostId in GhostsId)
             {
-                var ghost = allghosts.FirstOrDefault(c => c.ID == ghostId);
+                var ghost = allghosts.FirstOrDefault(c => c.Id == ghostId);
                 if (ghost != null) Ghosts.Add(ghost);
             }
         }

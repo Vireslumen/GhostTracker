@@ -123,10 +123,10 @@ namespace GhostTracker.ViewModels
             try
             {
                 challengeMode.ChallengeMap = dataService.GetMaps()
-                        .Where(m => m.ID == challengeMode.MapID)
+                        .Where(m => m.Id == challengeMode.MapId)
                         .FirstOrDefault();
                 challengeMode.ChallengeEquipments = new List<Equipment>
-                (dataService.GetEquipments().Where(e => challengeMode.EquipmentsID.Contains(e.ID))
+                (dataService.GetEquipments().Where(e => challengeMode.EquipmentsId.Contains(e.Id))
                     .ToList());
             }
             catch (Exception ex)

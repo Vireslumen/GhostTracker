@@ -12,7 +12,7 @@ namespace GhostTracker.Data
         public float SanityConsumption { get; set; }
         public ICollection<DifficultyTranslations> Translations { get; set; }
         public int EvidenceAvailable { get; set; }
-        [Key] public int ID { get; set; }
+        [Key] public int Id { get; set; }
         public int SanityRestoration { get; set; }
         public int SetupTime { get; set; }
         public int UnlockLevel { get; set; }

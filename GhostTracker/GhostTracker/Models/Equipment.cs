@@ -8,12 +8,12 @@ namespace GhostTracker.Models
     public class Equipment : BaseTitledItem
     {
         public int Cost { get; set; }
-        public int ID { get; set; }
+        public int Id { get; set; }
         public int MaxLimit { get; set; }
         public int UnlockCost { get; set; }
         public int UnlockLevel { get; set; }
         public List<Clue> EquipmentRelatedClues { get; set; }
-        public List<int> CluesID { get; set; }
+        public List<int> CluesId { get; set; }
         /// <summary>
         ///     Прочие характеристики снаряжения.
         /// </summary>

@@ -7,7 +7,7 @@ namespace GhostTracker.Data
     /// </summary>
     public class AppShellCommonTranslations
     {
-        [Key] public int ID { get; set; }
+        [Key] public int Id { get; set; }
         public string CursedPossessions { get; set; }
         public string Equipments { get; set; }
         public string Ghosts { get; set; }

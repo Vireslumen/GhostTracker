@@ -5,7 +5,7 @@
     /// </summary>
     public class Quest
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public int Reward { get; set; }
         /// <summary>
         ///     Условие выполнения квеста.

@@ -8,7 +8,7 @@ namespace GhostTracker.Models
     /// </summary>
     public class CursedPossession : BaseTitledItem
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public List<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }
         public List<UnfoldingItem> UnfoldingItems { get; set; }
     }
