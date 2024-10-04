@@ -47,7 +47,7 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (isNavigating) return;
+                if (IsNavigating) return;
                 if (dataService.IsMapsDataLoaded && dataService.IsEquipmentsDataLoaded)
                 {
                     var page = new ChallengeModeDetailPage(challengeMode);

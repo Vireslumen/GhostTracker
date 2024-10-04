@@ -74,7 +74,7 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (isNavigating) return;
+                if (IsNavigating) return;
                 var page = new ClueDetailPage(clueItem);
                 await NavigateWithLoadingAsync(page);
             }
@@ -91,7 +91,7 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (isNavigating) return;
+                if (IsNavigating) return;
                 var page = new GhostDetailPage(ghostItem);
                 await NavigateWithLoadingAsync(page);
             }
@@ -108,7 +108,7 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (isNavigating) return;
+                if (IsNavigating) return;
                 var page = new EquipmentDetailPage(eqipItem);
                 await NavigateWithLoadingAsync(page);
             }

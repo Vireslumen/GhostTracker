@@ -78,7 +78,7 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (isNavigating) return;
+                if (IsNavigating) return;
                 if (selectedEquipment != null)
                 {
                     // Логика для открытия страницы деталей снаряжения
@@ -100,7 +100,7 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (isNavigating) return;
+                if (IsNavigating) return;
                 if (ChallengeMode.ChallengeMap != null)
                 {
                     // Логика для открытия страницы деталей карты

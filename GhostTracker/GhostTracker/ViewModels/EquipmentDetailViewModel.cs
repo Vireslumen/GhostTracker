@@ -81,7 +81,7 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (isNavigating) return;
+                if (IsNavigating) return;
                 if (selectedEquipment != null)
                 {
                     // Логика для открытия страницы деталей снаряжения
@@ -103,7 +103,7 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (isNavigating) return;
+                if (IsNavigating) return;
                 var page = new ClueDetailPage(clueItem);
                 await NavigateWithLoadingAsync(page);
             }

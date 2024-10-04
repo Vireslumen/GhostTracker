@@ -165,7 +165,7 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (isNavigating) return;
+                if (IsNavigating) return;
                 if (selectedEquipment != null)
                 {
                     // Логика для открытия страницы деталей снаряжения

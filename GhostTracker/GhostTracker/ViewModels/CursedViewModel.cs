@@ -57,7 +57,7 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (isNavigating) return;
+                if (IsNavigating) return;
                 if (selectedCursed != null)
                 {
                     // Логика для открытия страницы деталей проклятого предмета

@@ -271,7 +271,7 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (isNavigating) return;
+                if (IsNavigating) return;
                 var page = new GhostDetailPage(ghostItem.Ghost);
                 await NavigateWithLoadingAsync(page);
             }

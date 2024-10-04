@@ -287,7 +287,7 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (isNavigating || selectedSearchItem == null) return;
+                if (IsNavigating || selectedSearchItem == null) return;
 
                 Page detailPage;
                 switch (selectedSearchItem)
@@ -349,7 +349,7 @@ namespace GhostTracker.ViewModels
         /// </summary>
         private async void OnChallengeModeTapped()
         {
-            if (isNavigating) return;
+            if (IsNavigating) return;
             if (!dataService.IsMapsDataLoaded || !dataService.IsEquipmentsDataLoaded) return;
             var page = new ChallengeModeDetailPage(ChallengeMode);
             await NavigateWithLoadingAsync(page);
@@ -360,7 +360,7 @@ namespace GhostTracker.ViewModels
         /// </summary>
         private async void OnClueTapped(Clue clueItem)
         {
-            if (isNavigating) return;
+            if (IsNavigating) return;
             var page = new ClueDetailPage(clueItem);
             await NavigateWithLoadingAsync(page);
         }
@@ -370,7 +370,7 @@ namespace GhostTracker.ViewModels
         /// </summary>
         private async void OnDifficultyTapped(Difficulty difficultyItem)
         {
-            if (isNavigating) return;
+            if (IsNavigating) return;
             var page = new DifficultyDetailPage(difficultyItem);
             await NavigateWithLoadingAsync(page);
         }
@@ -404,7 +404,7 @@ namespace GhostTracker.ViewModels
         /// </summary>
         private async void OnGhostTapped(Ghost ghostItem)
         {
-            if (isNavigating) return;
+            if (IsNavigating) return;
             var page = new GhostDetailPage(ghostItem);
             await NavigateWithLoadingAsync(page);
         }
@@ -470,7 +470,7 @@ namespace GhostTracker.ViewModels
         /// </summary>
         private async void OnOtherPageTapped(ITitledItem otherInfoItem)
         {
-            if (isNavigating) return;
+            if (IsNavigating) return;
             switch (otherInfoItem)
             {
                 case OtherInfo info:
@@ -544,7 +544,7 @@ namespace GhostTracker.ViewModels
         /// </summary>
         private async void OpenSettings()
         {
-            if (isNavigating) return;
+            if (IsNavigating) return;
             var page = new SettingsPage();
             await NavigateWithLoadingAsync(page);
         }

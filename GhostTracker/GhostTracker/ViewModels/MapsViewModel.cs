@@ -223,7 +223,7 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (isNavigating) return;
+                if (IsNavigating) return;
                 if (selectedMap != null)
                 {
                     // Логика для открытия страницы деталей карты

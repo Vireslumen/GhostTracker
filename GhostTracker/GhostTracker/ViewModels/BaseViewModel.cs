@@ -10,22 +10,13 @@ using Xamarin.Forms;
 
 namespace GhostTracker.ViewModels
 {
+    /// <summary>
+    ///     Базовый ViewModel класс для страниц.
+    /// </summary>
     public class BaseViewModel : INotifyPropertyChanged
     {
-        protected bool isNavigating;
-        private bool isBusy;
+        protected bool IsNavigating;
         private string title = string.Empty;
-
-        public BaseViewModel()
-        {
-            isNavigating = false;
-        }
-
-        public bool IsBusy
-        {
-            get => isBusy;
-            set => SetProperty(ref isBusy, value);
-        }
         public string Title
         {
             get => title;
@@ -34,7 +25,7 @@ namespace GhostTracker.ViewModels
 
         public async Task NavigateWithLoadingAsync(Page page)
         {
-            isNavigating = true;
+            IsNavigating = true;
             var isPopupShown = false;
             try
             {
@@ -64,10 +55,10 @@ namespace GhostTracker.ViewModels
                     }
                     catch (Exception ex)
                     {
-                        Log.Error(ex, "Ошибка при попытке закрыть попап загрузки.");
+                        Log.Error(ex, "Ошибка при попытке закрыть popup загрузки.");
                     }
 
-                isNavigating = false;
+                IsNavigating = false;
             }
         }
 

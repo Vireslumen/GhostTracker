@@ -182,7 +182,7 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (isNavigating || selectedGhost == null) return;
+                if (IsNavigating || selectedGhost == null) return;
                 // Логика для открытия страницы деталей призрака
                 var detailPage = new GhostDetailPage(selectedGhost);
                 await NavigateWithLoadingAsync(detailPage);

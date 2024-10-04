@@ -46,7 +46,7 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (isNavigating) return;
+                if (IsNavigating) return;
                 if (clue == null) return;
                 // Логика для открытия страницы деталей призрака
                 var detailPage = new ClueDetailPage(clue);
