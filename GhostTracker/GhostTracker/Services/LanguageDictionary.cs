@@ -19,7 +19,7 @@ namespace GhostTracker.Services
                 LanguageMap.FirstOrDefault(x => x.Value.Equals(code, StringComparison.OrdinalIgnoreCase));
 
             // Если такая пара найдена, возвращаем ключ, иначе null или любое другое указанное значение
-            return languageEntry.Key ?? null;
+            return languageEntry.Key;
         }
     }
 }
