@@ -11,7 +11,7 @@ using Xamarin.Forms;
 namespace GhostTracker.ViewModels
 {
     /// <summary>
-    /// ViewModel для страницы списка достижений.
+    ///     ViewModel для страницы списка достижений.
     /// </summary>
     public class AchievementsViewModel : BaseViewModel
     {
@@ -21,9 +21,9 @@ namespace GhostTracker.ViewModels
         public AchievementsViewModel()
         {
             var dataService = DependencyService.Get<DataService>();
-                Achievements = dataService.GetAchievements();
-                AchievementCommon = dataService.GetAchievementCommon();
-                ChallengeModeTappedCommand = new Command<Achievement>(OnAchievementTapped);
+            Achievements = dataService.GetAchievements();
+            AchievementCommon = dataService.GetAchievementCommon();
+            ChallengeModeTappedCommand = new Command<Achievement>(OnAchievementTapped);
         }
 
         public AchievementCommon AchievementCommon

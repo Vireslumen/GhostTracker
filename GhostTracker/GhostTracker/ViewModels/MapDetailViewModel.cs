@@ -13,13 +13,12 @@ namespace GhostTracker.ViewModels
     /// </summary>
     public class MapDetailViewModel : UnfoldingItemsViewModel
     {
-        private readonly DataService dataService;
         private Map map;
         private MapCommon mapCommon;
 
         public MapDetailViewModel(Map map)
         {
-            dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<DataService>();
             MapCommon = dataService.GetMapCommon();
             Map = map;
             foreach (var item in Map.UnfoldingItems) item.IsExpanded = true;

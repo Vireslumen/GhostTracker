@@ -25,7 +25,6 @@ namespace GhostTracker.ViewModels
         private const int ValueForVisibility = 90;
         private const double SpeedCoef = 0.88;
         private const int ResetTime = 2;
-        public readonly DataService dataService;
         private readonly List<DateTime> lastClickTimes;
         private readonly Timer resetTimer;
         public List<Ghost> Ghosts;
@@ -42,7 +41,7 @@ namespace GhostTracker.ViewModels
         public GhostGuessViewModel()
         {
             //Загрузка всех данных для страницы
-            dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<DataService>();
             ghostGuessQuestionCommon = dataService.GetGhostGuessQuestionCommon();
             Ghosts = dataService.GetGhosts();
             Questions = dataService.GetGhostGuessQuestions();

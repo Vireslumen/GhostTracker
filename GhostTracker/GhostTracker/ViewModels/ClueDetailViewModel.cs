@@ -15,17 +15,16 @@ namespace GhostTracker.ViewModels
     /// </summary>
     public class ClueDetailViewModel : UnfoldingItemsViewModel
     {
-        public readonly DataService DataService;
         private Clue clue;
         private ClueCommon clueCommon;
 
         public ClueDetailViewModel(Clue clue)
         {
-            DataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<DataService>();
             Clue = clue;
-            ClueCommon = DataService.GetClueCommon();
+            ClueCommon = dataService.GetClueCommon();
             Clue.ClueRelatedEquipments = new List<Equipment>
-            (DataService.GetEquipments().Where(e => Clue.EquipmentsId.Contains(e.Id))
+            (dataService.GetEquipments().Where(e => Clue.EquipmentsId.Contains(e.Id))
                 .ToList());
             foreach (var item in Clue.UnfoldingItems) item.IsExpanded = true;
             foreach (var item in Clue.ExpandFieldsWithImages) item.IsExpanded = true;

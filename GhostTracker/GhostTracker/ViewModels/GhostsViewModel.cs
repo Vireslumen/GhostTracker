@@ -18,7 +18,6 @@ namespace GhostTracker.ViewModels
     /// </summary>
     public class GhostsViewModel : SearchableViewModel, IFilterable
     {
-        private readonly DataService dataService;
         private readonly List<Ghost> ghosts;
         private GhostCommon ghostCommon;
         private List<Clue> allClues;
@@ -28,7 +27,7 @@ namespace GhostTracker.ViewModels
 
         public GhostsViewModel()
         {
-            dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<DataService>();
             //Загрузка всех призраков и улик.
             ghosts = dataService.GetGhosts().OrderBy(g => g.Title).ToList();
             allClues = dataService.GetClues();

@@ -15,7 +15,6 @@ namespace GhostTracker.ViewModels
     /// </summary>
     public class ChallengeModeDetailViewModel : BaseViewModel
     {
-        public readonly DataService DataService;
         private ChallengeMode challengeMode;
         private ChallengeModeCommon challengeModeCommon;
         private DifficultyCommon difficultyCommon;
@@ -23,12 +22,12 @@ namespace GhostTracker.ViewModels
 
         public ChallengeModeDetailViewModel(ChallengeMode challengeMode)
         {
-            DataService = DependencyService.Get<DataService>();
-            DifficultyCommon = DataService.GetDifficultyCommon();
-            EquipmentCommon = DataService.GetEquipmentCommon();
+            var dataService = DependencyService.Get<DataService>();
+            DifficultyCommon = dataService.GetDifficultyCommon();
+            EquipmentCommon = dataService.GetEquipmentCommon();
             ChallengeMode = challengeMode;
-            ChallengeModeCommon = DataService.GetChallengeModeCommon();
-            SetChallengeModeData();
+            ChallengeModeCommon = dataService.GetChallengeModeCommon();
+            SetChallengeModeData(dataService);
             EquipmentSelectedCommand = new Command<Equipment>(OnEquipmentSelected);
             MapSelectedCommand = new Command(OnMapSelected);
         }
@@ -114,15 +113,16 @@ namespace GhostTracker.ViewModels
         /// <summary>
         ///     Установка карты, снаряжения для выбранного особого режима.
         /// </summary>
-        private void SetChallengeModeData()
+        /// <param name="dataService">Сервис для загрузки данных.</param>
+        private void SetChallengeModeData(DataService dataService)
         {
             try
             {
-                challengeMode.ChallengeMap = DataService
+                challengeMode.ChallengeMap = dataService
                     .GetMaps()
                     .FirstOrDefault(m => m.Id == challengeMode.MapId);
                 challengeMode.ChallengeEquipments = new List<Equipment>
-                (DataService.GetEquipments().Where(e => challengeMode.EquipmentsId.Contains(e.Id))
+                (dataService.GetEquipments().Where(e => challengeMode.EquipmentsId.Contains(e.Id))
                     .ToList());
             }
             catch (Exception ex)

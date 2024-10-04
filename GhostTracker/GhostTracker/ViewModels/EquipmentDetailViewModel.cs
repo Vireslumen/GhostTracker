@@ -15,14 +15,13 @@ namespace GhostTracker.ViewModels
     /// </summary>
     public class EquipmentDetailViewModel : UnfoldingItemsViewModel
     {
-        private readonly DataService dataService;
         private Equipment equipment;
         private EquipmentCommon equipmentCommon;
         private List<Equipment> equipmentsSameTypeCollection;
 
         public EquipmentDetailViewModel(Equipment equipment)
         {
-            dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<DataService>();
             EquipmentCommon = dataService.GetEquipmentCommon();
             EquipmentsSameTypeCollection = dataService.GetEquipmentsSameTypeCollection(equipment);
             Equipment = equipment;

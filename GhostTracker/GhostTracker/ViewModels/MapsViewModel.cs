@@ -20,7 +20,6 @@ namespace GhostTracker.ViewModels
     {
         private const int MaxRoomDefault = 100;
         private const int MinRoomDefault = 0;
-        private readonly DataService dataService;
         private readonly List<Map> maps;
         private int maxRoomSaved;
         private int minRoomSaved;
@@ -34,7 +33,7 @@ namespace GhostTracker.ViewModels
 
         public MapsViewModel()
         {
-            dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<DataService>();
             // Загрузка всех карт.
             maps = dataService.GetMaps().OrderBy(m => m.SizeNumeric).ThenBy(m => m.UnlockLevel).ToList();
             Maps = new ObservableCollection<Map>(maps);

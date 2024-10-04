@@ -14,7 +14,6 @@ namespace GhostTracker.ViewModels
     /// </summary>
     public class QuestsViewModel : BaseViewModel
     {
-        private readonly DataService dataService;
         private List<Quest> dailyQuests;
         private List<Quest> quests;
         private List<Quest> weeklyQuests;
@@ -22,7 +21,7 @@ namespace GhostTracker.ViewModels
 
         public QuestsViewModel()
         {
-            dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<DataService>();
             Quests = dataService.GetQuests();
             QuestCommon = dataService.GetQuestCommon();
             SetDailyQuests();

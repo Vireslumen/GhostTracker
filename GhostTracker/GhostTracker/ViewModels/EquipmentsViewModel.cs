@@ -20,7 +20,6 @@ namespace GhostTracker.ViewModels
     {
         private const int MaxUnlockLevelDefault = 100;
         private const int MinUnlockLevelDefault = 0;
-        private readonly DataService dataService;
         private readonly List<Equipment> equipments;
         private EquipmentCommon equipmentCommon;
         private int maxUnlockLevelSaved;
@@ -34,7 +33,7 @@ namespace GhostTracker.ViewModels
 
         public EquipmentsViewModel()
         {
-            dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<DataService>();
             //Загрузка данных для интерфейса.
             EquipmentCommon = dataService.GetEquipmentCommon();
             //Загрузка всего снаряжения.
