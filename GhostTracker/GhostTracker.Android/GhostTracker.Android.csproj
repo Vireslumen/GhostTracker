@@ -116,7 +116,7 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PhasmophobiaCompanion\GhostTracker.csproj">
+    <ProjectReference Include="..\GhostTracker\GhostTracker.csproj">
       <Project>{D5FF502D-EA1A-425B-94C9-C7CF7A9078AB}</Project>
       <Name>GhostTracker</Name>
     </ProjectReference>
