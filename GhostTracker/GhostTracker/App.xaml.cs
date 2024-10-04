@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace GhostTracker
 {
-    public partial class App : Application
+    public partial class App
     {
         public App()
         {
@@ -46,6 +46,7 @@ namespace GhostTracker
         }
 
         public static App CurrentApp { get; private set; }
+        public static event Action ThemeChanged;
 
         public async Task InitializeAppShellAsync()
         {
@@ -56,7 +57,7 @@ namespace GhostTracker
                 dataService.ReinitializeLanguage();
                 // Загрузка данных
                 await Task.Run(async () => { await dataService.LoadInitialDataAsync(); });
-                Task.Run(async () => { dataService.LoadOtherDataAsync(); });
+                _ = Task.Run(async () => { await dataService.LoadOtherDataAsync(); });
                 // После загрузки данных, загрузка начальной страницы
                 MainPage = new AppShell();
             }
@@ -71,7 +72,5 @@ namespace GhostTracker
             // Инициализация и загрузка начальных данных 
             await InitializeAppShellAsync();
         }
-
-        public static event Action ThemeChanged;
     }
 }
