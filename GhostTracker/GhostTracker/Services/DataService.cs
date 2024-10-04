@@ -12,6 +12,10 @@ using Serilog;
 
 namespace GhostTracker.Services
 {
+    /// <summary>
+    ///     Класс <c>DataService</c> представляет собой сервис для загрузки, кэширования и управления данными приложения,
+    ///     такими как достижения, подсказки, карты, снаряжение, призраки и другие игровые элементы.
+    /// </summary>
     public class DataService
     {
         private readonly DatabaseManager databaseManager;

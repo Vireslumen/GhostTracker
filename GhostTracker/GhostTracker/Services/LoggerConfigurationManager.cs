@@ -5,6 +5,9 @@ using Serilog.Debugging;
 
 namespace GhostTracker.Services
 {
+    /// <summary>
+    ///     Статический класс <c>LoggerConfigurationManager</c> управляет настройками конфигурации логирования приложения.
+    /// </summary>
     public static class LoggerConfigurationManager
     {
         private static ILogger _logger;

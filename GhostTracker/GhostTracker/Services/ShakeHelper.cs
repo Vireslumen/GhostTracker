@@ -2,6 +2,10 @@
 
 namespace GhostTracker.Services
 {
+    /// <summary>
+    ///     Статический класс <c>ShakeHelper</c> предоставляет методы для управления настройками активности обнаружения
+    ///     встряхивания устройства.
+    /// </summary>
     public static class ShakeHelper
     {
         private const string ShakeActive = "ShakeActive";

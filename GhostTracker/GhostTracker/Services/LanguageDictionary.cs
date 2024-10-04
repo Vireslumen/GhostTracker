@@ -4,6 +4,13 @@ using System.Linq;
 
 namespace GhostTracker.Services
 {
+    /// <summary>
+    ///     Статический класс <c>LanguageDictionary</c> содержит словарь соответствий между названиями языков и их кодами.
+    /// </summary>
+    /// <remarks>
+    ///     Содержит методы для получения названия языка по его коду.
+    ///     В словаре хранятся поддерживаемые языки приложения.
+    /// </remarks>
     public static class LanguageDictionary
     {
         public static readonly Dictionary<string, string> LanguageMap = new Dictionary<string, string>

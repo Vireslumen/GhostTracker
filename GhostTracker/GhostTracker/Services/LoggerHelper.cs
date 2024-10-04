@@ -2,6 +2,10 @@
 
 namespace GhostTracker.Services
 {
+    /// <summary>
+    ///     Статический класс <c>LoggerHelper</c> предоставляет методы для управления состоянием серверного логирования
+    ///     с использованием сохранения предпочтений приложения.
+    /// </summary>
     public static class LoggerHelper
     {
         private const string ServerLoggerActive = "ServerLogger";
