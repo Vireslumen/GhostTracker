@@ -9,14 +9,14 @@ using Xamarin.Forms;
 namespace GhostTracker.ViewModels
 {
     /// <summary>
-    ///     Базовый класс ViewModel для управления разворачиваемыми элементами. 
-    ///     Предоставляет функциональность для переключения состояния раскрытия элементов 
+    ///     Базовый класс ViewModel для управления разворачиваемыми элементами.
+    ///     Предоставляет функциональность для переключения состояния раскрытия элементов
     ///     и ограничения количества одновременно раскрытых элементов.
     /// </summary>
     public abstract class UnfoldingItemsViewModel : BaseViewModel
     {
         private const int MaxExpandedItems = 3;
-        protected Queue<UnfoldingItem> expandedItems = new Queue<UnfoldingItem>();
+        protected Queue<UnfoldingItem> ExpandedItems = new Queue<UnfoldingItem>();
 
         protected UnfoldingItemsViewModel()
         {
@@ -34,23 +34,19 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (item.CanExpand)
+                if (!item.CanExpand) return;
+                item.IsExpanded = !item.IsExpanded;
+                if (item.IsExpanded)
                 {
-                    item.IsExpanded = !item.IsExpanded;
-                    if (item.IsExpanded)
-                    {
-                        expandedItems.Enqueue(item);
-                        if (expandedItems.Count > MaxExpandedItems)
-                        {
-                            var itemToCollapse = expandedItems.Dequeue();
-                            itemToCollapse.IsExpanded = false;
-                        }
-                    }
-                    else
-                    {
-                        var tempItems = new Queue<UnfoldingItem>(expandedItems.Where(x => x.IsExpanded));
-                        expandedItems = tempItems;
-                    }
+                    ExpandedItems.Enqueue(item);
+                    if (ExpandedItems.Count <= MaxExpandedItems) return;
+                    var itemToCollapse = ExpandedItems.Dequeue();
+                    itemToCollapse.IsExpanded = false;
+                }
+                else
+                {
+                    var tempItems = new Queue<UnfoldingItem>(ExpandedItems.Where(x => x.IsExpanded));
+                    ExpandedItems = tempItems;
                 }
             }
             catch (Exception ex)
