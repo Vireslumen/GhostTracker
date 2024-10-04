@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Windows.Input;
@@ -17,13 +16,12 @@ namespace GhostTracker.ViewModels
     /// </summary>
     public class FeedbackViewModel : BindableObject
     {
-        private readonly DataService dataService;
         private FeedbackCommon feedbackCommon;
         private string feedbackText;
 
         public FeedbackViewModel()
         {
-            dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<DataService>();
             FeedbackCommon = dataService.GetFeedbackCommon();
             SubmitCommand = new Command(ExecuteSubmit);
             CancelCommand = new Command(Exit);
@@ -63,15 +61,13 @@ namespace GhostTracker.ViewModels
                 var json = JsonConvert.SerializeObject(FeedbackText);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                using (var client = new HttpClient())
-                {
-                    // Укажите URL вашего API
-                    var response = await client.PostAsync("https://a28577-767d.u.d-f.pw/Feedback", content);
+                using var client = new HttpClient();
+                // Укажите URL вашего API
+                var response = await client.PostAsync("https://a28577-767d.u.d-f.pw/Feedback", content);
 
-                    if (response.IsSuccessStatusCode)
-                    {
-                        PopupNavigation.Instance.PopAsync();
-                    }
+                if (response.IsSuccessStatusCode)
+                {
+                    await PopupNavigation.Instance.PopAsync();
                 }
             }
             catch (Exception ex)
@@ -80,9 +76,9 @@ namespace GhostTracker.ViewModels
             }
         }
 
-        private void Exit()
+        private static async void Exit()
         {
-            PopupNavigation.Instance.PopAsync();
+            await PopupNavigation.Instance.PopAsync();
         }
     }
 }
