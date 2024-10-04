@@ -12,12 +12,6 @@ namespace GhostTracker.Models
     {
         private bool isVisible;
         private int visibility;
-
-        public GhostGuessQuestion()
-        {
-            Ghosts = new List<Ghost>();
-        }
-
         public bool IsVisible
         {
             get => isVisible;
@@ -40,27 +34,27 @@ namespace GhostTracker.Models
                 OnPropertyChanged();
             }
         }
-        public List<Ghost> Ghosts { get; set; }
+        public List<Ghost> Ghosts { get; set; } = new List<Ghost>();
         public List<int> GhostsId { get; set; }
         public string QuestionText { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         /// <summary>
         ///     Связывает вопрос  - GhostGuessQuestion с призраками Ghost через имеющийся список Id призраков - GhostsId.
         /// </summary>
-        /// <param name="allghosts">Список всех призраков Ghost.</param>
-        public void PopulateAssociatedGhosts(List<Ghost> allghosts)
+        /// <param name="allGhosts">Список всех призраков Ghost.</param>
+        public void PopulateAssociatedGhosts(List<Ghost> allGhosts)
         {
             foreach (var ghostId in GhostsId)
             {
-                var ghost = allghosts.FirstOrDefault(c => c.Id == ghostId);
+                var ghost = allGhosts.FirstOrDefault(c => c.Id == ghostId);
                 if (ghost != null) Ghosts.Add(ghost);
             }
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
