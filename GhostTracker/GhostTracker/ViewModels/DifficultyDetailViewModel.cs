@@ -9,13 +9,12 @@ namespace GhostTracker.ViewModels
     /// </summary>
     public class DifficultyDetailViewModel : BaseViewModel
     {
-        public readonly DataService dataService;
         private Difficulty difficulty;
         private DifficultyCommon difficultyCommon;
 
         public DifficultyDetailViewModel(Difficulty difficulty)
         {
-            dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<DataService>();
             DifficultyCommon = dataService.GetDifficultyCommon();
             Difficulty = difficulty;
         }
