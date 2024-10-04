@@ -29,14 +29,14 @@ namespace GhostTracker.ViewModels
         public SettingsViewModel()
         {
             dataService = DependencyService.Get<DataService>();
-            tipLevels = dataService.GetTipLevels();
-            languages = new List<string>(LanguageDictionary.LanguageMap.Keys);
+            TipLevels = dataService.GetTipLevels();
+            Languages = new List<string>(LanguageDictionary.LanguageMap.Keys);
             selectedLanguage = LanguageDictionary.GetLanguageNameByCode(dataService.LanguageCode);
             shakeActive = ShakeHelper.GetShakeActive();
-            settingsCommon = dataService.GetSettingsCommon();
+            SettingsCommon = dataService.GetSettingsCommon();
             isLoggingEnabled = LoggerHelper.GetServerLogActive();
-            selectedTipLevel = settingsCommon.SelectedLevel;
-            ReportBugCommand = new Command(() => ReportBug());
+            selectedTipLevel = SettingsCommon.SelectedLevel;
+            ReportBugCommand = new Command(ReportBug);
         }
 
         public bool IsLoggingEnabled
@@ -44,13 +44,11 @@ namespace GhostTracker.ViewModels
             get => isLoggingEnabled;
             set
             {
-                if (isLoggingEnabled != value)
-                {
-                    isLoggingEnabled = value;
-                    LoggerHelper.SaveServerLogActive(value);
-                    LoggerConfigurationManager.EnableServerLogging(value);
-                    OnPropertyChanged();
-                }
+                if (isLoggingEnabled == value) return;
+                isLoggingEnabled = value;
+                LoggerHelper.SaveServerLogActive(value);
+                LoggerConfigurationManager.EnableServerLogging(value);
+                OnPropertyChanged();
             }
         }
         public bool ShakeActive
@@ -88,14 +86,12 @@ namespace GhostTracker.ViewModels
             get => selectedLanguage;
             set
             {
-                if (selectedLanguage != value)
-                {
-                    selectedLanguage = value;
-                    OnPropertyChanged();
-                    var selectedLanguageCode = LanguageDictionary.LanguageMap[value];
-                    LanguageHelper.SaveUserLanguage(selectedLanguageCode);
-                    ShowLoadingAndInitializeApp();
-                }
+                if (selectedLanguage == value) return;
+                selectedLanguage = value;
+                OnPropertyChanged();
+                var selectedLanguageCode = LanguageDictionary.LanguageMap[value];
+                LanguageHelper.SaveUserLanguage(selectedLanguageCode);
+                ShowLoadingAndInitializeApp();
             }
         }
         public string SelectedTipLevel
@@ -103,17 +99,15 @@ namespace GhostTracker.ViewModels
             get => selectedTipLevel;
             set
             {
-                if (selectedTipLevel != value)
-                {
-                    selectedTipLevel = value;
-                    SettingsCommon.SelectedLevel = value;
-                    dataService.SelectedTipLevel = value;
-                    var serializedData = JsonConvert.SerializeObject(SettingsCommon);
-                    var filePath = Path.Combine(dataService.FolderPath,
-                        dataService.LanguageCode + "_" + "settings_common_cache.json");
-                    File.WriteAllText(filePath, serializedData);
-                    OnPropertyChanged();
-                }
+                if (selectedTipLevel == value) return;
+                selectedTipLevel = value;
+                SettingsCommon.SelectedLevel = value;
+                dataService.SelectedTipLevel = value;
+                var serializedData = JsonConvert.SerializeObject(SettingsCommon);
+                var filePath = Path.Combine(dataService.FolderPath,
+                    dataService.LanguageCode + "_" + "settings_common_cache.json");
+                File.WriteAllText(filePath, serializedData);
+                OnPropertyChanged();
             }
         }
 
@@ -125,7 +119,7 @@ namespace GhostTracker.ViewModels
         /// <summary>
         ///     Открытие страницы отправки фидбэка.
         /// </summary>
-        private async void ReportBug()
+        private static async void ReportBug()
         {
             await PopupNavigation.Instance.PushAsync(new FeedbackPopupPage());
         }
@@ -133,7 +127,7 @@ namespace GhostTracker.ViewModels
         /// <summary>
         ///     Показ загрузочного экрана и перезагрузка приложения для смены языка.
         /// </summary>
-        private async void ShowLoadingAndInitializeApp()
+        private static async void ShowLoadingAndInitializeApp()
         {
             try
             {
