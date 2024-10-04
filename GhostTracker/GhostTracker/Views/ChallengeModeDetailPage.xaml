@@ -110,7 +110,7 @@
                     <Label
                         FontFamily="{StaticResource BoldFont}"
                         FontSize="16"
-                        Text="{Binding ChallengeModeCommon.DiffucltyParams}" />
+                        Text="{Binding ChallengeModeCommon.DistinctiveParams}" />
                     <Label
                         LineHeight="1.5"
                         Padding="5,0,5,5"

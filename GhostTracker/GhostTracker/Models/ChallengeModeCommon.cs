@@ -13,10 +13,10 @@ namespace GhostTracker.Models
         /// </summary>
         public string Description { get; set; }
         /// <summary>
-        ///     Название списка параметров сложности особого режима. Примеры: "Mode Complexity Parameters", "Параметры сложности
-        ///     особого режима".
+        ///     Название списка отличительных параметров особого режима. Примеры: "Distinctive mode parameters", "Отличительные
+        ///     параметры режима".
         /// </summary>
-        public string DiffucltyParams { get; set; }
+        public string DistinctiveParams { get; set; }
         /// <summary>
         ///     Название списка предоставляемого в особом режиме снаряжения. Примеры: "Equipment provided", "Предоставляемое
         ///     снаряжение".

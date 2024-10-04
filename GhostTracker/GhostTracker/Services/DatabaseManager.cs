@@ -142,7 +142,7 @@ namespace GhostTracker.Services
                 {
                     Title = c.Title,
                     Description = c.Description,
-                    DiffucltyParams = c.DiffucltyParams,
+                    DistinctiveParams = c.DistinctiveParams,
                     EquipmentProvided = c.EquipmentProvided
                 }).FirstOrDefault();
             }
