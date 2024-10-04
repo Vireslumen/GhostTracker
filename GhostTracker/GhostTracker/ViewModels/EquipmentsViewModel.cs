@@ -97,27 +97,18 @@ namespace GhostTracker.ViewModels
             get => selectedTiers;
             set => SetProperty(ref selectedTiers, value);
         }
-        public string FilterColor
-        {
-            get
-            {
-                var currentTheme = Application.Current.RequestedTheme;
-                return SelectedTiers.Any() || minUnlockLevelSaved != MinUnlockLevelDefault ||
-                       maxUnlockLevelSaved != MaxUnlockLevelDefault
-                    ? currentTheme == OSAppTheme.Dark ? "#FD7E14" : "#FD7E14"
-                    : "Transparent";
-            }
-        }
+        public string FilterColor =>
+            SelectedTiers.Any() || minUnlockLevelSaved != MinUnlockLevelDefault || maxUnlockLevelSaved != MaxUnlockLevelDefault
+                ? "#FD7E14"
+                : "Transparent";
         public string MaxUnlockLevel
         {
             get => maxUnlockLevel;
             set
             {
-                if (maxUnlockLevel != value)
-                {
-                    maxUnlockLevel = value;
-                    OnPropertyChanged();
-                }
+                if (maxUnlockLevel == value) return;
+                maxUnlockLevel = value;
+                OnPropertyChanged();
             }
         }
         public string MinUnlockLevel
@@ -125,11 +116,9 @@ namespace GhostTracker.ViewModels
             get => minUnlockLevel;
             set
             {
-                if (minUnlockLevel != value)
-                {
-                    minUnlockLevel = value;
-                    OnPropertyChanged();
-                }
+                if (minUnlockLevel == value) return;
+                minUnlockLevel = value;
+                OnPropertyChanged();
             }
         }
 
@@ -137,6 +126,14 @@ namespace GhostTracker.ViewModels
         ///     Фильтрация оборудования по выбранным тирам и диапазону уровней разблокировки.
         /// </summary>
         public void Filter()
+        {
+            UpdateFilteredEquipments();
+        }
+
+        /// <summary>
+        ///     Фильтрация коллекции в соответствии с поисковым запросом.
+        /// </summary>
+        protected override void PerformSearch()
         {
             UpdateFilteredEquipments();
         }
@@ -165,12 +162,10 @@ namespace GhostTracker.ViewModels
             try
             {
                 if (IsNavigating) return;
-                if (selectedEquipment != null)
-                {
-                    // Логика для открытия страницы деталей снаряжения
-                    var detailPage = new EquipmentDetailPage(selectedEquipment);
-                    await NavigateWithLoadingAsync(detailPage);
-                }
+                if (selectedEquipment == null) return;
+                // Логика для открытия страницы деталей снаряжения
+                var detailPage = new EquipmentDetailPage(selectedEquipment);
+                await NavigateWithLoadingAsync(detailPage);
             }
             catch (Exception ex)
             {
@@ -237,14 +232,6 @@ namespace GhostTracker.ViewModels
             {
                 Log.Error(ex, "Ошибка во время открытия фильтра на странице снаряжения EquipmentPage.");
             }
-        }
-
-        /// <summary>
-        ///     Фильтрация коллекции в соответствии с поисковым запросом.
-        /// </summary>
-        protected override void PerformSearch()
-        {
-            UpdateFilteredEquipments();
         }
 
         /// <summary>
