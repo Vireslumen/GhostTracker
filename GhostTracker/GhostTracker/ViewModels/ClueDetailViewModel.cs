@@ -15,17 +15,17 @@ namespace GhostTracker.ViewModels
     /// </summary>
     public class ClueDetailViewModel : UnfoldingItemsViewModel
     {
-        public readonly DataService dataService;
+        public readonly DataService DataService;
         private Clue clue;
         private ClueCommon clueCommon;
 
         public ClueDetailViewModel(Clue clue)
         {
-            dataService = DependencyService.Get<DataService>();
+            DataService = DependencyService.Get<DataService>();
             Clue = clue;
-            ClueCommon = dataService.GetClueCommon();
+            ClueCommon = DataService.GetClueCommon();
             Clue.ClueRelatedEquipments = new List<Equipment>
-            (dataService.GetEquipments().Where(e => Clue.EquipmentsId.Contains(e.Id))
+            (DataService.GetEquipments().Where(e => Clue.EquipmentsId.Contains(e.Id))
                 .ToList());
             foreach (var item in Clue.UnfoldingItems) item.IsExpanded = true;
             foreach (var item in Clue.ExpandFieldsWithImages) item.IsExpanded = true;
@@ -104,12 +104,12 @@ namespace GhostTracker.ViewModels
         /// <summary>
         ///     Переход на страницу связанного с уликой снаряжения при нажатии на него.
         /// </summary>
-        private async void OpenEquipPage(Equipment eqipItem)
+        private async void OpenEquipPage(Equipment equipItem)
         {
             try
             {
                 if (IsNavigating) return;
-                var page = new EquipmentDetailPage(eqipItem);
+                var page = new EquipmentDetailPage(equipItem);
                 await NavigateWithLoadingAsync(page);
             }
             catch (Exception ex)
