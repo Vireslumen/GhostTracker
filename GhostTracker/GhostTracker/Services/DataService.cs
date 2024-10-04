@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using GhostTracker.Data;
 using GhostTracker.Models;
+using Newtonsoft.Json;
 using Serilog;
 
 namespace GhostTracker.Services
@@ -26,14 +26,15 @@ namespace GhostTracker.Services
         /// </summary>
         public string LanguageCode;
 
+        public string SelectedTipLevel;
+        private AchievementCommon achievementCommon;
+        private AppShellCommon appShellCommon;
+
         /// <summary>
         ///     Активно ли открытие окна фидбэка при тряске девайса.
         /// </summary>
         private bool shakeActive;
 
-        public string SelectedTipLevel;
-        private AchievementCommon achievementCommon;
-        private AppShellCommon appShellCommon;
         private ChallengeModeCommon challengeModeCommon;
         private ClueCommon clueCommon;
         private CursedPossessionCommon cursedPossessionCommon;
@@ -69,10 +70,9 @@ namespace GhostTracker.Services
                 var userLanguage = LanguageHelper.GetUserLanguage();
                 shakeActive = ShakeHelper.GetShakeActive();
                 //Настройка языка приложения
-                if (!string.IsNullOrEmpty(userLanguage))
-                    LanguageCode = userLanguage;
-                else
-                    LanguageCode = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
+                LanguageCode = !string.IsNullOrEmpty(userLanguage)
+                    ? userLanguage
+                    : CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
                 //Если в приложении нет такого языка, то язык английский
                 if (!LanguageDictionary.LanguageMap.ContainsValue(LanguageCode)) LanguageCode = "EN";
                 FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
@@ -90,6 +90,8 @@ namespace GhostTracker.Services
         public bool NewPatch { get; set; }
         public event Action CursedsDataLoaded;
         public event Action EquipmentsDataLoaded;
+        public event Action GhostsDataLoaded;
+        public event Action MapsDataLoaded;
 
         public AchievementCommon GetAchievementCommon()
         {
@@ -284,8 +286,6 @@ namespace GhostTracker.Services
             return tips;
         }
 
-        public event Action GhostsDataLoaded;
-
         /// <summary>
         ///     Загружает текстовые данные для интерфейса, относящиеся к достижениям - Achievement из базы данных, а затем
         ///     кэширует их,
@@ -470,6 +470,7 @@ namespace GhostTracker.Services
         /// <typeparam name="T">Тип данных, который нужно загрузить.</typeparam>
         /// <param name="cacheFileName">Имя файла кэша для проверки наличия и загрузки данных.</param>
         /// <param name="databaseLoadFunction">Функция для загрузки данных из базы данных, если кэш отсутствует.</param>
+        /// <param name="notAwaitWrite">Не нужно ли ждать завершение записи в файл.</param>
         /// <returns>Объект типа <typeparamref name="T" />, содержащий загруженные данные.</returns>
         /// <remarks>
         ///     Этот метод сначала пытается загрузить данные из файла кэша. Если файл кэша не найден,
@@ -492,7 +493,7 @@ namespace GhostTracker.Services
                 var data = await databaseLoadFunction();
                 var serializedData = JsonConvert.SerializeObject(data);
                 if (notAwaitWrite)
-                    File.WriteAllTextAsync(filePath, serializedData).ContinueWith(task =>
+                    _ = File.WriteAllTextAsync(filePath, serializedData).ContinueWith(task =>
                     {
                         if (task.Exception != null)
 
@@ -846,40 +847,30 @@ namespace GhostTracker.Services
         {
             try
             {
-                var url =
+                const string url =
                     "https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=739630&count=5&feeds=steam_community_announcements";
 
-                using (var httpClient = new HttpClient())
+                using var httpClient = new HttpClient();
+                var jsonResponse = await httpClient.GetStringAsync(url);
+                var appNews = JsonConvert.DeserializeObject<AppNewsRoot>(jsonResponse);
+                appNews.AppNews.PatchItems.Reverse();
+                var patchWasAdded = false;
+                foreach (var patch in appNews.AppNews.PatchItems)
                 {
-                    var jsonResponse = await httpClient.GetStringAsync(url);
-                    var appNews = JsonConvert.DeserializeObject<AppNewsRoot>(jsonResponse);
-                    appNews.AppNews.PatchItems.Reverse();
-                    var patchWasAdded = false;
-                    foreach (var patch in appNews.AppNews.PatchItems)
-                    {
-                        var patchWasnot = true;
-                        foreach (var patchDB in patches)
-                            if (patch.Source == patchDB.Source)
-                            {
-                                patchWasnot = false;
-                                break;
-                            }
+                    var isPatchNew = patches.All(patchDb => patch.Source != patchDb.Source);
 
-                        if (patchWasnot)
-                        {
-                            patches.Add(patch);
-                            await databaseManager.AddPatchAsync(patch);
-                            patchWasAdded = true;
-                        }
-                    }
+                    if (!isPatchNew) continue;
+                    patches.Add(patch);
+                    await databaseManager.AddPatchAsync(patch);
+                    patchWasAdded = true;
+                }
 
-                    if (patchWasAdded)
-                    {
-                        NewPatch = true;
-                        var serializedData = JsonConvert.SerializeObject(patches);
-                        var filePath = Path.Combine(FolderPath, LanguageCode + "_" + "patch_cache.json");
-                        File.WriteAllText(filePath, serializedData);
-                    }
+                if (patchWasAdded)
+                {
+                    NewPatch = true;
+                    var serializedData = JsonConvert.SerializeObject(patches);
+                    var filePath = Path.Combine(FolderPath, LanguageCode + "_" + "patch_cache.json");
+                    await File.WriteAllTextAsync(filePath, serializedData);
                 }
             }
             catch (Exception ex)
@@ -962,16 +953,13 @@ namespace GhostTracker.Services
             }
         }
 
-        public event Action MapsDataLoaded;
-
         public void ReinitializeLanguage()
         {
             var userLanguage = LanguageHelper.GetUserLanguage();
             //Настройка языка приложения
-            if (!string.IsNullOrEmpty(userLanguage))
-                LanguageCode = userLanguage;
-            else
-                LanguageCode = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
+            LanguageCode = !string.IsNullOrEmpty(userLanguage)
+                ? userLanguage
+                : CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
             //Если в приложении нет такого языка, то язык английский
             if (!LanguageDictionary.LanguageMap.ContainsValue(LanguageCode)) LanguageCode = "EN";
         }
