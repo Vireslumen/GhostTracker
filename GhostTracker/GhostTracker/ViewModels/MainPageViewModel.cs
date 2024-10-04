@@ -22,18 +22,19 @@ namespace GhostTracker.ViewModels
     /// </summary>
     public class MainPageViewModel : SearchableViewModel
     {
-        public readonly DataService dataService;
+        private readonly DataService dataService;
+        private readonly Random random;
         private bool isSearchResultVisible;
         private ObservableCollection<object> searchResults;
         private ObservableCollection<Quest> dailyQuest;
-        private ObservableCollection<Quest> weekyQuest;
+        private ObservableCollection<Quest> weeklyQuest;
         private Tip displayedTip;
 
         public MainPageViewModel()
         {
             try
             {
-                var random = new Random();
+                random = new Random();
                 dataService = DependencyService.Get<DataService>();
                 //Загрузка всех данных для страницы
                 ChallengeMode = dataService.GetCurrentChallengeMode();
@@ -45,10 +46,12 @@ namespace GhostTracker.ViewModels
                 Patches = dataService.GetPatches().TakeLast(5).ToList();
                 Patches.Reverse();
                 Quests = dataService.GetQuests();
-                OtherInfos = new List<ITitledItem>();
-                OtherInfos.Add(dataService.GetQuestCommon());
-                OtherInfos.Add(dataService.GetChallengeModeCommon());
-                OtherInfos.Add(dataService.GetAchievementCommon());
+                OtherInfos = new List<ITitledItem>
+                {
+                    dataService.GetQuestCommon(),
+                    dataService.GetChallengeModeCommon(),
+                    dataService.GetAchievementCommon()
+                };
                 OtherInfos.AddRange(dataService.GetOtherInfos());
                 MainPageCommon = dataService.GetMainPageCommon();
                 ChangeTip();
@@ -147,10 +150,10 @@ namespace GhostTracker.ViewModels
         }
         public ObservableCollection<Quest> WeeklyQuest
         {
-            get => weekyQuest;
+            get => weeklyQuest;
             set
             {
-                weekyQuest = value;
+                weeklyQuest = value;
                 OnPropertyChanged();
             }
         }
@@ -172,7 +175,6 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                var random = new Random();
                 if (dataService.SelectedTipLevel == dataService.GetSettingsCommon().AnyLevel)
                 {
                     if (DisplayedTip != null)
@@ -207,19 +209,45 @@ namespace GhostTracker.ViewModels
         }
 
         /// <summary>
+        ///     Получение коллекции квестов по номерам.
+        /// </summary>
+        /// <param name="indices">Массив номеров квестов.</param>
+        /// <returns>Коллекция квестов.</returns>
+        public ObservableCollection<Quest> GetSomeQuests(int[] indices)
+        {
+            return new ObservableCollection<Quest>(Quests.Where((c, index) => indices.Contains(index)));
+        }
+
+        /// <summary>
+        ///     Глобальный поиск среди на главной странице.
+        /// </summary>
+        protected override void PerformSearch()
+        {
+            if (!string.IsNullOrWhiteSpace(SearchText))
+            {
+                var results = dataService.Search(SearchText);
+                SearchResults.Clear();
+                foreach (var item in results) SearchResults.Add(item);
+                IsSearchResultVisible = SearchResults.Any();
+            }
+            else
+            {
+                IsSearchResultVisible = false;
+            }
+        }
+
+        /// <summary>
         ///     Метод проверки выхода нового патча и открытия алерта.
         /// </summary>
         private async void CheckPatchUpdate()
         {
             try
             {
-                if (dataService.NewPatch)
-                {
-                    LastPatch = Patches.First();
-                    // Логика для открытия алерта о выходе нового патча
-                    var alertPage = new PatchAlertPage(this);
-                    await PopupNavigation.Instance.PushAsync(alertPage);
-                }
+                if (!dataService.NewPatch) return;
+                LastPatch = Patches.First();
+                // Логика для открытия алерта о выходе нового патча
+                var alertPage = new PatchAlertPage(this);
+                await PopupNavigation.Instance.PushAsync(alertPage);
             }
             catch (Exception ex)
             {
@@ -252,16 +280,6 @@ namespace GhostTracker.ViewModels
         }
 
         /// <summary>
-        ///     Получение коллекции квестов по номерам.
-        /// </summary>
-        /// <param name="indices">Массив номеров квестов.</param>
-        /// <returns>Коллекция квестов.</returns>
-        public ObservableCollection<Quest> GetSomeQuests(int[] indices)
-        {
-            return new ObservableCollection<Quest>(Quests.Where((c, index) => indices.Contains(index)));
-        }
-
-        /// <summary>
         ///     Переход на выбранную страницу или сайт из поиска.
         /// </summary>
         /// <param name="selectedSearchItem">Выбранный элемент в поиске</param>
@@ -271,7 +289,7 @@ namespace GhostTracker.ViewModels
             {
                 if (isNavigating || selectedSearchItem == null) return;
 
-                Page detailPage = null;
+                Page detailPage;
                 switch (selectedSearchItem)
                 {
                     case CursedPossession cursedPossession:
@@ -310,11 +328,11 @@ namespace GhostTracker.ViewModels
                         detailPage = new ChallengeModeDetailPage(challengeMode);
                         await NavigateWithLoadingAsync(detailPage);
                         break;
-                    case Quest quest:
+                    case Quest _:
                         detailPage = new QuestsPage();
                         await NavigateWithLoadingAsync(detailPage);
                         break;
-                    case Achievement achievement:
+                    case Achievement _:
                         detailPage = new AchievementPage();
                         await NavigateWithLoadingAsync(detailPage);
                         break;
@@ -332,11 +350,9 @@ namespace GhostTracker.ViewModels
         private async void OnChallengeModeTapped()
         {
             if (isNavigating) return;
-            if (dataService.IsMapsDataLoaded && dataService.IsEquipmentsDataLoaded)
-            {
-                var page = new ChallengeModeDetailPage(ChallengeMode);
-                await NavigateWithLoadingAsync(page);
-            }
+            if (!dataService.IsMapsDataLoaded || !dataService.IsEquipmentsDataLoaded) return;
+            var page = new ChallengeModeDetailPage(ChallengeMode);
+            await NavigateWithLoadingAsync(page);
         }
 
         /// <summary>
@@ -455,32 +471,39 @@ namespace GhostTracker.ViewModels
         private async void OnOtherPageTapped(ITitledItem otherInfoItem)
         {
             if (isNavigating) return;
-            if (otherInfoItem is OtherInfo)
+            switch (otherInfoItem)
             {
-                var page = new OtherInfoPage((OtherInfo) otherInfoItem);
-                await NavigateWithLoadingAsync(page);
-            }
-            else if (otherInfoItem is QuestCommon)
-            {
-                var page = new QuestsPage();
-                await NavigateWithLoadingAsync(page);
-            }
-            else if (otherInfoItem is ChallengeModeCommon)
-            {
-                var page = new ChallengeModesPage();
-                await NavigateWithLoadingAsync(page);
-            }
-            else if (otherInfoItem is AchievementCommon)
-            {
-                var page = new AchievementPage();
-                await NavigateWithLoadingAsync(page);
+                case OtherInfo info:
+                {
+                    var page = new OtherInfoPage(info);
+                    await NavigateWithLoadingAsync(page);
+                    break;
+                }
+                case QuestCommon _:
+                {
+                    var page = new QuestsPage();
+                    await NavigateWithLoadingAsync(page);
+                    break;
+                }
+                case ChallengeModeCommon _:
+                {
+                    var page = new ChallengeModesPage();
+                    await NavigateWithLoadingAsync(page);
+                    break;
+                }
+                case AchievementCommon _:
+                {
+                    var page = new AchievementPage();
+                    await NavigateWithLoadingAsync(page);
+                    break;
+                }
             }
         }
 
         /// <summary>
         ///     Переход на страницу в браузере патча.
         /// </summary>
-        private async void OnPatchTapped(Patch patch)
+        private static async void OnPatchTapped(Patch patch)
         {
             try
             {
@@ -496,7 +519,7 @@ namespace GhostTracker.ViewModels
         /// <summary>
         ///     Отображение всплывающей подсказки о прохождении квеста на экране.
         /// </summary>
-        private async void OnQuestTapped(Quest questItem)
+        private static async void OnQuestTapped(Quest questItem)
         {
             var questTip = questItem.Tip;
             await PopupNavigation.Instance.PushAsync(new TooltipPopup(questTip));
@@ -527,24 +550,6 @@ namespace GhostTracker.ViewModels
         }
 
         /// <summary>
-        ///     Глобальный поиск среди на главной странице.
-        /// </summary>
-        protected override void PerformSearch()
-        {
-            if (!string.IsNullOrWhiteSpace(SearchText))
-            {
-                var results = dataService.Search(SearchText);
-                SearchResults.Clear();
-                foreach (var item in results) SearchResults.Add(item);
-                IsSearchResultVisible = SearchResults.Any();
-            }
-            else
-            {
-                IsSearchResultVisible = false;
-            }
-        }
-
-        /// <summary>
         ///     Получение текущих задач с сервера.
         /// </summary>
         private async void SetTasks()
@@ -556,11 +561,9 @@ namespace GhostTracker.ViewModels
                 response.EnsureSuccessStatusCode();
                 var jsonString = await response.Content.ReadAsStringAsync();
                 var numbers = JsonSerializer.Deserialize<int[]>(jsonString);
-                if (numbers.Length >= 8)
-                {
-                    DailyQuest = GetSomeQuests(new ArraySegment<int>(numbers, 0, 4).ToArray());
-                    WeeklyQuest = GetSomeQuests(new ArraySegment<int>(numbers, 4, 4).ToArray());
-                }
+                if (numbers.Length < 8) return;
+                DailyQuest = GetSomeQuests(new ArraySegment<int>(numbers, 0, 4).ToArray());
+                WeeklyQuest = GetSomeQuests(new ArraySegment<int>(numbers, 4, 4).ToArray());
             }
             catch (Exception ex)
             {
