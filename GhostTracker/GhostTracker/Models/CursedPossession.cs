@@ -6,7 +6,7 @@ namespace GhostTracker.Models
     /// <summary>
     ///     Представляет собой проклятый предмет, который расположен на карте.
     /// </summary>
-    public class CursedPossession : BaseDisplayableItem
+    public class CursedPossession : BaseTitledItem
     {
         public int ID { get; set; }
         public List<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }

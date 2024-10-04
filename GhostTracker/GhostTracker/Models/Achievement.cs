@@ -3,7 +3,7 @@
     /// <summary>
     ///     Представляет собой достижение, получаемое в игре.
     /// </summary>
-    public class Achievement : BaseDisplayableItem
+    public class Achievement : BaseTitledItem
     {
         /// <summary>
         ///     Подсказка по получению достижения.

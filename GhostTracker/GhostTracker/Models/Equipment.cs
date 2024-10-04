@@ -5,7 +5,7 @@ namespace GhostTracker.Models
     /// <summary>
     ///     Представляет собой снаряжение.
     /// </summary>
-    public class Equipment : BaseDisplayableItem
+    public class Equipment : BaseTitledItem
     {
         public int Cost { get; set; }
         public int ID { get; set; }

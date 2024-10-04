@@ -6,7 +6,7 @@ namespace GhostTracker.Models
     ///     Класс QuestCommon содержит атрибуты для локализации текстовых элементов интерфейса,
     ///     относящихся к квестам - Quest.
     /// </summary>
-    public class QuestCommon: ITitledItem
+    public class QuestCommon : ITitledItem
     {
         /// <summary>
         ///     Название поля ежедневных квестов. Примеры: "Daily Tasks", "Ежедневные задания".

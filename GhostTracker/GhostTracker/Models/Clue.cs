@@ -9,7 +9,7 @@ namespace GhostTracker.Models
     /// <summary>
     ///     Представляет собой улику, которую оставляют призраки.
     /// </summary>
-    public class Clue : BaseDisplayableItem, INotifyPropertyChanged
+    public class Clue : BaseTitledItem, INotifyPropertyChanged
     {
         private string iconFilePath;
 

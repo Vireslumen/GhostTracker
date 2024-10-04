@@ -5,7 +5,7 @@ namespace GhostTracker.Models
     /// <summary>
     ///     Представляет собой карту для игровой сессии.
     /// </summary>
-    public class Map : BaseDisplayableItem
+    public class Map : BaseTitledItem
     {
         /// <summary>
         ///     Количество выходов.

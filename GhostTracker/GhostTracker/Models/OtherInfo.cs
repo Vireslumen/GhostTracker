@@ -6,7 +6,7 @@ namespace GhostTracker.Models
     /// <summary>
     ///     Представляет собой данные для некатегоризируемой страницы.
     /// </summary>
-    public class OtherInfo : BaseDisplayableItem
+    public class OtherInfo : BaseTitledItem
     {
         public int ID { get; set; }
         public List<ExpandFieldWithImages> ExpandFieldsWithImages { get; set; }

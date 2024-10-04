@@ -6,7 +6,7 @@ namespace GhostTracker.Models
     /// <summary>
     ///     Представляет собой призрака с характерными ему свойствами.
     /// </summary>
-    public class Ghost : BaseDisplayableItem
+    public class Ghost : BaseTitledItem
     {
         public Ghost()
         {
