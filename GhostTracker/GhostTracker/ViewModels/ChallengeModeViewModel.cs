@@ -9,6 +9,9 @@ using Xamarin.Forms;
 
 namespace GhostTracker.ViewModels
 {
+    /// <summary>
+    ///     ViewModel для страницы списка особых режимов.
+    /// </summary>
     public class ChallengeModeViewModel : BaseViewModel
     {
         private readonly DataService dataService;

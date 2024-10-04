@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Input;
-using Newtonsoft.Json;
 using GhostTracker.Models;
 using GhostTracker.Services;
 using GhostTracker.Views;
+using Newtonsoft.Json;
 using Rg.Plugins.Popup.Services;
 using Serilog;
 using Xamarin.Forms;
 
 namespace GhostTracker.ViewModels
 {
+    /// <summary>
+    ///     ViewModel для страницы настроек.
+    /// </summary>
     public class SettingsViewModel : BaseViewModel
     {
         private readonly DataService dataService;

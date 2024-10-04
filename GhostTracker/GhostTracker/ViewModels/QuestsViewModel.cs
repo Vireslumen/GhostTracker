@@ -8,6 +8,10 @@ using Xamarin.Forms;
 
 namespace GhostTracker.ViewModels
 {
+
+    /// <summary>
+    ///     ViewModel для страницы списка ежедневных и еженедельных заданий.
+    /// </summary>
     public class QuestsViewModel : BaseViewModel
     {
         private readonly DataService dataService;

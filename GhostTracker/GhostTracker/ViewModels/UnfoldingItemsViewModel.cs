@@ -8,6 +8,11 @@ using Xamarin.Forms;
 
 namespace GhostTracker.ViewModels
 {
+    /// <summary>
+    ///     Базовый класс ViewModel для управления разворачиваемыми элементами. 
+    ///     Предоставляет функциональность для переключения состояния раскрытия элементов 
+    ///     и ограничения количества одновременно раскрытых элементов.
+    /// </summary>
     public abstract class UnfoldingItemsViewModel : BaseViewModel
     {
         private const int MaxExpandedItems = 3;
