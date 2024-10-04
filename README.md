@@ -1,7 +1,9 @@
 ![title2](https://github.com/user-attachments/assets/2d9dbcc3-63c4-43f9-bc35-5cabcd193269)
-# PhasmAid
+# GhostTracker
 ## Description
-PhasmAid is an assistant application for the game Phasmophobia. It provides detailed information about game mechanics, ghosts, and much more. The app delivers up-to-date information on game events and news, and includes maps of game locations with markings for hiding places, cursed possessions, and fuse box locations. Additionally, the app features a system to assist in identifying ghosts.
+GhostTracker is an **UNOFFICIAL** assistant application for the game Phasmophobia. It provides detailed information about game mechanics, ghosts, and much more. The app delivers up-to-date information on game events and news, and includes maps of game locations with markings for hiding places, cursed possessions, and fuse box locations. Additionally, the app features a system to assist in identifying ghosts.
+
+This application is not affiliated with or endorsed by the official developers of Phasmophobia, Kinetic Games, or any other related entities. All content within the app is sourced from publicly available materials and is intended for informational purposes only.
 
 ## Features
 - **Ghost Information**: Detailed descriptions and characteristics of each ghost type.
@@ -44,12 +46,12 @@ This application leverages a range of modern technologies and libraries to ensur
 - Specifically designed for Android devices, optimizing the app for use on a wide range of screens and device types.
 
 ## Future Plans
-PhasmAid is committed to continuous improvement and expansion. Here are some enhancements and features planned for future releases:
+GhostTracker is committed to continuous improvement and expansion. Here are some enhancements and features planned for future releases:
 
 - **Additional Language Support**: Building on the existing multilingual support, the app will be translated into additional languages to further expand accessibility.
 - **Theme Customization**: Introducing multiple themes to enable users to personalize their app experience.
-- **iOS Support**: Plans to develop and release an iOS version of PhasmAid, expanding the user base to include Apple device users.
-- **Ongoing Improvements**: Enhancements will be made based on user feedback to continually refine and optimize the functionality and user experience of PhasmAid.
+- **iOS Support**: Plans to develop and release an iOS version of GhostTracker, expanding the user base to include Apple device users.
+- **Ongoing Improvements**: Enhancements will be made based on user feedback to continually refine and optimize the functionality and user experience of GhostTracker.
 
 ## Acknowledgements
 
