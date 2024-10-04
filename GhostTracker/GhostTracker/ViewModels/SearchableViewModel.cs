@@ -14,9 +14,9 @@ namespace GhostTracker.ViewModels
         private const int SearchInterval = 500;
 
         private readonly Timer searchTimer;
-        protected string searchText;
+        private string searchText;
 
-        public SearchableViewModel()
+        protected SearchableViewModel()
         {
             searchTimer = new Timer(OnSearchTimerElapsed, null, Timeout.Infinite, Timeout.Infinite);
         }
@@ -39,7 +39,7 @@ namespace GhostTracker.ViewModels
         private void OnSearchTimerElapsed(object state)
         {
             // Вызов метода поиска на основном потоке
-            Device.BeginInvokeOnMainThread(() => { PerformSearch(); });
+            Device.BeginInvokeOnMainThread(PerformSearch);
         }
 
         /// <summary>
