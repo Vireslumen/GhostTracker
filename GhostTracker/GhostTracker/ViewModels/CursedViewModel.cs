@@ -16,19 +16,17 @@ namespace GhostTracker.ViewModels
     /// </summary>
     internal class CursedViewModel : SearchableViewModel
     {
-        private readonly DataService dataService;
         private readonly List<CursedPossession> curseds;
         private CursedPossessionCommon cursedPossessionCommon;
         private ObservableCollection<CursedPossession> filteredCurseds;
 
         public CursedViewModel()
         {
-            dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<DataService>();
             //Загрузка всех проклятых предметов.
             curseds = dataService.GetCurseds().OrderBy(c => c.Title).ToList();
-            ;
             Curseds = new ObservableCollection<CursedPossession>(curseds);
-            cursedPossessionCommon = dataService.GetCursedCommon();
+            CursedPossessionCommon = dataService.GetCursedCommon();
             // Инициализация команд
             CursedSelectedCommand = new Command<CursedPossession>(OnCursedSelected);
         }
