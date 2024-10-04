@@ -8,15 +8,15 @@ namespace GhostTracker.Services
     public static class LoggerConfigurationManager
     {
         private static ILogger _logger;
-        private static string logFilePath;
+        private static string _logFilePath;
 
         public static void EnableServerLogging(bool enable)
         {
             SelfLog.Enable(msg => Debug.WriteLine(msg));
-            logFilePath = Path.Combine("/storage/emulated/0/Download/", "logs", "log-.txt");
+            _logFilePath = Path.Combine("/storage/emulated/0/Download/", "logs", "log-.txt");
             var config = new LoggerConfiguration()
                 .MinimumLevel.Debug()
-                .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day);
+                .WriteTo.File(_logFilePath, rollingInterval: RollingInterval.Day);
 
             if (enable) config.WriteTo.Http("https://a28577-767d.u.d-f.pw/Log", 500000);
 
