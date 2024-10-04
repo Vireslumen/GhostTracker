@@ -3,7 +3,7 @@ using Rg.Plugins.Popup.Pages;
 using Serilog;
 using Xamarin.Forms.Xaml;
 
-namespace PhasmophobiaCompanion.Views
+namespace GhostTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoadingPopup : PopupPage

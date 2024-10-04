@@ -5,17 +5,17 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Windows.Input;
-using PhasmophobiaCompanion.Interfaces;
-using PhasmophobiaCompanion.Models;
-using PhasmophobiaCompanion.Services;
-using PhasmophobiaCompanion.Views;
+using GhostTracker.Interfaces;
+using GhostTracker.Models;
+using GhostTracker.Services;
+using GhostTracker.Views;
 using Rg.Plugins.Popup.Services;
 using Serilog;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Map = PhasmophobiaCompanion.Models.Map;
+using Map = GhostTracker.Models.Map;
 
-namespace PhasmophobiaCompanion.ViewModels
+namespace GhostTracker.ViewModels
 {
     /// <summary>
     ///     ViewModel для главной страницы.

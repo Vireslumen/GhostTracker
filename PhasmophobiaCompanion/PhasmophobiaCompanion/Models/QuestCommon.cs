@@ -1,6 +1,6 @@
-﻿using PhasmophobiaCompanion.Interfaces;
+﻿using GhostTracker.Interfaces;
 
-namespace PhasmophobiaCompanion.Models
+namespace GhostTracker.Models
 {
     /// <summary>
     ///     Класс QuestCommon содержит атрибуты для локализации текстовых элементов интерфейса,

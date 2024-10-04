@@ -1,10 +1,10 @@
-﻿using PhasmophobiaCompanion.Interfaces;
+﻿using GhostTracker.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace PhasmophobiaCompanion.Models
+namespace GhostTracker.Models
 {
     public class AchievementCommon : ITitledItem
     {

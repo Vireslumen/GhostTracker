@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using PhasmophobiaCompanion.Services;
-using PhasmophobiaCompanion.Views;
+using GhostTracker.Services;
+using GhostTracker.Views;
 using Serilog;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion
+namespace GhostTracker
 {
     public partial class App : Application
     {

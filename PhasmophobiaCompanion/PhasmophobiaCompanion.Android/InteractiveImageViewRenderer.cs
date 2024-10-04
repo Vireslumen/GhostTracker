@@ -2,15 +2,15 @@
 using Android.Content;
 using Android.Graphics;
 using Android.Views;
-using PhasmophobiaCompanion.Droid;
-using PhasmophobiaCompanion.Views;
+using GhostTracker.Droid;
+using GhostTracker.Views;
 using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportRenderer(typeof(InteractiveImageView), typeof(InteractiveImageViewRenderer))]
 
-namespace PhasmophobiaCompanion.Droid
+namespace GhostTracker.Droid
 {
     /// <summary>
     ///     Рендерер для создания элемента управления InteractiveImageView на Android.

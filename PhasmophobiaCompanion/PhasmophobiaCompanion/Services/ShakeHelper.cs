@@ -1,6 +1,6 @@
 ﻿using Xamarin.Essentials;
 
-namespace PhasmophobiaCompanion.Services
+namespace GhostTracker.Services
 {
     public static class ShakeHelper
     {

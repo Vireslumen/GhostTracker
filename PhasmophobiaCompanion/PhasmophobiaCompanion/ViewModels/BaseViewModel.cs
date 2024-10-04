@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using PhasmophobiaCompanion.Views;
+using GhostTracker.Views;
 using Rg.Plugins.Popup.Services;
 using Serilog;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion.ViewModels
+namespace GhostTracker.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-using PhasmophobiaCompanion.Interfaces;
-using PhasmophobiaCompanion.Models;
-using PhasmophobiaCompanion.Services;
-using PhasmophobiaCompanion.Views;
+using GhostTracker.Interfaces;
+using GhostTracker.Models;
+using GhostTracker.Services;
+using GhostTracker.Views;
 using Rg.Plugins.Popup.Services;
 using Serilog;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion.ViewModels
+namespace GhostTracker.ViewModels
 {
     /// <summary>
     ///     ViewModel для страницы списка карт, поддерживающий поиск и фильтрацию.

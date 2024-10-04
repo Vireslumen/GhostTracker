@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion.Behaviors
+namespace GhostTracker.Behaviors
 {
     /// <summary>
     ///     Поведение для Xamarin.Forms Picker control, которое конвертирует event SelectedIndexChanged в Command.

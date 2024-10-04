@@ -1,6 +1,6 @@
-﻿using PhasmophobiaCompanion.Interfaces;
+﻿using GhostTracker.Interfaces;
 
-namespace PhasmophobiaCompanion.Models
+namespace GhostTracker.Models
 {
     /// <summary>
     ///     Предоставляет базовую реализацию для элементов, которые могут быть отображены в приложении.

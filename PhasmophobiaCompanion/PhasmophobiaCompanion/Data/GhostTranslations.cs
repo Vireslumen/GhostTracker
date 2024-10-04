@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PhasmophobiaCompanion.Data
+namespace GhostTracker.Data
 {
     /// <summary>
     ///     Entity framework модель для таблицы GhostTranslations, содержащей переводы на множество языков.

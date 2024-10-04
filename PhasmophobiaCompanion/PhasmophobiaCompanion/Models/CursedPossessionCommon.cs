@@ -1,4 +1,4 @@
-﻿namespace PhasmophobiaCompanion.Models
+﻿namespace GhostTracker.Models
 {
     /// <summary>
     ///     Класс CursedPossessionCommon содержит атрибуты для локализации текстовых элементов интерфейса,

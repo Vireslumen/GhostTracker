@@ -2,8 +2,8 @@
 using Android.Content.Res;
 using Android.Webkit;
 using Java.Lang;
-using PhasmophobiaCompanion.Droid;
-using PhasmophobiaCompanion.Models;
+using GhostTracker.Droid;
+using GhostTracker.Models;
 using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -12,7 +12,7 @@ using WebView = Xamarin.Forms.WebView;
 
 [assembly: ExportRenderer(typeof(WebView), typeof(CustomWebViewRenderer))]
 
-namespace PhasmophobiaCompanion.Droid
+namespace GhostTracker.Droid
 {
     public class CustomWebViewRenderer : WebViewRenderer
     {

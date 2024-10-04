@@ -1,4 +1,4 @@
-﻿namespace PhasmophobiaCompanion.Models
+﻿namespace GhostTracker.Models
 {
     /// <summary>
     ///     Класс MainPageCommon содержит атрибуты для локализации текстовых элементов интерфейса,

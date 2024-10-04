@@ -1,4 +1,4 @@
-﻿namespace PhasmophobiaCompanion.Models
+﻿namespace GhostTracker.Models
 {
     /// <summary>
     ///     Представляет собой уровень сложности конкретной игровой сессии.

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Input;
-using PhasmophobiaCompanion.Models;
-using PhasmophobiaCompanion.Views;
+using GhostTracker.Models;
+using GhostTracker.Views;
 using Serilog;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion.ViewModels
+namespace GhostTracker.ViewModels
 {
     /// <summary>
     ///     ViewModel для подробной страницы проклятого предмета.

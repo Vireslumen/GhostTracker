@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace PhasmophobiaCompanion.Models
+namespace GhostTracker.Models
 {
     /// <summary>
     ///     Представляет собой информацию о патче, с сылкой на его страницу.

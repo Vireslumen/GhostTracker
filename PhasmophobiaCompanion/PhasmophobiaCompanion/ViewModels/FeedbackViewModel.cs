@@ -4,13 +4,13 @@ using System.Net.Http;
 using System.Text;
 using System.Windows.Input;
 using Newtonsoft.Json;
-using PhasmophobiaCompanion.Models;
-using PhasmophobiaCompanion.Services;
+using GhostTracker.Models;
+using GhostTracker.Services;
 using Rg.Plugins.Popup.Services;
 using Serilog;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion.ViewModels
+namespace GhostTracker.ViewModels
 {
     /// <summary>
     ///     ViewModel для страницы Фидбэка.

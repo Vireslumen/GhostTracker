@@ -1,4 +1,4 @@
-﻿namespace PhasmophobiaCompanion.Models
+﻿namespace GhostTracker.Models
 {
     /// <summary>
     ///     Класс EquipmentCommon содержит атрибуты для локализации текстовых элементов интерфейса,

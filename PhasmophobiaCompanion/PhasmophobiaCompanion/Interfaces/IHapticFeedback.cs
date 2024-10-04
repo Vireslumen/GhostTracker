@@ -1,4 +1,4 @@
-﻿namespace PhasmophobiaCompanion.Interfaces
+﻿namespace GhostTracker.Interfaces
 {
     /// <summary>
     ///     Предоставляет методы для выполнения тактильной обратной связи на устройстве.

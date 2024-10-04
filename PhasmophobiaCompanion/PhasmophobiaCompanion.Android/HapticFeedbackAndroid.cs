@@ -2,14 +2,14 @@
 using Android.Content;
 using Android.OS;
 using Java.Lang;
-using PhasmophobiaCompanion.Droid;
-using PhasmophobiaCompanion.Interfaces;
+using GhostTracker.Droid;
+using GhostTracker.Interfaces;
 using Serilog;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(HapticFeedbackAndroid))]
 
-namespace PhasmophobiaCompanion.Droid
+namespace GhostTracker.Droid
 {
     /// <summary>
     ///     Реализация тактильной обратной связи для Android, использующая функции Haptic Feedback устройства.

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PhasmophobiaCompanion.Models
+namespace GhostTracker.Models
 {
     /// <summary>
     ///     Представляет собой карту для игровой сессии.

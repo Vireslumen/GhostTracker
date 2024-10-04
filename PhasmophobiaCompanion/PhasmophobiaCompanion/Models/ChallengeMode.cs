@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace PhasmophobiaCompanion.Models
+namespace GhostTracker.Models
 {
     /// <summary>
     ///     Представляет собой особый режим игры.

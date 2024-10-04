@@ -1,4 +1,4 @@
-﻿namespace PhasmophobiaCompanion.Interfaces
+﻿namespace GhostTracker.Interfaces
 {
     public interface IDatabasePathProvider
     {

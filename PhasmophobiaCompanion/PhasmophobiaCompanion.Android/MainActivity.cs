@@ -13,9 +13,9 @@ using Application = Android.App.Application;
 using Environment = System.Environment;
 using Platform = Xamarin.Essentials.Platform;
 
-namespace PhasmophobiaCompanion.Droid
+namespace GhostTracker.Droid
 {
-    [Activity(Label = "PhasmAid", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true,
+    [Activity(Label = "GhostTracker", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode |
                                ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
     public class MainActivity : FormsAppCompatActivity

@@ -2,14 +2,14 @@
 using System.Linq;
 using Android.App;
 using Android.Content;
-using PhasmophobiaCompanion.Droid;
+using GhostTracker.Droid;
 using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportRenderer(typeof(Picker), typeof(CustomPickerRenderer))]
 
-namespace PhasmophobiaCompanion.Droid
+namespace GhostTracker.Droid
 {
     public class CustomPickerRenderer : PickerRenderer
     {

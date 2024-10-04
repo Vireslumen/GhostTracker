@@ -1,4 +1,4 @@
-﻿namespace PhasmophobiaCompanion.Models
+﻿namespace GhostTracker.Models
 {
     /// <summary>
     ///     Класс FeedbackCommon содержит атрибуты для локализации текстовых элементов интерфейса, относящихся к странице

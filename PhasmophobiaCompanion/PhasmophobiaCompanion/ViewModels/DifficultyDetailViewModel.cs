@@ -1,8 +1,8 @@
-﻿using PhasmophobiaCompanion.Models;
-using PhasmophobiaCompanion.Services;
+﻿using GhostTracker.Models;
+using GhostTracker.Services;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion.ViewModels
+namespace GhostTracker.ViewModels
 {
     /// <summary>
     ///     ViewModel для подробной страницы сложности.

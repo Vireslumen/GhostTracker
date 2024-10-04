@@ -1,4 +1,4 @@
-﻿namespace PhasmophobiaCompanion.Data
+﻿namespace GhostTracker.Data
 {
     /// <summary>
     ///     Entity framework модель для таблицы QuestCommonTranslations.

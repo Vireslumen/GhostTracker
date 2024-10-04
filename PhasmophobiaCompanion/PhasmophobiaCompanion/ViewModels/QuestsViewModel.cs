@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using PhasmophobiaCompanion.Models;
-using PhasmophobiaCompanion.Services;
+using GhostTracker.Models;
+using GhostTracker.Services;
 using Serilog;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion.ViewModels
+namespace GhostTracker.ViewModels
 {
     public class QuestsViewModel : BaseViewModel
     {

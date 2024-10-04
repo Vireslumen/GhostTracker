@@ -5,7 +5,7 @@ using Serilog;
 using Serilog.Formatting.Json;
 using Serilog.Sinks.Http.TextFormatters;
 
-namespace PhasmophobiaCompanion.Services
+namespace GhostTracker.Services
 {
     public static class LoggerConfigurationManager
     {

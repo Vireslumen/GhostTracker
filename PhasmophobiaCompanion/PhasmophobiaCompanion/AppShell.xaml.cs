@@ -1,11 +1,11 @@
 ﻿using System;
-using PhasmophobiaCompanion.Services;
-using PhasmophobiaCompanion.Views;
+using GhostTracker.Services;
+using GhostTracker.Views;
 using Rg.Plugins.Popup.Services;
 using Serilog;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion
+namespace GhostTracker
 {
     public partial class AppShell : Shell
     {

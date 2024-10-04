@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PhasmophobiaCompanion.Services
+namespace GhostTracker.Services
 {
     public static class LanguageDictionary
     {

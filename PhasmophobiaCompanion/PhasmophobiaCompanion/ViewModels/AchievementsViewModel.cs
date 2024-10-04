@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using PhasmophobiaCompanion.Models;
-using PhasmophobiaCompanion.Services;
-using PhasmophobiaCompanion.Views;
+using GhostTracker.Models;
+using GhostTracker.Services;
+using GhostTracker.Views;
 using Rg.Plugins.Popup.Services;
 using Serilog;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion.ViewModels
+namespace GhostTracker.ViewModels
 {
     public class AchievementsViewModel : BaseViewModel
     {

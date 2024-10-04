@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion.ViewModels
+namespace GhostTracker.ViewModels
 {
     /// <summary>
     ///     Предоставляет базовую функциональность для ViewModel с возможностью отложенного поиска.

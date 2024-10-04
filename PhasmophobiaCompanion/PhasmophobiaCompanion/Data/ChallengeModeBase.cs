@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace PhasmophobiaCompanion.Data
+namespace GhostTracker.Data
 {
     /// <summary>
     ///     Entity framework модель для таблицы ChallengeModeBase.

@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion.Behaviors
+namespace GhostTracker.Behaviors
 {
     /// <summary>
     ///     Поведение для Xamarin.Forms Entry control, которое конвертирует event Completed в Command.

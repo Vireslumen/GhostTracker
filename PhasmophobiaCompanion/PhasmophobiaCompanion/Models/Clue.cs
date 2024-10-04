@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion.Models
+namespace GhostTracker.Models
 {
     /// <summary>
     ///     Представляет собой улику, которую оставляют призраки.

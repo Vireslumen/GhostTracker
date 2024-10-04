@@ -1,15 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
-using PhasmophobiaCompanion.Models;
-using PhasmophobiaCompanion.ViewModels;
+using GhostTracker.Models;
+using GhostTracker.ViewModels;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace PhasmophobiaCompanion.Views
+namespace GhostTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     [DesignTimeVisible(false)]

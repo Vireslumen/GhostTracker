@@ -2,7 +2,7 @@
 using Serilog;
 using Xamarin.Essentials;
 
-namespace PhasmophobiaCompanion.Services
+namespace GhostTracker.Services
 {
     /// <summary>
     ///     Сервис для определения встряхивания девайса.

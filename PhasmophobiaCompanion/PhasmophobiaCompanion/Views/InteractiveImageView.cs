@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion.Views
+namespace GhostTracker.Views
 {
     /// <summary>
     ///     Представляет изображение, которое можно масштабировать и перемещать.

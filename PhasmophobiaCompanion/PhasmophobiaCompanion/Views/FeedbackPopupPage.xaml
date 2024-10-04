@@ -3,7 +3,7 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  xmlns:popup="http://rotorgames.com"
                  xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
-                 x:Class="PhasmophobiaCompanion.Views.FeedbackPopupPage"
+                 x:Class="GhostTracker.Views.FeedbackPopupPage"
                  BackgroundColor="Transparent">
     <Frame
         Margin="20"

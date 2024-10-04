@@ -1,10 +1,10 @@
 ﻿using System;
-using PhasmophobiaCompanion.Models;
+using GhostTracker.Models;
 using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace PhasmophobiaCompanion.Views
+namespace GhostTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ImagePage : ContentPage

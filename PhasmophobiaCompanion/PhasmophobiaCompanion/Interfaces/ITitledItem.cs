@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PhasmophobiaCompanion.Interfaces
+namespace GhostTracker.Interfaces
 {
     public interface ITitledItem
     {

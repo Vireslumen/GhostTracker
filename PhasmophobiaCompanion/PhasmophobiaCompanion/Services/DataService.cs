@@ -6,11 +6,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using PhasmophobiaCompanion.Data;
-using PhasmophobiaCompanion.Models;
+using GhostTracker.Data;
+using GhostTracker.Models;
 using Serilog;
 
-namespace PhasmophobiaCompanion.Services
+namespace GhostTracker.Services
 {
     public class DataService
     {
@@ -65,7 +65,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 NewPatch = false;
-                databaseManager = new DatabaseManager(new PhasmaDB());
+                databaseManager = new DatabaseManager(new GhostTrackerDB());
                 var userLanguage = LanguageHelper.GetUserLanguage();
                 shakeActive = ShakeHelper.GetShakeActive();
                 //Настройка языка приложения

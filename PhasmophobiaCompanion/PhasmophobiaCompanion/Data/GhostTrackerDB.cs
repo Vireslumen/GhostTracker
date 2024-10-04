@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion.Data
+namespace GhostTracker.Data
 {
     /// <summary>
     ///     Контекст базы данных для приложений, наследующий от DbContext.
     /// </summary>
-    public class PhasmaDB : DbContext
+    public class GhostTrackerDB : DbContext
     {
         //Определения DbSet для различных сущностей.
         public DbSet<AchievementBase> AchievementBase { get; set; }

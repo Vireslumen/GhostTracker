@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Essentials;
 
-namespace PhasmophobiaCompanion.Services
+namespace GhostTracker.Services
 {
     public static class LoggerHelper
     {

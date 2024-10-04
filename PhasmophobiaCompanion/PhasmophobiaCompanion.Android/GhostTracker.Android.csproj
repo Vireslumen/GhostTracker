@@ -7,8 +7,8 @@
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{6968b3a4-1835-46a3-ac5c-1ae33b475983}</TemplateGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>PhasmophobiaCompanion.Droid</RootNamespace>
-    <AssemblyName>PhasmophobiaCompanion.Android</AssemblyName>
+    <RootNamespace>GhostTracker.Droid</RootNamespace>
+    <AssemblyName>GhostTracker.Android</AssemblyName>
     <Deterministic>True</Deterministic>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
@@ -116,9 +116,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PhasmophobiaCompanion\PhasmophobiaCompanion.csproj">
-      <Project>{DBFBA17F-F600-495F-9397-BCBB40C4C92F}</Project>
-      <Name>PhasmophobiaCompanion</Name>
+    <ProjectReference Include="..\PhasmophobiaCompanion\GhostTracker.csproj">
+      <Project>{D5FF502D-EA1A-425B-94C9-C7CF7A9078AB}</Project>
+      <Name>GhostTracker</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

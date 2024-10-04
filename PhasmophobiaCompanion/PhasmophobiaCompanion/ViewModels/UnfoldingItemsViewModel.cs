@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using PhasmophobiaCompanion.Models;
+using GhostTracker.Models;
 using Serilog;
 using Xamarin.Forms;
 
-namespace PhasmophobiaCompanion.ViewModels
+namespace GhostTracker.ViewModels
 {
     public abstract class UnfoldingItemsViewModel : BaseViewModel
     {

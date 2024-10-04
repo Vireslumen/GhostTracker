@@ -1,5 +1,5 @@
-﻿using PhasmophobiaCompanion.Models;
-using PhasmophobiaCompanion.ViewModels;
+﻿using GhostTracker.Models;
+using GhostTracker.ViewModels;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace PhasmophobiaCompanion.Views
+namespace GhostTracker.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class QuestsPage : ContentPage

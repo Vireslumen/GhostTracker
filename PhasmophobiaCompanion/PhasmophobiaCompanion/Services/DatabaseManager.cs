@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using PhasmophobiaCompanion.Data;
-using PhasmophobiaCompanion.Models;
+using GhostTracker.Data;
+using GhostTracker.Models;
 using Serilog;
 
-namespace PhasmophobiaCompanion.Services
+namespace GhostTracker.Services
 {
     /// <summary>
-    ///     Отвечает за добавление и загрузку различных типов данных из и в базу данных PhasmaDB.
+    ///     Отвечает за добавление и загрузку различных типов данных из и в базу данных GhostTrackerDB.
     /// </summary>
     public class DatabaseManager
     {
-        private readonly PhasmaDB phasmaDbContext;
+        private readonly GhostTrackerDB ghostTrackerDbContext;
 
-        public DatabaseManager(PhasmaDB context)
+        public DatabaseManager(GhostTrackerDB context)
         {
-            phasmaDbContext = context;
+            ghostTrackerDbContext = context;
         }
 
         /// <summary>
@@ -29,12 +29,12 @@ namespace PhasmophobiaCompanion.Services
         {
             if (patch == null) return;
 
-            phasmaDbContext.PatchBase.Add(new PatchBase
+            ghostTrackerDbContext.PatchBase.Add(new PatchBase
             {
                 Source = patch.Source,
                 Title = patch.Title
             });
-            await phasmaDbContext.SaveChangesAsync();
+            await ghostTrackerDbContext.SaveChangesAsync();
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var achievementCommonData = await phasmaDbContext.AchievementCommonTranslations
+                var achievementCommonData = await ghostTrackerDbContext.AchievementCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект AchievementCommon.
@@ -74,7 +74,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных без учета языкового фильтра.
-                var achievementData = await phasmaDbContext.AchievementBase
+                var achievementData = await ghostTrackerDbContext.AchievementBase
                     .Include(a => a.Translations)
                     .ToListAsync();
 
@@ -105,7 +105,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var appShellCommonData = await phasmaDbContext.AppShellCommonTranslations
+                var appShellCommonData = await ghostTrackerDbContext.AppShellCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект AppShellCommon.
@@ -135,7 +135,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var challengeModeCommonData = await phasmaDbContext.ChallengeModeCommonTranslations
+                var challengeModeCommonData = await ghostTrackerDbContext.ChallengeModeCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
                 //Преобразование данных в объект ChallengeModeCommon.
                 return challengeModeCommonData.Select(c => new ChallengeModeCommon
@@ -163,7 +163,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных без учета языкового фильтра.
-                var challengeModeData = await phasmaDbContext.ChallengeModeBase
+                var challengeModeData = await ghostTrackerDbContext.ChallengeModeBase
                     .Include(c => c.Translations)
                     .Include(c => c.EquipmentBase)
                     .ToListAsync();
@@ -197,7 +197,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var clueCommonData = await phasmaDbContext.ClueCommonTranslations
+                var clueCommonData = await ghostTrackerDbContext.ClueCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект ClueCommon.
@@ -224,7 +224,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных без учета языкового фильтра.
-                var cluesData = await phasmaDbContext.ClueBase
+                var cluesData = await ghostTrackerDbContext.ClueBase
                     .Include(c => c.Translations)
                     .Include(c => c.GhostBase)
                     .Include(c => c.UnfoldingItemBase)
@@ -270,7 +270,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var cursedCommonData = await phasmaDbContext.CursedPossessionCommonTranslations
+                var cursedCommonData = await ghostTrackerDbContext.CursedPossessionCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект CursedPossessionCommon.
@@ -298,7 +298,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных без учета языкового фильтра.
-                var cursedPossessionData = await phasmaDbContext.CursedPossessionBase
+                var cursedPossessionData = await ghostTrackerDbContext.CursedPossessionBase
                     .Include(c => c.Translations)
                     .Include(c => c.ExpandFieldWithImagesBase)
                     .ThenInclude(e => e.Translations)
@@ -338,7 +338,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных без учета языкового фильтра.
-                var difficultyData = await phasmaDbContext.DifficultyBase
+                var difficultyData = await ghostTrackerDbContext.DifficultyBase
                     .Include(d => d.Translations)
                     .ToListAsync();
 
@@ -401,7 +401,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var difficultyCommonData = await phasmaDbContext.DifficultyCommonTranslations
+                var difficultyCommonData = await ghostTrackerDbContext.DifficultyCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект DifficultyCommon.
@@ -449,7 +449,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных без учета языкового фильтра.
-                var equipmentData = await phasmaDbContext.EquipmentBase
+                var equipmentData = await ghostTrackerDbContext.EquipmentBase
                     .Include(e => e.Translations)
                     .Include(e => e.OtherEquipmentStatBase)
                     .Include(e => e.UnfoldingItemBase)
@@ -493,7 +493,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var equipmentCommonData = await phasmaDbContext.EquipmentCommonTranslations
+                var equipmentCommonData = await ghostTrackerDbContext.EquipmentCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект EquipmentCommon.
@@ -532,7 +532,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var feedbackCommonData = await phasmaDbContext.FeedbackCommonTranslations
+                var feedbackCommonData = await ghostTrackerDbContext.FeedbackCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект FeedbackCommon.
@@ -561,7 +561,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var ghostCommonData = await phasmaDbContext.GhostCommonTranslations
+                var ghostCommonData = await ghostTrackerDbContext.GhostCommonTranslations
                     .Where(g => g.LanguageCode == languageCode).ToListAsync();
 
                 // Преобразование данных в объект GhostCommon.
@@ -603,7 +603,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var ghostGuessQuestionCommonData = await phasmaDbContext.GhostGuessQuestionCommonTranslations
+                var ghostGuessQuestionCommonData = await ghostTrackerDbContext.GhostGuessQuestionCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект GhostGuessQuestionCommon.
@@ -639,7 +639,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных без учета языкового фильтра.
-                var ghostGuessQuestionData = await phasmaDbContext.GhostGuessQuestionBase
+                var ghostGuessQuestionData = await ghostTrackerDbContext.GhostGuessQuestionBase
                     .Include(c => c.Translations)
                     .Include(c => c.GhostBase)
                     .ToListAsync();
@@ -675,7 +675,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка всех данных без фильтрации по языку.
-                var ghostData = await phasmaDbContext.GhostBase
+                var ghostData = await ghostTrackerDbContext.GhostBase
                     .Include(g => g.Translations)
                     .Include(g => g.SpeedRangesBase)
                     .Include(g => g.ClueBase)
@@ -741,7 +741,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var mainPageCommonData = await phasmaDbContext.MainPageCommonTranslations
+                var mainPageCommonData = await ghostTrackerDbContext.MainPageCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект MainPageCommon.
@@ -787,7 +787,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var mapCommonData = await phasmaDbContext.MapCommonTranslations
+                var mapCommonData = await ghostTrackerDbContext.MapCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект MapCommon.
@@ -825,7 +825,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных без учета языкового фильтра.
-                var mapData = await phasmaDbContext.MapBase
+                var mapData = await ghostTrackerDbContext.MapBase
                     .Include(m => m.Translations)
                     .Include(m => m.ExpandFieldWithImagesBase)
                     .ThenInclude(e => e.Translations)
@@ -874,7 +874,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных без учета языкового фильтра.
-                var otherInfoData = await phasmaDbContext.OtherInfoBase
+                var otherInfoData = await ghostTrackerDbContext.OtherInfoBase
                     .Include(o => o.Translations)
                     .Include(o => o.ExpandFieldWithImagesBase)
                     .ThenInclude(e => e.Translations)
@@ -914,7 +914,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var patchData = await phasmaDbContext.PatchBase.ToListAsync();
+                var patchData = await ghostTrackerDbContext.PatchBase.ToListAsync();
 
                 // Преобразование данных в список объектов Patch.
                 return patchData
@@ -943,7 +943,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var questCommonData = await phasmaDbContext.QuestCommonTranslations
+                var questCommonData = await ghostTrackerDbContext.QuestCommonTranslations
                     .Where(e => e.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект QuestCommon.
@@ -972,7 +972,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных без учета языкового фильтра.
-                var questData = await phasmaDbContext.QuestBase
+                var questData = await ghostTrackerDbContext.QuestBase
                     .Include(q => q.Translations)
                     .ToListAsync();
 
@@ -1006,7 +1006,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var settingsCommonData = await phasmaDbContext.SettingsCommonTranslations
+                var settingsCommonData = await ghostTrackerDbContext.SettingsCommonTranslations
                     .Where(s => s.LanguageCode == languageCode).ToListAsync();
 
                 //Преобразование данных в объект SettingsCommon.
@@ -1042,7 +1042,7 @@ namespace PhasmophobiaCompanion.Services
             try
             {
                 // Загрузка данных с учетом перевода и связанных сущностей.
-                var tipsData = await phasmaDbContext.TipsTranslations.Where(t => t.LanguageCode == languageCode)
+                var tipsData = await ghostTrackerDbContext.TipsTranslations.Where(t => t.LanguageCode == languageCode)
                     .ToListAsync();
 
                 // Преобразование данных в список строк.
