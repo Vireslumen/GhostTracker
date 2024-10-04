@@ -258,9 +258,9 @@ namespace GhostTracker.ViewModels
         /// <summary>
         ///     Закрытие алерта о выходе патча.
         /// </summary>
-        private void CloseAlert()
+        private static async void CloseAlert()
         {
-            PopupNavigation.Instance.PopAsync();
+            await PopupNavigation.Instance.PopAsync();
         }
 
         /// <summary>
