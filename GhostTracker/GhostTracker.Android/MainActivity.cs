@@ -20,80 +20,11 @@ namespace GhostTracker.Droid
                                ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
     public class MainActivity : FormsAppCompatActivity
     {
-        /// <summary>
-        ///     Копирование базы данных из ассетов в доступную для обработки директорию, если база данных уже не существует в ней.
-        /// </summary>
-        private void CopyDatabase()
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions,
+            [GeneratedEnum] Permission[] grantResults)
         {
-            try
-            {
-                var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                var dbPath = Path.Combine(folderPath, "phasmaDATADB.db");
-                var dbVersionFilePath = Path.Combine(folderPath, "dbVersion.txt");
-                var currentDbVersion = "1.2"; // Версия базы данных
-
-                if (File.Exists(dbPath))
-                {
-                    if (File.Exists(dbVersionFilePath))
-                    {
-                        var installedDbVersion = File.ReadAllText(dbVersionFilePath);
-
-                        if (installedDbVersion != currentDbVersion)
-                        {
-                            // Удаление кэша, так как версия базы данных изменилась
-                            DeleteCacheFiles(folderPath);
-
-                            // Копирование новой базы данных
-                            CopyNewDatabase(dbPath);
-
-                            // Обновление версии базы данных
-                            File.WriteAllText(dbVersionFilePath, currentDbVersion);
-                        }
-                    }
-                    else
-                    {
-                        CopyNewDatabase(dbPath);
-                        DeleteCacheFiles(folderPath);
-                        File.WriteAllText(dbVersionFilePath, currentDbVersion);
-                    }
-                }
-                else
-                {
-                    // Копирование базы данных в первый раз
-                    CopyNewDatabase(dbPath);
-                    File.WriteAllText(dbVersionFilePath, currentDbVersion);
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка при копировании базы данных.");
-            }
-        }
-
-        private void CopyNewDatabase(string dbPath)
-        {
-            using (var br = new BinaryReader(Application.Context.Assets.Open("phasmaDATADB.db")))
-            {
-                using (var bw = new BinaryWriter(new FileStream(dbPath, FileMode.Create)))
-                {
-                    var buffer = new byte[2048];
-                    var length = 0;
-                    while ((length = br.Read(buffer, 0, buffer.Length)) > 0) bw.Write(buffer, 0, length);
-                }
-            }
-        }
-
-        private void DeleteCacheFiles(string folderPath)
-        {
-            try
-            {
-                var cacheFiles = Directory.GetFiles(folderPath, "*.json");
-                foreach (var cacheFile in cacheFiles) File.Delete(cacheFile);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка при удалении файлов кэша.");
-            }
+            Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -128,11 +59,75 @@ namespace GhostTracker.Droid
             LoadApplication(new App());
         }
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions,
-            [GeneratedEnum] Permission[] grantResults)
+        /// <summary>
+        ///     Копирование базы данных из ассетов в доступную для обработки директорию, если база данных уже не существует в ней.
+        /// </summary>
+        private static void CopyDatabase()
         {
-            Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            try
+            {
+                var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                var dbPath = Path.Combine(folderPath, "phasmaDATADB.db");
+                var dbVersionFilePath = Path.Combine(folderPath, "dbVersion.txt");
+                const string currentDbVersion = "1.3"; // Версия базы данных
+
+                if (File.Exists(dbPath))
+                {
+                    if (File.Exists(dbVersionFilePath))
+                    {
+                        var installedDbVersion = File.ReadAllText(dbVersionFilePath);
+
+                        if (installedDbVersion == currentDbVersion) return;
+                        // Удаление кэша, так как версия базы данных изменилась
+                        DeleteCacheFiles(folderPath);
+
+                        // Копирование новой базы данных
+                        CopyNewDatabase(dbPath);
+
+                        // Обновление версии базы данных
+                        File.WriteAllText(dbVersionFilePath, currentDbVersion);
+                    }
+                    else
+                    {
+                        CopyNewDatabase(dbPath);
+                        DeleteCacheFiles(folderPath);
+                        File.WriteAllText(dbVersionFilePath, currentDbVersion);
+                    }
+                }
+                else
+                {
+                    // Копирование базы данных в первый раз
+                    CopyNewDatabase(dbPath);
+                    File.WriteAllText(dbVersionFilePath, currentDbVersion);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при копировании базы данных.");
+            }
+        }
+
+        private static void CopyNewDatabase(string dbPath)
+        {
+            if (Application.Context.Assets == null) return;
+            using var br = new BinaryReader(Application.Context.Assets.Open("phasmaDATADB.db"));
+            using var bw = new BinaryWriter(new FileStream(dbPath, FileMode.Create));
+            var buffer = new byte[2048];
+            int length;
+            while ((length = br.Read(buffer, 0, buffer.Length)) > 0) bw.Write(buffer, 0, length);
+        }
+
+        private static void DeleteCacheFiles(string folderPath)
+        {
+            try
+            {
+                var cacheFiles = Directory.GetFiles(folderPath, "*.json");
+                foreach (var cacheFile in cacheFiles) File.Delete(cacheFile);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при удалении файлов кэша.");
+            }
         }
     }
 }
