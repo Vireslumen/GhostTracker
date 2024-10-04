@@ -10,15 +10,17 @@ using Xamarin.Forms;
 
 namespace GhostTracker.ViewModels
 {
+    /// <summary>
+    /// ViewModel для страницы списка достижений.
+    /// </summary>
     public class AchievementsViewModel : BaseViewModel
     {
-        private readonly DataService dataService;
         private AchievementCommon achievementCommon;
         private List<Achievement> achievements;
 
         public AchievementsViewModel()
         {
-                dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<DataService>();
                 Achievements = dataService.GetAchievements();
                 AchievementCommon = dataService.GetAchievementCommon();
                 ChallengeModeTappedCommand = new Command<Achievement>(OnAchievementTapped);
@@ -44,7 +46,7 @@ namespace GhostTracker.ViewModels
         /// <summary>
         ///     Отображение всплывающей подсказки по получению достижения.
         /// </summary>
-        private async void OnAchievementTapped(Achievement achievement)
+        private static async void OnAchievementTapped(Achievement achievement)
         {
             try
             {
