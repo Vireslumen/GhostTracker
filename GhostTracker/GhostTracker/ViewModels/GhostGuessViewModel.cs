@@ -23,7 +23,7 @@ namespace GhostTracker.ViewModels
         private const int SpeedPoints = 10;
         private const int GhostListCount = 6;
         private const int ValueForVisibility = 90;
-        private const double SpeedCoef = 0.88;
+        private const double SpeedCoefficient = 0.88;
         private const int ResetTime = 2;
         private readonly List<DateTime> lastClickTimes;
         private readonly Timer resetTimer;
@@ -90,11 +90,10 @@ namespace GhostTracker.ViewModels
             get => averageFrequency;
             set
             {
-                if (averageFrequency != value)
-                {
-                    averageFrequency = value;
-                    OnPropertyChanged();
-                }
+                const double epsilon = 0.00001;
+                if (Math.Abs(averageFrequency - value) < epsilon) return;
+                averageFrequency = value;
+                OnPropertyChanged();
             }
         }
         public GhostGuessQuestionCommon GhostGuessQuestionCommon
@@ -136,26 +135,28 @@ namespace GhostTracker.ViewModels
         }
 
         /// <summary>
+        ///     Предотвращение утечек памяти.
+        /// </summary>
+        public void Cleanup()
+        {
+            PressButtonCommand = null;
+            UpdateGhost = null;
+            GhostTappedCommand = null;
+        }
+
+        /// <summary>
         ///     Добавление или вычет поинтов Points за ответы на вопросы.
         /// </summary>
         private void AddPointsForQuestionAnswers()
         {
-            try
+            foreach (var question in DisplayedQuestions)
+            foreach (var ghost in question.Ghosts)
             {
-                foreach (var question in DisplayedQuestions)
-                foreach (var ghost in question.Ghosts)
-                {
-                    var supposedGhost = SupposedGhosts.FirstOrDefault(sg => sg.Ghost == ghost);
-                    if (supposedGhost != null)
-                        supposedGhost.Points += RoundAwayFromZero(CalculateAnswerResult(question.Answer,
-                            question.AnswerMeaning,
-                            question.AnswerNegativeMeaning, question.Ghosts.Count > 1 && ghost.Id == MimicId));
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex,
-                    "Ошибка при добавлении или вычитании поинтов за ответы на вопросы на странице определения призрака.");
+                var supposedGhost = SupposedGhosts.FirstOrDefault(sg => sg.Ghost == ghost);
+                if (supposedGhost != null)
+                    supposedGhost.Points += RoundAwayFromZero(CalculateAnswerResult(question.Answer,
+                        question.AnswerMeaning,
+                        question.AnswerNegativeMeaning, question.Ghosts.Count > 1 && ghost.Id == MimicId));
             }
         }
 
@@ -164,21 +165,12 @@ namespace GhostTracker.ViewModels
         /// </summary>
         private void AddPointsForSpeed()
         {
-            try
-            {
-                if (IsSpeedMatter)
-                    foreach (var supposedGhost in SupposedGhosts)
-                    foreach (var speedRange in supposedGhost.Ghost.SpeedRanges)
-                        if (AverageFrequency > speedRange.Min / 100.0 && AverageFrequency < speedRange.Max / 100.0)
-                        {
-                            supposedGhost.Points += SpeedPoints;
-                            break;
-                        }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка при добавлении поинтов за совпадающую скорость на странице определения призрака.");
-            }
+            if (!IsSpeedMatter) return;
+
+            foreach (var supposedGhost in SupposedGhosts)
+                if (supposedGhost.Ghost.SpeedRanges.Any
+                        (speedRange => AverageFrequency > speedRange.Min / 100.0 && AverageFrequency < speedRange.Max / 100.0))
+                    supposedGhost.Points += SpeedPoints;
         }
 
         /// <summary>
@@ -189,7 +181,7 @@ namespace GhostTracker.ViewModels
         /// <param name="answerNegativeValue">Коэффициент начисляемых поинтов на отрицательный ответ</param>
         /// <param name="mimic">Является ли призрак мимиком</param>
         /// <returns>Число начисляемых поинтов.</returns>
-        private double CalculateAnswerResult(int index, int answerValue, int answerNegativeValue, bool mimic)
+        private static double CalculateAnswerResult(int index, int answerValue, int answerNegativeValue, bool mimic)
         {
             double[] values = {0, 1, 0.01, 1};
             switch (index)
@@ -205,31 +197,14 @@ namespace GhostTracker.ViewModels
         }
 
         /// <summary>
-        ///     Предотвращение утечек памяти.
-        /// </summary>
-        public void Cleanup()
-        {
-            PressButtonCommand = null;
-            UpdateGhost = null;
-            GhostTappedCommand = null;
-        }
-
-        /// <summary>
         ///     Очистить видимость вопросов на странице.
         /// </summary>
         private void ClearQuestionVisibility()
         {
-            try
+            foreach (var displayedQuestion in DisplayedQuestions)
             {
-                for (var i = 0; i < DisplayedQuestions.Count; i++)
-                {
-                    DisplayedQuestions[i].Visibility = -1;
-                    DisplayedQuestions[i].IsVisible = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка очищения видимости вопросов на странице.");
+                displayedQuestion.Visibility = -1;
+                displayedQuestion.IsVisible = true;
             }
         }
 
@@ -328,7 +303,7 @@ namespace GhostTracker.ViewModels
                         .Zip(lastClickTimes.Skip(1), (previous, next) => (next - previous).TotalSeconds).ToList();
                     if (intervals.Count > 0)
                     {
-                        var averageInterval = intervals.Average() / SpeedCoef;
+                        var averageInterval = intervals.Average() / SpeedCoefficient;
                         AverageFrequency = averageInterval > 0 ? 1 / averageInterval : 0;
                     }
                     else
@@ -352,22 +327,15 @@ namespace GhostTracker.ViewModels
         /// </summary>
         private void UpdateGhostsPercentAndSort()
         {
-            try
-            {
-                double totalPoints = SupposedGhosts.Where(sg => sg.Points > 0).Sum(sg => sg.Points);
-                foreach (var supposedGhost in SupposedGhosts)
-                    if (totalPoints > 0 && supposedGhost.Points > 0)
-                        supposedGhost.Percent = RoundAwayFromZero(supposedGhost.Points * 100 / totalPoints);
-                    else
-                        supposedGhost.Percent = 0;
-                SortedGhosts = new ObservableCollection<SupposedGhost>(SupposedGhosts
-                    .OrderByDescending(sg => sg.Percent)
-                    .Where(sg => sg.Percent > 0).Take(GhostListCount).ToList());
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка при обновлении шансов и сортировки призраков на странице определения призрака.");
-            }
+            double totalPoints = SupposedGhosts.Where(sg => sg.Points > 0).Sum(sg => sg.Points);
+            foreach (var supposedGhost in SupposedGhosts)
+                if (totalPoints > 0 && supposedGhost.Points > 0)
+                    supposedGhost.Percent = RoundAwayFromZero(supposedGhost.Points * 100 / totalPoints);
+                else
+                    supposedGhost.Percent = 0;
+            SortedGhosts = new ObservableCollection<SupposedGhost>(SupposedGhosts
+                .OrderByDescending(sg => sg.Percent)
+                .Where(sg => sg.Percent > 0).Take(GhostListCount).ToList());
         }
 
         /// <summary>
@@ -375,25 +343,17 @@ namespace GhostTracker.ViewModels
         /// </summary>
         private void UpdateQuestionVisibilityBasedOnClues()
         {
-            try
+            foreach (var question in DisplayedQuestions)
             {
-                foreach (var question in DisplayedQuestions)
-                {
-                    var isVisible = question.Ghosts.Where(ghost => !(ghost.Id == MimicId && question.Ghosts.Count > 1))
-                        .Any(
-                            ghost =>
-                                !SelectedClues.Any() ||
-                                SelectedClues.All(selectedClue =>
-                                    ghost.Clues.Any(clue =>
-                                        clue.Title == ((Clue) selectedClue).Title)));
-                    question.Visibility = isVisible ? -1 : 0;
-                    question.IsVisible = isVisible;
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex,
-                    "Ошибка во время обновления видимости вопросов на основе улик Clue на странице определения призрака.");
+                var isVisible = question.Ghosts.Where(ghost => !(ghost.Id == MimicId && question.Ghosts.Count > 1))
+                    .Any(
+                        ghost =>
+                            !SelectedClues.Any() ||
+                            SelectedClues.All(selectedClue =>
+                                ghost.Clues.Any(clue =>
+                                    clue.Title == ((Clue) selectedClue).Title)));
+                question.Visibility = isVisible ? -1 : 0;
+                question.IsVisible = isVisible;
             }
         }
 
@@ -402,36 +362,31 @@ namespace GhostTracker.ViewModels
         /// </summary>
         private void UpdateQuestionVisibilityBasedOnGhostPoints()
         {
-            try
+            var validSupposedGhosts = SupposedGhosts
+                .Where(supposedGhost => supposedGhost.Points > ValueForVisibility)
+                .Select(sg => sg.Ghost.Title).ToList();
+            if (validSupposedGhosts.Count <= 0) return;
             {
-                var validSupposedGhosts = SupposedGhosts
-                    .Where(supposedGhost => supposedGhost.Points > ValueForVisibility)
-                    .Select(sg => sg.Ghost.Title).ToList();
-                if (validSupposedGhosts.Count > 0)
-                    foreach (var question in DisplayedQuestions)
-                    {
-                        var shouldBeVisible = question.Ghosts
-                            .Where(ghost => !(ghost.Id == MimicId && question.Ghosts.Count > 1))
-                            .Any(ghost => SupposedGhosts.Any(sg => sg.Ghost == ghost) &&
-                                          (validSupposedGhosts.Contains(ghost.Title) || (question.Ghosts.Count == 1 &&
-                                              question.Ghosts.FirstOrDefault().Id == MimicId))) || question.Answer != 0;
+                foreach (var question in DisplayedQuestions)
+                {
+                    var shouldBeVisible = question.Ghosts
+                                              .Where(ghost => !(ghost.Id == MimicId && question.Ghosts.Count > 1))
+                                              .Any(ghost => SupposedGhosts.Any(sg => sg.Ghost == ghost) &&
+                                                            (validSupposedGhosts.Contains(ghost.Title) || (question.Ghosts.Count == 1 &&
+                                                                question.Ghosts.First().Id == MimicId))) ||
+                                          question.Answer != 0;
 
-                        if (shouldBeVisible)
-                        {
-                            question.Visibility = -1;
-                            question.IsVisible = true;
-                        }
-                        else
-                        {
-                            question.Visibility = 0;
-                            question.IsVisible = false;
-                        }
+                    if (shouldBeVisible)
+                    {
+                        question.Visibility = -1;
+                        question.IsVisible = true;
                     }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex,
-                    "Ошибка при обновлении видимости вопросов на основе данных ответов на странице определения призрака.");
+                    else
+                    {
+                        question.Visibility = 0;
+                        question.IsVisible = false;
+                    }
+                }
             }
         }
 
@@ -440,24 +395,14 @@ namespace GhostTracker.ViewModels
         /// </summary>
         private void UpdateSupposedGhostsBasedOnClues()
         {
-            try
-            {
-                SupposedGhosts = Ghosts.Where(ghost =>
-                    !SelectedClues.Any() ||
-                    SelectedClues.All(selectedClue =>
-                        ghost.Clues.Any(clue =>
-                            clue.Title == ((Clue) selectedClue).Title))).Select(ghost => new SupposedGhost
+            SupposedGhosts = Ghosts.Where(ghost =>
+                    !SelectedClues.Any() || SelectedClues.All(selectedClue => ghost.Clues.Any(clue => clue.Title == ((Clue) selectedClue).Title)))
+                .Select(ghost => new SupposedGhost
                 {
                     Ghost = ghost,
                     Points = 5,
                     Percent = 0
                 }).ToList();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex,
-                    "Ошибка во время обновления списка предполагаемых призраков на основе улик Clue на странице определения призрака.");
-            }
         }
     }
 }
