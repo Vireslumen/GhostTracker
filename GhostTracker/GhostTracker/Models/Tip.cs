@@ -6,7 +6,7 @@
     public class Tip
     {
         /// <summary>
-        ///     Опредяляет какому уровню игроков будет полезна подсказка.
+        ///     Определяет какому уровню игроков будет полезна подсказка.
         /// </summary>
         public string Level { get; set; }
         public string TipValue { get; set; }

@@ -546,7 +546,7 @@ namespace GhostTracker.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время загрузки из бд общих названия для cраницы фидбэка");
+                Log.Error(ex, "Ошибка во время загрузки из бд общих названия для страницы фидбэка");
                 return new FeedbackCommon();
             }
         }

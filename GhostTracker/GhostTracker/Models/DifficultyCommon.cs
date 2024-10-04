@@ -21,7 +21,7 @@
         /// </summary>
         public string DifficultiesTitle { get; set; }
         /// <summary>
-        ///     Текс для названия списка параметров сложности. Примеры: "Difficulty Parameters", "Параметры Сложности"
+        ///     Текст для названия списка параметров сложности. Примеры: "Difficulty Parameters", "Параметры Сложности"
         /// </summary>
         public string DifficultyParams { get; set; }
         /// <summary>

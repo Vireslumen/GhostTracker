@@ -8,7 +8,7 @@ using Xamarin.Forms;
 namespace GhostTracker.ViewModels
 {
     /// <summary>
-    ///     ViewModel для подробной некатегоризованной страницы.
+    ///     ViewModel для подробной некатегоризированной страницы.
     /// </summary>
     public class OtherViewModel : UnfoldingItemsViewModel
     {

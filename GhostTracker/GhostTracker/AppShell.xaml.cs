@@ -86,7 +86,7 @@ namespace GhostTracker
         }
 
         /// <summary>
-        ///     Переход на страницу отправки фидбека.
+        ///     Переход на страницу отправки фидбэка.
         /// </summary>
         private async void OnShakeDetected(object sender, EventArgs e)
         {

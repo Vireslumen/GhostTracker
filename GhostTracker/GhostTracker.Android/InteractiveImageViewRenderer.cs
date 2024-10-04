@@ -13,7 +13,7 @@ using Xamarin.Forms.Platform.Android;
 namespace GhostTracker.Droid
 {
     /// <summary>
-    ///     Рендерер для создания элемента управления InteractiveImageView на Android.
+    ///     Рендер для создания элемента управления InteractiveImageView на Android.
     /// </summary>
     public class InteractiveImageViewRenderer : ImageRenderer
     {

@@ -76,7 +76,7 @@
         /// </summary>
         public string SpecialMode { get; set; }
         /// <summary>
-        ///     Текст информаирующий о неудачной загрузки квестов.
+        ///     Текст уведомляющий о неудачной загрузки квестов.
         /// </summary>
         public string TasksError { get; set; }
         /// <summary>

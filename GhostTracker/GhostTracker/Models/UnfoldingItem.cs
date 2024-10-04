@@ -4,6 +4,9 @@ using Xamarin.Forms;
 
 namespace GhostTracker.Models
 {
+    /// <summary>
+    ///     Представляет собой раскрывающийся элемент с текстом.
+    /// </summary>
     public class UnfoldingItem : INotifyPropertyChanged
     {
         private bool isExpanded;
@@ -35,6 +38,11 @@ namespace GhostTracker.Models
         public string Title { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         private string GetThemedIcon()
         {
             var themePrefix = Application.Current.UserAppTheme == OSAppTheme.Dark ||
@@ -43,11 +51,6 @@ namespace GhostTracker.Models
                 ? "dark_"
                 : "";
             return CanExpand ? IsExpanded ? $"{themePrefix}icon_collapse.png" : $"{themePrefix}icon_expand.png" : null;
-        }
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
