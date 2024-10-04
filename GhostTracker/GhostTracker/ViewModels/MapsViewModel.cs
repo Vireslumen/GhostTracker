@@ -89,26 +89,18 @@ namespace GhostTracker.ViewModels
             get => selectedSizes;
             set => SetProperty(ref selectedSizes, value);
         }
-        public string FilterColor
-        {
-            get
-            {
-                var currentTheme = Application.Current.RequestedTheme;
-                return SelectedSizes.Any() || minRoomSaved != 0 || maxRoomSaved != 100
-                    ? currentTheme == OSAppTheme.Dark ? "#FD7E14" : "#FD7E14"
-                    : "Transparent";
-            }
-        }
+        public string FilterColor =>
+            SelectedSizes.Any() || minRoomSaved != 0 || maxRoomSaved != 100
+                ? "#FD7E14"
+                : "Transparent";
         public string MaxRoom
         {
             get => maxRoom;
             set
             {
-                if (maxRoom != value)
-                {
-                    maxRoom = value;
-                    OnPropertyChanged();
-                }
+                if (maxRoom == value) return;
+                maxRoom = value;
+                OnPropertyChanged();
             }
         }
         public string MinRoom
@@ -116,11 +108,9 @@ namespace GhostTracker.ViewModels
             get => minRoom;
             set
             {
-                if (minRoom != value)
-                {
-                    minRoom = value;
-                    OnPropertyChanged();
-                }
+                if (minRoom == value) return;
+                minRoom = value;
+                OnPropertyChanged();
             }
         }
 
@@ -136,6 +126,21 @@ namespace GhostTracker.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка во время фильтрации карт.");
+            }
+        }
+
+        /// <summary>
+        ///     Фильтрация коллекции в соответствии с поисковым запросом.
+        /// </summary>
+        protected override void PerformSearch()
+        {
+            try
+            {
+                UpdateFilteredMaps();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка во время поиска карт.");
             }
         }
 
@@ -223,32 +228,15 @@ namespace GhostTracker.ViewModels
             try
             {
                 if (IsNavigating) return;
-                if (selectedMap != null)
-                {
-                    // Логика для открытия страницы деталей карты
-                    var detailPage = new MapDetailPage(selectedMap);
-                    await NavigateWithLoadingAsync(detailPage);
-                }
+                if (selectedMap == null) return;
+                // Логика для открытия страницы деталей карты
+                var detailPage = new MapDetailPage(selectedMap);
+                await NavigateWithLoadingAsync(detailPage);
             }
             catch (Exception ex)
             {
                 Log.Error(ex,
                     "Ошибка во время перехода на подробную страницу карты из страницы карт MapsPage.");
-            }
-        }
-
-        /// <summary>
-        ///     Фильтрация коллекции в соответствии с поисковым запросом.
-        /// </summary>
-        protected override void PerformSearch()
-        {
-            try
-            {
-                UpdateFilteredMaps();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Ошибка во время поиска карт.");
             }
         }
 
