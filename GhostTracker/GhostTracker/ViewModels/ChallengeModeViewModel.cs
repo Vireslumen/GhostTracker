@@ -50,12 +50,9 @@ namespace GhostTracker.ViewModels
         {
             try
             {
-                if (IsNavigating) return;
-                if (dataService.IsMapsDataLoaded && dataService.IsEquipmentsDataLoaded)
-                {
-                    var page = new ChallengeModeDetailPage(challengeMode);
-                    await NavigateWithLoadingAsync(page);
-                }
+                if (IsNavigating || !dataService.IsMapsDataLoaded || !dataService.IsEquipmentsDataLoaded) return;
+                var page = new ChallengeModeDetailPage(challengeMode);
+                await NavigateWithLoadingAsync(page);
             }
             catch (Exception ex)
             {
