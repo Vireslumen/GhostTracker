@@ -1,9 +1,7 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using Serilog;
-using Serilog.Formatting.Json;
-using Serilog.Sinks.Http.TextFormatters;
+using Serilog.Debugging;
 
 namespace GhostTracker.Services
 {
@@ -14,7 +12,7 @@ namespace GhostTracker.Services
 
         public static void EnableServerLogging(bool enable)
         {
-            Serilog.Debugging.SelfLog.Enable(msg => Debug.WriteLine(msg));
+            SelfLog.Enable(msg => Debug.WriteLine(msg));
             logFilePath = Path.Combine("/storage/emulated/0/Download/", "logs", "log-.txt");
             var config = new LoggerConfiguration()
                 .MinimumLevel.Debug()

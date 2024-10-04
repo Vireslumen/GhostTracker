@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using Serilog;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;

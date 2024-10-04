@@ -1,12 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Linq;
-using GhostTracker.Models;
 using GhostTracker.ViewModels;
 using Rg.Plugins.Popup.Pages;
-using Rg.Plugins.Popup.Services;
 using Serilog;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace GhostTracker.Views

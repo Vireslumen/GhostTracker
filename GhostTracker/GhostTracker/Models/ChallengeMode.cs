@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace GhostTracker.Models
 {
@@ -11,9 +10,9 @@ namespace GhostTracker.Models
         public int DifficultyId { get; set; }
         public int Id { get; set; }
         public int MapId { get; set; }
+        public List<Equipment> ChallengeEquipments { get; set; }
         public List<int> EquipmentsId { get; set; }
         public Map ChallengeMap { get; set; }
-        public List<Equipment> ChallengeEquipments { get; set; }
         public string Description { get; set; }
         public string Parameters { get; set; }
         public string Title { get; set; }
