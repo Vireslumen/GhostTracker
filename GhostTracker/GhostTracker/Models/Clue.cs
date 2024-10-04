@@ -11,8 +11,6 @@ namespace GhostTracker.Models
     /// </summary>
     public class Clue : BaseTitledItem, INotifyPropertyChanged
     {
-        private string iconFilePath;
-
         public Clue()
         {
             App.ThemeChanged += HandleThemeChanged;
@@ -30,6 +28,24 @@ namespace GhostTracker.Models
         public string ThemedIconFilePath => GetThemedIcon();
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        ///     Связывает улики - Clue с призраками Ghost через имеющийся список Id призраков - GhostsId.
+        /// </summary>
+        /// <param name="allGhosts">Список всех призраков Ghost.</param>
+        public void PopulateAssociatedGhosts(List<Ghost> allGhosts)
+        {
+            foreach (var ghostId in GhostsId)
+            {
+                var ghost = allGhosts.FirstOrDefault(c => c.Id == ghostId);
+                if (ghost != null) Ghosts.Add(ghost);
+            }
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         private string GetThemedIcon()
         {
             var themePrefix = Application.Current.UserAppTheme == OSAppTheme.Dark ||
@@ -43,24 +59,6 @@ namespace GhostTracker.Models
         private void HandleThemeChanged()
         {
             OnPropertyChanged(nameof(ThemedIconFilePath));
-        }
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        /// <summary>
-        ///     Связывает улики - Clue с призраками Ghost через имеющийся список Id призраков - GhostsId.
-        /// </summary>
-        /// <param name="allghosts">Список всех призраков Ghost.</param>
-        public void PopulateAssociatedGhosts(List<Ghost> allghosts)
-        {
-            foreach (var ghostId in GhostsId)
-            {
-                var ghost = allghosts.FirstOrDefault(c => c.Id == ghostId);
-                if (ghost != null) Ghosts.Add(ghost);
-            }
         }
     }
 }
