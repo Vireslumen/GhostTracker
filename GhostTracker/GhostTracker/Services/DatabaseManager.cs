@@ -14,9 +14,9 @@ namespace GhostTracker.Services
     /// </summary>
     public class DatabaseManager
     {
-        private readonly GhostTrackerDB ghostTrackerDbContext;
+        private readonly GhostTrackerDb ghostTrackerDbContext;
 
-        public DatabaseManager(GhostTrackerDB context)
+        public DatabaseManager(GhostTrackerDb context)
         {
             ghostTrackerDbContext = context;
         }

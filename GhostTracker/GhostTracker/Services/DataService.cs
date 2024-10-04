@@ -66,7 +66,7 @@ namespace GhostTracker.Services
             try
             {
                 NewPatch = false;
-                databaseManager = new DatabaseManager(new GhostTrackerDB());
+                databaseManager = new DatabaseManager(new GhostTrackerDb());
                 var userLanguage = LanguageHelper.GetUserLanguage();
                 shakeActive = ShakeHelper.GetShakeActive();
                 //Настройка языка приложения
