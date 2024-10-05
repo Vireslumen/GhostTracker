@@ -11,6 +11,7 @@ namespace GhostTracker.Data
         public string About { get; set; }
         public string AnyLevel { get; set; }
         public string AppLanguage { get; set; }
+        public string AppVersion { get; set; }
         public string ErrorReport { get; set; }
         public string LanguageCode { get; set; }
         public string LoggerServerActive { get; set; }

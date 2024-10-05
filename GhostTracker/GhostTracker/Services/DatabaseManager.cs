@@ -1015,6 +1015,7 @@ namespace GhostTracker.Services
                     About = s.About,
                     AnyLevel = s.AnyLevel,
                     AppLanguage = s.AppLanguage,
+                    AppVersion = s.AppVersion,
                     ErrorReport = s.ErrorReport,
                     TipLevel = s.TipLevel,
                     ShakeActiveLabel = s.ShakeActiveLabel,

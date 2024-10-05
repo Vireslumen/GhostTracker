@@ -19,6 +19,10 @@
         /// </summary>
         public string AppLanguage { get; set; }
         /// <summary>
+        ///     Название поля версии приложения. Примеры: "App Version:", "Версия приложения:".
+        /// </summary>
+        public string AppVersion { get; set; }
+        /// <summary>
         ///     Название кнопки отправки репорта об ошибке. Примеры: "Send Error Report", "Отправить репорт об ошибках".
         /// </summary>
         public string ErrorReport { get; set; }

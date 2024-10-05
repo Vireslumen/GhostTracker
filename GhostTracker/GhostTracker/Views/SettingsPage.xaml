@@ -32,27 +32,32 @@
                     SelectedItem="{Binding SelectedTipLevel}" />
 
             <!-- Отправка фдбэка -->
-            <Button 
+            <Button
                 effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                 effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
                 effects:ShadowEffect.Radius="10" CornerRadius="8" Margin="0,30,0,0"
-                Text="{Binding SettingsCommon.ErrorReport}" 
+                Text="{Binding SettingsCommon.ErrorReport}"
                 TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 Command="{Binding ReportBugCommand}" />
             <!-- Включен ли фдбэк при тряске -->
             <StackLayout Padding="0,10,0,0" Orientation="Horizontal">
-                <Frame  BackgroundColor="{AppThemeBinding Light={StaticResource ThirdBackgroundColorDark}, Dark={StaticResource ThirdBackgroundColorDark}}" Padding="7" VerticalOptions="Center" CornerRadius="30">
+                <Frame
+                    BackgroundColor="{AppThemeBinding Light={StaticResource ThirdBackgroundColorDark}, Dark={StaticResource ThirdBackgroundColorDark}}"
+                    Padding="7" VerticalOptions="Center" CornerRadius="30">
 
-                    <CheckBox  BackgroundColor="Transparent"
-                               HorizontalOptions="Center" Scale="1.5" IsChecked="{Binding ShakeActive}" />
+                    <CheckBox BackgroundColor="Transparent"
+                              HorizontalOptions="Center" Scale="1.5" IsChecked="{Binding ShakeActive}" />
                 </Frame>
                 <Label VerticalOptions="Center" Text="{Binding SettingsCommon.ShakeActiveLabel}" />
             </StackLayout>
             <!-- Включено ли логирование на сервер -->
             <StackLayout Padding="0,30,0,0" Orientation="Horizontal">
-                <Frame  BackgroundColor="{AppThemeBinding Light={StaticResource ThirdBackgroundColorDark}, Dark={StaticResource ThirdBackgroundColorDark}}" Padding="7" VerticalOptions="Center" CornerRadius="30">
-                    <CheckBox BackgroundColor="Transparent" HorizontalOptions="Center" Scale="1.5" IsChecked="{Binding IsLoggingEnabled}" />
+                <Frame
+                    BackgroundColor="{AppThemeBinding Light={StaticResource ThirdBackgroundColorDark}, Dark={StaticResource ThirdBackgroundColorDark}}"
+                    Padding="7" VerticalOptions="Center" CornerRadius="30">
+                    <CheckBox BackgroundColor="Transparent" HorizontalOptions="Center" Scale="1.5"
+                              IsChecked="{Binding IsLoggingEnabled}" />
                 </Frame>
                 <Label FontFamily="{StaticResource BoldFont}" VerticalOptions="Center"
                        Text="{Binding SettingsCommon.LoggerServerActive}" />
@@ -63,6 +68,15 @@
                     <HtmlWebViewSource Html="{Binding SettingsCommon.About}" />
                 </WebView.Source>
             </WebView>
+            <!-- Версия приложения -->
+            <Label FontFamily="{StaticResource BoldFont}" Text="{Binding SettingsCommon.AppVersion}" FontSize="16"
+                   HorizontalOptions="StartAndExpand"
+                   TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                   Padding="0,30,0,10" />
+            <Label FontFamily="{StaticResource RegularFont}" Text="{Binding AppVersion}" FontSize="16"
+                   HorizontalOptions="StartAndExpand"
+                   TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                   Padding="0,0,0,20" />
         </StackLayout>
     </ScrollView>
 </ContentPage>

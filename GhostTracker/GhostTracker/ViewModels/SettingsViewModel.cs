@@ -8,6 +8,7 @@ using GhostTracker.Views;
 using Newtonsoft.Json;
 using Rg.Plugins.Popup.Services;
 using Serilog;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace GhostTracker.ViewModels
@@ -81,6 +82,7 @@ namespace GhostTracker.ViewModels
                 OnPropertyChanged();
             }
         }
+        public string AppVersion => $"{AppInfo.VersionString}";
         public string SelectedLanguage
         {
             get => selectedLanguage;
