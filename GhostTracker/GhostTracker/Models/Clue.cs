@@ -7,7 +7,7 @@ using Xamarin.Forms;
 namespace GhostTracker.Models
 {
     /// <summary>
-    ///     Представляет собой улику, которую оставляют призраки.
+    ///     Представляет собой доказательство, которую оставляют призраки.
     /// </summary>
     public class Clue : BaseTitledItem, INotifyPropertyChanged
     {
@@ -29,7 +29,7 @@ namespace GhostTracker.Models
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        ///     Связывает улики - Clue с призраками Ghost через имеющийся список Id призраков - GhostsId.
+        ///     Связывает доказательства - Clue с призраками Ghost через имеющийся список Id призраков - GhostsId.
         /// </summary>
         /// <param name="allGhosts">Список всех призраков Ghost.</param>
         public void PopulateAssociatedGhosts(List<Ghost> allGhosts)

@@ -14,7 +14,7 @@
         /// </summary>
         public float SanityConsumption { get; set; }
         /// <summary>
-        ///     Количество доступных улик у призрака.
+        ///     Количество доступных доказательств у призрака.
         /// </summary>
         public int EvidenceAvailable { get; set; }
         public int Id { get; set; }

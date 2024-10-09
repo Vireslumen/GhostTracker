@@ -44,7 +44,7 @@
         /// </summary>
         public string ElectricityOn { get; set; }
         /// <summary>
-        ///     Текст для отображения количества доступных улик у призрака. Примеры: "Evidence Available", "Улик доступно".
+        ///     Текст для отображения количества доступных доказательств у призрака. Примеры: "Evidence Available", "Доказательств доступно".
         /// </summary>
         public string EvidenceAvailable { get; set; }
         /// <summary>

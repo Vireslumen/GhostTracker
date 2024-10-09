@@ -15,7 +15,7 @@
         /// </summary>
         public double PlayerMinSpeed { get; set; }
         /// <summary>
-        ///     Название списка улик на главной странице. Примеры: "Clues", "Улики".
+        ///     Название списка доказательств на главной странице. Примеры: "Evidence", "Доказательства".
         /// </summary>
         public string Clue { get; set; }
         /// <summary>

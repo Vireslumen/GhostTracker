@@ -25,7 +25,7 @@ namespace GhostTracker.Models
         /// </summary>
         public int UnlockLevel { get; set; }
         /// <summary>
-        ///     Список улик связанных с этим снаряжением.
+        ///     Список доказательств связанных с этим снаряжением.
         /// </summary>
         public List<Clue> EquipmentRelatedClues { get; set; }
         public List<int> CluesId { get; set; }

@@ -96,7 +96,7 @@ namespace GhostTracker.ViewModels
         }
 
         /// <summary>
-        ///     Переход на страницу связанного со снаряжением улики при нажатии на нее.
+        ///     Переход на страницу связанного со снаряжением доказательства при нажатии на него.
         /// </summary>
         private async void OpenCluePage(Clue clueItem)
         {
@@ -108,7 +108,7 @@ namespace GhostTracker.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время перехода на страницу улики с подробной страницы снаряжения.");
+                Log.Error(ex, "Ошибка во время перехода на страницу доказательства с подробной страницы снаряжения.");
             }
         }
     }

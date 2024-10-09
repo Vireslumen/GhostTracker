@@ -188,10 +188,10 @@ namespace GhostTracker.Services
         }
 
         /// <summary>
-        ///     Асинхронно возвращает общие данные для улик - Clue, на основе языка.
+        ///     Асинхронно возвращает общие данные для доказательств - Clue, на основе языка.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>
-        /// <returns>Общие данные для улик.</returns>
+        /// <returns>Общие данные для доказательств.</returns>
         public async Task<ClueCommon> GetClueCommonAsync(string languageCode)
         {
             try
@@ -209,16 +209,16 @@ namespace GhostTracker.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время загрузки из бд общих названия для улик.");
+                Log.Error(ex, "Ошибка во время загрузки из бд общих названия для доказательств.");
                 return new ClueCommon();
             }
         }
 
         /// <summary>
-        ///     Асинхронно возвращает список улик - Clue на основе языка.
+        ///     Асинхронно возвращает список доказательств - Clue на основе языка.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>
-        /// <returns>Список улик.</returns>
+        /// <returns>Список доказательств.</returns>
         public async Task<List<Clue>> GetCluesAsync(string languageCode)
         {
             try
@@ -255,7 +255,7 @@ namespace GhostTracker.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время загрузки из бд улик.");
+                Log.Error(ex, "Ошибка во время загрузки из бд доказательств.");
                 return new List<Clue>();
             }
         }
@@ -666,7 +666,7 @@ namespace GhostTracker.Services
         }
 
         /// <summary>
-        ///     Асинхронно возвращает список призраков - Ghost на основе кода языка, а также всех улик.
+        ///     Асинхронно возвращает список призраков - Ghost на основе кода языка, а также всех доказательств.
         /// </summary>
         /// <param name="languageCode">Код языка для получения переводов.</param>
         /// <returns>Список призраков.</returns>

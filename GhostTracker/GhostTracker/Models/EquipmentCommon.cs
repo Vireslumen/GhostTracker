@@ -49,7 +49,7 @@
         /// </summary>
         public string PriceUnlock { get; set; }
         /// <summary>
-        ///     Текст для названия списка связанных с снаряжением улик. Примеры: "Related Clues", "Связанные улики".
+        ///     Текст для названия списка связанных с снаряжением доказательств. Примеры: "Related Clues", "Связанные доказательства".
         /// </summary>
         public string RelatedClues { get; set; }
         /// <summary>

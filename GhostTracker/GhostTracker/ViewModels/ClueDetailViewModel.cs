@@ -11,7 +11,7 @@ using Xamarin.Forms;
 namespace GhostTracker.ViewModels
 {
     /// <summary>
-    ///     ViewModel для подробной страницы улики.
+    ///     ViewModel для подробной страницы доказательств.
     /// </summary>
     public class ClueDetailViewModel : UnfoldingItemsViewModel
     {
@@ -67,7 +67,7 @@ namespace GhostTracker.ViewModels
         }
 
         /// <summary>
-        ///     Переход на страницу улики при нажатии на неё.
+        ///     Переход на страницу доказательства при нажатии на неё.
         /// </summary>
         private async void OnClueSelected(Clue clueItem)
         {
@@ -79,7 +79,7 @@ namespace GhostTracker.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время перехода на страницу улики с подробной страницы улики.");
+                Log.Error(ex, "Ошибка во время перехода на страницу доказательства с подробной страницы доказательства.");
             }
         }
 
@@ -96,12 +96,12 @@ namespace GhostTracker.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время перехода на страницу призрака с подробной страницы улики.");
+                Log.Error(ex, "Ошибка во время перехода на страницу призрака с подробной страницы доказательства.");
             }
         }
 
         /// <summary>
-        ///     Переход на страницу связанного с уликой снаряжения при нажатии на него.
+        ///     Переход на страницу связанного с доказательством снаряжения при нажатии на него.
         /// </summary>
         private async void OpenEquipPage(Equipment equipItem)
         {
@@ -113,7 +113,7 @@ namespace GhostTracker.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время перехода на страницу снаряжения с подробной страницы улики.");
+                Log.Error(ex, "Ошибка во время перехода на страницу снаряжения с подробной страницы доказательства.");
             }
         }
 

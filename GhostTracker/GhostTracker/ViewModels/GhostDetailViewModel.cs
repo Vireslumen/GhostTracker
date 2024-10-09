@@ -39,9 +39,9 @@ namespace GhostTracker.ViewModels
         }
 
         /// <summary>
-        ///     Переход на подробную страницу улики.
+        ///     Переход на подробную страницу доказательства.
         /// </summary>
-        /// <param name="clue">Выбранная улика</param>
+        /// <param name="clue">Выбранное доказательство</param>
         private async void OnClueSelected(Clue clue)
         {
             try
@@ -55,7 +55,7 @@ namespace GhostTracker.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex,
-                    "Ошибка во время перехода на подробную страницу улики из подробной страницы призраков GhostDetailPage.");
+                    "Ошибка во время перехода на подробную страницу доказательства из подробной страницы призраков GhostDetailPage.");
             }
         }
     }

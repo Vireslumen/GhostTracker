@@ -19,7 +19,7 @@
         /// </summary>
         public string EmptyView { get; set; }
         /// <summary>
-        ///     Текст для фильтра по выбранным уликам Clue. Примеры: "Filter by Clue", "Фильтр по Уликам."
+        ///     Текст для фильтра по выбранным доказательствам Clue. Примеры: "Filter by Clue", "Фильтр по Доказательствам."
         /// </summary>
         public string FilterTitle { get; set; }
         /// <summary>

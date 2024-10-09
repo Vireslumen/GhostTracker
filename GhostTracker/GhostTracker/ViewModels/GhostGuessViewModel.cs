@@ -339,7 +339,7 @@ namespace GhostTracker.ViewModels
         }
 
         /// <summary>
-        ///     Обновление видимости вопросов на основе улик Clue.
+        ///     Обновление видимости вопросов на основе доказательств Clue.
         /// </summary>
         private void UpdateQuestionVisibilityBasedOnClues()
         {
@@ -391,7 +391,7 @@ namespace GhostTracker.ViewModels
         }
 
         /// <summary>
-        ///     Обновление списка предполагаемых призраков на основе улик Clue.
+        ///     Обновление списка предполагаемых призраков на основе доказательств Clue.
         /// </summary>
         private void UpdateSupposedGhostsBasedOnClues()
         {

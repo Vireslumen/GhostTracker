@@ -113,7 +113,7 @@
                                                     <DataTemplate x:DataType="models:Clue">
                                                         <StackLayout Orientation="Vertical"
                                                                      VerticalOptions="FillAndExpand">
-                                                            <!--  Иконка улики  -->
+                                                            <!--  Иконка доказательств  -->
                                                             <Image
                                                                 HeightRequest="30"
                                                                 Source="{Binding ThemedIconFilePath}"

@@ -224,7 +224,7 @@
                     </StackLayout>
                 </StackLayout>
             </yummy:PancakeView>
-            <!--  Поле содержащее список призраков у которых есть данное доказательство, а также список улик этих доказательств  -->
+            <!--  Поле содержащее список призраков у которых есть данное доказательство, а также список этих доказательств  -->
             <yummy:PancakeView
                 Padding="5,5,5,5"
                 BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}"

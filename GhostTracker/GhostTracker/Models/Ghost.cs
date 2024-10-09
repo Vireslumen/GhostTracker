@@ -69,9 +69,9 @@ namespace GhostTracker.Models
         public string MinSanityHuntClause { get; set; }
 
         /// <summary>
-        ///     Связывает призраков - Ghost с уликами Clue через имеющийся список Id улик - CluesId.
+        ///     Связывает призраков - Ghost с доказательствами Clue через имеющийся список Id доказательств - CluesId.
         /// </summary>
-        /// <param name="allClues">Список всех улик.</param>
+        /// <param name="allClues">Список всех доказательств.</param>
         public void PopulateAssociatedClues(List<Clue> allClues)
         {
             foreach (var clueId in CluesId)

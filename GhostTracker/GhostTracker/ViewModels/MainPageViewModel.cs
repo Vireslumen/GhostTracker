@@ -356,7 +356,7 @@ namespace GhostTracker.ViewModels
         }
 
         /// <summary>
-        ///     Переход на подробную страницу улики по нажатию на неё.
+        ///     Переход на подробную страницу доказательства по нажатию на неё.
         /// </summary>
         private async void OnClueTapped(Clue clueItem)
         {

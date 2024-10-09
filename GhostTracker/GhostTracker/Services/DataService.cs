@@ -387,7 +387,7 @@ namespace GhostTracker.Services
         }
 
         /// <summary>
-        ///     Загружает текстовые данные для интерфейса, относящиеся к уликам - Clue из базы данных, а
+        ///     Загружает текстовые данные для интерфейса, относящиеся к доказательствам - Clue из базы данных, а
         ///     затем кэширует их,
         ///     либо загружает данные из кэша, в зависимости от наличия кэша.
         /// </summary>
@@ -400,12 +400,12 @@ namespace GhostTracker.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время загрузки общих названий для улик.");
+                Log.Error(ex, "Ошибка во время загрузки общих названий для доказательств.");
             }
         }
 
         /// <summary>
-        ///     Загружает список улик  - Clue, а затем кэширует их,
+        ///     Загружает список доказательств  - Clue, а затем кэширует их,
         ///     либо загружает данные из кэша, в зависимости от наличия кэша.
         /// </summary>
         public async Task LoadCluesAsync()
@@ -416,12 +416,12 @@ namespace GhostTracker.Services
                     LanguageCode + "_" + "clues_cache.json",
                     async () => new List<Clue>(await databaseManager.GetCluesAsync(LanguageCode))
                 );
-                //Загрузка текстовых данных для интерфейса, относящимся к уликам - Clue
+                //Загрузка текстовых данных для интерфейса, относящимся к доказательствам - Clue
                 await LoadClueCommonAsync();
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время загрузки улик.");
+                Log.Error(ex, "Ошибка во время загрузки доказательств.");
             }
         }
 
@@ -716,10 +716,10 @@ namespace GhostTracker.Services
             await LoadPatchesSteamAsync();
             await LoadGhostGuessQuestionsAsync();
             await LoadFeedbackCommonAsync();
-            //Добавление связи от призраков Ghost к уликам Clue
+            //Добавление связи от призраков Ghost к доказательствам Clue
             //Связи добавляются после кэширования, из-за невозможности кэшировать данные с такими связями
             foreach (var ghost in ghosts) ghost.PopulateAssociatedClues(clues);
-            //Добавление связи от улик Clue - к призракам Ghost
+            //Добавление связи от доказательств Clue - к призракам Ghost
             foreach (var clue in clues) clue.PopulateAssociatedGhosts(ghosts);
             //Добавление связи от GhostGuessQuestion - к призракам Ghost
             foreach (var ghostGuessQuestion in ghostGuessQuestions)

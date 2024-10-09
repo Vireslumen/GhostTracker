@@ -28,7 +28,7 @@ namespace GhostTracker.ViewModels
         public GhostsViewModel()
         {
             var dataService = DependencyService.Get<DataService>();
-            //Загрузка всех призраков и улик.
+            //Загрузка всех призраков и доказательств.
             ghosts = dataService.GetGhosts().OrderBy(g => g.Title).ToList();
             allClues = dataService.GetClues();
             SelectedClues = new ObservableCollection<object>();
@@ -83,7 +83,7 @@ namespace GhostTracker.ViewModels
         public string FilterColor => SelectedClues.Any() ? "#FD7E14" : "Transparent";
 
         /// <summary>
-        ///     Фильтрация списка призраков на основе выбранных улик.
+        ///     Фильтрация списка призраков на основе выбранных доказательств.
         /// </summary>
         public void Filter()
         {
