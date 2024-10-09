@@ -1,13 +1,12 @@
 ﻿using System;
 using GhostTracker.ViewModels;
 using Serilog;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace GhostTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MapsPage : ContentPage
+    public partial class MapsPage
     {
         public MapsPage()
         {

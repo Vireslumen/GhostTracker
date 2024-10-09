@@ -2,13 +2,12 @@
 using GhostTracker.Models;
 using GhostTracker.ViewModels;
 using Serilog;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace GhostTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class EquipmentDetailPage : ContentPage
+    public partial class EquipmentDetailPage
     {
         public EquipmentDetailPage(Equipment equipment)
         {
@@ -23,6 +22,7 @@ namespace GhostTracker.Views
                 Log.Error(ex, "Ошибка во время инициализации EquipmentDetailPage.");
             }
         }
+
         protected override void OnDisappearing()
         {
             base.OnDisappearing();

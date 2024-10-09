@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using GhostTracker.ViewModels;
-using Rg.Plugins.Popup.Pages;
 using Serilog;
 using Xamarin.Forms.Xaml;
 
@@ -9,7 +8,7 @@ namespace GhostTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     [DesignTimeVisible(false)]
-    public partial class FilterMapPage : PopupPage
+    public partial class FilterMapPage
     {
         public FilterMapPage(MapsViewModel viewModel)
         {

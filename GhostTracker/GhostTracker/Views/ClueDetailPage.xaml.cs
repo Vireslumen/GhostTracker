@@ -2,13 +2,12 @@
 using GhostTracker.Models;
 using GhostTracker.ViewModels;
 using Serilog;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace GhostTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ClueDetailPage : ContentPage
+    public partial class ClueDetailPage
     {
         public ClueDetailPage(Clue clue)
         {
@@ -23,6 +22,7 @@ namespace GhostTracker.Views
                 Log.Error(ex, "Ошибка во время инициализации ClueDetailPage.");
             }
         }
+
         protected override void OnDisappearing()
         {
             base.OnDisappearing();

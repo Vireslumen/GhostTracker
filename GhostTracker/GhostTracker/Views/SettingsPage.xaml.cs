@@ -1,13 +1,12 @@
 ﻿using System;
 using GhostTracker.ViewModels;
 using Serilog;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace GhostTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SettingsPage : ContentPage
+    public partial class SettingsPage
     {
         public SettingsPage()
         {
@@ -22,6 +21,7 @@ namespace GhostTracker.Views
                 Log.Error(ex, "Ошибка во время инициализации страницы настроек.");
             }
         }
+
         protected override void OnDisappearing()
         {
             base.OnDisappearing();

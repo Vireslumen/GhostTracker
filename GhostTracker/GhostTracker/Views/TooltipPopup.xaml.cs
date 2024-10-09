@@ -1,5 +1,4 @@
 ﻿using System;
-using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using Serilog;
 using Xamarin.Forms.Xaml;
@@ -7,7 +6,7 @@ using Xamarin.Forms.Xaml;
 namespace GhostTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TooltipPopup : PopupPage
+    public partial class TooltipPopup
     {
         public TooltipPopup(string message)
         {

@@ -7,7 +7,7 @@ using Xamarin.Forms.Xaml;
 namespace GhostTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ImagePage : ContentPage
+    public partial class ImagePage
     {
         public ImagePage(ImageWithDescription imageData)
         {
@@ -28,7 +28,15 @@ namespace GhostTracker.Views
             }
         }
 
-        private async void OnCloseRequested()
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            if (!(Content is InteractiveImageView interactiveImageView)) return;
+            interactiveImageView.TransparencyChanged -= OnTransparencyChanged;
+            interactiveImageView.CloseRequested -= OnCloseRequested;
+        }
+
+        private static async void OnCloseRequested()
         {
             try
             {
@@ -37,16 +45,6 @@ namespace GhostTracker.Views
             catch (Exception ex)
             {
                 Log.Error(ex, "Ошибка при закрытии страницы ImagePage.");
-            }
-        }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            if (Content is InteractiveImageView interactiveImageView)
-            {
-                interactiveImageView.TransparencyChanged -= OnTransparencyChanged;
-                interactiveImageView.CloseRequested -= OnCloseRequested;
             }
         }
 

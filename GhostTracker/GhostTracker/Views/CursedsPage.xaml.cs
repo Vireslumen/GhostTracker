@@ -1,13 +1,12 @@
 ﻿using System;
 using GhostTracker.ViewModels;
 using Serilog;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace GhostTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CursedsPage : ContentPage
+    public partial class CursedsPage
     {
         public CursedsPage()
         {

@@ -1,12 +1,11 @@
 ﻿using System;
-using Rg.Plugins.Popup.Pages;
 using Serilog;
 using Xamarin.Forms.Xaml;
 
 namespace GhostTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoadingPopup : PopupPage
+    public partial class LoadingPopup
     {
         public LoadingPopup()
         {

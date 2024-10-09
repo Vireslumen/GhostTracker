@@ -2,13 +2,12 @@
 using GhostTracker.Models;
 using GhostTracker.ViewModels;
 using Serilog;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace GhostTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ChallengeModeDetailPage : ContentPage
+    public partial class ChallengeModeDetailPage
     {
         public ChallengeModeDetailPage(ChallengeMode challengeMode)
         {
@@ -23,6 +22,7 @@ namespace GhostTracker.Views
                 Log.Error(ex, "Ошибка во время инициализации ChallengeModeDetailPage.");
             }
         }
+
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
