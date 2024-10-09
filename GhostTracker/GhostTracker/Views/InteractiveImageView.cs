@@ -35,7 +35,6 @@ namespace GhostTracker.Views
         /// <summary>
         ///     Событие, вызываемое при изменении прозрачности изображения.
         /// </summary>
-        /// <param name="opacity">Новое значение прозрачности.</param>
         public event Action<float> TransparencyChanged;
     }
 }

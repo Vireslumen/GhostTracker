@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="GhostTracker.Views.ClueDetailPage"
@@ -6,9 +6,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
-    x:Name="ClueDetailPageName"
+    xmlns:viewModels="clr-namespace:GhostTracker.ViewModels;assembly=GhostTracker"
+    xmlns:models="clr-namespace:GhostTracker.Models;assembly=GhostTracker"
     Shell.TabBarIsVisible="False"
-    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
+    x:DataType="viewModels:ClueDetailViewModel">
     <ScrollView>
         <StackLayout>
             <StackLayout>
@@ -36,9 +38,9 @@
                             TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                             HorizontalOptions="CenterAndExpand"
                             Text="{Binding Clue.Title}" />
-                        <!--  Изображение улики  -->
+                        <!--  Изображение доказательства  -->
                         <Image Source="{Binding Clue.ImageFilePath}" />
-                        <!--  Описание улики  -->
+                        <!--  Описание доказательства  -->
                         <Label
                             Padding="0,10,0,0"
                             FontSize="16"
@@ -47,127 +49,131 @@
                             VerticalOptions="Center" />
                     </StackLayout>
                 </yummy:PancakeView>
-
-
             </StackLayout>
             <!--  Список раскрывающихся элементов содержащих список изображений и описаний к ним  -->
             <StackLayout BindableLayout.ItemsSource="{Binding Clue.ExpandFieldsWithImages}">
                 <BindableLayout.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="models:ExpandFieldWithImages">
                         <Frame Margin="10,5" HasShadow="True"
-                                   Padding="13"
-                                   effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
-                                   effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
-                                   effects:ShadowEffect.Radius="5"
-                                   BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}"
-                                   CornerRadius="8">
+                               Padding="13"
+                               effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                               effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                               effects:ShadowEffect.Radius="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}"
+                               CornerRadius="8">
                             <StackLayout Orientation="Vertical">
-                                    <!--  Название раскрывающегося элемента  -->
+                                <!--  Название раскрывающегося элемента  -->
+                                <Label
+                                    FontFamily="{StaticResource BoldFont}"
+                                    FontSize="18"
+                                    Text="{Binding Title}"
+                                    VerticalOptions="CenterAndExpand" />
+                                <StackLayout Orientation="Horizontal">
+                                    <!--  Краткое описание раскрывающегося элемента  -->
                                     <Label
-                                        FontFamily="{StaticResource BoldFont}"
-                                        FontSize="18"
-                                        Text="{Binding Title}"
+                                        Margin="0,5,0,0"
+                                        Padding="10,0,0,0"
+                                        FontSize="14"
+                                        Text="{Binding Header}"
                                         VerticalOptions="CenterAndExpand" />
-                                    <StackLayout Orientation="Horizontal">
-                                        <!--  Краткое описание раскрывающегося элемента  -->
-                                        <Label
-                                            Margin="0,5,0,0"
-                                            Padding="10,0,0,0"
-                                            FontSize="14"
-                                            Text="{Binding Header}"
-                                            VerticalOptions="CenterAndExpand" />
-                                        <!--  Иконка раскрытия или скрытия тела элемента  -->
-                                        <Image
-                                            HeightRequest="20"
-                                            HorizontalOptions="EndAndExpand"
-                                            Source="{Binding Icon}"
-                                            VerticalOptions="CenterAndExpand" />
-                                    </StackLayout>
-                                    <StackLayout IsVisible="{Binding IsExpanded}" Orientation="Vertical">
-                                        <!--  Описание раскрывающегося элемента  -->
-                                        <WebView HorizontalOptions="FillAndExpand"
-         VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
-                                            <WebView.Source>
-                                                <HtmlWebViewSource Html="{Binding Body}" />
-                                            </WebView.Source>
-                                        </WebView>
-                                        <!--  Список изображений и описания к ним  -->
-                                        <StackLayout BindableLayout.ItemsSource="{Binding ImageWithDescriptions}">
-                                            <BindableLayout.ItemTemplate>
-                                                <DataTemplate>
-                                                    <StackLayout Padding="5,25,5,0" Orientation="Vertical">
-                                                        <!--  Изображение  -->
-                                                        <Image Source="{Binding ImageFilePath}">
-                                                            <Image.GestureRecognizers>
-                                                                <TapGestureRecognizer Command="{Binding BindingContext.ImageTappedCommand, Source={x:Reference ClueDetailPageName}}" CommandParameter="{Binding .}" />
-                                                            </Image.GestureRecognizers>
-                                                        </Image>
-                                                        <!--  Описание изображения  -->
-                                                        <Label
-                                                            FontAttributes="Italic"
-                                                            HorizontalTextAlignment="Center"
-                                                            Text="{Binding Description}"
-                                                            VerticalOptions="EndAndExpand" />
-                                                    </StackLayout>
-                                                </DataTemplate>
-                                            </BindableLayout.ItemTemplate>
-                                        </StackLayout>
-                                    </StackLayout>
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference ClueDetailPageName}}" CommandParameter="{Binding .}" />
-                                    </StackLayout.GestureRecognizers>
+                                    <!--  Иконка раскрытия или скрытия тела элемента  -->
+                                    <Image
+                                        HeightRequest="20"
+                                        HorizontalOptions="EndAndExpand"
+                                        Source="{Binding Icon}"
+                                        VerticalOptions="CenterAndExpand" />
                                 </StackLayout>
-                            </Frame>>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </StackLayout>
-            <!--  Список раскрывающихся элементов, содержащих текст в них  -->
-            <StackLayout BindableLayout.ItemsSource="{Binding Clue.UnfoldingItems}">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
-                        <Frame Margin="10,5" HasShadow="True"
-                                   Padding="13"
-                                   effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
-                                   effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
-                                   effects:ShadowEffect.Radius="5"
-                                   BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}"
-                                   CornerRadius="8">
-                                <StackLayout Orientation="Vertical">
-                                    <!--  Название раскрывающегося элемента  -->
-                                    <Label
-                                        FontFamily="{StaticResource BoldFont}"
-                                        FontSize="18"
-                                        Text="{Binding Title}" />
-                                    <StackLayout Orientation="Horizontal">
-                                        <!--  Краткое описание раскрывающегося элемента  -->
-                                        <Label
-                                            Margin="0,5,0,0"
-                                            Padding="10,0,0,0"
-                                            FontSize="14"
-                                            Text="{Binding Header}" />
-                                        <!--  Иконка раскрытия или скрытия тела элемента  -->
-                                        <Image
-                                            HeightRequest="20"
-                                            HorizontalOptions="EndAndExpand"
-                                            Source="{Binding Icon}"
-                                            VerticalOptions="CenterAndExpand" />
-                                    </StackLayout>
-                                    <!--  Раскрывающийся текст  -->
+                                <StackLayout IsVisible="{Binding IsExpanded}" Orientation="Vertical">
+                                    <!--  Описание раскрывающегося элемента  -->
                                     <WebView HorizontalOptions="FillAndExpand"
                                              VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
                                         <WebView.Source>
                                             <HtmlWebViewSource Html="{Binding Body}" />
                                         </WebView.Source>
                                     </WebView>
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference ClueDetailPageName}}" CommandParameter="{Binding .}" />
-                                    </StackLayout.GestureRecognizers>
+                                    <!--  Список изображений и описания к ним  -->
+                                    <StackLayout BindableLayout.ItemsSource="{Binding ImageWithDescriptions}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate x:DataType="models:ImageWithDescription">
+                                                <StackLayout Padding="5,25,5,0" Orientation="Vertical">
+                                                    <!--  Изображение  -->
+                                                    <Image Source="{Binding ImageFilePath}">
+                                                        <Image.GestureRecognizers>
+                                                            <TapGestureRecognizer
+                                                                Command="{Binding Path=EquipmentSelectedCommand, Source={RelativeSource AncestorType={x:Type viewModels:ClueDetailViewModel}}}"
+                                                                CommandParameter="{Binding .}" />
+                                                        </Image.GestureRecognizers>
+                                                    </Image>
+                                                    <!--  Описание изображения  -->
+                                                    <Label
+                                                        FontAttributes="Italic"
+                                                        HorizontalTextAlignment="Center"
+                                                        Text="{Binding Description}"
+                                                        VerticalOptions="EndAndExpand" />
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
                                 </StackLayout>
-                            </Frame>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Path=ToggleExpandCommand, Source={RelativeSource AncestorType={x:Type viewModels:ClueDetailViewModel}}}"
+                                        CommandParameter="{Binding .}" />
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </Frame>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>
-            <!--  Список снаряжения связанного с данной уликой  -->
+            <!--  Список раскрывающихся элементов, содержащих текст в них  -->
+            <StackLayout BindableLayout.ItemsSource="{Binding Clue.UnfoldingItems}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:UnfoldingItem">
+                        <Frame Margin="10,5" HasShadow="True"
+                               Padding="13"
+                               effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                               effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
+                               effects:ShadowEffect.Radius="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}"
+                               CornerRadius="8">
+                            <StackLayout Orientation="Vertical">
+                                <!--  Название раскрывающегося элемента  -->
+                                <Label
+                                    FontFamily="{StaticResource BoldFont}"
+                                    FontSize="18"
+                                    Text="{Binding Title}" />
+                                <StackLayout Orientation="Horizontal">
+                                    <!--  Краткое описание раскрывающегося элемента  -->
+                                    <Label
+                                        Margin="0,5,0,0"
+                                        Padding="10,0,0,0"
+                                        FontSize="14"
+                                        Text="{Binding Header}" />
+                                    <!--  Иконка раскрытия или скрытия тела элемента  -->
+                                    <Image
+                                        HeightRequest="20"
+                                        HorizontalOptions="EndAndExpand"
+                                        Source="{Binding Icon}"
+                                        VerticalOptions="CenterAndExpand" />
+                                </StackLayout>
+                                <!--  Раскрывающийся текст  -->
+                                <WebView HorizontalOptions="FillAndExpand"
+                                         VerticalOptions="Fill" IsVisible="{Binding IsExpanded}">
+                                    <WebView.Source>
+                                        <HtmlWebViewSource Html="{Binding Body}" />
+                                    </WebView.Source>
+                                </WebView>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Path=ToggleExpandCommand, Source={RelativeSource AncestorType={x:Type viewModels:ClueDetailViewModel}}}"
+                                        CommandParameter="{Binding .}" />
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+            <!--  Список снаряжения связанного с данным доказательством  -->
             <yummy:PancakeView
                 Padding="10,10,10,10"
                 BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}"
@@ -189,15 +195,15 @@
                         FontSize="16"
                         Text="{Binding ClueCommon.RelatedEquipment}" />
                     <StackLayout
-                        x:Name="equipmentsStackLayout"
                         Padding="0,5,5,5"
                         BindableLayout.ItemsSource="{Binding Clue.ClueRelatedEquipments}"
                         Spacing="15">
-
                         <BindableLayout.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="models:Equipment">
                                 <StackLayout Orientation="Horizontal">
-                                    <Image HeightRequest="60" Source="{Binding ImageFilePath}"></Image>
+                                    <!--Картинка снаряжения-->
+                                    <Image HeightRequest="60" Source="{Binding ImageFilePath}" />
+                                    <!--Название снаряжения и его класс-->
                                     <Label VerticalOptions="CenterAndExpand">
                                         <Label.FormattedText>
                                             <FormattedString>
@@ -208,7 +214,9 @@
                                         </Label.FormattedText>
                                     </Label>
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.EquipmentSelectedCommand, Source={x:Reference Name=equipmentsStackLayout}}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer
+                                            Command="{Binding Path=EquipmentSelectedCommand, Source={RelativeSource AncestorType={x:Type viewModels:ClueDetailViewModel}}}"
+                                            CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </DataTemplate>
@@ -216,7 +224,7 @@
                     </StackLayout>
                 </StackLayout>
             </yummy:PancakeView>
-            <!--  Поле содержащее список призраков у которых есть данная улика, а также список улик этих призраков  -->
+            <!--  Поле содержащее список призраков у которых есть данное доказательство, а также список улик этих доказательств  -->
             <yummy:PancakeView
                 Padding="5,5,5,5"
                 BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}"
@@ -240,11 +248,10 @@
                         Text="{Binding ClueCommon.OtherGhosts}"
                         VerticalOptions="CenterAndExpand" />
                     <StackLayout
-                        x:Name="ghostStackLayoutView"
                         Padding="5"
                         BindableLayout.ItemsSource="{Binding Clue.Ghosts}">
                         <BindableLayout.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="models:Ghost">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="3*" />
@@ -255,29 +262,35 @@
                                         Grid.Column="0"
                                         Orientation="Vertical"
                                         VerticalOptions="CenterAndExpand">
-                                        <Label FontSize="16" FontFamily="{StaticResource BoldFont}" Text="{Binding Title}" />
+                                        <!--Название призрака-->
+                                        <Label FontSize="16" FontFamily="{StaticResource BoldFont}"
+                                               Text="{Binding Title}" />
                                         <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.GhostSelectedCommand, Source={x:Reference Name=ghostStackLayoutView}}" CommandParameter="{Binding .}" />
+                                            <TapGestureRecognizer
+                                                Command="{Binding Path=GhostSelectedCommand, Source={RelativeSource AncestorType={x:Type viewModels:ClueDetailViewModel}}}"
+                                                CommandParameter="{Binding .}" />
                                         </StackLayout.GestureRecognizers>
                                     </StackLayout>
-                                    <!--  Список улик призраков  -->
+                                    <!--  Список доказательств призраков  -->
                                     <FlexLayout
-                                        x:Name="clueFlexLayout"
                                         Grid.Column="1"
                                         BindableLayout.ItemsSource="{Binding Clues}"
                                         Direction="Column"
                                         JustifyContent="Start"
                                         Wrap="Wrap">
                                         <BindableLayout.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackLayout Padding="5,10,5,10" Orientation="Vertical" VerticalOptions="FillAndExpand">
-                                                    <!--  Иконка улики  -->
+                                            <DataTemplate x:DataType="models:Clue">
+                                                <StackLayout Padding="5,10,5,10" Orientation="Vertical"
+                                                             VerticalOptions="FillAndExpand">
+                                                    <!--  Иконка доказательства  -->
                                                     <Image
                                                         HeightRequest="35"
                                                         Source="{Binding ThemedIconFilePath}"
                                                         WidthRequest="35" />
                                                     <StackLayout.GestureRecognizers>
-                                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.ClueSelectedCommand, Source={x:Reference Name=ghostStackLayoutView}}" CommandParameter="{Binding .}" />
+                                                        <TapGestureRecognizer
+                                                            Command="{Binding Path=ClueSelectedCommand, Source={RelativeSource AncestorType={x:Type viewModels:ClueDetailViewModel}}}"
+                                                            CommandParameter="{Binding .}" />
                                                     </StackLayout.GestureRecognizers>
                                                 </StackLayout>
                                             </DataTemplate>

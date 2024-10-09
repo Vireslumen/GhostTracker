@@ -1,13 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="GhostTracker.Views.DifficultyDetailPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    x:Name="DifficultyDetailPageName"
+    xmlns:viewModels="clr-namespace:GhostTracker.ViewModels"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
-    Shell.TabBarIsVisible="False">
+    Shell.TabBarIsVisible="False" x:DataType="viewModels:DifficultyDetailViewModel">
     <ScrollView>
         <StackLayout Orientation="Vertical">
             <!--  Заголовок страницы  -->
@@ -37,7 +37,7 @@
                 BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
-                    <yummy:DropShadow  BlurRadius="{AppThemeBinding Light=10, Dark=0}" />
+                    <yummy:DropShadow BlurRadius="{AppThemeBinding Light=10, Dark=0}" />
                 </yummy:PancakeView.Shadow>
                 <yummy:PancakeView.Margin>
                     <Thickness>
@@ -47,7 +47,6 @@
                 <yummy:PancakeView.Border>
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
-
                 <StackLayout Padding="5" Spacing="20">
                     <Label
                         FontFamily="{StaticResource BoldFont}"
@@ -56,210 +55,221 @@
                     <StackLayout
                         Padding="5"
                         Spacing="15">
+                        <!--Включенность монитора активности-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.ActivityMonitorWork}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Процент возвращаемых денег после смерти-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.DeadCashBack}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.DeadCashBack}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.DeadCashBack}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Количество открытых дверей в начале игры-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.DoorOpenedCount}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.DoorOpenedCount}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.DoorOpenedCount}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Показывается ли электрический щиток на карте-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.ElectricityBlockNotShowedOnMap}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.ElectricityBlockNotShowedOnMap}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.ElectricityBlockNotShowedOnMap}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Включено ли электричество в начале игры-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.ElectricityOn}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.ElectricityOn}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.ElectricityOn}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Есть ли проклятые предметы-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.IsCursedAvailable}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.IsCursedAvailable}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.IsCursedAvailable}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Сколько доказательств доступно-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.EvidenceAvailable}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.EvidenceAvailable}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.EvidenceAvailable}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Длительность отпечатков пальцев-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.FingerPrints}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.FingerPrints}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.FingerPrints}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Уровень активности призрака-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.GhostActivity}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.GhostActivity}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.GhostActivity}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Длительность охоты призрака-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.GhostHuntTime}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.GhostHuntTime}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.GhostHuntTime}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Сколько мест для укрытия заблокировано-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.HidingSpotBlocked}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.HidingSpotBlocked}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.HidingSpotBlocked}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Продлевается ли охота после убийства игрока-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.HuntExtendByKilling}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.HuntExtendByKilling}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.HuntExtendByKilling}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Показывает ли доска задания отвечает призрак всем или одиночкам-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.ActivityMonitorWork}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding Difficulty.ActivityMonitorWork}" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-
-                        <Label>
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.ObjectiveBoardPendingAloneAll}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.ObjectiveBoardPendingAloneAll}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.ObjectiveBoardPendingAloneAll}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Множитель награды за контракт-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.RewardMultiplier}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.RewardMultiplier}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.RewardMultiplier}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Потребление рассудка-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.SanityConsumption}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.SanityConsumption}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.SanityConsumption}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Работает ли монитор рассудка-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.SanityMonitorWork}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.SanityMonitorWork}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.SanityMonitorWork}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Восстановление рассудка-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.SanityRestoration}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.SanityRestoration}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.SanityRestoration}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Сколько рассудка у игроков в начале игры-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.SanityStartAt}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.SanityStartAt}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.SanityStartAt}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Безопасное время для расстановки-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.SetupTime}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.SetupTime}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.SetupTime}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-
+                        <!--Уровень разблокировки сложности-->
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="{StaticResource BoldFont}" Text="{Binding DifficultyCommon.UnlockLevel}" />
+                                    <Span FontFamily="{StaticResource BoldFont}"
+                                          Text="{Binding DifficultyCommon.UnlockLevel}" />
                                     <Span Text=": " />
                                     <Span Text="{Binding Difficulty.UnlockLevel}" />
                                 </FormattedString>
@@ -267,7 +277,6 @@
                         </Label>
                     </StackLayout>
                 </StackLayout>
-
             </yummy:PancakeView>
         </StackLayout>
     </ScrollView>

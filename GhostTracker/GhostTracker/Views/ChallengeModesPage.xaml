@@ -1,16 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="GhostTracker.Views.ChallengeModesPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:viewModels="clr-namespace:GhostTracker.ViewModels"
+    xmlns:models="clr-namespace:GhostTracker.Models"
+    x:DataType="viewModels:ChallengeModeViewModel"
     Shell.TabBarIsVisible="False"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
     <ScrollView>
         <StackLayout Padding="0,10,0,0">
-
-            <!--  Заголовок страницы  -->
+            <!-- Заголовок страницы -->
             <Label
                 Margin="0,20,0,0"
                 TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
@@ -18,23 +20,19 @@
                 FontSize="Large"
                 HorizontalOptions="Center"
                 Text="{Binding ChallengeModeCommon.Title}" />
-
-            <!--  Описание особого режима в целом  -->
+            <!-- Описание особого режима в целом -->
             <Label
                 Margin="10"
                 FontSize="14"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
                 Text="{Binding ChallengeModeCommon.Description}" />
-
-            <!--  Список особых режимов  -->
+            <!-- Список особых режимов -->
             <StackLayout
-                x:Name="challengeModeCollection"
                 Margin="10"
                 BindableLayout.ItemsSource="{Binding ChallengeModes}">
-
                 <BindableLayout.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="models:ChallengeMode">
                         <StackLayout Padding="10,0,10,15">
                             <pancakeView:PancakeView
                                 Margin="5"
@@ -46,22 +44,21 @@
                                 <pancakeView:PancakeView.Shadow>
                                     <pancakeView:DropShadow BlurRadius="10" />
                                 </pancakeView:PancakeView.Shadow>
-
                                 <StackLayout>
-                                    <!--  Название особого режима  -->
+                                    <!-- Название особого режима -->
                                     <Label
                                         FontFamily="{StaticResource BoldFont}"
                                         FontSize="16"
                                         Text="{Binding Title}" />
-
-                                    <!--  Описание особого режима  -->
+                                    <!-- Описание особого режима -->
                                     <Label FontSize="12" Text="{Binding Description}" />
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.ChallengeModeTappedCommand, Source={x:Reference Name=challengeModeCollection}}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer
+                                            Command="{Binding Path=ChallengeModeTappedCommand, Source={RelativeSource AncestorType={x:Type viewModels:ChallengeModeViewModel}}}"
+                                            CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </pancakeView:PancakeView>
-
                         </StackLayout>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>

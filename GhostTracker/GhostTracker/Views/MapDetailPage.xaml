@@ -5,9 +5,11 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
-    x:Name="MapDetailPageName"
+    xmlns:viewModels="clr-namespace:GhostTracker.ViewModels"
+    xmlns:models="clr-namespace:GhostTracker.Models"
     Shell.TabBarIsVisible="False"
-    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
+    x:DataType="viewModels:MapDetailViewModel">
     <ScrollView>
         <StackLayout Orientation="Vertical">
             <Frame Margin="10,3,10,10" HasShadow="True"
@@ -47,6 +49,7 @@
                     <!--  Список значений параметров карты  -->
                     <ScrollView Grid.Row="0" Grid.Column="2">
                         <StackLayout>
+                            <!--Размер карты-->
                             <Label>
                                 <Label.FormattedText>
                                     <FormattedString>
@@ -56,6 +59,7 @@
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
+                            <!--Количество комнат на карте-->
                             <Label>
                                 <Label.FormattedText>
                                     <FormattedString>
@@ -65,6 +69,7 @@
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
+                            <!--Уровень разблокировки карты-->
                             <Label>
                                 <Label.FormattedText>
                                     <FormattedString>
@@ -74,6 +79,7 @@
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
+                            <!--Количество этажей на карте-->
                             <Label>
                                 <Label.FormattedText>
                                     <FormattedString>
@@ -83,6 +89,7 @@
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
+                            <!--Количество выходов на карте-->
                             <Label>
                                 <Label.FormattedText>
                                     <FormattedString>
@@ -92,6 +99,7 @@
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
+                            <!--Количество местр для укрытия на карте-->
                             <Label>
                                 <Label.FormattedText>
                                     <FormattedString>
@@ -112,14 +120,12 @@
                         HorizontalOptions="Center"
                         Text="{Binding Map.Description}"
                         VerticalOptions="Center" />
-
-
                 </Grid>
             </Frame>
             <!--  Список раскрывающихся элементов содержащих список изображений и описаний к ним  -->
             <StackLayout BindableLayout.ItemsSource="{Binding Map.ExpandFieldsWithImages}">
                 <BindableLayout.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="models:ExpandFieldWithImages">
                         <Frame HasShadow="True"
                                Margin="10,5"
                                Padding="13"
@@ -154,13 +160,13 @@
                                     <!--  Список изображений и описания к ним  -->
                                     <StackLayout BindableLayout.ItemsSource="{Binding ImageWithDescriptions}">
                                         <BindableLayout.ItemTemplate>
-                                            <DataTemplate>
+                                            <DataTemplate x:DataType="models:ImageWithDescription">
                                                 <StackLayout Padding="5,25,5,0" Orientation="Vertical">
                                                     <!--  Изображение  -->
                                                     <Image Source="{Binding ImageFilePath}">
                                                         <Image.GestureRecognizers>
                                                             <TapGestureRecognizer
-                                                                Command="{Binding BindingContext.ImageTappedCommand, Source={x:Reference MapDetailPageName}}"
+                                                                Command="{Binding Path=ImageTappedCommand, Source={RelativeSource AncestorType={x:Type viewModels:MapDetailViewModel}}}"
                                                                 CommandParameter="{Binding .}" />
                                                         </Image.GestureRecognizers>
                                                     </Image>
@@ -184,19 +190,18 @@
                                 </StackLayout>
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer
-                                        Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference MapDetailPageName}}"
+                                        Command="{Binding Path=ToggleExpandCommand, Source={RelativeSource AncestorType={x:Type viewModels:MapDetailViewModel}}}"
                                         CommandParameter="{Binding .}" />
                                 </StackLayout.GestureRecognizers>
                             </StackLayout>
                         </Frame>
-
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>
             <!--  Список раскрывающихся элементов, содержащих текст в них  -->
             <StackLayout BindableLayout.ItemsSource="{Binding Map.UnfoldingItems}">
                 <BindableLayout.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="models:UnfoldingItem">
                         <Frame Margin="10,5"
                                HasShadow="True"
                                Padding="13"
@@ -234,7 +239,7 @@
                                 </WebView>
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer
-                                        Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference MapDetailPageName}}"
+                                        Command="{Binding Path=ToggleExpandCommand, Source={RelativeSource AncestorType={x:Type viewModels:MapDetailViewModel}}}"
                                         CommandParameter="{Binding .}" />
                                 </StackLayout.GestureRecognizers>
                             </StackLayout>

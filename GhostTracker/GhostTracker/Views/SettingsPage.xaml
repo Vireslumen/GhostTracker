@@ -4,9 +4,10 @@
     x:Class="GhostTracker.Views.SettingsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:GhostTracker.ViewModels"
     xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
-    NavigationPage.HasNavigationBar="False">
+    NavigationPage.HasNavigationBar="False" x:DataType="viewModels:SettingsViewModel">
     <ScrollView>
         <StackLayout Spacing="0" Padding="25,10,25,0">
             <!-- Заголовок страницы -->
@@ -21,7 +22,6 @@
                     TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                     ItemsSource="{Binding Languages}"
                     SelectedItem="{Binding SelectedLanguage}" />
-
             <!-- Выбор уровня подсказок -->
             <Label FontFamily="{StaticResource BoldFont}" FontSize="16" Padding="0,30,0,0"
                    Text="{Binding SettingsCommon.TipLevel}"
@@ -30,8 +30,7 @@
                     TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                     ItemsSource="{Binding TipLevels}"
                     SelectedItem="{Binding SelectedTipLevel}" />
-
-            <!-- Отправка фдбэка -->
+            <!-- Отправка фидбэка -->
             <Button
                 effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                 effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
@@ -40,12 +39,11 @@
                 TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 Command="{Binding ReportBugCommand}" />
-            <!-- Включен ли фдбэк при тряске -->
+            <!-- Включен ли фидбэк при тряске -->
             <StackLayout Padding="0,10,0,0" Orientation="Horizontal">
                 <Frame
                     BackgroundColor="{AppThemeBinding Light={StaticResource ThirdBackgroundColorDark}, Dark={StaticResource ThirdBackgroundColorDark}}"
                     Padding="7" VerticalOptions="Center" CornerRadius="30">
-
                     <CheckBox BackgroundColor="Transparent"
                               HorizontalOptions="Center" Scale="1.5" IsChecked="{Binding ShakeActive}" />
                 </Frame>
@@ -62,6 +60,7 @@
                 <Label FontFamily="{StaticResource BoldFont}" VerticalOptions="Center"
                        Text="{Binding SettingsCommon.LoggerServerActive}" />
             </StackLayout>
+            <!--Описание приложения-->
             <WebView Margin="0,30,0,0" HorizontalOptions="FillAndExpand"
                      VerticalOptions="Fill">
                 <WebView.Source>

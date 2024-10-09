@@ -1,12 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="GhostTracker.Views.CursedsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:viewModels="clr-namespace:GhostTracker.ViewModels"
+    xmlns:models="clr-namespace:GhostTracker.Models;assembly=GhostTracker"
     BackgroundColor="Black"
-    NavigationPage.HasNavigationBar="False">
+    NavigationPage.HasNavigationBar="False" x:DataType="viewModels:CursedViewModel">
     <StackLayout>
         <!--  Заголовок страницы  -->
         <Label
@@ -32,19 +34,18 @@
                 Placeholder="{Binding CursedPossessionCommon.Search}"
                 Text="{Binding SearchText, Mode=TwoWay}" />
         </yummy:PancakeView>
+        <!--  Список проклятых предметов  -->
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
                 <yummy:PancakeView
                     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
                     CornerRadius="40,40,0,0"
                     VerticalOptions="FillAndExpand">
-                    <!--  Список проклятых предметов  -->
                     <CollectionView
-                        x:Name="collectionView"
                         ItemsSource="{Binding Curseds}"
                         SelectionMode="Single">
                         <CollectionView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="models:CursedPossession">
                                 <StackLayout>
                                     <StackLayout.Padding>
                                         0,0,0,10
@@ -54,7 +55,7 @@
                                         BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                                         CornerRadius="16">
                                         <yummy:PancakeView.Shadow>
-                                            <yummy:DropShadow BlurRadius="{AppThemeBinding Light=10, Dark=0}"/>
+                                            <yummy:DropShadow BlurRadius="{AppThemeBinding Light=10, Dark=0}" />
                                         </yummy:PancakeView.Shadow>
                                         <yummy:PancakeView.Margin>
                                             <Thickness>
@@ -80,7 +81,9 @@
                                         </StackLayout>
                                     </yummy:PancakeView>
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.CursedSelectedCommand, Source={x:Reference Name=collectionView}}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer
+                                            Command="{Binding Path=CursedSelectedCommand, Source={RelativeSource AncestorType={x:Type viewModels:CursedViewModel}}}"
+                                            CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </DataTemplate>

@@ -1,15 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="GhostTracker.Views.AchievementPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:viewModels="clr-namespace:GhostTracker.ViewModels" xmlns:models="clr-namespace:GhostTracker.Models"
+    x:DataType="viewModels:AchievementsViewModel"
     Shell.TabBarIsVisible="False"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
     <ScrollView>
         <StackLayout Padding="0,10,0,0">
-
             <!--  Заголовок страницы  -->
             <Label
                 Margin="0,20,0,0"
@@ -18,23 +19,19 @@
                 FontSize="Large"
                 HorizontalOptions="Center"
                 Text="{Binding AchievementCommon.Title}" />
-
-            <!--  Описание особого режима в целом  -->
+            <!--  Описание достижений в игре в целом  -->
             <Label
                 Margin="10"
                 FontSize="14"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
                 Text="{Binding AchievementCommon.Description}" />
-
-            <!--  Список особых режимов  -->
+            <!--  Список достижений в игре  -->
             <StackLayout
-                x:Name="achievementCollection"
                 Margin="10"
                 BindableLayout.ItemsSource="{Binding Achievements}">
-
                 <BindableLayout.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="models:Achievement">
                         <StackLayout Padding="10,0,10,15">
                             <pancakeView:PancakeView
                                 Margin="5"
@@ -47,23 +44,26 @@
                                     <pancakeView:DropShadow BlurRadius="10" />
                                 </pancakeView:PancakeView.Shadow>
                                 <StackLayout Orientation="Horizontal">
+                                    <!--  Картинка достижения  -->
                                     <Image
                                         HeightRequest="50"
                                         Source="{Binding ImageFilePath}"
                                         WidthRequest="50" />
                                     <StackLayout>
-                                        <!--  Название особого режима  -->
+                                        <!--  Название достижения  -->
                                         <Label
                                             FontFamily="{StaticResource BoldFont}"
                                             FontSize="16"
                                             Text="{Binding Title}" />
-                                        <!--  Описание особого режима  -->
+                                        <!--  Описание достижения  -->
                                         <Label FontSize="12" Text="{Binding Description}" />
                                     </StackLayout>
                                 </StackLayout>
                             </pancakeView:PancakeView>
                             <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Path=BindingContext.ChallengeModeTappedCommand, Source={x:Reference Name=achievementCollection}}" CommandParameter="{Binding .}" />
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:AchievementsViewModel}}, Path=ChallengeModeTappedCommand}"
+                                    CommandParameter="{Binding .}" />
                             </StackLayout.GestureRecognizers>
                         </StackLayout>
                     </DataTemplate>

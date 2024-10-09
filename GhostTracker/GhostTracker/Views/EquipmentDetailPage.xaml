@@ -5,12 +5,13 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:viewModels="clr-namespace:GhostTracker.ViewModels"
+    xmlns:models="clr-namespace:GhostTracker.Models"
     xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    x:Name="EquipmentDetailPageName"
     Shell.TabBarIsVisible="False"
-    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
+    x:DataType="viewModels:EquipmentDetailViewModel">
     <StackLayout Orientation="Vertical">
-
         <ScrollView>
             <StackLayout>
                 <Frame Margin="10,3,10,10"
@@ -44,16 +45,15 @@
                             VerticalOptions="CenterAndExpand" />
                         <!--  Изображение снаряжения  -->
                         <Image
-                            Grid.Row="1"
+                            Grid.Row="1" Grid.Column="0"
                             VerticalOptions="CenterAndExpand" HeightRequest="150"
                             Source="{Binding Equipment.ImageFilePath}" />
                         <!--  Описание снаряжения  -->
                         <Label
                             Padding="0,0,0,5"
-                            Grid.Row="2"
+                            Grid.Row="2" Grid.Column="0"
                             FontSize="14"
                             Text="{Binding Equipment.Description}"
-
                             VerticalOptions="CenterAndExpand" />
                         <BoxView
                             Grid.Row="0"
@@ -116,18 +116,15 @@
                             <!--  Уникальные параметры снаряжения  -->
                             <StackLayout BindableLayout.ItemsSource="{Binding Equipment.OtherEquipmentStats}">
                                 <BindableLayout.ItemTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate x:DataType="models:OtherEquipmentStat">
                                         <Label Text="{Binding Stat}" />
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </StackLayout>
-
                         </StackLayout>
-
                     </Grid>
                 </Frame>
-
-                <!--  Ссылки на снаряжение того же типа, но других тиров  -->
+                <!--  Ссылки на снаряжение того же типа, но других классов  -->
                 <StackLayout
                     HorizontalOptions="StartAndExpand"
                     Orientation="Vertical"
@@ -139,7 +136,6 @@
                         Text="{Binding EquipmentCommon.OtherTier}"
                         VerticalOptions="CenterAndExpand" />
                     <FlexLayout
-                        x:Name="otherFlexLayout"
                         AlignItems="Center"
                         BindableLayout.ItemsSource="{Binding EquipmentsSameTypeCollection}"
                         Direction="Row"
@@ -147,7 +143,7 @@
                         JustifyContent="Center"
                         Wrap="NoWrap">
                         <BindableLayout.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="models:Equipment">
                                 <pancakeView:PancakeView
                                     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                                     CornerRadius="110"
@@ -165,7 +161,9 @@
                                         <pancakeView:DropShadow />
                                     </pancakeView:PancakeView.Shadow>
                                     <StackLayout Spacing="0" VerticalOptions="CenterAndExpand" Orientation="Vertical">
+                                        <!--Картинка снаряжение другого класса-->
                                         <Image HeightRequest="100" Source="{Binding ImageFilePath}" />
+                                        <!--Класс снаряжения того же типа-->
                                         <Label
                                             FontFamily="{StaticResource BoldFont}"
                                             HorizontalOptions="Center"
@@ -173,7 +171,7 @@
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span
-                                                        Text="{Binding Path=BindingContext.EquipmentCommon.Tier, Source={x:Reference Name=otherFlexLayout}}" />
+                                                        Text="{Binding Path=EquipmentCommon.Tier, Source={RelativeSource AncestorType={x:Type viewModels:EquipmentDetailViewModel}}}" />
                                                     <Span Text=" " />
                                                     <Span Text="{Binding Tier}" />
                                                 </FormattedString>
@@ -182,19 +180,18 @@
                                     </StackLayout>
                                     <pancakeView:PancakeView.GestureRecognizers>
                                         <TapGestureRecognizer
-                                            Command="{Binding Path=BindingContext.EquipmentSelectedCommand, Source={x:Reference Name=otherFlexLayout}}"
+                                            Command="{Binding Path=EquipmentSelectedCommand, Source={RelativeSource AncestorType={x:Type viewModels:EquipmentDetailViewModel}}}"
                                             CommandParameter="{Binding .}" />
                                     </pancakeView:PancakeView.GestureRecognizers>
                                 </pancakeView:PancakeView>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </FlexLayout>
-
                 </StackLayout>
                 <!--  Список раскрывающихся элементов, содержащих текст в них  -->
                 <StackLayout BindableLayout.ItemsSource="{Binding Equipment.UnfoldingItems}">
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:UnfoldingItem">
                             <Frame HasShadow="True"
                                    Margin="10,5"
                                    Padding="13"
@@ -232,7 +229,7 @@
                                     </WebView>
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer
-                                            Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference EquipmentDetailPageName}}"
+                                            Command="{Binding Path=ToggleExpandCommand, Source={RelativeSource AncestorType={x:Type viewModels:EquipmentDetailViewModel}}}"
                                             CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
@@ -240,14 +237,14 @@
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </StackLayout>
-                <!--  Список улик связанных с данным снаряжением  -->
+                <!--  Список доказательств связанных с данным снаряжением  -->
                 <pancakeView:PancakeView
                     Padding="10,10,10,10"
                     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                     CornerRadius="16"
                     IsVisible="{Binding IsRelatedCluesExist}">
                     <pancakeView:PancakeView.Shadow>
-                        <pancakeView:DropShadow BlurRadius="{AppThemeBinding Light=10, Dark=0}"/>
+                        <pancakeView:DropShadow BlurRadius="{AppThemeBinding Light=10, Dark=0}" />
                     </pancakeView:PancakeView.Shadow>
                     <pancakeView:PancakeView.Margin>
                         <Thickness>
@@ -263,24 +260,23 @@
                             FontSize="16"
                             Text="{Binding EquipmentCommon.RelatedClues}" />
                         <StackLayout
-                            x:Name="cluesStackLayout"
                             Padding="10,5,5,5"
                             BindableLayout.ItemsSource="{Binding Equipment.EquipmentRelatedClues}"
                             Spacing="15">
-
                             <BindableLayout.ItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate x:DataType="models:Clue">
                                     <StackLayout Orientation="Horizontal">
-
+                                        <!--Картинка доказательства-->
                                         <Image
                                             HeightRequest="30"
                                             Source="{Binding ThemedIconFilePath}"
                                             WidthRequest="30" />
+                                        <!--Название доказательства-->
                                         <Label VerticalOptions="Center" FontFamily="{StaticResource BoldFont}"
                                                Text="{Binding Title}" />
                                         <StackLayout.GestureRecognizers>
                                             <TapGestureRecognizer
-                                                Command="{Binding Path=BindingContext.ClueSelectedCommand, Source={x:Reference Name=cluesStackLayout}}"
+                                                Command="{Binding Path=ClueSelectedCommand, Source={RelativeSource AncestorType={x:Type viewModels:EquipmentDetailViewModel}}}"
                                                 CommandParameter="{Binding .}" />
                                         </StackLayout.GestureRecognizers>
                                     </StackLayout>
@@ -292,5 +288,4 @@
             </StackLayout>
         </ScrollView>
     </StackLayout>
-
 </ContentPage>

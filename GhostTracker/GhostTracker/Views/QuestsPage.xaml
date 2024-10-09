@@ -1,13 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="GhostTracker.Views.QuestsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:GhostTracker.ViewModels"
+    xmlns:models="clr-namespace:GhostTracker.Models"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    Shell.TabBarIsVisible="False" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
+    Shell.TabBarIsVisible="False"
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
+    x:DataType="viewModels:QuestsViewModel">
     <ScrollView>
-
         <StackLayout>
             <!--  Заголовок страницы  -->
             <Label
@@ -27,7 +30,7 @@
                 Text="{Binding QuestCommon.Description}" />
             <!--  Список ежедневных квестов  -->
             <yummy:PancakeView
-                Padding="10,10,10,10" 
+                Padding="10,10,10,10"
                 BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                 CornerRadius="16">
                 <yummy:PancakeView.Shadow>
@@ -42,21 +45,23 @@
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
                 <StackLayout Padding="5" Spacing="20">
-                    <Label 
+                    <!--Название списка ежедневных квестов-->
+                    <Label
                         TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                         FontFamily="{StaticResource BoldFont}"
                         FontSize="18"
                         Text="{Binding QuestCommon.Daily}" />
-
                     <StackLayout
                         Padding="5"
                         BindableLayout.ItemsSource="{Binding DailyQuests}"
                         Spacing="25">
                         <BindableLayout.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="models:Quest">
                                 <StackLayout Spacing="3">
-                                    <Label 
-                                        TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" FontFamily="{StaticResource BoldFont}">
+                                    <!--Название квеста и награда за него-->
+                                    <Label
+                                        TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                                        FontFamily="{StaticResource BoldFont}">
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text="{Binding Title}" />
@@ -66,18 +71,17 @@
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
+                                    <!--Условие выполнения квеста-->
                                     <Label Text="{Binding Clause}" />
+                                    <!--Подсказка по выполнению квеста-->
                                     <Label Text="{Binding Tip}" />
                                 </StackLayout>
-
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </StackLayout>
                 </StackLayout>
-
             </yummy:PancakeView>
             <!--  Список еженедельных квестов  -->
-
             <yummy:PancakeView
                 Padding="10,10,10,10"
                 BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
@@ -94,21 +98,23 @@
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
                 <StackLayout Padding="5" Spacing="20">
+                    <!--Название списка еженедельных квестов-->
                     <Label
                         TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                         FontFamily="{StaticResource BoldFont}"
                         FontSize="18"
                         Text="{Binding QuestCommon.Weekly}" />
-
                     <StackLayout
                         Padding="5"
                         BindableLayout.ItemsSource="{Binding WeeklyQuests}"
                         Spacing="25">
                         <BindableLayout.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="models:Quest">
                                 <StackLayout Spacing="3">
-                                    <Label 
-                                        TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" FontFamily="{StaticResource BoldFont}">
+                                    <!--Название квеста и награда за него-->
+                                    <Label
+                                        TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                                        FontFamily="{StaticResource BoldFont}">
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text="{Binding Title}" />
@@ -118,15 +124,15 @@
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
+                                    <!--Условие выполнения квеста-->
                                     <Label Text="{Binding Clause}" />
+                                    <!--Подсказка по выполнению квеста-->
                                     <Label Text="{Binding Tip}" />
                                 </StackLayout>
-
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </StackLayout>
                 </StackLayout>
-
             </yummy:PancakeView>
         </StackLayout>
     </ScrollView>

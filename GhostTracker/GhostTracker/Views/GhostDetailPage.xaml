@@ -4,11 +4,13 @@
     x:Class="GhostTracker.Views.GhostDetailPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:GhostTracker.ViewModels"
+    xmlns:models="clr-namespace:GhostTracker.Models"
     xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
-    x:Name="GhostDetailPageName"
     NavigationPage.HasNavigationBar="False"
     Shell.TabBarIsVisible="False"
-    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
+    x:DataType="viewModels:GhostDetailViewModel">
     <ContentView>
         <ScrollView>
             <StackLayout>
@@ -38,7 +40,7 @@
                             VerticalOptions="Center">
                             <!--  Изображение призрака  -->
                             <Image HeightRequest="150" Source="{Binding Ghost.ImageFilePath}" />
-                            <!--  Название призркака  -->
+                            <!--  Название призрака  -->
                             <Label
                                 FontFamily="{StaticResource SpecialFont}"
                                 FontSize="20"
@@ -47,21 +49,21 @@
                                 Text="{Binding Ghost.Title}"
                                 TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                                 VerticalOptions="StartAndExpand" />
-                            <!--  Список улик призрака  -->
+                            <!--  Список доказательств призрака  -->
                             <StackLayout Margin="0,0,0,20">
                                 <FlexLayout
-                                    x:Name="ghostFlexLayout"
                                     AlignItems="Start"
                                     BindableLayout.ItemsSource="{Binding Ghost.Clues}"
                                     Direction="Row"
                                     JustifyContent="Center"
                                     Wrap="Wrap">
                                     <BindableLayout.ItemTemplate>
-                                        <DataTemplate>
+                                        <DataTemplate x:DataType="models:Clue">
                                             <StackLayout
                                                 Margin="5"
                                                 Padding="3"
                                                 HorizontalOptions="End">
+                                                <!--Изображение доказательства призрака-->
                                                 <Image
                                                     Aspect="AspectFit"
                                                     HeightRequest="30"
@@ -70,14 +72,13 @@
                                                     WidthRequest="30" />
                                                 <StackLayout.GestureRecognizers>
                                                     <TapGestureRecognizer
-                                                        Command="{Binding Path=BindingContext.ClueSelectedCommand, Source={x:Reference Name=ghostFlexLayout}}"
+                                                        Command="{Binding Path=ClueSelectedCommand, Source={RelativeSource AncestorType={x:Type viewModels:GhostDetailViewModel}}}"
                                                         CommandParameter="{Binding .}" />
                                                 </StackLayout.GestureRecognizers>
                                             </StackLayout>
                                         </DataTemplate>
                                     </BindableLayout.ItemTemplate>
                                 </FlexLayout>
-
                             </StackLayout>
                         </StackLayout>
                         <BoxView
@@ -94,7 +95,6 @@
                                 HorizontalOptions="CenterAndExpand"
                                 Text="{Binding Ghost.Description}"
                                 VerticalOptions="CenterAndExpand" />
-
                         </StackLayout>
                         <!--  Идентификация призрака  -->
                         <Label
@@ -104,13 +104,12 @@
                             Padding="5,5,5,5"
                             FontSize="16"
                             Text="{Binding Ghost.Identification}" />
-
                     </Grid>
                 </Frame>
                 <!--  Список раскрывающихся элементов, содержащих текст в них  -->
                 <StackLayout BindableLayout.ItemsSource="{Binding Ghost.UnfoldingItems}">
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:UnfoldingItem">
                             <Frame
                                 Margin="10,5"
                                 HasShadow="True"
@@ -149,7 +148,7 @@
                                     </WebView>
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer
-                                            Command="{Binding BindingContext.ToggleExpandCommand, Source={x:Reference GhostDetailPageName}}"
+                                            Command="{Binding Path=ToggleExpandCommand, Source={RelativeSource AncestorType={x:Type viewModels:GhostDetailViewModel}}}"
                                             CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
@@ -160,5 +159,4 @@
             </StackLayout>
         </ScrollView>
     </ContentView>
-
 </ContentPage>

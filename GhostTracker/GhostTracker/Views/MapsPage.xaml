@@ -3,10 +3,12 @@
 <ContentPage
     x:Class="GhostTracker.Views.MapsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:viewModels="clr-namespace:GhostTracker.ViewModels"
+    xmlns:models="clr-namespace:GhostTracker.Models"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     BackgroundColor="Black"
-    NavigationPage.HasNavigationBar="False">
+    NavigationPage.HasNavigationBar="False" x:DataType="viewModels:MapsViewModel">
     <StackLayout>
         <!--  Заголовок страницы  -->
         <Label
@@ -67,11 +69,10 @@
                     VerticalOptions="FillAndExpand">
                     <!--  Список карт  -->
                     <CollectionView
-                        x:Name="collectionView"
                         ItemsSource="{Binding Maps}"
                         SelectionMode="Single">
                         <CollectionView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="models:Map">
                                 <StackLayout>
                                     <StackLayout.Padding>
                                         0,0,0,10
@@ -90,7 +91,10 @@
                                         </yummy:PancakeView.Margin>
                                         <StackLayout>
                                             <StackLayout Orientation="Horizontal">
-                                                <Image HeightRequest="18"  Source="{AppThemeBinding Light={StaticResource icon_unlock}, Dark={StaticResource dark_icon_unlock}}" />
+                                                <!--Изображения уровня разблокировки карты-->
+                                                <Image HeightRequest="18"
+                                                       Source="{AppThemeBinding Light={StaticResource icon_unlock}, Dark={StaticResource dark_icon_unlock}}" />
+                                                <!--Уровень разблокировки карты-->
                                                 <Label
                                                     FontFamily="{StaticResource BoldFont}"
                                                     FontSize="13"
@@ -100,13 +104,15 @@
                                                     VerticalOptions="Center" />
                                                 <StackLayout Orientation="Horizontal"
                                                              HorizontalOptions="EndAndExpand">
-                                                    <Image HeightRequest="18"  Source="{AppThemeBinding Light={StaticResource icon_room}, Dark={StaticResource dark_icon_room}}"  />
+                                                    <!--Иконка количества комнат на карте-->
+                                                    <Image HeightRequest="18"
+                                                           Source="{AppThemeBinding Light={StaticResource icon_room}, Dark={StaticResource dark_icon_room}}" />
+                                                    <!--Число комнат на карте -->
                                                     <Label
                                                         FontFamily="{StaticResource BoldFont}"
                                                         FontSize="13"
                                                         Text="{Binding RoomCount}"
                                                         TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
-
                                                         VerticalOptions="Center" />
                                                 </StackLayout>
                                             </StackLayout>
@@ -120,7 +126,6 @@
                                                 FontFamily="{StaticResource BoldFont}"
                                                 Text="{Binding Title}"
                                                 TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
-
                                                 VerticalOptions="CenterAndExpand" />
                                             <!--  Размер карты  -->
                                             <Label
@@ -129,13 +134,12 @@
                                                 HorizontalTextAlignment="Center"
                                                 Text="{Binding Size}"
                                                 TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
-
                                                 VerticalOptions="StartAndExpand" />
                                         </StackLayout>
                                     </yummy:PancakeView>
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer
-                                            Command="{Binding Path=BindingContext.MapSelectedCommand, Source={x:Reference Name=collectionView}}"
+                                            Command="{Binding Path=MapSelectedCommand, Source={RelativeSource AncestorType={x:Type viewModels:MapsViewModel}}}"
                                             CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>

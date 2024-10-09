@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <popup:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  xmlns:popup="http://rotorgames.com"
-                 xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
+                 xmlns:viewModels="clr-namespace:GhostTracker.ViewModels"
+                 xmlns:effects="http://xamarin.com/schemas/2020/toolkit" x:DataType="viewModels:FeedbackViewModel"
                  x:Class="GhostTracker.Views.FeedbackPopupPage"
                  BackgroundColor="Transparent">
     <Frame
@@ -14,23 +16,33 @@
         HorizontalOptions="Center"
         VerticalOptions="Center">
         <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill">
-            <Label VerticalOptions="Start" Text="{Binding FeedbackCommon.Title}" FontAttributes="Bold" FontSize="Large" HorizontalOptions="Center" />
-            <Editor  HeightRequest="300" VerticalOptions="CenterAndExpand" Text="{Binding FeedbackText}" Placeholder="{Binding FeedbackCommon.EditorTip}" />
+            <!--Заголовок формы-->
+            <Label VerticalOptions="Start" Text="{Binding FeedbackCommon.Title}" FontAttributes="Bold" FontSize="Large"
+                   HorizontalOptions="Center" />
+            <!--Поле ввода фидбэка-->
+            <Editor HeightRequest="300" VerticalOptions="CenterAndExpand" Text="{Binding FeedbackText}"
+                    Placeholder="{Binding FeedbackCommon.EditorTip}" />
             <StackLayout VerticalOptions="EndAndExpand" Orientation="Horizontal">
+                <!--Кнопка отправки фидбэка-->
                 <Button
                     effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                     effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
                     effects:ShadowEffect.Radius="10"
                     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                     CornerRadius="5"
-                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Text="{Binding FeedbackCommon.Submit}" Command="{Binding SubmitCommand}" />
+                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                    HorizontalOptions="StartAndExpand" VerticalOptions="Center" Text="{Binding FeedbackCommon.Submit}"
+                    Command="{Binding SubmitCommand}" />
+                <!--Кнопка выхода с формы фидбэка-->
                 <Button
                     effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                     effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
                     effects:ShadowEffect.Radius="10"
                     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                     CornerRadius="5"
-                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Text="{Binding FeedbackCommon.Cancel}" Command="{Binding CancelCommand}" />
+                    TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
+                    HorizontalOptions="EndAndExpand" VerticalOptions="Center" Text="{Binding FeedbackCommon.Cancel}"
+                    Command="{Binding CancelCommand}" />
             </StackLayout>
         </StackLayout>
     </Frame>

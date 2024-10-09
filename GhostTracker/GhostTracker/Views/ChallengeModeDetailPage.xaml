@@ -1,16 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="GhostTracker.Views.ChallengeModeDetailPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    x:Name="ChallengeModeDetailPageName"
+    xmlns:viewModels="clr-namespace:GhostTracker.ViewModels"
+    xmlns:models="clr-namespace:GhostTracker.Models"
+    x:DataType="viewModels:ChallengeModeDetailViewModel"
     Shell.TabBarIsVisible="False"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}">
     <ScrollView>
         <StackLayout Orientation="Vertical">
-            <!--  Заголовок страницы  -->
+            <!-- Заголовок страницы -->
             <Label
                 TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                 FontFamily="{StaticResource SpecialFont}"
@@ -25,7 +27,7 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <!--  Поле информации о карте особого режима  -->
+            <!-- Поле информации об особом режиме и его карте -->
             <yummy:PancakeView
                 Padding="12,10,12,5"
                 BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
@@ -34,9 +36,7 @@
                     <yummy:DropShadow />
                 </yummy:PancakeView.Shadow>
                 <yummy:PancakeView.Margin>
-                    <Thickness>
-                        10,3,10,10
-                    </Thickness>
+                    <Thickness>10,3,10,10</Thickness>
                 </yummy:PancakeView.Margin>
                 <yummy:PancakeView.Border>
                     <yummy:Border Thickness="1" Color="Color.Default" />
@@ -51,14 +51,10 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <StackLayout
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Margin="0,5,5,5"
-                        VerticalOptions="Center">
-                        <!--  Изображение карты  -->
+                    <StackLayout Grid.Row="0" Grid.Column="0" Margin="0,5,5,5" VerticalOptions="Center">
+                        <!-- Изображение карты -->
                         <Image HeightRequest="150" Source="{Binding ChallengeMode.ChallengeMap.ImageFilePath}" />
-                        <!--  Название карты  -->
+                        <!-- Название карты -->
                         <Label
                             FontFamily="{StaticResource BoldFont}"
                             FontSize="18"
@@ -71,12 +67,9 @@
                             <TapGestureRecognizer Command="{Binding MapSelectedCommand}" />
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
-                    <BoxView
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        BackgroundColor="Gainsboro"
-                        VerticalOptions="FillAndExpand" />
-                    <!--  Описание особого режима  -->
+
+                    <BoxView Grid.Row="0" Grid.Column="1" BackgroundColor="Gainsboro" VerticalOptions="FillAndExpand" />
+                    <!-- Описание особого режима -->
                     <Label
                         Grid.Row="0"
                         Grid.Column="2"
@@ -86,10 +79,9 @@
                         HorizontalOptions="CenterAndExpand"
                         Text="{Binding ChallengeMode.Description}"
                         VerticalOptions="Center" />
-
                 </Grid>
             </yummy:PancakeView>
-            <!--  Настройки сложности особого режима  -->
+            <!-- Отличительные особенности особого режима -->
             <yummy:PancakeView
                 Padding="10,10,10,10"
                 BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
@@ -98,9 +90,7 @@
                     <yummy:DropShadow />
                 </yummy:PancakeView.Shadow>
                 <yummy:PancakeView.Margin>
-                    <Thickness>
-                        10,3,10,10
-                    </Thickness>
+                    <Thickness>10,3,10,10</Thickness>
                 </yummy:PancakeView.Margin>
                 <yummy:PancakeView.Border>
                     <yummy:Border Thickness="1" Color="Color.Default" />
@@ -119,7 +109,7 @@
                         Text="{Binding ChallengeMode.Parameters}" />
                 </StackLayout>
             </yummy:PancakeView>
-            <!--  Список снаряжения выдаваемого в особом режиме  -->
+            <!-- Список снаряжения, выдаваемого в особом режиме -->
             <yummy:PancakeView
                 Padding="10,10,10,10"
                 BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
@@ -128,41 +118,40 @@
                     <yummy:DropShadow />
                 </yummy:PancakeView.Shadow>
                 <yummy:PancakeView.Margin>
-                    <Thickness>
-                        10,3,10,10
-                    </Thickness>
+                    <Thickness>10,3,10,10</Thickness>
                 </yummy:PancakeView.Margin>
                 <yummy:PancakeView.Border>
                     <yummy:Border Thickness="1" Color="Color.Default" />
                 </yummy:PancakeView.Border>
+
                 <StackLayout Padding="5" Spacing="20">
                     <Label
                         FontFamily="{StaticResource BoldFont}"
                         FontSize="16"
                         Text="{Binding ChallengeModeCommon.EquipmentProvided}" />
                     <StackLayout
-                        x:Name="equipmentsStackLayout"
                         Padding="5"
                         BindableLayout.ItemsSource="{Binding ChallengeMode.ChallengeEquipments}"
                         Spacing="15">
-
                         <BindableLayout.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="models:Equipment">
                                 <StackLayout Orientation="Horizontal">
-                                    <Image HeightRequest="50" Source="{Binding ImageFilePath}"></Image>
+                                    <!--Изображение снаряжения-->
+                                    <Image HeightRequest="50" Source="{Binding ImageFilePath}" />
+                                    <!--Название снаряжения и его класс-->
                                     <Label VerticalOptions="CenterAndExpand">
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span FontFamily="{StaticResource BoldFont}" Text="{Binding Title}" />
                                                 <Span Text=" " />
-                                                <Span Text="{Binding Path=BindingContext.EquipmentCommon.Tier, Source={x:Reference Name=equipmentsStackLayout}}" />
+                                                <Span Text="{Binding Path=EquipmentCommon.Tier, Source={RelativeSource AncestorType={x:Type viewModels:ChallengeModeDetailViewModel}}}" />
                                                 <Span Text=" " />
                                                 <Span Text="{Binding Tier}" />
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.EquipmentSelectedCommand, Source={x:Reference Name=equipmentsStackLayout}}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer Command="{Binding Path=EquipmentSelectedCommand, Source={RelativeSource AncestorType={x:Type viewModels:ChallengeModeDetailViewModel}}}" CommandParameter="{Binding .}" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
                             </DataTemplate>
