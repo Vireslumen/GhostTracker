@@ -26,6 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\FilterGhostPage.xaml.cs">
+      <DependentUpon>FilterGhostPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\MapDetailPage.xaml.cs">
       <DependentUpon>MapDetailPage.xaml</DependentUpon>
     </Compile>
@@ -77,7 +80,7 @@
     <EmbeddedResource Update="Views\FilterEquipmentPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\FilterPage.xaml">
+    <EmbeddedResource Update="Views\FilterGhostPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\GhostDetailPage.xaml">

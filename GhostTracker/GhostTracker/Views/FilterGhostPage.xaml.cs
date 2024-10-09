@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using GhostTracker.ViewModels;
-using Rg.Plugins.Popup.Pages;
 using Serilog;
 using Xamarin.Forms.Xaml;
 
@@ -9,9 +8,9 @@ namespace GhostTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     [DesignTimeVisible(false)]
-    public partial class FilterPage : PopupPage
+    public partial class FilterGhostPage
     {
-        public FilterPage(GhostsViewModel viewModel)
+        public FilterGhostPage(GhostsViewModel viewModel)
         {
             try
             {
@@ -20,7 +19,7 @@ namespace GhostTracker.Views
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Ошибка во время инициализации FilterPage.");
+                Log.Error(ex, "Ошибка во время инициализации FilterGhostPage.");
             }
         }
     }

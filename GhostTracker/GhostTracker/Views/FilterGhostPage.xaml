@@ -1,14 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <popup:PopupPage
-    x:Class="GhostTracker.Views.FilterPage"
+    x:Class="GhostTracker.Views.FilterGhostPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:GhostTracker.Models"
+    xmlns:viewModels="clr-namespace:GhostTracker.ViewModels"
     xmlns:behaviors="http://xamarin.com/schemas/2020/toolkit"
     xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     BackgroundColor="Transparent"
-    HasSystemPadding="True">
+    HasSystemPadding="True" x:DataType="viewModels:GhostsViewModel">
     <popup:PopupPage.Behaviors>
         <behaviors:EventToCommandBehavior Command="{Binding BackgroundClickCommand}" EventName="BackgroundClicked" />
     </popup:PopupPage.Behaviors>
@@ -20,16 +22,16 @@
         HorizontalOptions="Center"
         VerticalOptions="Center"
         WidthRequest="300">
-        <!--  Фильтрация по уликам  -->
+        <!--  Фильтрация по доказательствам  -->
         <StackLayout WidthRequest="200">
-            <!--  Название фильтрации по уликам  -->
+            <!--  Название фильтрации по доказательствам  -->
             <Label
                 Margin="0,0,0,10"
                 FontFamily="{StaticResource BoldFont}"
                 FontSize="18"
                 HorizontalOptions="Center"
                 Text="{Binding GhostCommon.FilterTitle}" />
-            <!--  Список улик  -->
+            <!--  Список доказательств  -->
             <CollectionView
                 ItemsSource="{Binding AllClues}"
                 SelectedItems="{Binding SelectedClues, Mode=TwoWay}"
@@ -39,7 +41,7 @@
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="models:Clue">
                         <StackLayout Padding="0,0,0,10" behaviors:CornerRadiusEffect.CornerRadius="16">
                             <yummy:PancakeView
                                 Margin="20,5,20,5"
@@ -54,23 +56,25 @@
                                     <yummy:Border Thickness="1" Color="Color.Default" />
                                 </yummy:PancakeView.Border>
                                 <StackLayout Orientation="Horizontal">
+                                    <!--Картинка доказательства-->
                                     <Image
                                         HeightRequest="30"
                                         Source="{Binding ThemedIconFilePath}"
                                         WidthRequest="30" />
+                                    <!--Название доказательства-->
                                     <Label
                                         Margin="10,0,0,0"
                                         FontSize="16"
                                         Text="{Binding Title}"
                                         VerticalOptions="CenterAndExpand" />
-
                                 </StackLayout>
                             </yummy:PancakeView>
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup Name="CommonStates">
                                     <VisualState Name="Normal">
                                         <VisualState.Setters>
-                                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}" />
+                                            <Setter Property="BackgroundColor"
+                                                    Value="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}" />
                                         </VisualState.Setters>
                                     </VisualState>
                                     <VisualState Name="Selected">
@@ -86,6 +90,7 @@
             </CollectionView>
             <!--  Кнопка для принятия и сброса фильтрации  -->
             <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <!--Кнопка принятия фильтрации-->
                 <Button
                     Margin="10"
                     behaviors:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
@@ -96,6 +101,7 @@
                     CornerRadius="5"
                     Text="{Binding GhostCommon.ApplyTitle}"
                     TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" />
+                <!--Кнопка сброса фильтрации-->
                 <Button
                     Margin="10"
                     behaviors:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
@@ -106,7 +112,6 @@
                     CornerRadius="5"
                     Text="{Binding GhostCommon.Clear}"
                     TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}" />
-
             </StackLayout>
         </StackLayout>
     </Frame>

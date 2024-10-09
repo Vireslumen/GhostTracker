@@ -172,7 +172,7 @@ namespace GhostTracker.ViewModels
             try
             {
                 // Логика для открытия страницы фильтра
-                var filterPage = new FilterPage(this);
+                var filterPage = new FilterGhostPage(this);
                 await PopupNavigation.Instance.PushAsync(filterPage);
             }
             catch (Exception ex)
