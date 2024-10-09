@@ -2,14 +2,16 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:behaviors="clr-namespace:GhostTracker.Behaviors;assembly=GhostTracker"
              xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:viewModels="clr-namespace:GhostTracker.ViewModels"
+             xmlns:models="clr-namespace:GhostTracker.Models"
+             xmlns:behaviors="clr-namespace:GhostTracker.Behaviors;assembly=GhostTracker"
              x:Class="GhostTracker.Views.GhostGuessPage"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
-             Shell.TabBarIsVisible="False">
+             Shell.TabBarIsVisible="False" x:DataType="viewModels:GhostGuessViewModel">
     <StackLayout Padding="5">
-
+        <!--Заголовок страницы определения призрака-->
         <Label
             Margin="5"
             FontFamily="{StaticResource SpecialFont}"
@@ -19,20 +21,20 @@
             Text="{Binding GhostGuessQuestionCommon.PageTitle}"
             TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
             VerticalOptions="Center" />
-
+        <!--Название списка предполагаемых призраков-->
         <Label FontSize="18" FontFamily="{StaticResource RegularFont}" HorizontalOptions="CenterAndExpand"
                Text="{Binding GhostGuessQuestionCommon.GhostListTitle}" />
-
+        <!--Список предполагаемых призраков-->
         <FlexLayout
-            x:Name="ghostFlexLayout"
             Direction="Row" Wrap="Wrap" JustifyContent="Start" AlignItems="Start"
             AlignContent="Start" BindableLayout.ItemsSource="{Binding SortedGhosts}">
             <BindableLayout.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="models:SupposedGhost">
                     <Frame
                         BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource ThirdBackgroundColorDark}}"
                         HasShadow="False" Margin="5" FlexLayout.Basis="50%"
                         HeightRequest="30" Padding="0">
+                        <!--Название призрака и его вероятность-->
                         <Label HorizontalOptions="CenterAndExpand"
                                FontSize="16" FontFamily="{StaticResource BoldFont}"
                                FontAttributes="Bold">
@@ -46,7 +48,7 @@
                             </Label.FormattedText>
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer
-                                    Command="{Binding Path=BindingContext.GhostTappedCommand, Source={x:Reference Name=ghostFlexLayout}}"
+                                    Command="{Binding Path=GhostTappedCommand, Source={RelativeSource AncestorType={x:Type viewModels:GhostGuessViewModel}}}"
                                     CommandParameter="{Binding .}" />
                             </Label.GestureRecognizers>
                         </Label>
@@ -54,16 +56,18 @@
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </FlexLayout>
+        <!--Инструменты для определения призрака-->
         <ScrollView>
             <StackLayout>
+                <!--Список доказательств-->
                 <CollectionView HeightRequest="320"
-                                SelectionChangedCommand="{Binding UpdateGhost}"
+                                SelectionChangedCommand="{Binding UpdateGhostCommand}"
                                 ItemsSource="{Binding AllClues}"
                                 SelectedItems="{Binding SelectedClues, Mode=TwoWay}"
                                 SelectionChangedCommandParameter="{Binding .}"
                                 SelectionMode="Multiple">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:Clue">
                             <StackLayout Padding="0,0,0,10" effects:CornerRadiusEffect.CornerRadius="16">
                                 <pancakeView:PancakeView
                                     Margin="9,9,9,0"
@@ -78,17 +82,18 @@
                                         <pancakeView:Border Thickness="1" Color="Color.Default" />
                                     </pancakeView:PancakeView.Border>
                                     <StackLayout Orientation="Horizontal">
+                                        <!--Иконка доказательства-->
                                         <Image
                                             Margin="5,0,0,0"
                                             HeightRequest="30"
                                             Source="{Binding ThemedIconFilePath}"
                                             WidthRequest="30" />
+                                        <!--Название доказательства-->
                                         <Label
                                             Margin="5,0,0,0"
                                             FontSize="14"
                                             Text="{Binding Title}"
                                             VerticalOptions="CenterAndExpand" />
-
                                     </StackLayout>
                                 </pancakeView:PancakeView>
                                 <VisualStateManager.VisualStateGroups>
@@ -111,13 +116,14 @@
                             VerticalItemSpacing="5" />
                     </CollectionView.ItemsLayout>
                 </CollectionView>
+                <!--Поле определения скорости призрака-->
                 <StackLayout Padding="0,20,0,20" HeightRequest="150" Orientation="Vertical">
-
                     <Grid HeightRequest="120">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
+                        <!--Кнопка для вычисления скорости призрака-->
                         <Button Grid.Column="0"
                                 TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
@@ -127,18 +133,18 @@
                                 HorizontalOptions="StartAndExpand" CornerRadius="10"
                                 Command="{Binding PressButtonCommand}"
                                 Text="{Binding GhostGuessQuestionCommon.TapButtonTitle}" />
-
+                        <!--Включение или выключение учёта скорости призрака-->
                         <Frame
-
                             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                             effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                             effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}"
                             effects:ShadowEffect.Radius="10" Grid.Column="1" CornerRadius="10">
                             <StackLayout Spacing="0">
-
+                                <!--Чекбокс активности учета скорости призрака-->
                                 <CheckBox Scale="1.5" VerticalOptions="StartAndExpand"
                                           HorizontalOptions="CenterAndExpand"
                                           IsChecked="{Binding IsSpeedMatter}" />
+                                <!--Название чекбокса активности учета скорости призрака-->
                                 <Label Padding="5"
                                        TextColor="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                                        VerticalOptions="StartAndExpand"
@@ -148,9 +154,10 @@
                             </StackLayout>
                         </Frame>
                     </Grid>
+                    <!--Вычисленная скорость призрака метров в секунду-->
                     <Label
-                           FontSize="Medium"
-                           HorizontalOptions="Center">
+                        FontSize="Medium"
+                        HorizontalOptions="Center">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="{Binding GhostGuessQuestionCommon.SpeedTitle}" />
@@ -161,14 +168,14 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-
                 </StackLayout>
+                <!--Список вопрос для определения призрака по его вторичным чертам-->
                 <StackLayout x:Name="QuestionsStackLayout"
+                             x:DataType="viewModels:GhostGuessViewModel"
                              BindableLayout.ItemsSource="{Binding DisplayedQuestions}">
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:GhostGuessQuestion">
                             <StackLayout IsVisible="{Binding IsVisible}" HeightRequest="{Binding Visibility}">
-
                                 <Frame
                                     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource FirstBackGroundColorDark}}"
                                     Padding="10" Margin="10" CornerRadius="10"
@@ -176,30 +183,32 @@
                                     effects:ShadowEffect.Color="{AppThemeBinding Light={StaticResource ForegroundColorLight}, Dark={StaticResource ForegroundColorDark}}"
                                     effects:ShadowEffect.Opacity="{AppThemeBinding Light=0.5, Dark=0}">
                                     <StackLayout Padding="5">
+                                        <!--Название вопроса-->
                                         <Label FontSize="16" Text="{Binding QuestionText}"
                                                FontAttributes="Bold" />
+                                        <!--Выдвижной список ответов на вопрос-->
                                         <Picker
-                                            ItemsSource="{Binding Source={x:Reference QuestionsStackLayout}, Path=BindingContext.Items}"
                                             HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center"
                                             FontFamily="{StaticResource BoldFont}"
-                                            Title="{Binding Source={x:Reference QuestionsStackLayout}, Path=BindingContext.GhostGuessQuestionCommon.ChooseAnswer}"
+                                            Title="{Binding Source={RelativeSource AncestorType={x:Type viewModels:GhostGuessViewModel}}, Path=GhostGuessQuestionCommon.ChooseAnswer}"
                                             SelectedIndex="{Binding Answer}">
+                                            <!--Этот код ведет себя странно-->
                                             <Picker.Behaviors>
                                                 <behaviors:EventToCommandPickerBehavior
-                                                    Command="{Binding Source={x:Reference QuestionsStackLayout}, Path=BindingContext.UpdateGhost}" />
+                                                    Command="{Binding Source={x:Reference QuestionsStackLayout}, Path=BindingContext.UpdateGhostCommand}" />
                                             </Picker.Behaviors>
-
-
+                                            <Picker.ItemsSource>
+                                                <Binding Path="BindingContext.Items"
+                                                         Source="{x:Reference QuestionsStackLayout}" />
+                                            </Picker.ItemsSource>
                                         </Picker>
                                     </StackLayout>
                                 </Frame>
                             </StackLayout>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
-
                 </StackLayout>
             </StackLayout>
         </ScrollView>
-
     </StackLayout>
 </ContentPage>

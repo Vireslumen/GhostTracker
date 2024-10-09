@@ -71,7 +71,7 @@ namespace GhostTracker.ViewModels
 
             // Инициализация команд
             PressButtonCommand = new Command(OnButtonPressed);
-            UpdateGhost = new Command(OnUpdateGhost);
+            UpdateGhostCommand = new Command(OnUpdateGhost);
             GhostTappedCommand = new Command<SupposedGhost>(OnGhostTapped);
         }
 
@@ -107,7 +107,7 @@ namespace GhostTracker.ViewModels
         }
         public ICommand GhostTappedCommand { get; private set; }
         public ICommand PressButtonCommand { protected set; get; }
-        public ICommand UpdateGhost { protected set; get; }
+        public ICommand UpdateGhostCommand { protected set; get; }
         public List<Clue> AllClues { get; set; }
         public ObservableCollection<GhostGuessQuestion> DisplayedQuestions
         {
@@ -140,7 +140,7 @@ namespace GhostTracker.ViewModels
         public void Cleanup()
         {
             PressButtonCommand = null;
-            UpdateGhost = null;
+            UpdateGhostCommand = null;
             GhostTappedCommand = null;
         }
 
