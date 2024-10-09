@@ -65,15 +65,15 @@ To get in touch, please use the following email address: [vireslumen.dev@gmail.c
 ## Screenshots
 <table style="border-collapse: collapse; border: none;">
   <tr>
-    <td align="center"   width="300"><img src="https://github.com/user-attachments/assets/5fd8fb5c-d45c-4f43-ba99-e4fdbc71cb9f" width="200" alt="Main Page"/><br><em>Main Tab</em></td>
-    <td align="center"   width="300"><img src="https://github.com/user-attachments/assets/c669ab34-814f-4f7d-a723-b3a8faf9db31" width="200" alt="Main Page 2"/><br><em>Pop-up tooltip</em></td>
-    <td align="center"   width="300"><img src="https://github.com/user-attachments/assets/5325a94b-3b4f-4131-bac6-8382a7d492fe" width="200" alt="Main Page 3"/><br><em>Bottom of the Main Tab</em></td>
+    <td align="center"   width="300"><img src="https://github.com/user-attachments/assets/7a4f0189-8925-4c1e-9baa-0637c8bc8d38" width="200" alt="Main Page"/><br><em>Main Tab</em></td>
+    <td align="center"   width="300"><img src="https://github.com/user-attachments/assets/1819f43e-c115-4e78-a93b-40d174d098bb" width="200" alt="Main Page 2"/><br><em>Pop-up tooltip</em></td>
+    <td align="center"   width="300"><img src="https://github.com/user-attachments/assets/32e923d2-ef85-4e55-b2aa-d283f7db135d" width="200" alt="Main Page 3"/><br><em>Bottom of the Main Tab</em></td>
   </tr>
   <tr>
-    <td align="center" ><img src="https://github.com/user-attachments/assets/ec567c1a-5f3c-4f96-a8c1-2448cb918453" width="200" alt="Ghosts Page"/><br><em>Ghosts Tab</em></td>
-    <td align="center" ><img src="https://github.com/user-attachments/assets/e1a62615-133f-40d6-9b49-3ec07d7992cf" width="200" alt="Equipments Page"/><br><em>Equipments Tab</em></td>
-    <td align="center" ><img src="https://github.com/user-attachments/assets/cf9fdc4e-c588-4ae3-9ae0-4cec72fa1493" width="200" alt="Maps Page"/><br><em>Maps Tab</em></td>
-    <td align="center" width="300"><img src="https://github.com/user-attachments/assets/f6403cfb-244d-425f-8d6e-7976622ee4d2" width="200" alt="Cursed Possessions Page"/><br><em>Cursed Possessions Tab</em></td>
+    <td align="center" ><img src="https://github.com/user-attachments/assets/94f0cbcf-7482-4884-944f-90c032bb0b07" width="200" alt="Ghosts Page"/><br><em>Ghosts Tab</em></td>
+    <td align="center" ><img src="https://github.com/user-attachments/assets/34741139-c3d2-4f95-a642-177ae44a46a1" width="200" alt="Equipments Page"/><br><em>Equipments Tab</em></td>
+    <td align="center" ><img src="https://github.com/user-attachments/assets/100e798b-6d02-4e46-8faa-8cd03e9b0180" width="200" alt="Maps Page"/><br><em>Maps Tab</em></td>
+    <td align="center" width="300"><img src="https://github.com/user-attachments/assets/25d7f6e8-fb29-4dff-8a0b-5106474fa615" width="200" alt="Cursed Possessions Page"/><br><em>Cursed Possessions Tab</em></td>
   </tr>
   <tr>
     <td align="center" ><img src="https://github.com/user-attachments/assets/56753088-1980-46de-87d4-1186db7e2622" width="200" alt="Detail Map Page"/><br><em>Detail Map Page</em></td>
